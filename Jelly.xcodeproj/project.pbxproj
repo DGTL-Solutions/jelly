@@ -32,6 +32,7 @@
 		73993BF98CDB9EFA06BF79AB /* ConnectionAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3479D4451BFB1B7D96190F4A /* ConnectionAnalyzer.swift */; };
 		74CCB18E86A29F8F8A453D92 /* JellyfinClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A916E9281C3B1AFBC17BC1EF /* JellyfinClient.swift */; };
 		7DC74F429B6986114CD06B19 /* ConnectionAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C40772B599AEECCFAE7A9F /* ConnectionAnalysisView.swift */; };
+		8098E6ABC38C65F7B375684F /* Diagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6C40E354F80135D447511D /* Diagnostics.swift */; };
 		87AD7A4ED7BF9518DD260EEF /* IntroFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A1300A33DF01F71060478A /* IntroFinder.swift */; };
 		8D097650A2A316F8A82670A3 /* License-LibDovi.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8EA84B06FE50484566BB8B21 /* License-LibDovi.txt */; };
 		8EA49288FC8FB3B754D607B5 /* Artwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96C3A92A4D42FD38CE47AF6 /* Artwork.swift */; };
@@ -130,6 +131,7 @@
 		A5BF37FBE3A3195B3ECB50A8 /* ASSRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASSRenderer.swift; sourceTree = "<group>"; };
 		A7B2AE1F8781002F361F3C32 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		A916E9281C3B1AFBC17BC1EF /* JellyfinClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyfinClient.swift; sourceTree = "<group>"; };
+		A9DF8C9CF3A4619021669B46 /* JellyTopShelf.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JellyTopShelf.entitlements; sourceTree = "<group>"; };
 		B257626A6044D766406A7017 /* License-FreeType.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "License-FreeType.txt"; sourceTree = "<group>"; };
 		B55BAA7E8B4560B5AADB2D9D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5BA37AC42CFAF95B1F4BD8C /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 		C2398EB379E6931FEF40D3F5 /* JellyTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = JellyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C96C3A92A4D42FD38CE47AF6 /* Artwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artwork.swift; sourceTree = "<group>"; };
 		D2BF711CAC6D11FD362E4B80 /* License-libass.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "License-libass.txt"; sourceTree = "<group>"; };
+		D595DDE3BD824D805CB393E6 /* Jelly.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Jelly.entitlements; sourceTree = "<group>"; };
 		EC9148709D4EC1A327BDC313 /* License-LGPL-2.1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "License-LGPL-2.1.txt"; sourceTree = "<group>"; };
 		ED5A5EB408FA410DC424FFFC /* RemoteInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteInput.swift; sourceTree = "<group>"; };
 		EF11B3AA95BE8048BBE6CBBB /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -192,6 +195,7 @@
 			children = (
 				664B23CD8C8220A98BC90A53 /* ContentProvider.swift */,
 				BC3BA6DE0BE341AB8697E4A3 /* Info.plist */,
+				A9DF8C9CF3A4619021669B46 /* JellyTopShelf.entitlements */,
 				FAC47C69309861DA2C6C61E3 /* PrivacyInfo.xcprivacy */,
 			);
 			path = JellyTopShelf;
@@ -240,6 +244,7 @@
 			children = (
 				B55BAA7E8B4560B5AADB2D9D /* Assets.xcassets */,
 				1AB99804C998295075348B78 /* Info.plist */,
+				D595DDE3BD824D805CB393E6 /* Jelly.entitlements */,
 				F0B2A3B16FB43480FE26CF5A /* JellyApp.swift */,
 				05962768906AE4D3CC3E3EE1 /* PrivacyInfo.xcprivacy */,
 				36CE58ADF9032FAAE23C007A /* Core */,
@@ -479,6 +484,7 @@
 			files = (
 				41F73E595C6ED79D4F570BD7 /* Artwork.swift in Sources */,
 				D3A1C14C48B248D31CAD6DEC /* ContentProvider.swift in Sources */,
+				8098E6ABC38C65F7B375684F /* Diagnostics.swift in Sources */,
 				74CCB18E86A29F8F8A453D92 /* JellyfinClient.swift in Sources */,
 				E90AE878AB05EDA24D81F85D /* Models.swift in Sources */,
 				F00F3DFC47D7E42DB76DAE88 /* PlaybackSupport.swift in Sources */,
@@ -532,6 +538,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Jelly/Jelly.entitlements;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Jelly/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Jelly;
@@ -550,6 +557,7 @@
 		4A1EA297B0A5BC4CF956781A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = JellyTopShelf/JellyTopShelf.entitlements;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = JellyTopShelf/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Jelly;
@@ -570,6 +578,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Jelly/Jelly.entitlements;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Jelly/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Jelly;
@@ -732,6 +741,7 @@
 		F9EF1D5ECC2D0CFEB684ECDB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = JellyTopShelf/JellyTopShelf.entitlements;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = JellyTopShelf/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Jelly;
