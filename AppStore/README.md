@@ -57,6 +57,22 @@ Rechtliches, kurz: Apple ist beim Verkauf im App Store in der EU Wiederverkäufe
 6. **Texte** aus `metadata/de-DE/`, **Review-Hinweise** aus `review-notes.txt` (Demo-Server `demo.jellyfin.org/stable`, Konto „demo“ ohne Passwort – getestet am 23.10.2026: 11 frei lizenzierte Filme, kein Admin).
 7. **Screenshots:** 1920×1080 oder 3840×2160, 1–10 Stück. Am besten im Simulator mit dem Demo-Server – dessen Filme (Caminandes, Dracula …) sind frei lizenziert, fremde Filmplakate könnten in der Prüfung abgelehnt werden.
 
+## 3a. Alles Weitere per Skript
+
+Sobald der App-Eintrag existiert (Schritt 1 oben, geht nur im Browser), trägt `Scripts/asc_appstore.py` den Rest ein – idempotent, darf mehrfach laufen:
+
+```sh
+REVIEW_FIRST_NAME=… REVIEW_LAST_NAME=… REVIEW_PHONE=… REVIEW_EMAIL=… \
+  python3 Scripts/asc_appstore.py <Key-ID> <Issuer-ID> <Key-Datei> setup     # Texte, Screenshots, Altersfreigabe, gratis, alle Länder,
+                                                                            # Abo-Gruppe, Jahresabo 9,99 € (andere Länder umgerechnet),
+                                                                            # 2 Wochen gratis, Review-Screenshot und -Angaben
+Scripts/release-appstore.sh                                                  # Build hochladen (siehe unten)
+python3 Scripts/asc_appstore.py <Key-ID> <Issuer-ID> <Key-Datei> attach <Build-Nummer>
+python3 Scripts/asc_appstore.py <Key-ID> <Issuer-ID> <Key-Datei> submit --yes   # erst nach Freigabe
+```
+
+Nicht per API möglich und deshalb im Browser: App-Eintrag anlegen, Vertrag für kostenpflichtige Apps mit Bank- und Steuerdaten, EU-Händlerangaben (Apple bestätigt sie per Code an Telefon und E-Mail).
+
 ## 4. Build hochladen
 
 ```sh
