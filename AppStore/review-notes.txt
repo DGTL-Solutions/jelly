@@ -6,10 +6,10 @@ HOW TO REVIEW (public demo server of the Jellyfin project, public-domain and Cre
 3. Select the profile "demo", leave the password empty and choose "Anmelden" (Sign in).
 4. Browse the library and play e.g. "Caminandes: Llama Drama". Swipe down during playback for subtitles, audio and info.
 
-IN-APP PURCHASES (Guideline 3.1.1, trial for a non-subscription app)
-- The app is free to download. "14-day Trial" is a free non-consumable whose purchase starts a 14-day trial; "Jelly Vollversion" is a non-consumable (9.99 EUR) that unlocks the app permanently.
-- The offer appears once after signing in and whenever playback is started without an active trial or purchase. Before the trial starts it states the duration, the price and that playback stops after the trial (browsing and settings stay available).
-- Settings > Vollversion shows the status and offers purchase and "Käufe wiederherstellen" (restore).
+SUBSCRIPTION (Guideline 3.1.2)
+- The app is free to download and unlocked by the auto-renewable subscription "Jelly Jahresabo" (1 year, 9.99 EUR) with a 2-week free trial as introductory offer.
+- The offer appears once after signing in and whenever playback is started without an active subscription. It states the price per year, the trial, automatic renewal, how to cancel, and links to the terms of use (Apple's standard EULA) and the privacy policy (shown as address and QR code, the privacy policy also as text, since tvOS has no browser).
+- Settings > Jahresabo shows the status and offers subscribing and "Käufe wiederherstellen" (restore purchases). Browsing the library works without a subscription.
 
 NOTES
 - Local network access is used only to discover Jellyfin servers in the user's home network (UDP 7359 and TCP 8096).

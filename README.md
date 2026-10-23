@@ -118,7 +118,7 @@ Nur in Debug-Builds steuern Startparameter (`SIMCTL_CHILD_…` bei `simctl launc
 
 ## App Store
 
-Die App-Store-Fassung ist 14 Tage kostenlos testbar und kostet danach einmalig 9,99 € per In-App-Kauf (StoreKit 2, `Jelly/Core/Purchases.swift`, Angebot in `PaywallView`). Kaufsperre und IMDb-freie Bewertungen gibt es nur mit dem Build-Schalter `APPSTORE`, den `Scripts/release-appstore.sh` setzt; Builds aus dem Quellcode laufen ohne Sperre. Zum Testen der Oberfläche in Debug-Builds: `JELLY_ACCESS=none|trial|expired`.
+Die App-Store-Fassung wird mit einem Jahresabo freigeschaltet: 9,99 € pro Jahr, die ersten 2 Wochen gratis (StoreKit 2, `Jelly/Core/Purchases.swift`, Angebot mit allen Pflichtangaben für Abos in `PaywallView`). Kaufsperre und IMDb-freie Bewertungen gibt es nur mit dem Build-Schalter `APPSTORE`, den `Scripts/release-appstore.sh` setzt; Builds aus dem Quellcode laufen ohne Sperre. Zum Testen der Oberfläche in Debug-Builds: `JELLY_ACCESS=none|trial|active|expired`.
 
 Vorbereitung der Veröffentlichung – Lizenzen (AetherEngine und FFmpeg unter LGPL, ohne Lizenzkosten), Store-Texte, Review-Hinweise, Datenschutzerklärung und Upload-Skript (`Scripts/release-appstore.sh`): siehe [`AppStore/README.md`](AppStore/README.md). In der App: Einstellungen › Info › Open-Source-Lizenzen und Datenschutz.
 

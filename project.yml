@@ -44,6 +44,8 @@ targets:
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: true
         UIUserInterfaceStyle: Dark
+        # HTTPS only through Apple's URLSession, SHA-256 only for cache names: no non-exempt encryption.
+        ITSAppUsesNonExemptEncryption: false
         CFBundleDevelopmentRegion: de
         CFBundleLocalizations: [de]
         CFBundleURLTypes:

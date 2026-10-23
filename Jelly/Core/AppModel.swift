@@ -342,11 +342,11 @@ final class AppModel: ObservableObject {
         playback = PlaybackRequest(item: item, fromBeginning: fromBeginning, mediaSourceID: mediaSourceID)
     }
 
-    /// Right after the first sign-in, the App Store version presents its offer once; later playback asks again.
+    /// Right after the first sign-in, the App Store version presents its subscription offer once; later playback asks again.
     func offerTrialIfNeeded() async {
         guard purchases.isActive, session != nil, !UserDefaults.standard.bool(forKey: "trialOffered") else { return }
         for _ in 0..<20 where purchases.access == .checking { try? await Task.sleep(for: .milliseconds(250)) }
-        guard purchases.access == .notStarted else { return }
+        guard purchases.access == .notSubscribed else { return }
         UserDefaults.standard.set(true, forKey: "trialOffered")
         showsPaywall = true
     }

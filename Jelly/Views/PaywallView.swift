@@ -1,39 +1,39 @@
 import SwiftUI
+import CoreImage.CIFilterBuiltins
 
-/// The App Store version's offer. Before the trial starts it says how long it lasts, what stops working afterwards and
-/// what the full version costs, as App Review asks (Guideline 3.1.1); later it explains the remaining days or the end.
+/// The App Store version's offer: the yearly subscription with its free weeks. Before anything is bought it states
+/// what App Review asks for subscriptions (Guideline 3.1.2): name, length and price per period, the trial and what
+/// follows it, automatic renewal and how to cancel, plus the terms of use and the privacy policy.
 struct PaywallView: View {
     @EnvironmentObject private var purchases: Purchases
     @Environment(\.dismiss) private var dismiss
     @FocusState private var focused: Choice?
+    @State private var document: LegalDocument?
 
-    private enum Choice: Hashable { case trial, buy, restore, later }
+    private enum Choice: Hashable { case subscribe, restore, later, terms, privacy }
 
     var body: some View {
-        VStack(spacing: 26) {
-            AppMark(size: 100)
+        VStack(spacing: 28) {
+            AppMark(size: 110)
             Text(title).font(.system(size: 50, weight: .bold)).multilineTextAlignment(.center)
-            // The whole offer has to be readable before the trial starts: never truncated.
+            // The whole offer has to be readable before subscribing: never truncated.
             Text(explanation)
                 .font(.callout).foregroundStyle(.secondary).multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
-                .frame(maxWidth: 1150)
-            VStack(spacing: 18) {
-                if purchases.access == .notStarted {
-                    action("\(Access.trialDays) Tage kostenlos testen", icon: "gift", choice: .trial) {
-                        await purchases.startTrial()
+                .frame(maxWidth: 1250)
+            VStack(spacing: 16) {
+                if !purchases.access.isActive && purchases.access != .unlocked {
+                    Button { Task { await purchases.subscribe() } } label: {
+                        Label(subscribeTitle, systemImage: purchases.trialAvailable ? "gift" : "star").frame(width: 720)
                     }
-                }
-                if purchases.access != .unlocked {
-                    action("Vollversion kaufen – \(purchases.price)", icon: "lock.open", choice: .buy) {
-                        await purchases.buyFullVersion()
+                    .focused($focused, equals: .subscribe)
+                    Button { Task { await purchases.restore() } } label: {
+                        Label("Käufe wiederherstellen", systemImage: "arrow.clockwise").frame(width: 720)
                     }
-                    action("Käufe wiederherstellen", icon: "arrow.clockwise", choice: .restore) {
-                        await purchases.restore()
-                    }
+                    .focused($focused, equals: .restore)
                 }
                 Button { dismiss() } label: {
-                    Text(purchases.access.canPlay ? "Fertig" : "Später").frame(width: 640)
+                    Text(purchases.access.canPlay ? "Fertig" : "Später").frame(width: 720)
                 }
                 .focused($focused, equals: .later)
             }
@@ -44,15 +44,21 @@ struct PaywallView: View {
                 } else if let message = purchases.message {
                     Label(message, systemImage: "exclamationmark.circle").foregroundStyle(.orange)
                 } else {
-                    Text("Einmalig, kein Abo. Bezahlt wird über deine Apple-ID; der Kauf gilt auf allen Apple TVs mit dieser Apple-ID.")
+                    Text("Jelly Jahresabo · 1 Jahr · \(purchases.price) pro Jahr. Bezahlt wird über deine Apple-ID; das Abo gilt auf allen Apple TVs mit dieser Apple-ID. Kündigen: Apple-TV-Einstellungen › Benutzer und Accounts › Abonnements.")
                         .foregroundStyle(.secondary)
                 }
             }
             .font(.caption)
             .multilineTextAlignment(.center)
             .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: 1250)
+            HStack(spacing: 30) {
+                Button("Nutzungsbedingungen") { document = .terms }.focused($focused, equals: .terms)
+                Button("Datenschutz") { document = .privacy }.focused($focused, equals: .privacy)
+            }
+            .font(.caption)
         }
-        .padding(50)
+        .padding(60)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background {
             ZStack {
@@ -61,39 +67,97 @@ struct PaywallView: View {
             }
             .ignoresSafeArea()
         }
-        .defaultFocus($focused, purchases.access == .notStarted ? .trial : purchases.access == .unlocked ? .later : .buy)
+        .defaultFocus($focused, purchases.access.isActive || purchases.access == .unlocked ? .later : .subscribe)
         .onChange(of: purchases.access) { _, access in
-            // Started the trial or bought: straight back to where the viewer was.
-            if access == .unlocked || (access.canPlay && access != .checking) { dismiss() }
+            // Subscribed (trial included): straight back to where the viewer was.
+            if access.isActive { dismiss() }
         }
+        .sheet(item: $document) { LegalDocumentView(document: $0) }
     }
 
-    private func action(_ title: String, icon: String, choice: Choice, perform: @escaping () async -> Void) -> some View {
-        Button { Task { await perform() } } label: {
-            Label(title, systemImage: icon).frame(width: 640)
-        }
-        .focused($focused, equals: choice)
+    private var subscribeTitle: String {
+        purchases.trialAvailable
+            ? "\(Access.trialDays / 7) Wochen gratis, dann \(purchases.price) pro Jahr"
+            : "Jahresabo abschließen – \(purchases.price) pro Jahr"
     }
 
     private var title: String {
         switch purchases.access {
-        case .notStarted, .checking: return "Jelly \(Access.trialDays) Tage kostenlos testen"
-        case .trial(let days): return days == 1 ? "Noch 1 Tag Testzeitraum" : "Noch \(days) Tage Testzeitraum"
-        case .expired: return "Dein Testzeitraum ist abgelaufen"
-        case .unlocked: return "Danke! Jelly ist freigeschaltet"
+        case .notSubscribed, .checking: return purchases.trialAvailable ? "Jelly \(Access.trialDays / 7) Wochen kostenlos testen" : "Jelly Jahresabo"
+        case .trial(let days): return days == 1 ? "Noch 1 Tag kostenlos" : "Noch \(days) Tage kostenlos"
+        case .subscribed: return "Dein Jahresabo ist aktiv"
+        case .expired: return "Dein Abo ist abgelaufen"
+        case .unlocked: return "Jelly ist freigeschaltet"
         }
     }
 
     private var explanation: String {
+        let renewal = "Das Abo verlängert sich automatisch um ein Jahr für \(purchases.price), wenn du es nicht spätestens 24 Stunden vor Ablauf kündigst."
         switch purchases.access {
-        case .notStarted, .checking:
-            return "Probier alle Funktionen \(Access.trialDays) Tage lang kostenlos aus. Danach schaltest du die Vollversion mit einem einmaligen Kauf für \(purchases.price) frei – kein Abo. Ohne Vollversion spielt Jelly nach dem Test keine Filme und Serien mehr ab; deine Bibliothek und die Einstellungen bleiben erreichbar."
+        case .notSubscribed, .checking, .expired:
+            let start = purchases.trialAvailable
+                ? "Probier alle Funktionen \(Access.trialDays / 7) Wochen lang kostenlos aus. Danach kostet das Jelly Jahresabo \(purchases.price) pro Jahr. "
+                : "Mit dem Jelly Jahresabo für \(purchases.price) pro Jahr spielst du deine Filme und Serien ab. "
+            return start + renewal + " Ohne Abo spielt Jelly nichts ab; deine Bibliothek und die Einstellungen bleiben erreichbar."
         case .trial:
-            return "Bis zum Ende des Tests kannst du alles nutzen. Mit der Vollversion für einmalig \(purchases.price) läuft Jelly danach ohne Unterbrechung weiter – kein Abo."
-        case .expired:
-            return "Deine Bibliothek bleibt erreichbar, abspielen kannst du mit der Vollversion: einmalig \(purchases.price), kein Abo, für alle Apple TVs mit deiner Apple-ID."
+            return "Bis zum Ende des Probezeitraums ist alles kostenlos. Danach kostet das Jelly Jahresabo \(purchases.price) pro Jahr. " + renewal
+        case .subscribed:
+            return renewal
         case .unlocked:
             return "Viel Spaß mit deinen Filmen und Serien."
         }
+    }
+}
+
+/// Terms of use and privacy policy on a TV without a browser: the address, a QR code for the phone, and for the
+/// privacy policy the full text right here.
+enum LegalDocument: String, Identifiable {
+    case terms, privacy
+    var id: String { rawValue }
+}
+
+struct LegalDocumentView: View {
+    let document: LegalDocument
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                Text(document == .terms ? "Nutzungsbedingungen" : "Datenschutz").font(.title2.weight(.bold))
+                HStack(alignment: .top, spacing: 40) {
+                    QRCode(text: url).frame(width: 260, height: 260)
+                    ScrollableText(document == .terms
+                        ? "Für Jelly und das Jelly Jahresabo gilt die Standard-Lizenzvereinbarung von Apple für Apps aus dem App Store (EULA). Zum Lesen auf dem Handy den Code scannen oder die Adresse öffnen:\n\n\(url)"
+                        : "Die Datenschutzerklärung zum Lesen auf dem Handy: Code scannen oder die Adresse öffnen:\n\n\(url)\n\nDas Wichtigste steht auch hier darunter.",
+                                   font: .callout)
+                }
+                if document == .privacy { ScrollableText(PrivacyNoticeView.text, font: .callout) }
+            }
+            .frame(maxWidth: 1400, alignment: .leading)
+            .padding(60)
+            .frame(maxWidth: .infinity)
+        }
+        .background(Theme.background.ignoresSafeArea())
+    }
+
+    private var url: String { document == .terms ? AppInfo.termsURL : AppInfo.privacyURL }
+}
+
+/// A sharp QR code for an address, so it can be opened on a phone.
+struct QRCode: View {
+    let text: String
+
+    var body: some View {
+        if let image = Self.image(text) {
+            Image(decorative: image, scale: 1).interpolation(.none).resizable().scaledToFit()
+                .padding(14).background(.white, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+        }
+    }
+
+    private static func image(_ text: String) -> CGImage? {
+        let filter = CIFilter.qrCodeGenerator()
+        filter.message = Data(text.utf8)
+        filter.correctionLevel = "M"
+        guard let output = filter.outputImage?.transformed(by: CGAffineTransform(scaleX: 10, y: 10)) else { return nil }
+        return CIContext().createCGImage(output, from: output.extent)
     }
 }

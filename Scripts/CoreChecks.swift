@@ -121,14 +121,15 @@ struct CoreChecks {
                                          to: [URL(string: "https://jellyfin.example.com")!]))
         let wished = try JSONDecoder().decode(SeerrClient.Title.self, from: Data(#"{"id":603,"mediaType":"movie","title":"Matrix","releaseDate":"1999-03-31","posterPath":"/p.jpg","mediaInfo":{"status":5,"jellyfinMediaId":"abc"}}"#.utf8))
         precondition(wished.status == .available && wished.year == "1999" && wished.id == "movie-603")
-        // App Store version: 14 days to try, then the one-time purchase; a refund or a missing purchase locks playback.
-        let start = Date(timeIntervalSince1970: 1_800_000_000)
-        precondition(Access.state(trialStart: nil, purchased: false, now: start) == .notStarted)
-        precondition(Access.state(trialStart: start, purchased: false, now: start) == .trial(daysLeft: 14))
-        precondition(Access.state(trialStart: start, purchased: false, now: start.addingTimeInterval(13.5 * 86_400)) == .trial(daysLeft: 1))
-        precondition(Access.state(trialStart: start, purchased: false, now: start.addingTimeInterval(14 * 86_400)) == .expired)
-        precondition(Access.state(trialStart: start, purchased: true, now: start.addingTimeInterval(400 * 86_400)) == .unlocked)
-        precondition(!Access.expired.canPlay && !Access.notStarted.canPlay && Access.trial(daysLeft: 3).canPlay && Access.checking.canPlay)
-        print("Core checks passed: address detection, URL building, token handling, decoding, engine selection, Dolby Vision routing, HDR badges, audio language, IMDb dataset, intro detection, Jellyseerr, trial and purchase.")
+        // App Store version: yearly subscription with two free weeks; without an active subscription playback stops.
+        let now = Date(timeIntervalSince1970: 1_800_000_000)
+        precondition(Access.state(entitled: false, trialEnds: nil, everSubscribed: false, now: now) == .notSubscribed)
+        precondition(Access.state(entitled: true, trialEnds: now.addingTimeInterval(14 * 86_400), everSubscribed: true, now: now) == .trial(daysLeft: 14))
+        precondition(Access.state(entitled: true, trialEnds: now.addingTimeInterval(0.4 * 86_400), everSubscribed: true, now: now) == .trial(daysLeft: 1))
+        precondition(Access.state(entitled: true, trialEnds: now.addingTimeInterval(-60), everSubscribed: true, now: now) == .subscribed)
+        precondition(Access.state(entitled: true, trialEnds: nil, everSubscribed: true, now: now) == .subscribed)
+        precondition(Access.state(entitled: false, trialEnds: nil, everSubscribed: true, now: now) == .expired)
+        precondition(!Access.expired.canPlay && !Access.notSubscribed.canPlay && Access.trial(daysLeft: 3).canPlay && Access.subscribed.canPlay && Access.checking.canPlay)
+        print("Core checks passed: address detection, URL building, token handling, decoding, engine selection, Dolby Vision routing, HDR badges, audio language, IMDb dataset, intro detection, Jellyseerr, subscription and trial.")
     }
 }

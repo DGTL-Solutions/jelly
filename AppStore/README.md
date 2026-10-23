@@ -14,31 +14,29 @@ Jelly spielt seit dem 23.10.2026 mit **AetherEngine** statt KSPlayer (KSPlayer h
 | libass, FreeType, HarfBuzz, libunibreak | ISC, FTL, MIT, zlib | Hinweise in der App (erledigt) |
 | GNU FriBidi (für libass) | LGPL-2.1 | steckt statisch in der App-Binärdatei; erfüllt, weil Jellys Quellcode offen ist (MPL-2.0, https://github.com/DGTL-Solutions/jelly) und jeder die App mit einer geänderten FriBidi neu bauen kann |
 
-## 1a. Preis: 14 Tage testen, dann einmalig 9,99 €
+## 1a. Preis: Jahresabo 9,99 € mit 2 Wochen gratis
 
-So sieht Apple einen Testzeitraum ohne Abo vor (App Review Guideline 3.1.1): Die App ist **gratis**, ein **kostenloser In-App-Kauf „14-Tage-Test“** startet den Test, ein **In-App-Kauf „Vollversion“ für 9,99 €** schaltet dauerhaft frei. Apple speichert das Startdatum an der Apple-ID – Neuinstallieren verlängert nichts, ein Kauf gilt auf allen Apple TVs dieser Apple-ID. Nach dem Test bleiben Bibliothek und Einstellungen offen, nur das Abspielen verlangt die Vollversion.
+Die App ist **gratis**, freigeschaltet wird sie mit dem **automatisch verlängerten Jahresabo „Jelly Jahresabo“ für 9,99 € pro Jahr**; neue Abonnenten bekommen als Einführungsangebot **2 Wochen gratis**. Das Abo gehört zur Apple-ID: ein Abo gilt auf allen Apple TVs dieser Apple-ID, Neuinstallieren gibt keinen neuen Probezeitraum, gekündigt wird in den Apple-TV-Einstellungen (Benutzer und Accounts › Abonnements). Ohne Abo bleiben Bibliothek und Einstellungen offen, nur das Abspielen verlangt das Abo.
 
 In der App fertig (nur im App-Store-Build mit dem Schalter `APPSTORE`, den `Scripts/release-appstore.sh` setzt):
-- Angebot nach der ersten Anmeldung und bei jedem Abspielen ohne Test/Kauf; es nennt vor dem Start Dauer, Preis und was danach gesperrt ist (Screenshot für die Prüfung: `screenshots/iap-review-angebot.png`).
-- Einstellungen › Vollversion: Status, Kaufen, **Käufe wiederherstellen** (Pflicht bei dauerhaften Käufen).
-- StoreKit 2 mit Apples signierten Transaktionen, Erstattungen sperren wieder, Käufe von anderen Geräten und „Kaufen anfragen“ kommen automatisch an.
+- Angebot nach der ersten Anmeldung und bei jedem Abspielen ohne Abo, mit allem, was Apple für Abos verlangt (Richtlinie 3.1.2): Name, Laufzeit, Preis pro Jahr, Probezeit und was danach passiert, automatische Verlängerung und Kündigung bis 24 h vor Ablauf, wo man kündigt, **Nutzungsbedingungen** (Apples Standard-EULA) und **Datenschutz** – auf dem Fernseher ohne Browser als Adresse mit QR-Code, den Datenschutz zusätzlich als Text (Screenshot für die Prüfung: `screenshots/iap-review-angebot.png`).
+- Einstellungen › Jahresabo: Status (Probezeit mit Resttagen, aktiv, abgelaufen), Abo abschließen, **Käufe wiederherstellen**.
+- StoreKit 2 mit Apples signierten Transaktionen: Verlängerungen, Kündigungen, Erstattungen, Kulanzfrist bei Zahlungsproblemen und Käufe von anderen Geräten kommen automatisch an.
 - Ohne `APPSTORE` (eigene Builds, Quellcode) gibt es keine Sperre.
 
 In App Store Connect zu tun:
-1. **Verträge:** Business › „Vereinbarung für kostenpflichtige Apps“ annehmen, Bank- und Steuerdaten hinterlegen. Ohne sie lassen sich keine In-App-Käufe verkaufen. Tipp: **Small Business Program** beantragen – dann behält Apple 15 % statt 30 %.
-2. **EU-Händlerstatus (DSA):** als Händler eintragen; Anschrift, Telefon und E-Mail erscheinen dann öffentlich im App Store (Pflicht für Bezahlangebote in der EU).
-3. **Impressum** auf der Support-Seite (geschäftsmäßiges Angebot, § 5 DDG).
-4. **In-App-Käufe anlegen** (App › Monetarisierung › In-App-Käufe), beide Typ **Nicht verbrauchbar**:
+1. **Verträge:** Business › „Vereinbarung für kostenpflichtige Apps“ annehmen, Bank- und Steuerdaten hinterlegen – ohne sie lassen sich keine Abos verkaufen. Tipp: **Small Business Program** beantragen – dann behält Apple 15 % statt 30 %.
+2. **EU-Händlerstatus (DSA):** als Händler eintragen; Anschrift, Telefon und E-Mail erscheinen öffentlich im App Store.
+3. **Impressum und Datenschutz** veröffentlichen (Vorlage in `docs/`, wird als GitHub-Pages-Seite von `DGTL-Solutions/jelly` veröffentlicht; die Datenschutz-Adresse `https://dgtl-solutions.github.io/jelly/datenschutz/` steht schon in der App).
+4. **Abo anlegen** (App › Monetarisierung › Abonnements):
+   - Abo-Gruppe „Jelly“ (Anzeigename de: „Jelly“)
+   - Abo: Referenzname „Jelly Jahresabo“, Produkt-ID **`net.dgtl24.jelly.yearly`** (= Bundle-ID + `.yearly`), Dauer **1 Jahr**, Preis **9,99 €** (Basisland Deutschland, andere Länder automatisch), Anzeigename „Jelly Jahresabo“, Beschreibung „Alle Funktionen von Jelly, ein Jahr lang“, Familienfreigabe nach Wunsch
+   - Einführungsangebot: **Gratis-Testzeitraum, 2 Wochen**, alle Länder, für neue Abonnenten
+   - Review-Screenshot hochladen und das Abo **mit der ersten App-Version** zur Prüfung einreichen
+5. **App-Preis:** Gratis. **App-Datenschutz** bleibt „Keine Daten erfasst“ – das Abo wickelt Apple ab, Jelly gibt nichts weiter.
+6. **Lizenzvereinbarung:** Apples Standard-EULA belassen; der Link steht in App und Beschreibung.
 
-   | Produkt-ID | Referenzname | Preis | Anzeigename | Beschreibung |
-   | --- | --- | --- | --- | --- |
-   | `net.dgtl24.jelly.trial14` | 14-day Trial | 0,00 € (Gratis) | 14-Tage-Test | Alle Funktionen 14 Tage kostenlos testen |
-   | `net.dgtl24.jelly.full` | Jelly Vollversion | 9,99 € | Jelly Vollversion | Jelly dauerhaft freischalten – einmalig, kein Abo |
-
-   Die Produkt-IDs bildet die App aus der Bundle-ID (`<Bundle-ID>.trial14` / `.full`) – ändert sich die Bundle-ID, ändern sich die IDs mit. Für die Vollversion „Familienfreigabe“ einschalten, wenn die Familie mitnutzen soll. Je Kauf den Review-Screenshot hochladen und beide **mit der ersten App-Version** zur Prüfung einreichen.
-5. **App-Preis:** Gratis. **App-Datenschutz** bleibt „Keine Daten erfasst“ – Käufe wickelt Apple ab, Jelly gibt nichts weiter.
-
-Rechtliches, kurz: Apple ist beim Verkauf im App Store in der EU Wiederverkäufer, führt die Umsatzsteuer ab und übernimmt Widerruf und Erstattungen. Die Lizenzen der eingebauten Software erlauben den Verkauf (LGPL/MPL verbieten keine Preise). Geändert für den Verkauf: IMDb-Daten (nur nicht-kommerziell frei) und der Name „Rotten Tomatoes“ sind in der App-Store-Fassung entfernt; Bewertungen kommen vom Jellyfin-Server des Nutzers. Bleibende Restrisiken, die jede Mediaplayer-App trägt: Codec-Patente (H.264/HEVC laufen über Apples lizenzierte Hardware-Decoder, MPEG-2- und AC-3-Patente sind abgelaufen) und – wegen des offenen Quellcodes – Nachbauten: MPL erlaubt Weitergabe, aber nicht Name und Symbol; die Marke „Jelly“ ließe sich schützen. Das ersetzt keine Rechtsberatung.
+Rechtliches, kurz: Apple ist beim Verkauf im App Store in der EU Wiederverkäufer, führt die Umsatzsteuer ab und übernimmt Widerruf, Kündigung und Erstattungen. Die Lizenzen der eingebauten Software erlauben den Verkauf (LGPL/MPL verbieten keine Preise). Für den Verkauf entfernt: IMDb-Daten (nur nicht-kommerziell frei) und der Name „Rotten Tomatoes“; die App-Store-Fassung zeigt Bewertungen vom Jellyfin-Server des Nutzers. Abos verlangt Apple für Apps mit fortlaufendem Nutzen (Richtlinie 3.1.2) – bei einem gepflegten Mediaplayer mit Updates üblich (wie Infuse oder Plex), ein Restrisiko bei der Prüfung bleibt. Weitere Restrisiken jeder Mediaplayer-App: Codec-Patente (H.264/HEVC laufen über Apples lizenzierte Hardware-Decoder, MPEG-2- und AC-3-Patente sind abgelaufen) und – wegen des offenen Quellcodes – Nachbauten: MPL erlaubt Weitergabe, aber nicht Name und Symbol. Das ersetzt keine Rechtsberatung.
 
 ## 2. Weitere Entscheidungen
 
@@ -52,10 +50,10 @@ Rechtliches, kurz: Apple ist beim Verkauf im App Store in der EU Wiederverkäufe
 ## 3. Im Browser (App Store Connect)
 
 1. **App anlegen** (Apps › + › Neue App): Plattform tvOS, Name, Primärsprache Deutsch, Bundle-ID `net.dgtl24.jelly`, SKU z. B. `jelly-tvos`. Die API kann keine Apps anlegen.
-2. **Datenschutzerklärung und Support-Seite** veröffentlichen (Vorlage: `privacy-policy.md`, Platzhalter ausfüllen) und die URLs in `metadata/de-DE/privacy_url.txt` und `support_url.txt` eintragen.
+2. **Datenschutzerklärung und Support-Seite mit Impressum:** liegen in `docs/` und erscheinen per GitHub Pages unter `https://dgtl-solutions.github.io/jelly/datenschutz/` und `/support/` (stehen schon in `metadata/de-DE/` und in der App); vorher die Platzhalter ausfüllen.
 3. **App-Datenschutz:** „Es werden keine Daten erfasst“ (Jelly sendet nur an die Server des Nutzers; Privacy Manifest liegt bei).
 4. **Altersfreigabe:** Alle Fragen zu Inhalten mit „Keine“ beantworten (Jelly hat keine eigenen Inhalte); bei „Uneingeschränkter Webzugriff“ Nein. Apple kann für Mediaplayer, die beliebige Inhalte abspielen, trotzdem eine höhere Stufe verlangen.
-5. **Kategorie:** Unterhaltung. **Preis:** Gratis, freigeschaltet wird per In-App-Kauf (siehe 1a).
+5. **Kategorie:** Unterhaltung. **Preis:** Gratis, freigeschaltet wird per Jahresabo (siehe 1a).
 6. **Texte** aus `metadata/de-DE/`, **Review-Hinweise** aus `review-notes.txt` (Demo-Server `demo.jellyfin.org/stable`, Konto „demo“ ohne Passwort – getestet am 23.10.2026: 11 frei lizenzierte Filme, kein Admin).
 7. **Screenshots:** 1920×1080 oder 3840×2160, 1–10 Stück. Am besten im Simulator mit dem Demo-Server – dessen Filme (Caminandes, Dracula …) sind frei lizenziert, fremde Filmplakate könnten in der Prüfung abgelehnt werden.
 
