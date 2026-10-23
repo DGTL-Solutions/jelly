@@ -55,6 +55,8 @@ else
   }
   entitlements "$WORK/app.plist" "$BUNDLE_ID"
   entitlements "$WORK/topshelf.plist" "$BUNDLE_ID.topshelf"
+  # Prebuilt frameworks (AetherEngine's FFmpeg) arrive read-only; rcodesign signs in place.
+  chmod -R u+w "$APP"
   keys=(--pem-file "$SIGNING_CERT_DIR/dev.key" --pem-file "$SIGNING_CERT_DIR/dev.pem")
   # Inside out: frameworks, then the extension with its own profile, then the app itself.
   for item in "$APP"/Frameworks/*(N) "$APP"/PlugIns/*.appex/Frameworks/*(N); do "$RCODESIGN" sign "${keys[@]}" "$item" >/dev/null 2>&1; done
