@@ -94,6 +94,7 @@ struct LibraryGridView: View {
                 } else if items.isEmpty && !loading {
                     ContentUnavailableView(filter == .all ? "Keine Titel" : "Keine Treffer", systemImage: "film.stack",
                                            description: Text(filter == .all ? "Diese Bibliothek ist leer." : "Für diesen Filter gibt es keine Titel."))
+                        .frame(maxWidth: .infinity)
                 } else {
                     LazyVGrid(columns: columns, alignment: .leading, spacing: 56) {
                         ForEach(items) { item in
@@ -150,9 +151,10 @@ struct SearchView: View {
                 if query.isEmpty {
                     ContentUnavailableView("Suche", systemImage: "magnifyingglass",
                                            description: Text("Finde Filme, Serien und Folgen in deiner Mediathek."))
+                        .frame(maxWidth: .infinity)
                         .padding(.top, 120)
                 } else if results.isEmpty && !searching {
-                    ContentUnavailableView.search(text: query).padding(.top, 120)
+                    ContentUnavailableView.search(text: query).frame(maxWidth: .infinity).padding(.top, 120)
                 }
                 if !movies.isEmpty { Shelf(title: "Filme", items: movies) { MediaCard(item: $0, style: .poster, width: 230) } }
                 if !series.isEmpty { Shelf(title: "Serien", items: series) { MediaCard(item: $0, style: .poster, width: 230) } }

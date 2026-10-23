@@ -318,6 +318,7 @@ struct ErrorView: View {
         } actions: {
             if let retry { Button("Erneut versuchen", action: retry) }
         }
+        .frame(maxWidth: .infinity)
     }
 }
 
