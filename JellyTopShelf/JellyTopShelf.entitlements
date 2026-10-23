@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Shared with the Top Shelf extension, which reads the active profile. Device builds get the same group from
+	     Scripts/install-appletv.sh and Scripts/release-appstore.sh. -->
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)$(JELLY_BUNDLE_ID)</string>
+	</array>
+</dict>
+</plist>

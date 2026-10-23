@@ -374,7 +374,12 @@ final class AppModel: ObservableObject {
         guard url.scheme == "jelly", let action = url.host(), let id = url.pathComponents.dropFirst().first,
               let client, let session, let item = try? await client.item(user: session.userID, id: id) else { return }
         choosingProfile = false
-        if action == "play" { play(item) } else { pendingOpen = item }
+        if action == "play" {
+            // A series from "Neu in deiner Mediathek" starts with its next episode.
+            if item.isSeries { await playSeries(item) } else { play(item) }
+        } else {
+            pendingOpen = item
+        }
     }
 
     #if DEBUG

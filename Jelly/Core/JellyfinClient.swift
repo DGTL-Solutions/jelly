@@ -139,15 +139,18 @@ struct JellyfinClient: Sendable {
         return page.items
     }
 
-    func resume(user: String, limit: Int = 16) async throws -> [BaseItem] {
-        let page: ItemsResponse = try await get("UserItems/Resume", legacy: "Users/\(user)/Items/Resume",
-                                                query: listQuery(user, ["Limit": "\(limit)", "MediaTypes": "Video"]))
+    /// `fields` replaces the usual list fields, e.g. to add MediaSources for quality badges.
+    func resume(user: String, limit: Int = 16, fields: String? = nil) async throws -> [BaseItem] {
+        var query = listQuery(user, ["Limit": "\(limit)", "MediaTypes": "Video"])
+        if let fields { query["Fields"] = fields }
+        let page: ItemsResponse = try await get("UserItems/Resume", legacy: "Users/\(user)/Items/Resume", query: query)
         return page.items
     }
 
-    func nextUp(user: String, seriesID: String? = nil, limit: Int = 16) async throws -> [BaseItem] {
+    func nextUp(user: String, seriesID: String? = nil, limit: Int = 16, fields: String? = nil) async throws -> [BaseItem] {
         var query = listQuery(user, ["Limit": "\(limit)", "EnableResumable": "false"])
         if let seriesID { query["SeriesId"] = seriesID }
+        if let fields { query["Fields"] = fields }
         let page: ItemsResponse = try await get("Shows/NextUp", query: query)
         return page.items
     }
