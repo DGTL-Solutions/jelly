@@ -121,6 +121,27 @@ struct CoreChecks {
                                          to: [URL(string: "https://jellyfin.example.com")!]))
         let wished = try JSONDecoder().decode(SeerrClient.Title.self, from: Data(#"{"id":603,"mediaType":"movie","title":"Matrix","releaseDate":"1999-03-31","posterPath":"/p.jpg","mediaInfo":{"status":5,"jellyfinMediaId":"abc"}}"#.utf8))
         precondition(wished.status == .available && wished.year == "1999" && wished.id == "movie-603")
+        precondition(wished.download == nil && !(wished.mediaInfo?.isLoading ?? true))
+        // Download progress from Jellyseerr's tracker: a season pack counts once, the slowest running download sets the time.
+        let loading = try JSONDecoder().decode(SeerrClient.Title.self, from: Data(#"""
+            {"id":1399,"mediaType":"tv","name":"Game of Thrones","mediaInfo":{"status":3,"downloadStatus":[
+             {"size":4000,"sizeLeft":1000,"status":"downloading","timeLeft":"00:10:00","estimatedCompletionTime":"2027-01-15T08:10:00.000Z","downloadId":"A","episode":{"seasonNumber":1,"episodeNumber":2}},
+             {"size":4000,"sizeLeft":1000,"status":"downloading","timeLeft":"00:10:00","estimatedCompletionTime":"2027-01-15T08:10:00.000Z","downloadId":"A","episode":{"seasonNumber":1,"episodeNumber":1}},
+             {"size":2000,"sizeLeft":2000,"status":"queued","timeLeft":null,"estimatedCompletionTime":null,"downloadId":"B","episode":{"seasonNumber":2,"episodeNumber":1}}],
+             "downloadStatus4k":[]}}
+            """#.utf8))
+        let clock = try Date.ISO8601FormatStyle().parse("2027-01-15T08:00:00Z")
+        let progress = DownloadProgress(loading.mediaInfo!.downloads, now: clock)!
+        precondition(loading.mediaInfo!.isLoading && progress.phase == .downloading && progress.percent == "50 %", "\(progress)")
+        precondition(progress.remaining == 600 && progress.cardText == "50 % · noch 10 Min.", "\(progress)")
+        precondition(progress.parts.map(\.label) == ["S1 E1", "S1 E2", "S2 E1"] && progress.parts[0].fraction == 0.75 && progress.parts[2].phase == .queued)
+        precondition(DownloadProgress([.init(size: 100, sizeLeft: 0, status: "completed")])?.summary == "Wird importiert")
+        precondition(DownloadProgress([.init(size: 100, sizeLeft: 60, status: "paused")])?.cardText == "Pausiert · 40 %")
+        precondition(DownloadProgress([.init(size: 100, sizeLeft: 60, status: "warning")])?.phase == .stalled)
+        precondition(DownloadProgress([.init(size: 100, sizeLeft: 60, status: "downloading", timeLeft: "1.02:00:00")])?.remaining == 93_600)
+        precondition(DownloadProgress.seconds("00:12:34.5") == 754.5 && DownloadProgress.seconds("00:00:00") == nil && DownloadProgress([]) == nil)
+        let request = try JSONDecoder().decode(SeerrClient.Request.self, from: Data(#"{"id":7,"status":2,"media":{"tmdbId":603,"mediaType":"movie","status":3,"downloadStatus":[{"size":10,"sizeLeft":5,"status":"downloading"}]}}"#.utf8))
+        precondition(request.media?.key == "movie-603" && request.media?.info.download?.percent == "50 %")
         // App Store version: yearly subscription with two free weeks; without an active subscription playback stops.
         let now = Date(timeIntervalSince1970: 1_800_000_000)
         precondition(Access.state(entitled: false, trialEnds: nil, everSubscribed: false, now: now) == .notSubscribed)
@@ -130,6 +151,6 @@ struct CoreChecks {
         precondition(Access.state(entitled: true, trialEnds: nil, everSubscribed: true, now: now) == .subscribed)
         precondition(Access.state(entitled: false, trialEnds: nil, everSubscribed: true, now: now) == .expired)
         precondition(!Access.expired.canPlay && !Access.notSubscribed.canPlay && Access.trial(daysLeft: 3).canPlay && Access.subscribed.canPlay && Access.checking.canPlay)
-        print("Core checks passed: address detection, URL building, token handling, decoding, engine selection, Dolby Vision routing, HDR badges, audio language, IMDb dataset, intro detection, Jellyseerr, subscription and trial.")
+        print("Core checks passed: address detection, URL building, token handling, decoding, engine selection, Dolby Vision routing, HDR badges, audio language, IMDb dataset, intro detection, Jellyseerr, download progress, subscription and trial.")
     }
 }

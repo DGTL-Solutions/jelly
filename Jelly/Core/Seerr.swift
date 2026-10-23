@@ -45,6 +45,32 @@ struct SeerrClient: Sendable {
         var status: Int?
         var jellyfinMediaId: String?
         var seasons: [Season]?
+        var downloadStatus: [Download]?
+        var downloadStatus4k: [Download]?
+
+        /// Everything Radarr or Sonarr is fetching for the title right now, in either quality.
+        var downloads: [Download] { (downloadStatus ?? []) + (downloadStatus4k ?? []) }
+        var download: DownloadProgress? { DownloadProgress(downloads) }
+        /// Approved and not complete yet: being downloaded, or waiting for Radarr or Sonarr to find it.
+        var isLoading: Bool { !downloads.isEmpty || status == 3 }
+    }
+
+    /// A file Radarr or Sonarr is fetching for a title, as Jellyseerr's download tracker reports it once a minute.
+    struct Download: Decodable, Hashable {
+        struct Episode: Decodable, Hashable {
+            var seasonNumber: Int
+            var episodeNumber: Int
+        }
+        var size: Double?
+        var sizeLeft: Double?
+        /// Radarr's or Sonarr's queue state: downloading, queued, paused, completed, delay, failed, warning …
+        var status: String?
+        /// "hh:mm:ss" or "d.hh:mm:ss".
+        var timeLeft: String?
+        var estimatedCompletionTime: String?
+        /// Shared by the episodes of one season pack.
+        var downloadId: String?
+        var episode: Episode?
     }
 
     /// A film or series from TMDB as Jellyseerr knows it. TMDB numbers films and series separately.
@@ -70,6 +96,7 @@ struct SeerrClient: Sendable {
         var displayTitle: String { title ?? name ?? "" }
         var year: String? { (releaseDate ?? firstAirDate).flatMap { $0.count >= 4 ? String($0.prefix(4)) : nil } }
         var status: SeerrStatus { SeerrStatus(mediaInfo?.status) }
+        var download: DownloadProgress? { mediaInfo?.download }
         var poster: URL? { posterPath.flatMap { URL(string: "https://image.tmdb.org/t/p/w342\($0)") } }
         var backdrop: URL? { backdropPath.flatMap { URL(string: "https://image.tmdb.org/t/p/w1280\($0)") } }
     }
@@ -103,7 +130,20 @@ struct SeerrClient: Sendable {
         struct Media: Decodable {
             var tmdbId: Int
             var mediaType: String
-            var status: Int?
+            /// Status and downloads, as fresh as on the title's own page.
+            var info: MediaInfo
+
+            enum CodingKeys: String, CodingKey { case tmdbId, mediaType }
+
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                tmdbId = try container.decode(Int.self, forKey: .tmdbId)
+                mediaType = try container.decode(String.self, forKey: .mediaType)
+                info = try MediaInfo(from: decoder)
+            }
+
+            /// Same as the `id` of the matching `Title`.
+            var key: String { "\(mediaType)-\(tmdbId)" }
         }
         var id: Int
         var status: Int
@@ -236,10 +276,18 @@ struct SeerrClient: Sendable {
         return (try? JSONDecoder().decode(Request.self, from: data))?.status ?? 1
     }
 
+    private struct Requests: Decodable { var results: [Request] }
+
     /// The signed-in user's latest requests, newest first.
     func myRequests(userID: Int) async throws -> [Request] {
-        struct Response: Decodable { var results: [Request] }
-        let response: Response = try await get("request", query: "take=20&skip=0&sort=added&filter=all&requestedBy=\(userID)")
+        let response: Requests = try await get("request", query: "take=20&skip=0&sort=added&filter=all&requestedBy=\(userID)")
+        return response.results
+    }
+
+    /// Approved wishes that aren't complete yet, most recently changed first: the whole household's for accounts that
+    /// may see all requests, otherwise the user's own (Jellyseerr decides).
+    func approvedRequests() async throws -> [Request] {
+        let response: Requests = try await get("request", query: "take=30&skip=0&sort=modified&filter=processing")
         return response.results
     }
 
@@ -346,6 +394,117 @@ enum SeerrStatus: Equatable {
         case .partial: "circle.lefthalf.filled"
         case .available: "checkmark"
         }
+    }
+}
+
+/// How far the downloads of one title are, summed up for a card or the title's page.
+struct DownloadProgress: Equatable {
+    enum Phase: Equatable {
+        case downloading, queued, paused, importing, stalled
+
+        init(_ status: String?, done: Bool) {
+            switch status?.lowercased() {
+            case "downloading": self = .downloading
+            case "paused": self = .paused
+            case "queued", "delay": self = .queued
+            case "completed": self = .importing
+            case "failed", "warning", "downloadclientunavailable": self = .stalled
+            default: self = done ? .importing : .downloading
+            }
+        }
+    }
+
+    /// One download; for series an episode ("S1 E3"), for films without a label.
+    struct Part: Equatable {
+        var label: String?
+        var fraction: Double
+        var phase: Phase
+    }
+
+    var phase: Phase
+    /// Share of all bytes already there, 0…1.
+    var fraction: Double
+    /// Seconds until the last running download is done, when the download client can tell.
+    var remaining: TimeInterval?
+    var parts: [Part]
+
+    init?(_ downloads: [SeerrClient.Download], now: Date = Date()) {
+        guard !downloads.isEmpty else { return nil }
+        func share(of download: SeerrClient.Download) -> Double {
+            guard let size = download.size, size > 0 else { return 0 }
+            return (size - min(max(download.sizeLeft ?? size, 0), size)) / size
+        }
+        func state(of download: SeerrClient.Download) -> Phase {
+            Phase(download.status, done: download.sizeLeft == 0 && (download.size ?? 0) > 0)
+        }
+        // The episodes of a season pack each list the whole pack: count every download once.
+        var counted = Set<String>(), total = 0.0, left = 0.0
+        for (index, download) in downloads.enumerated() where counted.insert(download.downloadId ?? "#\(index)").inserted {
+            let size = max(download.size ?? 0, 0)
+            total += size
+            left += min(max(download.sizeLeft ?? size, 0), size)
+        }
+        self.fraction = total > 0 ? (total - left) / total : 0
+
+        let phases = downloads.map(state(of:))
+        phase = [Phase.downloading, .stalled, .paused, .queued].first { phases.contains($0) } ?? .importing
+
+        remaining = downloads.filter { state(of: $0) == .downloading }.compactMap { download -> TimeInterval? in
+            if let text = download.estimatedCompletionTime, let date = Self.date(text) {
+                let seconds = date.timeIntervalSince(now)
+                if seconds > 0 { return seconds }
+            }
+            return download.timeLeft.flatMap(Self.seconds)
+        }.max()
+
+        parts = downloads.sorted {
+            ($0.episode?.seasonNumber ?? 0, $0.episode?.episodeNumber ?? 0) < ($1.episode?.seasonNumber ?? 0, $1.episode?.episodeNumber ?? 0)
+        }.map { download in
+            Part(label: download.episode.map { "S\($0.seasonNumber) E\($0.episodeNumber)" }, fraction: share(of: download), phase: state(of: download))
+        }
+    }
+
+    /// "42 %", rounded down so 100 % only shows once everything is there.
+    static func percent(_ fraction: Double) -> String { "\(Int((fraction * 100).rounded(.down))) %" }
+    var percent: String { Self.percent(fraction) }
+
+    /// The state in a few words: "Lädt · 42 %", "In der Warteschlange" …
+    var summary: String {
+        switch phase {
+        case .downloading: "Lädt · \(percent)"
+        case .queued: "In der Warteschlange"
+        case .paused: "Pausiert · \(percent)"
+        case .importing: "Wird importiert"
+        case .stalled: "Download hängt · \(percent)"
+        }
+    }
+
+    var remainingText: String? {
+        guard phase == .downloading, let remaining else { return nil }
+        return remaining < 60 ? "gleich fertig" : "noch \(Format.duration(remaining))"
+    }
+
+    /// The line under a poster: "42 % · noch 12 Min.", or the state when nothing is running.
+    var cardText: String {
+        guard phase == .downloading else { return summary }
+        return remainingText.map { "\(percent) · \($0)" } ?? summary
+    }
+
+    static func date(_ text: String) -> Date? {
+        (try? Date.ISO8601FormatStyle(includingFractionalSeconds: true).parse(text)) ?? (try? Date.ISO8601FormatStyle().parse(text))
+    }
+
+    /// Radarr's and Sonarr's "hh:mm:ss" or "d.hh:mm:ss", seconds possibly with a fraction.
+    static func seconds(_ text: String) -> TimeInterval? {
+        var clock = Substring(text), days: Double? = 0
+        if let dot = text.firstIndex(of: "."), let colon = text.firstIndex(of: ":"), dot < colon {
+            days = Double(text[..<dot])
+            clock = text[text.index(after: dot)...]
+        }
+        let parts = clock.split(separator: ":").map { Double($0) }
+        guard let days, parts.count == 3, let h = parts[0], let m = parts[1], let s = parts[2] else { return nil }
+        let total = days * 86_400 + h * 3600 + m * 60 + s
+        return total > 0 ? total : nil
     }
 }
 
