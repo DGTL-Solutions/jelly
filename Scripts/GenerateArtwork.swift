@@ -22,7 +22,7 @@ func background(_ rect: CGRect) {
     // Soft "jelly" bubbles for depth behind the parallax front layer.
     for (x, y, r, a) in [(0.18, 0.85, 0.55, 0.16), (0.9, 0.1, 0.5, 0.12), (0.75, 0.95, 0.25, 0.10)] as [(CGFloat, CGFloat, CGFloat, CGFloat)] {
         let radius = rect.height * r
-        let center = CGPoint(x: rect.width * x, y: rect.height * y)
+        let center = CGPoint(x: rect.minX + rect.width * x, y: rect.minY + rect.height * y)
         NSGradient(starting: NSColor.white.withAlphaComponent(a), ending: NSColor.white.withAlphaComponent(0))!
             .draw(fromCenter: center, radius: 0, toCenter: center, radius: radius, options: [])
     }
@@ -76,31 +76,92 @@ func imageset(_ dir: URL, base: String, sizes: [(Int, Int, String)], draw: @esca
     json(["images": images, "info": info], dir.appendingPathComponent("Contents.json"))
 }
 
+/// The glossy "jelly" drop between background and play mark: a third layer, so the focused icon tilts with depth.
+func jellyDrop(_ rect: CGRect) {
+    let size = rect.height * 0.62
+    let drop = NSBezierPath(roundedRect: CGRect(x: rect.midX - size / 2, y: rect.midY - size / 2, width: size, height: size),
+                            xRadius: size * 0.32, yRadius: size * 0.32)
+    let shadow = NSShadow()
+    shadow.shadowColor = NSColor(calibratedRed: 0.12, green: 0.05, blue: 0.35, alpha: 0.45)
+    shadow.shadowBlurRadius = size * 0.12
+    shadow.shadowOffset = NSSize(width: 0, height: -size * 0.05)
+    NSGraphicsContext.saveGraphicsState()
+    shadow.set()
+    NSColor.white.withAlphaComponent(0.16).setFill()
+    drop.fill()
+    NSGraphicsContext.restoreGraphicsState()
+    // Light from above, like on glass.
+    NSGradient(starting: NSColor.white.withAlphaComponent(0.34), ending: NSColor.white.withAlphaComponent(0.02))!.draw(in: drop, angle: -90)
+    NSColor.white.withAlphaComponent(0.35).setStroke()
+    drop.lineWidth = size * 0.012
+    drop.stroke()
+}
+
 func imagestack(_ name: String, sizes: [(Int, Int, String)]) {
     let stack = brand.appendingPathComponent("\(name).imagestack")
-    json(["info": info, "layers": [["filename": "Front.imagestacklayer"], ["filename": "Back.imagestacklayer"]]],
-         stack.appendingPathComponent("Contents.json"))
-    for layer in ["Front", "Back"] {
+    let layers = ["Front", "Middle", "Back"]
+    json(["info": info, "layers": layers.map { ["filename": "\($0).imagestacklayer"] }], stack.appendingPathComponent("Contents.json"))
+    for layer in layers {
         let dir = stack.appendingPathComponent("\(layer).imagestacklayer")
         json(["info": info], dir.appendingPathComponent("Contents.json"))
         imageset(dir.appendingPathComponent("Content.imageset"), base: layer.lowercased(), sizes: sizes) { rect in
-            if layer == "Back" { background(rect) } else { playMark(center: CGPoint(x: rect.midX, y: rect.midY), height: rect.height * 0.42) }
+            switch layer {
+            case "Back": background(rect)
+            case "Middle": jellyDrop(rect)
+            default: playMark(center: CGPoint(x: rect.midX + rect.height * 0.025, y: rect.midY), height: rect.height * 0.3)
+            }
         }
     }
 }
 
+/// The static Top Shelf, shown when nobody is signed in or there is nothing to continue. tvOS shows it full-screen,
+/// crops it to the middle 1920 points and fills above and below with a blurred mirror image; the Dock covers the lower
+/// part. So: calm, dark edges and everything that matters in the middle, a little above centre.
 func topShelf(_ rect: CGRect) {
-    background(rect)
     let h = rect.height
-    playMark(center: CGPoint(x: h * 0.42, y: rect.midY), height: h * 0.3)
+    NSGradient(colors: [NSColor(calibratedRed: 0.07, green: 0.05, blue: 0.16, alpha: 1),
+                        NSColor(calibratedRed: 0.10, green: 0.06, blue: 0.24, alpha: 1),
+                        NSColor(calibratedRed: 0.03, green: 0.10, blue: 0.20, alpha: 1)])!.draw(in: rect, angle: -15)
+    for (x, y, r, color, a) in [(0.36, 0.62, 1.05, purple, 0.55), (0.66, 0.40, 0.95, blue, 0.42), (0.52, 1.05, 0.55, purple, 0.25)]
+        as [(CGFloat, CGFloat, CGFloat, NSColor, CGFloat)] {
+        let center = CGPoint(x: rect.width * x, y: h * y)
+        NSGradient(starting: color.withAlphaComponent(a), ending: color.withAlphaComponent(0))!
+            .draw(fromCenter: center, radius: 0, toCenter: center, radius: h * r, options: [])
+    }
+
+    let mark = h * 0.30
     let title = NSAttributedString(string: "Jelly", attributes: [
-        .font: NSFont.systemFont(ofSize: h * 0.2, weight: .bold), .foregroundColor: NSColor.white
+        .font: NSFont.systemFont(ofSize: h * 0.19, weight: .bold), .foregroundColor: NSColor.white, .kern: -h * 0.004
     ])
-    let tagline = NSAttributedString(string: "Dein Jellyfin. Auf dem großen Bildschirm.", attributes: [
-        .font: NSFont.systemFont(ofSize: h * 0.06, weight: .medium), .foregroundColor: NSColor.white.withAlphaComponent(0.85)
+    let tagline = NSAttributedString(string: "Deine Filme und Serien von Jellyfin – direkt auf dem Apple TV.", attributes: [
+        .font: NSFont.systemFont(ofSize: h * 0.05, weight: .medium), .foregroundColor: NSColor.white.withAlphaComponent(0.78)
     ])
-    title.draw(at: CGPoint(x: h * 0.72, y: rect.midY - h * 0.04))
-    tagline.draw(at: CGPoint(x: h * 0.74, y: rect.midY - h * 0.13))
+    let gap = h * 0.075
+    let textWidth = max(title.size().width, tagline.size().width)
+    let left = rect.midX - (mark + gap + textWidth) / 2
+    let middle = h * 0.54
+
+    // The app's mark: the icon's gradient tile with its play symbol.
+    let tile = CGRect(x: left, y: middle - mark / 2, width: mark, height: mark)
+    let tilePath = NSBezierPath(roundedRect: tile, xRadius: mark * 0.26, yRadius: mark * 0.26)
+    let glow = NSShadow()
+    glow.shadowColor = NSColor(calibratedRed: 0.45, green: 0.3, blue: 1, alpha: 0.6)
+    glow.shadowBlurRadius = mark * 0.3
+    glow.shadowOffset = NSSize(width: 0, height: -mark * 0.06)
+    NSGraphicsContext.saveGraphicsState()
+    glow.set()
+    purple.setFill()
+    tilePath.fill()
+    NSGraphicsContext.restoreGraphicsState()
+    NSGraphicsContext.saveGraphicsState()
+    tilePath.addClip()
+    background(tile)
+    NSGraphicsContext.restoreGraphicsState()
+    playMark(center: CGPoint(x: tile.midX + mark * 0.03, y: tile.midY), height: mark * 0.42)
+
+    let textLeft = left + mark + gap
+    title.draw(at: CGPoint(x: textLeft - h * 0.008, y: middle - h * 0.02))
+    tagline.draw(at: CGPoint(x: textLeft, y: middle - h * 0.105))
 }
 
 try? FileManager.default.removeItem(at: brand)
