@@ -1,0 +1,31 @@
+Jelly bringt deine Jellyfin-Bibliothek auf das Apple TV – nativ, schnell und in Originalqualität. Du brauchst dafür einen eigenen Jellyfin-Server (kostenlos unter jellyfin.org).
+
+ORIGINAL STATT UMGERECHNET
+Jelly spielt deine Dateien so, wie sie sind: MKV, MP4, AVI und TS mit H.264, HEVC, AV1, VC-1 oder MPEG-2. Dein Server muss nichts neu kodieren, das Bild bleibt unangetastet.
+
+DOLBY VISION, HDR10+ UND ATMOS
+Dolby Vision (Profil 5 und 8) und HDR10+ laufen über Apples Player mit dynamischen Metadaten, Dolby Atmos in Dolby Digital Plus kommt als Bitstream am Receiver an, TrueHD und DTS-HD verlustfrei als Mehrkanalton. HDR10 und HLG funktionieren auch für alles andere. Bildfrequenz und Dynamikbereich passen sich jedem Film an.
+
+UNTERTITEL, WIE SIE GEDACHT SIND
+ASS/SSA-Untertitel mit eingebetteten Schriften, Positionen und Effekten, dazu PGS, VobSub, SRT und externe Untertitel. Größe, Farbe und Hintergrund stellst du selbst ein.
+
+ANMELDEN OHNE TIPPEN
+Jelly findet deinen Server im Heimnetz von selbst. Profile ohne Passwort öffnen sich mit einem Klick, alle anderen per Code über die Jellyfin-App auf dem Handy. Mehrere Server und Profile auf einem Apple TV, mit „Wer schaut gerade?“ beim Start.
+
+FÜR SERIEN GEMACHT
+Weiterschauen und nächste Folgen auf der Startseite und im Top Shelf. Jelly erkennt Intros und Abspann selbst am Ton – auch ohne Server-Plugin – und startet die nächste Folge, sobald der Abspann beginnt.
+
+UNTERWEGS UND BEI LANGSAMER LEITUNG
+Jelly misst die Verbindung zu deinem Server und wählt die beste Qualität, die ohne Stocken läuft. Bricht die Leitung mitten im Film ein, passt Jelly sich an und geht später wieder auf die bessere Qualität. Zu Hause spricht Jelly den Server direkt an.
+
+ERKUNDEN MIT JELLYSEERR
+Verbinde deinen Jellyseerr und wünsch dir Filme und Serien, die noch nicht auf deinem Server sind – mit Trends, Neuerscheinungen und Suche.
+
+Außerdem: Bewertungen auf den Detailseiten, Kapitel, Bildvorschau beim Spulen, Ton- und Untertitel-Synchronisation, eine Verbindungsanalyse und ein Cover-Bildschirmschoner wie früher bei iTunes.
+
+14 TAGE TESTEN, DANN EINMAL ZAHLEN
+Probier Jelly 14 Tage kostenlos mit allen Funktionen. Danach schaltest du die Vollversion mit einem einmaligen In-App-Kauf für 9,99 € frei – kein Abo, gültig für alle Apple TVs mit deiner Apple-ID.
+
+Keine Werbung, kein Tracking, keine Datensammlung. Jelly spricht nur mit deinen eigenen Servern.
+
+Jelly ist eine unabhängige App und kein offizielles Produkt des Jellyfin-Projekts.
