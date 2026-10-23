@@ -1,5 +1,5 @@
 // simhid UDID key [key …] — sends hardware-keyboard presses to a booted simulator (tvOS: arrows = remote, select = Return, menu = Escape).
-// Keys: up down left right select menu playpause, wait (0.5 s pause), or sleep:<seconds>.
+// Keys: up down left right select menu playpause, wait (0.5 s pause), sleep:<seconds>, or type:<text> (a–z, 0–9, space).
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
@@ -33,22 +33,36 @@ int main(int argc, const char *argv[]) {
                                                        @"select": @0x28, @"menu": @0x29, @"playpause": @0x2C };
         dispatch_queue_t queue = dispatch_queue_create("simhid", DISPATCH_QUEUE_SERIAL);
         SEL send = NSSelectorFromString(@"sendWithMessage:freeWhenDone:completionQueue:completion:");
-        for (int index = 2; index < argc; index++) {
-            NSString *name = @(argv[index]);
-            if ([name isEqualToString:@"wait"]) { usleep(500000); continue; }
-            if ([name hasPrefix:@"sleep:"]) { usleep((useconds_t)([[name substringFromIndex:6] doubleValue] * 1e6)); continue; }
-            NSNumber *code = codes[name];
-            if (!code) { fprintf(stderr, "unknown key %s\n", argv[index]); return 2; }
+        void (^press)(uint32_t) = ^(uint32_t code) {
             for (uint32_t direction = 1; direction <= 2; direction++) {
                 dispatch_semaphore_t done = dispatch_semaphore_create(0);
                 ((void (*)(id, SEL, void *, BOOL, dispatch_queue_t, void (^)(NSError *)))objc_msgSend)(client, send,
-                    keyMessage(code.unsignedIntValue, direction), YES, queue, ^(NSError *sendError) {
+                    keyMessage(code, direction), YES, queue, ^(NSError *sendError) {
                         if (sendError) fprintf(stderr, "send: %s\n", sendError.description.UTF8String);
                         dispatch_semaphore_signal(done);
                     });
                 dispatch_semaphore_wait(done, dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC));
                 usleep(60000);
             }
+        };
+        for (int index = 2; index < argc; index++) {
+            NSString *name = @(argv[index]);
+            if ([name isEqualToString:@"wait"]) { usleep(500000); continue; }
+            if ([name hasPrefix:@"sleep:"]) { usleep((useconds_t)([[name substringFromIndex:6] doubleValue] * 1e6)); continue; }
+            if ([name hasPrefix:@"type:"]) {
+                // HID usage codes: a–z 0x04…, 1–9 0x1E…, 0 0x27, space 0x2C.
+                for (const char *c = [name substringFromIndex:5].lowercaseString.UTF8String; *c; c++) {
+                    if (*c >= 'a' && *c <= 'z') press(0x04 + (uint32_t)(*c - 'a'));
+                    else if (*c >= '1' && *c <= '9') press(0x1E + (uint32_t)(*c - '1'));
+                    else if (*c == '0') press(0x27);
+                    else if (*c == ' ') press(0x2C);
+                    usleep(120000);
+                }
+                continue;
+            }
+            NSNumber *code = codes[name];
+            if (!code) { fprintf(stderr, "unknown key %s\n", argv[index]); return 2; }
+            press(code.unsignedIntValue);
             usleep(350000);
         }
     }

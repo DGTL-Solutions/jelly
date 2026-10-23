@@ -226,11 +226,22 @@ private struct DiscoverHome: View {
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 56) {
-                HStack(alignment: .firstTextBaseline, spacing: 30) {
-                    Text("Erkunden").font(.title2.weight(.bold))
-                    Text("Über Jellyseerr · \(account.name)").font(.callout).foregroundStyle(.secondary)
-                    Spacer()
-                    Button { path.append(.search) } label: { Label("Suchen", systemImage: "magnifyingglass") }
+                VStack(alignment: .leading, spacing: 30) {
+                    HStack(alignment: .firstTextBaseline, spacing: 30) {
+                        Text("Erkunden").font(.title2.weight(.bold))
+                        Text("Über Jellyseerr · \(account.name)").font(.callout).foregroundStyle(.secondary)
+                    }
+                    // The way in for anything not in the rows: first on the page, so the focus starts here.
+                    Button { path.append(.search) } label: {
+                        HStack(spacing: 22) {
+                            Image(systemName: "magnifyingglass").font(.title3.weight(.semibold))
+                            Text("Filme und Serien suchen und wünschen")
+                            Spacer(minLength: 0)
+                        }
+                        .font(.callout)
+                        .padding(.horizontal, 12)
+                        .frame(width: 1000, height: 60, alignment: .leading)
+                    }
                 }
                 .padding(.horizontal, Theme.edge)
                 .focusSection()
