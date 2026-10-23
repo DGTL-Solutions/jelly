@@ -58,6 +58,10 @@ private struct ConnectSeerrPrompt: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .task {
+            #if DEBUG
+            // Simulator testing only: JELLY_SEERR_SERVER (with JELLY_SEERR_PASSWORD) connects a local mock right away.
+            if ProcessInfo.processInfo.environment["JELLY_SEERR_SERVER"] != nil { path.append(.connect); return }
+            #endif
             found = model.lastSeerrServer
             if found == nil { found = await SeerrClient.find(near: [model.homeAddress, model.session?.server].compactMap { $0 })?.0 }
         }
@@ -134,7 +138,14 @@ struct SeerrConnectView: View {
         }
         .task {
             username = model.session?.name ?? ""
-            if let last = model.lastSeerrServer {
+            #if DEBUG
+            let debugServer = ProcessInfo.processInfo.environment["JELLY_SEERR_SERVER"]
+            #else
+            let debugServer: String? = nil
+            #endif
+            if let debugServer {
+                address = debugServer
+            } else if let last = model.lastSeerrServer {
                 address = last.absoluteString
             } else if let (url, _) = await SeerrClient.find(near: [model.homeAddress, model.session?.server].compactMap { $0 }) {
                 address = url.absoluteString
@@ -204,9 +215,13 @@ private struct DiscoverHome: View {
     @Binding var path: [DiscoverRoute]
     @EnvironmentObject private var model: AppModel
     @State private var shelves: [SeerrClient.Shelf: [SeerrClient.Title]] = [:]
+    @State private var loading: [SeerrClient.Title] = []
     @State private var wishes: [SeerrClient.Title] = []
     @State private var loaded = false
     @State private var error: String?
+
+    /// Jellyseerr asks Radarr and Sonarr for their queues once a minute; looking twice as often keeps the bars current.
+    private static let followInterval: Duration = .seconds(30)
 
     var body: some View {
         ScrollView {
@@ -227,6 +242,11 @@ private struct DiscoverHome: View {
                         LoadingView(text: "Jellyseerr wird geladen …").frame(height: 500)
                     }
                 }
+                if !loading.isEmpty {
+                    Shelf(title: "Wird geladen", items: loading) { title in
+                        SeerrCard(title: title) { path.append(.title(title)) }
+                    }
+                }
                 if !wishes.isEmpty {
                     Shelf(title: "Deine Wünsche", items: wishes) { title in
                         SeerrCard(title: title) { path.append(.title(title)) }
@@ -243,7 +263,10 @@ private struct DiscoverHome: View {
             .padding(.vertical, 40)
         }
         .scrollClipDisabled()
-        .task(id: model.refreshID) { await load() }
+        .task(id: model.refreshID) {
+            await load()
+            await follow()
+        }
     }
 
     private func load() async {
@@ -259,18 +282,14 @@ private struct DiscoverHome: View {
                 for await (shelf, items) in group { rows[shelf] = items }
                 return rows
             }
-            let requests = (try? await client.myRequests(userID: account.userID)) ?? []
-            let titles = await withTaskGroup(of: (Int, SeerrClient.Title?).self) { group in
-                for (index, request) in requests.prefix(12).enumerated() {
-                    group.addTask { (index, try? await client.title(for: request)) }
-                }
-                var titles: [(Int, SeerrClient.Title)] = []
-                for await (index, title) in group { if let title { titles.append((index, title)) } }
-                return titles.sorted { $0.0 < $1.0 }.map(\.1)
-            }
+            async let approved = try? client.approvedRequests()
+            async let mine = try? client.myRequests(userID: account.userID)
+            let loadingTitles = await titles(for: Self.loading(await approved ?? []), client: client)
+            let wishedTitles = await titles(for: Array((await mine ?? []).prefix(12)), client: client)
             withAnimation(.easeOut(duration: 0.35)) {
                 shelves = rest
-                wishes = titles.uniqued()
+                loading = loadingTitles
+                wishes = wishedTitles
                 loaded = true
                 error = nil
             }
@@ -281,9 +300,63 @@ private struct DiscoverHome: View {
             self.error = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
         }
     }
+
+    /// Approved wishes still on their way, running downloads first.
+    private static func loading(_ requests: [SeerrClient.Request]) -> [SeerrClient.Request] {
+        let open = requests.filter { $0.media?.info.isLoading == true }
+        return Array((open.filter { $0.media?.info.download != nil } + open.filter { $0.media?.info.download == nil }).prefix(12))
+    }
+
+    /// Posters and names for requests, in their order; titles already on screen are reused with the request's fresh state.
+    private func titles(for requests: [SeerrClient.Request], client: SeerrClient) async -> [SeerrClient.Title] {
+        var known: [String: SeerrClient.Title] = [:]
+        for title in loading + wishes { known[title.id] = title }
+        let titles = await withTaskGroup(of: (Int, SeerrClient.Title?).self) { group in
+            for (index, request) in requests.enumerated() {
+                if let media = request.media, let title = known[media.key] {
+                    var current = title
+                    current.mediaInfo = media.info
+                    group.addTask { [current] in (index, current) }
+                } else {
+                    group.addTask { (index, try? await client.title(for: request)) }
+                }
+            }
+            var titles: [(Int, SeerrClient.Title)] = []
+            for await (index, title) in group { if let title { titles.append((index, title)) } }
+            return titles.sorted { $0.0 < $1.0 }.map(\.1)
+        }
+        return titles.uniqued()
+    }
+
+    /// While something is being downloaded, keeps the bars, the time left and the "Wird geladen" row current – and
+    /// the badges of the same titles in the other rows. Ends when the page is left or nothing is on its way any more.
+    private func follow() async {
+        let client = account.client
+        while !Task.isCancelled, (loading + wishes).contains(where: { $0.mediaInfo?.isLoading == true }) {
+            try? await Task.sleep(for: Self.followInterval)
+            guard !Task.isCancelled, let approved = try? await client.approvedRequests() else { continue }
+            let mine = (try? await client.myRequests(userID: account.userID)) ?? []
+            var fresh: [String: SeerrClient.MediaInfo] = [:]
+            for request in mine + approved { if let media = request.media { fresh[media.key] = media.info } }
+            func update(_ titles: [SeerrClient.Title]) -> [SeerrClient.Title] {
+                titles.map { title in
+                    var title = title
+                    if let info = fresh[title.id] { title.mediaInfo = info }
+                    return title
+                }
+            }
+            let loadingTitles = await titles(for: Self.loading(approved), client: client)
+            guard !Task.isCancelled else { return }
+            withAnimation(.easeOut(duration: 0.35)) {
+                loading = loadingTitles
+                wishes = update(wishes)
+                shelves = shelves.mapValues(update)
+            }
+        }
+    }
 }
 
-/// Poster with the title's state in Jellyseerr: in the library, wished for, being downloaded.
+/// Poster with the title's state in Jellyseerr: in the library, wished for, being downloaded – with how far.
 struct SeerrCard: View {
     let title: SeerrClient.Title
     var width: CGFloat = 230
@@ -291,6 +364,7 @@ struct SeerrCard: View {
     @FocusState private var focused: Bool
 
     var body: some View {
+        let download = title.download
         VStack(alignment: .leading, spacing: 0) {
             Button(action: action) {
                 ZStack(alignment: .topTrailing) {
@@ -299,14 +373,28 @@ struct SeerrCard: View {
                     if title.status != .none { SeerrStatusBadge(status: title.status).padding(14) }
                 }
                 .frame(width: width, height: width * 1.5)
+                .overlay(alignment: .bottom) {
+                    if let download {
+                        DownloadBar(progress: download).frame(height: 8).padding(.horizontal, 16).padding(.bottom, 14)
+                    }
+                }
             }
             .buttonStyle(.card)
             .focused($focused)
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(title.displayTitle).font(.caption.weight(.semibold)).lineLimit(1)
-                Text([title.year, title.isSeries ? "Serie" : "Film"].compactMap { $0 }.joined(separator: " · "))
-                    .font(.caption2).foregroundStyle(.secondary).lineLimit(1)
+                Group {
+                    if let download {
+                        Text(download.cardText).foregroundStyle(download.phase == .stalled ? .orange : .secondary)
+                    } else if title.status == .processing {
+                        Text("Wartet auf Download").foregroundStyle(.secondary)
+                    } else {
+                        Text([title.year, title.isSeries ? "Serie" : "Film"].compactMap { $0 }.joined(separator: " · "))
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .font(.caption2).lineLimit(1).minimumScaleFactor(0.8)
             }
             .padding(.top, focused ? 26 : 14)
             .opacity(focused ? 1 : 0.85)
@@ -335,6 +423,46 @@ struct SeerrStatusBadge: View {
         case .processing: Color(red: 0.25, green: 0.45, blue: 0.95)
         case .pending: Color(red: 0.95, green: 0.6, blue: 0.15)
         case .none: Theme.accent
+        }
+    }
+}
+
+/// How much of a download is there, in the colour of its state.
+struct DownloadBar: View {
+    let fraction: Double
+    let phase: DownloadProgress.Phase
+
+    init(progress: DownloadProgress) { self.init(fraction: progress.fraction, phase: progress.phase) }
+    init(fraction: Double, phase: DownloadProgress.Phase) { self.fraction = fraction; self.phase = phase }
+
+    var body: some View {
+        GeometryReader { proxy in
+            ZStack(alignment: .leading) {
+                Capsule().fill(.black.opacity(0.5))
+                if fraction > 0 { Capsule().fill(color).frame(width: max(proxy.size.height, proxy.size.width * fraction)) }
+            }
+        }
+        .animation(.easeOut(duration: 0.6), value: fraction)
+    }
+
+    private var color: Color {
+        switch phase {
+        case .downloading: Color(red: 0.35, green: 0.55, blue: 1)
+        case .importing: Color(red: 0.2, green: 0.7, blue: 0.4)
+        case .queued: .white.opacity(0.55)
+        case .paused, .stalled: Color(red: 0.95, green: 0.6, blue: 0.15)
+        }
+    }
+}
+
+extension DownloadProgress.Phase {
+    var symbol: String {
+        switch self {
+        case .downloading: "arrow.down.circle"
+        case .queued: "clock"
+        case .paused: "pause.circle"
+        case .importing: "tray.and.arrow.down"
+        case .stalled: "exclamationmark.triangle"
         }
     }
 }
@@ -368,9 +496,10 @@ struct SeerrDetailView: View {
                     Text(metadata).font(.callout).foregroundStyle(.secondary)
                     if let tagline = details?.tagline?.nonEmpty { Text(tagline).font(.callout.italic()) }
                     if let overview = (details?.overview ?? title.overview)?.nonEmpty {
-                        Text(overview).font(.callout).lineLimit(5).frame(maxWidth: 1100, alignment: .leading)
+                        Text(overview).font(.callout).lineLimit(download == nil ? 5 : 3).frame(maxWidth: 1100, alignment: .leading)
                     }
                     actions.padding(.top, 14)
+                    if let download { SeerrDownloadPanel(progress: download, isSeries: title.isSeries).padding(.top, 8) }
                     if let message { Text(message).font(.callout).foregroundStyle(.secondary).frame(maxWidth: 1100, alignment: .leading) }
                 }
             }
@@ -379,10 +508,14 @@ struct SeerrDetailView: View {
         }
         .task {
             status = title.status
-            guard let account = model.seerr else { return }
-            if let loaded = try? await account.client.details(title) {
-                details = loaded
-                status = SeerrStatus(loaded.mediaInfo?.status)
+            await reload()
+        }
+        .task(id: isLoading) {
+            // Follow the download while the page is open, as often as Jellyseerr learns something new.
+            while isLoading, !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(30))
+                guard !Task.isCancelled else { return }
+                await reload()
             }
         }
         .fullScreenCover(isPresented: $choosingSeasons) {
@@ -392,6 +525,17 @@ struct SeerrDetailView: View {
                     if let seasons { Task { await request(seasons: seasons) } }
                 }
             }
+        }
+    }
+
+    private var download: DownloadProgress? { (details?.mediaInfo ?? title.mediaInfo)?.download }
+    private var isLoading: Bool { status == .processing || download != nil }
+
+    private func reload() async {
+        guard let account = model.seerr, let loaded = try? await account.client.details(title) else { return }
+        withAnimation(.easeOut(duration: 0.3)) {
+            details = loaded
+            status = SeerrStatus(loaded.mediaInfo?.status)
         }
     }
 
@@ -451,6 +595,54 @@ struct SeerrDetailView: View {
             return
         }
         model.pendingOpen = item
+    }
+}
+
+/// The download of a wished title: how far, how long still, and for series the episodes on their way.
+private struct SeerrDownloadPanel: View {
+    let progress: DownloadProgress
+    let isSeries: Bool
+
+    private static let maxEpisodes = 6
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(alignment: .firstTextBaseline) {
+                Label(progress.summary, systemImage: progress.phase.symbol).font(.callout.weight(.semibold))
+                Spacer()
+                Text(times).font(.callout).foregroundStyle(.secondary).monospacedDigit()
+            }
+            DownloadBar(progress: progress).frame(height: 12)
+            if isSeries, progress.parts.count > 1 {
+                let shown = progress.parts.prefix(Self.maxEpisodes)
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 290), spacing: 30, alignment: .leading)], alignment: .leading, spacing: 12) {
+                    ForEach(Array(shown.enumerated()), id: \.offset) { _, part in
+                        HStack(spacing: 12) {
+                            Text(part.label ?? "–").monospacedDigit().frame(width: 100, alignment: .leading)
+                            DownloadBar(fraction: part.fraction, phase: part.phase).frame(width: 80, height: 8)
+                            Text(part.phase == .queued ? "wartet" : DownloadProgress.percent(part.fraction))
+                                .monospacedDigit().lineLimit(1).fixedSize()
+                        }
+                    }
+                }
+                .font(.caption).foregroundStyle(.secondary)
+                if progress.parts.count > Self.maxEpisodes {
+                    Text("und \(progress.parts.count - Self.maxEpisodes) weitere Folgen").font(.caption).foregroundStyle(.secondary)
+                }
+            }
+        }
+        .frame(maxWidth: 900, alignment: .leading)
+    }
+
+    /// "noch 12 Min. · fertig gegen 21:40", or just the time left when the end is not today or tomorrow.
+    private var times: String {
+        guard let left = progress.remainingText, let remaining = progress.remaining else { return progress.percent }
+        let end = Date().addingTimeInterval(remaining)
+        let calendar = Calendar.current
+        let time = end.formatted(date: .omitted, time: .shortened)
+        if calendar.isDateInToday(end) { return "\(left) · fertig gegen \(time)" }
+        if calendar.isDateInTomorrow(end) { return "\(left) · fertig morgen gegen \(time)" }
+        return left
     }
 }
 
