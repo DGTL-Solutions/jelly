@@ -60,6 +60,19 @@ def call(method, path, body=None, fatal=True):
         return None
 
 
+def find(path):
+    """The resource a to-one link points to, or None while it doesn't exist yet (404 or `"data": null`)."""
+    request = urllib.request.Request(API + path)
+    request.add_header("Authorization", f"Bearer {token()}")
+    try:
+        with urllib.request.urlopen(request, timeout=60) as response:
+            return json.loads(response.read()).get("data")
+    except urllib.error.HTTPError as error:
+        if error.code == 404:
+            return None
+        sys.exit(f"App Store Connect GET {path.split('?')[0]}: {error.code} {error.read().decode()[:600]}")
+
+
 def pages(path):
     """Every item of a list endpoint, following the `next` links."""
     items, included = [], []

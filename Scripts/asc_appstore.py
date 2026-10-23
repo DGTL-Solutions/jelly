@@ -11,7 +11,7 @@ App Review contact (seen by Apple only, never committed): REVIEW_FIRST_NAME, REV
 import hashlib, os, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from asc_api import call, configure, pages, query, upload  # noqa: E402
+from asc_api import call, configure, find, pages, query, upload  # noqa: E402
 
 if len(sys.argv) < 5:
     sys.exit(__doc__)
@@ -110,19 +110,18 @@ if COMMAND == "setup":
     contact = {k: os.environ.get(v) for k, v in [("contactFirstName", "REVIEW_FIRST_NAME"), ("contactLastName", "REVIEW_LAST_NAME"),
                                                  ("contactPhone", "REVIEW_PHONE"), ("contactEmail", "REVIEW_EMAIL")] if os.environ.get(v)}
     review = {**contact, "demoAccountRequired": False, "notes": text("review-notes.txt")[:4000]}
-    existing = call("GET", f"/appStoreVersions/{version}/appStoreReviewDetail", fatal=False)
-    if existing and existing.get("data"):
-        call("PATCH", f"/appStoreReviewDetails/{existing['data']['id']}", {"data": {"type": "appStoreReviewDetails",
-             "id": existing["data"]["id"], "attributes": review}}, fatal=False)
-    else:
+    existing = find(f"/appStoreVersions/{version}/appStoreReviewDetail")
+    if existing and len(contact) == 4:
+        call("PATCH", f"/appStoreReviewDetails/{existing['id']}", {"data": {"type": "appStoreReviewDetails",
+             "id": existing["id"], "attributes": review}}, fatal=False)
+    elif not existing:
         call("POST", "/appStoreReviewDetails", {"data": {"type": "appStoreReviewDetails", "attributes": review,
              "relationships": {"appStoreVersion": ref("appStoreVersions", version)}}}, fatal=False)
     if len(contact) < 4:
         print("  ! Kontakt für App Review fehlt noch (REVIEW_FIRST_NAME, REVIEW_LAST_NAME, REVIEW_PHONE, REVIEW_EMAIL).")
 
     step("Preis: gratis (freigeschaltet wird per Abo)")
-    schedule = call("GET", f"/apps/{app}/appPriceSchedule?include=manualPrices", fatal=False)
-    if not (schedule and schedule.get("included")):
+    if not find(f"/apps/{app}/appPriceSchedule"):
         free = next(p for p in pages(f"/apps/{app}/appPricePoints?filter[territory]={BASE_TERRITORY}&limit=200")[0]
                     if float(p["attributes"]["customerPrice"]) == 0)
         call("POST", "/appPriceSchedules", {"data": {"type": "appPriceSchedules", "relationships": {
@@ -132,7 +131,7 @@ if COMMAND == "setup":
                           "relationships": {"appPricePoint": ref("appPricePoints", free["id"])}}]}, fatal=False)
 
     step("Verfügbarkeit: alle Länder")
-    if not call("GET", f"/apps/{app}/appAvailabilityV2", fatal=False):
+    if not find(f"/apps/{app}/appAvailabilityV2"):
         body = {"data": {"type": "appAvailabilities", "attributes": {"availableInNewTerritories": True}, "relationships": {
             "app": ref("apps", app),
             "territoryAvailabilities": {"data": [{"type": "territoryAvailabilities", "id": f"${{{t}}}"} for t in territories]}}},
@@ -161,7 +160,7 @@ if COMMAND == "setup":
         call("POST", "/subscriptionLocalizations", {"data": {"type": "subscriptionLocalizations", "attributes": {
             "name": "Jelly Jahresabo", "locale": LOCALE, "description": "Alle Funktionen von Jelly, ein Jahr lang"},
             "relationships": {"subscription": ref("subscriptions", subscription)}}}, fatal=False)
-    if not call("GET", f"/subscriptions/{subscription}/subscriptionAvailability", fatal=False):
+    if not find(f"/subscriptions/{subscription}/subscriptionAvailability"):
         call("POST", "/subscriptionAvailabilities", {"data": {"type": "subscriptionAvailabilities", "attributes": {"availableInNewTerritories": True},
              "relationships": {"subscription": ref("subscriptions", subscription),
                                "availableTerritories": {"data": [{"type": "territories", "id": t} for t in territories]}}}}, fatal=False)
@@ -186,7 +185,7 @@ if COMMAND == "setup":
                 "relationships": {"subscription": ref("subscriptions", subscription), "territory": ref("territories", territory)}}}, fatal=False)
 
     step("Review-Screenshot des Abo-Angebots")
-    if not call("GET", f"/subscriptions/{subscription}/appStoreReviewScreenshot", fatal=False):
+    if not find(f"/subscriptions/{subscription}/appStoreReviewScreenshot"):
         put_asset("/subscriptionAppStoreReviewScreenshots", "subscriptionAppStoreReviewScreenshots", "subscription", "subscriptions",
                   subscription, os.path.join(ROOT, "screenshots", "iap-review-angebot.png"))
     print("Fertig. Fehlt nur noch der Build: Scripts/release-appstore.sh, dann „attach <Build-Nummer>“.")
