@@ -6,7 +6,7 @@ title: Jelly – Datenschutz
 
 Stand: 23. Oktober 2026
 
-Anbieter im App Store: Nessy GmbH, Kirchstraße 10, 53773 Hennef, Telefon 02242 932901, E-Mail: info@dgtl24.net
+Anbieter im App Store: Nessy GmbH, Kirchstraße 10, 53773 Hennef, Telefon 02242 9329301, E-Mail: info@dgtl24.net
 Rechteinhaber: DGTL Solutions GmbH
 
 ## Kurz gesagt
