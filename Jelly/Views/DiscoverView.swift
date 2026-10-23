@@ -725,12 +725,14 @@ private struct SeerrSearchView: View {
                 if query.isEmpty {
                     ContentUnavailableView("Neues finden", systemImage: "sparkles",
                                            description: Text("Suche nach Filmen und Serien, die du dir über Jellyseerr wünschen möchtest."))
+                        .frame(maxWidth: .infinity)
                         .padding(.top, 120)
                 } else if let error {
                     ContentUnavailableView("Suche fehlgeschlagen", systemImage: "exclamationmark.triangle", description: Text(error))
+                        .frame(maxWidth: .infinity)
                         .padding(.top, 120)
                 } else if results.isEmpty && !searching {
-                    ContentUnavailableView.search(text: query).padding(.top, 120)
+                    ContentUnavailableView.search(text: query).frame(maxWidth: .infinity).padding(.top, 120)
                 }
                 LazyVGrid(columns: columns, alignment: .leading, spacing: 60) {
                     ForEach(results) { title in
