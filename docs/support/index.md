@@ -23,11 +23,13 @@ E-Mail: BITTE KONTAKT-E-MAIL EINTRAGEN
 
 Anbieter im App Store:
 Nessy GmbH
-BITTE ANSCHRIFT EINTRAGEN
-Vertreten durch: BITTE GESCHÄFTSFÜHRUNG EINTRAGEN
-Registergericht und Registernummer: BITTE EINTRAGEN
-Umsatzsteuer-ID: BITTE EINTRAGEN
-Telefon: BITTE EINTRAGEN · E-Mail: BITTE EINTRAGEN
+Kirchstraße 10
+53773 Hennef
+Vertreten durch die Geschäftsführer Valentin Kaymer und Bünyamin Sarikaya
+Amtsgericht Siegburg, HRB 16716
+USt-IdNr.: DE347150665
+Telefon: 02242 93 29 300
+E-Mail: BITTE KONTAKT-E-MAIL EINTRAGEN
 
 Rechteinhaber der App: DGTL Solutions GmbH. Jellys Quellcode steht unter der Mozilla Public License 2.0: [github.com/DGTL-Solutions/jelly](https://github.com/DGTL-Solutions/jelly).
 

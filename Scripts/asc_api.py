@@ -41,16 +41,44 @@ def token() -> str:
     return f"{header}.{payload}.{b64(der_to_raw(der))}"
 
 
-def call(method, path, body=None):
-    request = urllib.request.Request(API + path, method=method, data=json.dumps(body).encode() if body else None)
+def call(method, path, body=None, fatal=True):
+    """One API request; `path` may also be a full URL (pagination links). Errors end the script unless `fatal` is
+    False, then they are printed and None is returned."""
+    url = path if path.startswith("http") else API + path
+    request = urllib.request.Request(url, method=method, data=json.dumps(body).encode() if body else None)
     request.add_header("Authorization", f"Bearer {token()}")
     request.add_header("Content-Type", "application/json")
     try:
-        with urllib.request.urlopen(request, timeout=30) as response:
+        with urllib.request.urlopen(request, timeout=60) as response:
             body = response.read()
             return json.loads(body) if body else {}
     except urllib.error.HTTPError as error:
-        sys.exit(f"App Store Connect {method} {path.split('?')[0]}: {error.code} {error.read().decode()[:300]}")
+        text = f"App Store Connect {method} {url.split('?')[0].replace(API, '')}: {error.code} {error.read().decode()[:600]}"
+        if fatal:
+            sys.exit(text)
+        print("  ! " + text)
+        return None
+
+
+def pages(path):
+    """Every item of a list endpoint, following the `next` links."""
+    items, included = [], []
+    while path:
+        result = call("GET", path)
+        items += result.get("data", [])
+        included += result.get("included", [])
+        path = result.get("links", {}).get("next")
+    return items, included
+
+
+def upload(operations, data):
+    """Sends a file to the upload operations App Store Connect handed out for an asset reservation."""
+    for operation in operations:
+        chunk = data[operation["offset"]:operation["offset"] + operation["length"]]
+        request = urllib.request.Request(operation["url"], method=operation["method"], data=chunk)
+        for header in operation.get("requestHeaders", []):
+            request.add_header(header["name"], header["value"])
+        urllib.request.urlopen(request, timeout=120).read()
 
 
 def query(path, **filters):

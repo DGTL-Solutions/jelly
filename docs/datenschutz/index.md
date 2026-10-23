@@ -4,9 +4,9 @@ title: Jelly – Datenschutz
 
 # Datenschutzerklärung für Jelly (Apple TV)
 
-Stand: BITTE DATUM EINTRAGEN
+Stand: 23. Oktober 2026
 
-Anbieter im App Store: Nessy GmbH, BITTE ANSCHRIFT UND KONTAKT-E-MAIL EINTRAGEN
+Anbieter im App Store: Nessy GmbH, Kirchstraße 10, 53773 Hennef, Telefon 02242 93 29 300, E-Mail: BITTE KONTAKT-E-MAIL EINTRAGEN
 Rechteinhaber: DGTL Solutions GmbH
 
 ## Kurz gesagt
