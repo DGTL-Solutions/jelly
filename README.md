@@ -105,7 +105,7 @@ xcrun devicectl device copy from --device <UDID> --domain-type appDataContainer 
   --source Library/Caches/jelly-diagnostics.log --destination jelly-diagnostics.log
 ```
 
-Fernbedienung im Simulator ohne Simulator.app: `Scripts/simhid.m` schickt Tastendrücke über SimulatorKit (Pfeile = Touchpad-Richtungen, `select`, `menu`, `playpause`):
+Fernbedienung im Simulator ohne Simulator.app: `Scripts/simhid.m` schickt Tastendrücke über SimulatorKit (Pfeile = Touchpad-Richtungen, `select`, `menu`, `playpause`, `type:dune` tippt in Suchfelder):
 
 ```sh
 clang -fobjc-arc -framework Foundation Scripts/simhid.m -o /tmp/simhid
