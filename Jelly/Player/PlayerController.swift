@@ -305,6 +305,12 @@ final class PlayerController: ObservableObject {
         options.preferredDecodePath = preference == .software ? .software : .automatic
         // A server stream is HLS: straight to Apple's player, no probing as a file first.
         options.nativeRemoteHLS = plan.engine == .server
+        // The original file, repackaged on the Apple TV: hand Apple's player each piece while it is still being written,
+        // so a jump on a slow line (files with keyframes far apart) waits for the first fragment rather than the whole
+        // piece – and AVPlayer doesn't give up after 4 s and ask again. Reading about two minutes ahead (instead of 40 s)
+        // usually has the end of an intro cached before "Intro überspringen" is pressed.
+        options.progressiveSegmentDelivery = true
+        options.forwardBufferSegments = 30
         // The engine picks the stream index Jellyfin names; a server stream carries only that one track.
         let audioStream = plan.engine == .direct ? audioIndex.map(Int32.init) : nil
         _ = try await aether.load(url: url, startPosition: seconds > 1 ? seconds : nil, options: options, audioSourceStreamIndex: audioStream)
