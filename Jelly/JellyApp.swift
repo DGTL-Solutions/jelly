@@ -37,9 +37,10 @@ struct RootView: View {
             } else {
                 // A fresh set of tabs per profile: no detail pages or lists from the previous server linger.
                 MainView().id(model.session?.key).transition(.opacity)
+                    // The subscription offer full screen: everything App Review asks for has to fit and stay reachable.
+                    .fullScreenCover(isPresented: $model.showsPaywall) { PaywallView() }
             }
         }
-        .sheet(isPresented: $model.showsPaywall) { PaywallView() }
         .task(id: model.session?.key) { await model.offerTrialIfNeeded() }
         .fullScreenCover(item: $model.playback) { request in
             if let client = model.client, let session = model.session {

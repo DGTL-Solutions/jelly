@@ -1,15 +1,15 @@
 import Foundation
 import StoreKit
 
-/// The App Store version's trial and one-time purchase, through StoreKit 2. The trial is a free non-consumable
-/// ("14-Tage-Test") whose purchase date starts it – Apple's prescribed way to offer a trial without a subscription
-/// (App Review Guideline 3.1.1) –, the full version a non-consumable for 9,99 €. Both belong to the Apple ID, so
-/// reinstalling doesn't restart the trial and every Apple TV of the household is unlocked by one purchase.
+/// The App Store version's yearly subscription (9,99 € a year, auto-renewing) with two free weeks as its introductory
+/// offer, through StoreKit 2. It belongs to the Apple ID: one subscription unlocks every Apple TV of the household,
+/// reinstalling doesn't restart the trial, and cancelling happens in the Apple TV's own settings.
 @MainActor
 final class Purchases: ObservableObject {
     @Published private(set) var access: Access
-    @Published private(set) var fullProduct: Product?
-    @Published private(set) var trialProduct: Product?
+    @Published private(set) var product: Product?
+    /// The Apple ID hasn't used the subscription's free trial yet.
+    @Published private(set) var trialAvailable = true
     @Published private(set) var busy = false
     @Published var message: String?
 
@@ -22,31 +22,30 @@ final class Purchases: ObservableObject {
         #endif
     }()
 
-    private let fullID: String
-    private let trialID: String
+    let productID: String
     private var updates: Task<Void, Never>?
-
-    /// Shown until the App Store answers with the local price.
-    var price: String { fullProduct?.displayPrice ?? "9,99 €" }
-
-    var isActive: Bool { Self.isEnforced || forcedForTesting }
     private var forcedForTesting = false
 
+    var isActive: Bool { Self.isEnforced || forcedForTesting }
+
+    /// Shown until the App Store answers with the local price.
+    var price: String { product?.displayPrice ?? "9,99 €" }
+
     init(bundleID: String = Bundle.main.bundleIdentifier ?? "net.dgtl24.jelly") {
-        fullID = "\(bundleID).full"
-        trialID = "\(bundleID).trial14"
+        productID = "\(bundleID).yearly"
         access = Self.isEnforced ? .checking : .unlocked
         #if DEBUG
-        // Screens and review screenshots of every state, without App Store products: none, trial, expired, unlocked.
+        // Screens and review screenshots of every state, without App Store products: none, trial, active, expired.
         if let forced = ProcessInfo.processInfo.environment["JELLY_ACCESS"] {
             forcedForTesting = true
-            access = ["none": .notStarted, "trial": .trial(daysLeft: 9), "expired": .expired][forced] ?? .unlocked
+            access = ["none": .notSubscribed, "trial": .trial(daysLeft: 9), "active": .subscribed, "expired": .expired][forced] ?? .unlocked
+            trialAvailable = forced == "none"
             return
         }
         #endif
         guard Self.isEnforced else { return }
         updates = Task { [weak self] in
-            // Purchases finished elsewhere (another Apple TV, Ask to Buy, a refund) arrive here.
+            // Renewals, cancellations, refunds and purchases from other devices or Ask to Buy arrive here.
             for await update in Transaction.updates {
                 if case .verified(let transaction) = update { await transaction.finish() }
                 await self?.refresh()
@@ -56,31 +55,37 @@ final class Purchases: ObservableObject {
     }
 
     func load() async {
-        if let products = try? await Product.products(for: [fullID, trialID]) {
-            fullProduct = products.first { $0.id == fullID }
-            trialProduct = products.first { $0.id == trialID }
-        }
+        if let products = try? await Product.products(for: [productID]) { product = products.first }
         await refresh()
     }
 
-    /// Reads the purchases Apple has verified for this Apple ID; refunded ones no longer count.
+    /// Reads what Apple has verified for this Apple ID: an active subscription (refunded or revoked ones don't count),
+    /// whether its current period is the free trial, and whether the trial is still available.
     func refresh() async {
         guard isActive, !forcedForTesting else { return }
-        var trialStart: Date?
-        var purchased = false
+        var entitled = false
+        var trialEnds: Date?
         for await result in Transaction.currentEntitlements {
-            guard case .verified(let transaction) = result, transaction.revocationDate == nil else { continue }
-            if transaction.productID == fullID { purchased = true }
-            if transaction.productID == trialID { trialStart = transaction.originalPurchaseDate }
+            guard case .verified(let transaction) = result, transaction.productID == productID, transaction.revocationDate == nil
+            else { continue }
+            entitled = true
+            if transaction.offer?.type == .introductory { trialEnds = transaction.expirationDate }
         }
-        access = Access.state(trialStart: trialStart, purchased: purchased)
+        var eligible = true
+        if let subscription = product?.subscription {
+            eligible = await subscription.isEligibleForIntroOffer
+        } else {
+            // Without the product (App Store unreachable), any earlier transaction means the trial is used up.
+            for await result in Transaction.all {
+                if case .verified(let transaction) = result, transaction.productID == productID { eligible = false; break }
+            }
+        }
+        // The free weeks are offered as long as Apple says this Apple ID may still take them.
+        trialAvailable = eligible && (product == nil || product?.subscription?.introductoryOffer?.paymentMode == .freeTrial)
+        access = Access.state(entitled: entitled, trialEnds: trialEnds, everSubscribed: !eligible)
     }
 
-    func startTrial() async { await buy(trialProduct) }
-
-    func buyFullVersion() async { await buy(fullProduct) }
-
-    private func buy(_ product: Product?) async {
+    func subscribe() async {
         message = nil
         guard let product else {
             message = "Der App Store ist gerade nicht erreichbar. Bitte versuch es gleich noch einmal."
@@ -95,7 +100,7 @@ final class Purchases: ObservableObject {
                 if case .verified(let transaction) = result { await transaction.finish() }
                 await refresh()
             case .pending:
-                message = "Der Kauf wartet noch auf eine Bestätigung, zum Beispiel aus der Familienfreigabe."
+                message = "Das Abo wartet noch auf eine Bestätigung, zum Beispiel aus der Familienfreigabe."
             case .userCancelled:
                 break
             @unknown default:
@@ -113,6 +118,6 @@ final class Purchases: ObservableObject {
         defer { busy = false }
         try? await AppStore.sync()
         await refresh()
-        if access != .unlocked { message = "Für diese Apple-ID ist noch keine Vollversion gekauft." }
+        if !access.isActive { message = "Für diese Apple-ID ist kein aktives Abo gespeichert." }
     }
 }

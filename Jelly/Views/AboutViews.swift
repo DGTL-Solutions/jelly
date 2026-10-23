@@ -10,8 +10,12 @@ enum AppInfo {
 
     static let publisher = "DGTL Solutions GmbH"
     static let copyright = "© 2026 \(publisher)"
-    /// Jelly's own source code (MPL-2.0); set once the repository is public.
+    /// Jelly's own source code (MPL-2.0).
     static let sourceURL: String? = "https://github.com/DGTL-Solutions/jelly"
+    /// The subscription's terms: Apple's standard licence agreement for App Store apps.
+    static let termsURL = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
+    /// The privacy policy as published for the App Store listing.
+    static let privacyURL = "https://dgtl-solutions.github.io/jelly/datenschutz/"
 }
 
 /// A library inside Jelly and the licence it ships under. `file` names the text in Resources/Licenses.
@@ -201,7 +205,7 @@ struct PrivacyNoticeView: View {
 
     Jelly verbindet sich nur mit den Servern, die du selbst einrichtest: deinem Jellyfin-Server und, wenn du willst, deinem Jellyseerr. Dorthin gehen deine Anmeldung, was du abspielst, der Wiedergabefortschritt sowie Ton- und Untertitelwahl – damit „Weiterschauen“ auf all deinen Geräten stimmt.
 
-    Gespeichert werden auf diesem Apple TV nur die Sitzungsschlüssel deiner Server (im Schlüsselbund) und deine Einstellungen. Passwörter speichert Jelly nicht. Käufe wickelt Apple über deine Apple-ID ab; Jelly prüft sie nur auf diesem Gerät und gibt nichts davon weiter.
+    Gespeichert werden auf diesem Apple TV nur die Sitzungsschlüssel deiner Server (im Schlüsselbund) und deine Einstellungen. Passwörter speichert Jelly nicht. Ein Abo wickelt Apple über deine Apple-ID ab; Jelly prüft den Abo-Status nur auf diesem Gerät und gibt nichts davon weiter.
 
 
     """

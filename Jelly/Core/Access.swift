@@ -1,31 +1,42 @@
 import Foundation
 
-/// What the App Store version lets the viewer do: two weeks to try everything, then a one-time purchase. Builds from
+/// What the App Store version lets the viewer do: a yearly subscription that starts with two free weeks. Builds from
 /// source (without the `APPSTORE` flag) are always unlocked.
 enum Access: Equatable {
     /// The App Store's answer is still on its way; playback isn't held up for it.
     case checking
-    /// No trial yet: browsing works, playback asks to start the trial or buy.
-    case notStarted
+    /// Never subscribed: browsing works, playback offers the free trial.
+    case notSubscribed
+    /// The free trial of the subscription is running.
     case trial(daysLeft: Int)
+    case subscribed
+    /// The subscription (or its trial) ended without renewal.
     case expired
     case unlocked
 
     static let trialDays = 14
 
-    /// `trialStart` is when the free "14-Tage-Test" was taken, as Apple recorded it; `purchased` the full version.
-    static func state(trialStart: Date?, purchased: Bool, now: Date = Date()) -> Access {
-        if purchased { return .unlocked }
-        guard let trialStart else { return .notStarted }
-        let end = trialStart.addingTimeInterval(Double(trialDays) * 86_400)
-        guard now < end else { return .expired }
-        return .trial(daysLeft: max(1, Int((end.timeIntervalSince(now) / 86_400).rounded(.up))))
+    /// `entitled`: StoreKit lists an active subscription (including a billing grace period); `trialEnds`: when that
+    /// period ends, if it is the free introductory offer; `everSubscribed`: the Apple ID has used this subscription before.
+    static func state(entitled: Bool, trialEnds: Date?, everSubscribed: Bool, now: Date = Date()) -> Access {
+        if entitled {
+            guard let trialEnds, trialEnds > now else { return .subscribed }
+            return .trial(daysLeft: max(1, Int((trialEnds.timeIntervalSince(now) / 86_400).rounded(.up))))
+        }
+        return everSubscribed ? .expired : .notSubscribed
     }
 
     var canPlay: Bool {
         switch self {
-        case .checking, .trial, .unlocked: return true
-        case .notStarted, .expired: return false
+        case .checking, .trial, .subscribed, .unlocked: return true
+        case .notSubscribed, .expired: return false
+        }
+    }
+
+    var isActive: Bool {
+        switch self {
+        case .trial, .subscribed: return true
+        default: return false
         }
     }
 }

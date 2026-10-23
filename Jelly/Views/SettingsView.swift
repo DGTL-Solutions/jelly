@@ -145,14 +145,15 @@ struct SettingsView: View {
 }
 
 extension SettingsView {
-    /// The App Store version's trial and purchase.
+    /// The App Store version's subscription.
     var purchase: some View {
-        SettingsSection("Vollversion", footer: purchases.message ?? "Einmalig \(purchases.price), kein Abo – gilt für alle Apple TVs mit deiner Apple-ID.") {
+        SettingsSection("Jahresabo", footer: purchases.message ?? "\(purchases.price) pro Jahr, verlängert sich automatisch – gilt für alle Apple TVs mit deiner Apple-ID. Kündigen: Apple-TV-Einstellungen › Benutzer und Accounts › Abonnements.") {
             SettingsInfo("Jelly", value: purchaseStatus)
-            if purchases.access != .unlocked {
-                Button { model.showsPaywall = true } label: {
-                    SettingsRowLabel(purchases.access == .notStarted ? "Kostenlos testen oder kaufen" : "Vollversion kaufen", icon: "lock.open", chevron: true)
-                }
+            Button { model.showsPaywall = true } label: {
+                SettingsRowLabel(purchases.access.isActive ? "Abo, Nutzungsbedingungen & Datenschutz" : purchases.trialAvailable ? "Kostenlos testen" : "Jahresabo abschließen",
+                                 icon: purchases.access.isActive ? "doc.text" : "star", chevron: true)
+            }
+            if !purchases.access.isActive {
                 Button { Task { await purchases.restore() } } label: {
                     SettingsRowLabel("Käufe wiederherstellen", icon: "arrow.clockwise", value: purchases.busy ? "…" : nil)
                 }
@@ -163,9 +164,10 @@ extension SettingsView {
     private var purchaseStatus: String {
         switch purchases.access {
         case .checking: return "Wird geprüft …"
-        case .notStarted: return "Test noch nicht gestartet"
-        case .trial(let days): return days == 1 ? "Test: noch 1 Tag" : "Test: noch \(days) Tage"
-        case .expired: return "Test abgelaufen"
+        case .notSubscribed: return "Kein Abo"
+        case .trial(let days): return days == 1 ? "Probezeit: noch 1 Tag" : "Probezeit: noch \(days) Tage"
+        case .subscribed: return "Abo aktiv"
+        case .expired: return "Abo abgelaufen"
         case .unlocked: return "Freigeschaltet"
         }
     }
