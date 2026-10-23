@@ -17,7 +17,7 @@ Jelly spielt deine eigene Jellyfin-Bibliothek auf dem Apple TV ab – in Origina
 
 ## Kontakt
 
-E-Mail: BITTE KONTAKT-E-MAIL EINTRAGEN
+E-Mail: info@dgtl24.net
 
 ## Impressum
 
@@ -28,8 +28,8 @@ Kirchstraße 10
 Vertreten durch die Geschäftsführer Valentin Kaymer und Bünyamin Sarikaya
 Amtsgericht Siegburg, HRB 16716
 USt-IdNr.: DE347150665
-Telefon: 02242 93 29 300
-E-Mail: BITTE KONTAKT-E-MAIL EINTRAGEN
+Telefon: 02242 932901
+E-Mail: info@dgtl24.net
 
 Rechteinhaber der App: DGTL Solutions GmbH. Jellys Quellcode steht unter der Mozilla Public License 2.0: [github.com/DGTL-Solutions/jelly](https://github.com/DGTL-Solutions/jelly).
 

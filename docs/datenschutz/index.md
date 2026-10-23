@@ -6,7 +6,7 @@ title: Jelly – Datenschutz
 
 Stand: 23. Oktober 2026
 
-Anbieter im App Store: Nessy GmbH, Kirchstraße 10, 53773 Hennef, Telefon 02242 93 29 300, E-Mail: BITTE KONTAKT-E-MAIL EINTRAGEN
+Anbieter im App Store: Nessy GmbH, Kirchstraße 10, 53773 Hennef, Telefon 02242 932901, E-Mail: info@dgtl24.net
 Rechteinhaber: DGTL Solutions GmbH
 
 ## Kurz gesagt
@@ -31,10 +31,10 @@ Wenn du Jelly löschst, entfernt tvOS diese Daten.
 
 ## Deine Rechte
 
-Da wir keine Daten über dich verarbeiten, können wir dazu auch keine Auskunft geben. Fragen zu Daten auf deinem Jellyfin- oder Jellyseerr-Server richtest du an dessen Betreiber. Bei Fragen zu dieser Erklärung: BITTE KONTAKT-E-MAIL EINTRAGEN.
+Da wir keine Daten über dich verarbeiten, können wir dazu auch keine Auskunft geben. Fragen zu Daten auf deinem Jellyfin- oder Jellyseerr-Server richtest du an dessen Betreiber. Bei Fragen zu dieser Erklärung: info@dgtl24.net.
 
 ---
 
 # Privacy Policy for Jelly (Apple TV)
 
-Jelly does not collect personal data. There is no advertising, analytics, tracking or account with us, and neither Nessy GmbH (App Store seller) nor DGTL Solutions GmbH (rights holder) receives data from the app. Jelly only connects to the Jellyfin and (optionally) Jellyseerr servers you set up yourself; your sign-in, what you play, playback progress and track choices go to those servers. The subscription and its trial are handled by Apple through your Apple ID; Jelly only verifies the subscription status on the device. Images for the Discover tab load from The Movie Database (image.tmdb.org), which sees nothing about you beyond your IP address. On the Apple TV, Jelly stores only server session keys (in the keychain, never passwords), your settings, caches and a local diagnostics log that never leaves the device. Contact: PLEASE ADD CONTACT E-MAIL.
+Jelly does not collect personal data. There is no advertising, analytics, tracking or account with us, and neither Nessy GmbH (App Store seller) nor DGTL Solutions GmbH (rights holder) receives data from the app. Jelly only connects to the Jellyfin and (optionally) Jellyseerr servers you set up yourself; your sign-in, what you play, playback progress and track choices go to those servers. The subscription and its trial are handled by Apple through your Apple ID; Jelly only verifies the subscription status on the device. Images for the Discover tab load from The Movie Database (image.tmdb.org), which sees nothing about you beyond your IP address. On the Apple TV, Jelly stores only server session keys (in the keychain, never passwords), your settings, caches and a local diagnostics log that never leaves the device. Contact: info@dgtl24.net.
