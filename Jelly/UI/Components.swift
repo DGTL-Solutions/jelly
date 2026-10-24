@@ -297,7 +297,7 @@ struct TitleLogo: View {
 }
 
 struct LoadingView: View {
-    var text = "Wird geladen …"
+    var text = String(localized: "Wird geladen …")
     var body: some View {
         VStack(spacing: 24) {
             ProgressView()
@@ -389,7 +389,8 @@ struct RatingBadges: View {
                     Text((score / 100).formatted(.percent.precision(.fractionLength(0)))).font(.callout.weight(.semibold))
                 }
                 .accessibilityElement(children: .combine)
-                .accessibilityLabel("\(IMDbRatings.isAvailable ? "Rotten Tomatoes" : "Kritiker") \(Int(score)) Prozent")
+                .accessibilityLabel(IMDbRatings.isAvailable ? String(localized: "Rotten Tomatoes \(Int(score)) Prozent")
+                                                            : String(localized: "Kritiker \(Int(score)) Prozent", comment: "Critics' score, e.g. Kritiker 85 Prozent"))
             }
         }
         .task(id: "\(item.imdbID ?? "")-\(showIMDb)") {

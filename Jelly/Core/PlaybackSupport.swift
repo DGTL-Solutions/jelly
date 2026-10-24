@@ -35,8 +35,8 @@ enum PlaybackEngine: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .direct: return "Originaldatei"
-        case .server: return "Vom Server verpackt"
+        case .direct: return String(localized: "Originaldatei", comment: "Playback engine: the original file plays unchanged")
+        case .server: return String(localized: "Vom Server verpackt", comment: "Playback engine: stream repackaged by the server")
         }
     }
 
@@ -57,14 +57,15 @@ struct PlaybackPlan: Equatable {
 
     /// Server-side conversion to a bitrate the connection can carry – the only plan that re-encodes video.
     static func limited(_ limit: Int) -> PlaybackPlan {
-        PlaybackPlan(engine: .server, remuxAudio: "aac,eac3,ac3", maxBitrate: limit, reason: "Angepasst an die Verbindung · höchstens \(limit / 1_000_000) Mbit/s")
+        PlaybackPlan(engine: .server, remuxAudio: "aac,eac3,ac3", maxBitrate: limit,
+                     reason: String(localized: "Angepasst an die Verbindung · höchstens \(limit / 1_000_000) Mbit/s"))
     }
 
     /// The original video plus only the selected audio track, repackaged by the server (nothing re-encoded).
     static func compact(audio: MediaStream?) -> PlaybackPlan {
         let copies = copyableAudio.contains(audio?.codecName ?? "")
         return PlaybackPlan(engine: .server, remuxAudio: copies ? "eac3,ac3,aac" : "flac,eac3,ac3,aac",
-                            reason: "Original ohne ungenutzte Tonspuren · verlustfrei")
+                            reason: String(localized: "Original ohne ungenutzte Tonspuren · verlustfrei"))
     }
 
     /// Bits per second this plan pulls over the network.
@@ -102,17 +103,19 @@ struct PlaybackPlan: Equatable {
         var reasons: [String] = []
         if TechInfo.dynamicRange(source.video) == "Dolby Vision" {
             if !device.dolbyVision {
-                reasons.append("Dolby Vision als HDR10")
+                reasons.append(String(localized: "Dolby Vision als HDR10", comment: "Dolby Vision video shown as HDR10"))
             } else if source.video?.dvProfile == 7 || range.hasPrefix("DOVIWithEL") {
-                reasons.append("Dolby Vision Profil 7 als 8.1")
+                reasons.append(String(localized: "Dolby Vision Profil 7 als 8.1", comment: "Dolby Vision profile 7 played as profile 8.1"))
             } else {
                 reasons.append("Dolby Vision")
             }
         } else if range == "HDR10Plus" {
-            reasons.append("HDR10+ dynamisch")
+            reasons.append(String(localized: "HDR10+ dynamisch", comment: "HDR10+ with dynamic metadata"))
         }
         if TechInfo.isAtmosPassthrough(audio) { reasons.append("Dolby Atmos") }
-        return PlaybackPlan(engine: .direct, reason: reasons.isEmpty ? "Originaldatei" : reasons.joined(separator: " · "))
+        let reason = reasons.isEmpty ? String(localized: "Originaldatei", comment: "Playback engine: the original file plays unchanged")
+            : reasons.joined(separator: " · ")
+        return PlaybackPlan(engine: .direct, reason: reason)
     }
 }
 
@@ -167,32 +170,45 @@ enum EnginePreference: String, CaseIterable, Identifiable {
     case automatic
     case software = "ffmpeg"
     var id: String { rawValue }
-    var title: String { self == .automatic ? "Automatisch (empfohlen)" : "Immer Software-Decoder" }
+    var title: String { self == .automatic ? String(localized: "Automatisch (empfohlen)") : String(localized: "Immer Software-Decoder") }
 }
 
 /// What to do when the measured connection can't carry the original file.
 enum SlowConnectionPolicy: String, CaseIterable, Identifiable {
     case adapt, original
     var id: String { rawValue }
-    var title: String { self == .adapt ? "Automatisch anpassen (empfohlen)" : "Immer Original (kann stocken)" }
+    var title: String {
+        self == .adapt ? String(localized: "Automatisch anpassen (empfohlen)") : String(localized: "Immer Original (kann stocken)")
+    }
 }
 
 enum SubtitleBackground: String, CaseIterable, Identifiable {
     case shadow, box
     var id: String { rawValue }
-    var title: String { self == .shadow ? "Schatten" : "Box" }
+    var title: String {
+        self == .shadow ? String(localized: "Schatten", comment: "Subtitle background: drop shadow")
+            : String(localized: "Box", comment: "Subtitle background: solid box")
+    }
 }
 
 enum SubtitleColor: String, CaseIterable, Identifiable {
     case white, yellow
     var id: String { rawValue }
-    var title: String { self == .white ? "Weiß" : "Gelb" }
+    var title: String {
+        self == .white ? String(localized: "Weiß", comment: "Subtitle color") : String(localized: "Gelb", comment: "Subtitle color")
+    }
 }
 
 enum SubtitleSize: String, CaseIterable, Identifiable {
     case small, standard, large
     var id: String { rawValue }
-    var title: String { ["small": "Klein", "standard": "Standard", "large": "Groß"][rawValue]! }
+    var title: String {
+        switch self {
+        case .small: return String(localized: "Klein", comment: "Subtitle size")
+        case .standard: return String(localized: "Standard", comment: "Subtitle size")
+        case .large: return String(localized: "Groß", comment: "Subtitle size")
+        }
+    }
     var points: CGFloat { ["small": 46, "standard": 56, "large": 68][rawValue]! }
 }
 
@@ -251,7 +267,7 @@ enum TechInfo {
         case 2: return "Stereo"
         case 6: return "5.1"
         case 8: return "7.1"
-        default: return "\(channels) Kanäle"
+        default: return String(localized: "\(channels) Kanäle", comment: "Number of audio channels")
         }
     }
 
@@ -261,13 +277,16 @@ enum TechInfo {
             ?? source.audioStreams.first { $0.isDefault == true } ?? source.audioStreams.first
     }
 
+    /// The badge for "has subtitles"; the player leaves it out because it shows the tracks itself.
+    static let subtitlesBadge = String(localized: "UT", comment: "Badge: the title has subtitles")
+
     static func badges(_ source: MediaSource?) -> [String] {
         guard let source else { return [] }
         let audio = defaultAudio(source)
         var badges = [resolution(source.video), dynamicRange(source.video)].compactMap { $0 }
         if let format = audioFormat(audio), ["Dolby Atmos", "DTS:X", "DTS-HD MA", "Dolby TrueHD"].contains(format) { badges.append(format) }
         if let channels = channels(audio), channels == "5.1" || channels == "7.1" { badges.append(channels) }
-        if !source.subtitleStreams.isEmpty { badges.append("UT") }
+        if !source.subtitleStreams.isEmpty { badges.append(subtitlesBadge) }
         return badges
     }
 
@@ -277,7 +296,9 @@ enum TechInfo {
         if let width = video.width, let height = video.height { parts.append("\(width)×\(height)") }
         parts.append([video.codec?.uppercased(), video.profile].compactMap { $0 }.joined(separator: " "))
         if let range = dynamicRange(video) {
-            parts.append(range + ((video.dvProfile).map { range == "Dolby Vision" ? " Profil \($0)" : "" } ?? ""))
+            if range == "Dolby Vision", let profile = video.dvProfile {
+                parts.append(String(localized: "Dolby Vision Profil \(profile)", comment: "Dolby Vision profile number"))
+            } else { parts.append(range) }
         } else { parts.append("SDR") }
         if let fps = video.realFrameRate ?? video.averageFrameRate, fps > 0 { parts.append(String(format: "%.3g fps", fps)) }
         return parts.filter { !$0.isEmpty }.joined(separator: " · ")

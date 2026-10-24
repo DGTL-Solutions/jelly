@@ -122,6 +122,19 @@ Die App-Store-Fassung wird mit einem Jahresabo freigeschaltet: 9,99 € pro Jahr
 
 Vorbereitung der Veröffentlichung – Lizenzen (AetherEngine und FFmpeg unter LGPL, ohne Lizenzkosten), Store-Texte, Review-Hinweise, Datenschutzerklärung und Upload-Skript (`Scripts/release-appstore.sh`): siehe [`AppStore/README.md`](AppStore/README.md). In der App: Einstellungen › Info › Open-Source-Lizenzen und Datenschutz.
 
+## Sprachen
+
+Jelly ist auf Deutsch und Englisch und folgt der Sprache des Apple TV; jede andere Sprache bekommt Englisch. Deutsch ist die Ausgangssprache: Die Texte stehen deutsch im Code (`Text("…")`, `String(localized: "…")`), die englischen Übersetzungen in `Jelly/Localizable.xcstrings` und `JellyTopShelf/Localizable.xcstrings` (Mehrzahl als Plural-Varianten), die Info.plist-Texte in den `InfoPlist.xcstrings`. Neue oder geänderte Texte holt man so heraus und wieder hinein:
+
+```sh
+xcodebuild -exportLocalizations -project Jelly.xcodeproj -scheme Jelly -localizationPath /tmp/jelly-loc -exportLanguage en \
+  -derivedDataPath .build/loc -sdk appletvsimulator CODE_SIGN_IDENTITY=- EXCLUDED_ARCHS=x86_64
+# en.xliff übersetzen, dann:
+xcodebuild -importLocalizations -project Jelly.xcodeproj -localizationPath /tmp/jelly-loc/en.xcloc
+```
+
+Im Simulator testet man eine Sprache mit `xcrun simctl launch <UDID> de.jelly.tv -AppleLanguages "(en)" -AppleLocale en_US`. Das statische Top-Shelf-Bild enthält bewusst keinen Satz, weil es nicht sprachabhängig sein kann.
+
 ## Grenzen
 
 - tvOS gibt TrueHD und DTS nie als Bitstream aus: Atmos aus TrueHD und DTS:X kommen als verlustfreies Mehrkanal-PCM ohne Objekte an. AetherEngine könnte die Objekte über optionale Paket-Traits als Apple Positional Audio ausgeben; XcodeGen kann diese Traits noch nicht setzen.

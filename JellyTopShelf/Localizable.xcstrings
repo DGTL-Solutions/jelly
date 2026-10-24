@@ -1,0 +1,499 @@
+{
+  "sourceLanguage": "de",
+  "strings": {
+    "%lld Kanäle": {
+      "comment": "Number of audio channels",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld channel"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld channels"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld Min.": {
+      "comment": "Duration: minutes, abbreviated",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
+          }
+        }
+      }
+    },
+    "%lld Std.": {
+      "comment": "Duration: hours, abbreviated",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld hr"
+          }
+        }
+      }
+    },
+    "%lld Std. %lld Min.": {
+      "comment": "Duration: hours and minutes, abbreviated",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$lld Std. %2$lld Min."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld hr %lld min"
+          }
+        }
+      }
+    },
+    "Angepasst an die Verbindung · höchstens %lld Mbit/s": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adjusted to your connection · up to %lld Mbit/s"
+          }
+        }
+      }
+    },
+    "Automatisch (empfohlen)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic (recommended)"
+          }
+        }
+      }
+    },
+    "Automatisch anpassen (empfohlen)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adjust automatically (recommended)"
+          }
+        }
+      }
+    },
+    "Benutzername oder Passwort stimmen nicht.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Incorrect username or password."
+          }
+        }
+      }
+    },
+    "Box": {
+      "comment": "Subtitle background: solid box",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Box"
+          }
+        }
+      }
+    },
+    "Dafür fehlt deinem Konto die Berechtigung.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your account doesn't have permission to do this."
+          }
+        }
+      }
+    },
+    "Der Server hat die Anmeldung abgelehnt. Meist ist das Geräte-Limit deines Kontos erreicht – melde ein anderes Gerät ab oder bitte den Admin, das Limit zu erhöhen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The server rejected the sign-in. Usually your account has reached its device limit—sign out another device or ask the admin to raise the limit."
+          }
+        }
+      }
+    },
+    "Der Server hat mit Fehler %lld geantwortet.": {
+      "comment": "HTTP status code",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The server responded with error %lld."
+          }
+        }
+      }
+    },
+    "Die Anmeldung konnte nicht sicher gespeichert werden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your sign-in couldn't be stored securely."
+          }
+        }
+      }
+    },
+    "Diese Adresse sieht nicht richtig aus. Beispiel: 192.168.1.20 oder jellyfin.meinedomain.de": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This address doesn't look right. Example: 192.168.1.20 or jellyfin.mydomain.com"
+          }
+        }
+      }
+    },
+    "Dolby Vision Profil %lld": {
+      "comment": "Dolby Vision profile number",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dolby Vision Profile %lld"
+          }
+        }
+      }
+    },
+    "Dolby Vision Profil 7 als 8.1": {
+      "comment": "Dolby Vision profile 7 played as profile 8.1",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dolby Vision Profile 7 as 8.1"
+          }
+        }
+      }
+    },
+    "Dolby Vision als HDR10": {
+      "comment": "Dolby Vision video shown as HDR10",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dolby Vision as HDR10"
+          }
+        }
+      }
+    },
+    "F%lld": {
+      "comment": "Episode number (F = Folge)",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E%lld"
+          }
+        }
+      }
+    },
+    "Folge": {
+      "comment": "TV episode",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Episode"
+          }
+        }
+      }
+    },
+    "Für diesen Titel ist keine abspielbare Datei verfügbar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No playable file is available for this title."
+          }
+        }
+      }
+    },
+    "Gelb": {
+      "comment": "Subtitle color",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yellow"
+          }
+        }
+      }
+    },
+    "Groß": {
+      "comment": "Subtitle size",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Large"
+          }
+        }
+      }
+    },
+    "HDR10+ dynamisch": {
+      "comment": "HDR10+ with dynamic metadata",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HDR10+ dynamic"
+          }
+        }
+      }
+    },
+    "Immer Original (kann stocken)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Always original (may stutter)"
+          }
+        }
+      }
+    },
+    "Immer Software-Decoder": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Always software decoder"
+          }
+        }
+      }
+    },
+    "Klein": {
+      "comment": "Subtitle size",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Small"
+          }
+        }
+      }
+    },
+    "Laufend": {
+      "comment": "Series status: still airing",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ongoing"
+          }
+        }
+      }
+    },
+    "Neu in deiner Mediathek": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New in Your Library"
+          }
+        }
+      }
+    },
+    "Noch %@": {
+      "comment": "Time left to watch, e.g. Noch 45 Min.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ left"
+          }
+        }
+      }
+    },
+    "Nächste Folge": {
+      "comment": "Next TV episode",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next Episode"
+          }
+        }
+      }
+    },
+    "Original ohne ungenutzte Tonspuren · verlustfrei": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Original without unused audio tracks · lossless"
+          }
+        }
+      }
+    },
+    "Originaldatei": {
+      "comment": "Playback engine: the original file plays unchanged",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Original file"
+          }
+        }
+      }
+    },
+    "Quick Connect ist auf diesem Server deaktiviert.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Connect is turned off on this server."
+          }
+        }
+      }
+    },
+    "S%lld": {
+      "comment": "Season number (S = Staffel)",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "S%lld"
+          }
+        }
+      }
+    },
+    "S%lld · F%lld": {
+      "comment": "Season and episode number, e.g. S1 · F3 (S = Staffel, F = Folge)",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "S%1$lld · F%2$lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "S%lld · E%lld"
+          }
+        }
+      }
+    },
+    "Schatten": {
+      "comment": "Subtitle background: drop shadow",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shadow"
+          }
+        }
+      }
+    },
+    "Serie": {
+      "comment": "Item type: TV series",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show"
+          }
+        }
+      }
+    },
+    "Spur %lld": {
+      "comment": "Fallback name of an audio or subtitle track",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Track %lld"
+          }
+        }
+      }
+    },
+    "Standard": {
+      "comment": "Subtitle size",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Default"
+          }
+        }
+      }
+    },
+    "UT": {
+      "comment": "Badge: the title has subtitles",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SUB"
+          }
+        }
+      }
+    },
+    "Unter dieser Adresse wurde kein Jellyfin-Server gefunden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No Jellyfin server was found at this address."
+          }
+        }
+      }
+    },
+    "Vom Server verpackt": {
+      "comment": "Playback engine: stream repackaged by the server",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repackaged by the server"
+          }
+        }
+      }
+    },
+    "Weiterschauen": {
+      "comment": "Continue watching",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continue Watching"
+          }
+        }
+      }
+    },
+    "Weiß": {
+      "comment": "Subtitle color",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "White"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

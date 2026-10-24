@@ -1,0 +1,5467 @@
+{
+  "sourceLanguage": "de",
+  "strings": {
+    "": {},
+    "%.0f Mbit/s benötigt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.0f Mbit/s needed"
+          }
+        }
+      }
+    },
+    "%.0f Mbit/s verfügbar": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.0f Mbit/s available"
+          }
+        }
+      }
+    },
+    "%.0f Mbit/s · Datei unverändert": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.0f Mbit/s · file unchanged"
+          }
+        }
+      }
+    },
+    "%.0f Mbit/s · verlustfrei, der Server lässt ungenutzte Spuren weg": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.0f Mbit/s · lossless, the server leaves out unused tracks"
+          }
+        }
+      }
+    },
+    "%.1f s voraus": {
+      "comment": "Seconds buffered ahead",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f s ahead"
+          }
+        }
+      }
+    },
+    "%@ %@ · unverändert": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ %2$@ · unverändert"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ %@ · unchanged"
+          }
+        }
+      }
+    },
+    "%@ abmelden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign Out %@"
+          }
+        }
+      }
+    },
+    "%@ ankommend": {
+      "comment": "Network rate arriving, e.g. 12.3 Mbit/s",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ incoming"
+          }
+        }
+      }
+    },
+    "%@ deiner Titel laufen im Original.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ of your titles play in original quality."
+          }
+        }
+      }
+    },
+    "%@ deiner Titel laufen im Original. Sehr große 4K-Remuxe passt Jelly automatisch an.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ of your titles play in original quality. Jelly automatically adjusts very large 4K remuxes."
+          }
+        }
+      }
+    },
+    "%@ für diesen Stream": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ for this stream"
+          }
+        }
+      }
+    },
+    "%@ gemessen": {
+      "comment": "Measured connection rate",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ measured"
+          }
+        }
+      }
+    },
+    "%@ im Original": {
+      "comment": "Share of titles that play in original quality",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ in original quality"
+          }
+        }
+      }
+    },
+    "%@ ist gerade nicht erreichbar.": {
+      "comment": "<server address> is currently unreachable",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ can't be reached right now."
+          }
+        }
+      }
+    },
+    "%@ pro Jahr, verlängert sich automatisch – gilt für alle Apple TVs mit deiner Apple-ID. Kündigen: Apple-TV-Einstellungen › Benutzer und Accounts › Abonnements.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ per year, renews automatically—applies to all Apple TVs using your Apple ID. To cancel: Apple TV Settings › Users and Accounts › Subscriptions."
+          }
+        }
+      }
+    },
+    "%@ · fertig gegen %@": {
+      "comment": "Time left · done at <time>",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ · fertig gegen %2$@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · done around %@"
+          }
+        }
+      }
+    },
+    "%@ · fertig morgen gegen %@": {
+      "comment": "Time left · done tomorrow at <time>",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ · fertig morgen gegen %2$@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · done tomorrow around %@"
+          }
+        }
+      }
+    },
+    "%@: Ø %@ Mbit/s (%lld Messungen)": {
+      "comment": "Time of day: average speed (number of measurements)",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@: Ø %2$@ Mbit/s (%3$lld Messungen)"
+          }
+        },
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%@: avg. %@ Mbit/s (%lld measurement)"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%@: avg. %@ Mbit/s (%lld measurements)"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%@× Echtzeit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@× real time"
+          }
+        }
+      }
+    },
+    "%lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld"
+          }
+        }
+      }
+    },
+    "%lld %%": {
+      "comment": "Percentage; German puts a space before the sign",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld%%"
+          }
+        }
+      }
+    },
+    "%lld Folgen": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Episode"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Episodes"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld Kanäle": {
+      "comment": "Number of audio channels",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld channel"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld channels"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld Min.": {
+      "comment": "Duration: minutes, abbreviated",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
+          }
+        }
+      }
+    },
+    "%lld Profile": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld profile"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld profiles"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld Staffeln": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Season"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Seasons"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld Staffeln wünschen": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Request %lld Season"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Request %lld Seasons"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld Std.": {
+      "comment": "Duration: hours, abbreviated",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld hr"
+          }
+        }
+      }
+    },
+    "%lld Std. %lld Min.": {
+      "comment": "Duration: hours and minutes, abbreviated",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$lld Std. %2$lld Min."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld hr %lld min"
+          }
+        }
+      }
+    },
+    "%lld Titel": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld title"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld titles"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld Wochen gratis, dann %@ pro Jahr": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$lld Wochen gratis, dann %2$@ pro Jahr"
+          }
+        },
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld week free, then %@ per year"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld weeks free, then %@ per year"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld ohne ungenutzte Tonspuren (verlustfrei)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld without unused audio tracks (lossless)"
+          }
+        }
+      }
+    },
+    "%lld verloren": {
+      "comment": "Dropped frames",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld dropped"
+          }
+        }
+      }
+    },
+    "%lld von %lld Titeln unverändert": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$lld von %2$lld Titeln unverändert"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld of %lld titles unchanged"
+          }
+        }
+      }
+    },
+    "%lld werden vom Server angepasst": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld adjusted by the server"
+          }
+        }
+      }
+    },
+    "+%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+%@"
+          }
+        }
+      }
+    },
+    "1 Staffel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 Season"
+          }
+        }
+      }
+    },
+    "1 Staffel wünschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Request 1 Season"
+          }
+        }
+      }
+    },
+    "A/V-Sync": {
+      "comment": "Diagnostics label: audio/video sync offset",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A/V Sync"
+          }
+        }
+      }
+    },
+    "AAC · vom Server umgerechnet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AAC · converted by the server"
+          }
+        }
+      }
+    },
+    "AUSGABE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OUTPUT"
+          }
+        }
+      }
+    },
+    "Abends": {
+      "comment": "Time of day: evening",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Evening"
+          }
+        }
+      }
+    },
+    "Abo abgelaufen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscription expired"
+          }
+        }
+      }
+    },
+    "Abo aktiv": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscription active"
+          }
+        }
+      }
+    },
+    "Abo, Nutzungsbedingungen & Datenschutz": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscription, Terms of Use & Privacy Policy"
+          }
+        }
+      }
+    },
+    "Abspielen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play"
+          }
+        }
+      }
+    },
+    "Adresse eingeben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter Address"
+          }
+        }
+      }
+    },
+    "Adresse, z. B. jellyseerr.example.com": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Address, e.g. jellyseerr.example.com"
+          }
+        }
+      }
+    },
+    "Aktiv": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On"
+          }
+        }
+      }
+    },
+    "Alle": {
+      "comment": "Library filter: all titles",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All"
+          }
+        }
+      }
+    },
+    "Alles läuft in Originalqualität": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Everything plays in original quality"
+          }
+        }
+      }
+    },
+    "Als gesehen markieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mark as Watched"
+          }
+        }
+      }
+    },
+    "Als ungesehen markieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mark as Unwatched"
+          }
+        }
+      }
+    },
+    "Analyse starten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start Analysis"
+          }
+        }
+      }
+    },
+    "Anderer Benutzer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Other User"
+          }
+        }
+      }
+    },
+    "Angemeldet als %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Signed in as %@"
+          }
+        }
+      }
+    },
+    "Angepasst an die Verbindung · höchstens %lld Mbit/s": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adjusted to your connection · up to %lld Mbit/s"
+          }
+        }
+      }
+    },
+    "Anmelden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign In"
+          }
+        }
+      }
+    },
+    "Anmelden …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Signing In …"
+          }
+        }
+      }
+    },
+    "Ansehen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch"
+          }
+        }
+      }
+    },
+    "Ansehen %@": {
+      "comment": "Watch <episode label, e.g. S1 · F3>",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch %@"
+          }
+        }
+      }
+    },
+    "Antwortzeit %@ ms": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Response time %@ ms"
+          }
+        }
+      }
+    },
+    "Antwortzeit %@ ms (±%@ ms)": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Antwortzeit %1$@ ms (±%2$@ ms)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Response time %@ ms (±%@ ms)"
+          }
+        }
+      }
+    },
+    "Apple TV per %@": {
+      "comment": "e.g. 'Apple TV per WLAN' / 'Apple TV per LAN-Kabel'",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple TV via %@"
+          }
+        }
+      }
+    },
+    "Apple-Player · Originaldatei": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Player · original file"
+          }
+        }
+      }
+    },
+    "Apple-Player · Originaldatei, auf dem Apple TV umverpackt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Player · original file, repackaged on Apple TV"
+          }
+        }
+      }
+    },
+    "Apple-Player · vom Server umgerechnet": {
+      "comment": "Apple-Player = Apple's AVPlayer",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Player · converted by the server"
+          }
+        }
+      }
+    },
+    "Apple-Player · vom Server verpackt, Bild original": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Player · repackaged by the server, original video"
+          }
+        }
+      }
+    },
+    "Audio": {
+      "comment": "Audio (player panel tab, info label)",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Audio"
+          }
+        }
+      }
+    },
+    "Aus": {
+      "comment": "Off\nSubtitles off",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off"
+          }
+        }
+      }
+    },
+    "Aus Favoriten entfernen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove from Favorites"
+          }
+        }
+      }
+    },
+    "Ausgabe": {
+      "comment": "Info panel label: audio output",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Output"
+          }
+        }
+      }
+    },
+    "Automatisch (empfohlen)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic (recommended)"
+          }
+        }
+      }
+    },
+    "Automatisch anpassen (empfohlen)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adjust automatically (recommended)"
+          }
+        }
+      }
+    },
+    "Bald im Kino": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upcoming Movies"
+          }
+        }
+      }
+    },
+    "Bedarf": {
+      "comment": "Diagnostics label: required bitrate",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Required"
+          }
+        }
+      }
+    },
+    "Bei zu langsamer Verbindung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If Connection Is Too Slow"
+          }
+        }
+      }
+    },
+    "Beide Werte stammen aus den Metadaten deines Jellyfin-Servers und fehlen bei Titeln, für die der Server keine Bewertung hat.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Both values come from your Jellyfin server's metadata and are missing for titles the server has no rating for."
+          }
+        }
+      }
+    },
+    "Beim Start nach Profil fragen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ask for Profile at Launch"
+          }
+        }
+      }
+    },
+    "Beim Umrechnen macht der Server aus HDR normales SDR. Für HDR in angepasster Qualität braucht der Server einen 10-Bit-fähigen HEVC-Encoder.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When converting, the server turns HDR into regular SDR. For HDR at adjusted quality, the server needs a 10-bit-capable HEVC encoder."
+          }
+        }
+      }
+    },
+    "Bekannt aus": {
+      "comment": "Titles a person is known for",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Known For"
+          }
+        }
+      }
+    },
+    "Beliebte Filme": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Popular Movies"
+          }
+        }
+      }
+    },
+    "Beliebte Serien": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Popular Shows"
+          }
+        }
+      }
+    },
+    "Benutzername": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Username"
+          }
+        }
+      }
+    },
+    "Benutzername & Passwort": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Username & Password"
+          }
+        }
+      }
+    },
+    "Benutzername oder Passwort stimmen nicht.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Incorrect username or password."
+          }
+        }
+      }
+    },
+    "Besetzung & Crew": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cast & Crew"
+          }
+        }
+      }
+    },
+    "Bewertung": {
+      "comment": "Library sort order: by rating\nRating",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rating"
+          }
+        }
+      }
+    },
+    "Bewertung %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rating %@"
+          }
+        }
+      }
+    },
+    "Bewertungen bei Filmen und Serien": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ratings for Movies and Shows"
+          }
+        }
+      }
+    },
+    "Bewertungen: Publikums- und Kritikerwerte stammen aus den Metadaten deines Jellyfin-Servers.": {
+      "comment": "Licences screen, data notice (without IMDb)",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ratings: audience and critic scores come from your Jellyfin server's metadata."
+          }
+        }
+      }
+    },
+    "Bibliothek": {
+      "comment": "Connection analysis step: media library check",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Library"
+          }
+        }
+      }
+    },
+    "Bibliotheken": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Libraries"
+          }
+        }
+      }
+    },
+    "Bild": {
+      "comment": "Diagnostics label: video output",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Video"
+          }
+        }
+      }
+    },
+    "Bild & Ton": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Video & Audio"
+          }
+        }
+      }
+    },
+    "Bildausgabe": {
+      "comment": "Info panel label: video output",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Video Output"
+          }
+        }
+      }
+    },
+    "Bilder": {
+      "comment": "Diagnostics label: video frames",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frames"
+          }
+        }
+      }
+    },
+    "Bilder im Tab „Erkunden“ lädt Jelly von The Movie Database (image.tmdb.org).\n\nUm deinen Server ohne Tippen zu finden, sucht Jelly im lokalen Netzwerk nach Jellyfin-Servern.\n\nDas Diagnose-Protokoll bleibt auf diesem Apple TV. Es enthält keine Passwörter oder Zugangsschlüssel und lässt sich unter Einstellungen › Diagnose löschen.": {
+      "comment": "Privacy notice, part 3 of 3. Keep the blank lines between paragraphs.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jelly loads images in the “Discover” tab from The Movie Database (image.tmdb.org).\n\nTo find your server without typing, Jelly searches the local network for Jellyfin servers.\n\nThe diagnostic log stays on this Apple TV. It contains no passwords or access keys and can be deleted under Settings › Diagnostics."
+          }
+        }
+      }
+    },
+    "Bildschirm": {
+      "comment": "Info panel label: TV display",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Display"
+          }
+        }
+      }
+    },
+    "Bildschirmschoner": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Screensaver"
+          }
+        }
+      }
+    },
+    "Bis zum Ende des Probezeitraums ist alles kostenlos. Danach kostet das Jelly Jahresabo %@ pro Jahr.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Everything is free until your free trial ends. After that, the Jelly Annual Subscription costs %@ per year."
+          }
+        }
+      }
+    },
+    "Box": {
+      "comment": "Subtitle background: solid box",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Box"
+          }
+        }
+      }
+    },
+    "Cover-Wand starten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start Cover Wall"
+          }
+        }
+      }
+    },
+    "DATEN & MARKEN": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DATA & TRADEMARKS"
+          }
+        }
+      }
+    },
+    "Dafür fehlt deinem Konto die Berechtigung.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your account doesn't have permission to do this."
+          }
+        }
+      }
+    },
+    "Das Abo verlängert sich automatisch um ein Jahr für %@, wenn du es nicht spätestens 24 Stunden vor Ablauf kündigst.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The subscription automatically renews for one year at %@ unless you cancel it at least 24 hours before the end of the current period."
+          }
+        }
+      }
+    },
+    "Das Abo wartet noch auf eine Bestätigung, zum Beispiel aus der Familienfreigabe.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The subscription is still waiting for approval, for example through Family Sharing."
+          }
+        }
+      }
+    },
+    "Das Apple TV hängt im WLAN. Ein LAN-Kabel macht große Dateien stabiler – besonders 4K.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your Apple TV is on Wi-Fi. An Ethernet cable makes large files play more reliably—especially 4K."
+          }
+        }
+      }
+    },
+    "Das Apple TV schaltet für jeden Film automatisch auf Dolby Vision, HDR10 oder SDR und die passende Bildfrequenz um.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple TV automatically switches to Dolby Vision, HDR10, or SDR and the matching frame rate for each movie."
+          }
+        }
+      }
+    },
+    "Das Overlay zeigt während der Wiedergabe, was die Leitung liefert, was der Film braucht, Puffer, Hänger und verlorene Bilder – und in Klartext, woran ein Stocken liegt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "During playback, the overlay shows what your connection delivers, what the movie needs, buffer, stalls, and dropped frames—and explains in plain language what's causing any stuttering."
+          }
+        }
+      }
+    },
+    "Das könnte dir auch gefallen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You Might Also Like"
+          }
+        }
+      }
+    },
+    "Datei": {
+      "comment": "Info panel label: file",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "File"
+          }
+        }
+      }
+    },
+    "Datenschutz": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacy Policy"
+          }
+        }
+      }
+    },
+    "Decoder": {
+      "comment": "Settings row: video decoder choice",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Decoder"
+          }
+        }
+      }
+    },
+    "Decoder kommt nicht hinterher": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Decoder can't keep up"
+          }
+        }
+      }
+    },
+    "Decodiert AV1": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Decodes AV1"
+          }
+        }
+      }
+    },
+    "Dein Abo ist abgelaufen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your subscription has expired"
+          }
+        }
+      }
+    },
+    "Dein Jahresabo ist aktiv": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your annual subscription is active"
+          }
+        }
+      }
+    },
+    "Dein Jellyseerr-Konto darf das nicht.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your Jellyseerr account isn't allowed to do that."
+          }
+        }
+      }
+    },
+    "Dein Konto darf nicht umrechnen lassen. Titel über der Leitungsgeschwindigkeit werden stocken.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your account isn't allowed to use server conversion. Titles above your connection speed will stutter."
+          }
+        }
+      }
+    },
+    "Dein Konto erlaubt %lld gleichzeitige Anmeldungen; Jelly auf diesem Apple TV ist eine davon.": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Your account allows %lld sign-in at a time; Jelly on this Apple TV is using it."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Your account allows %lld sign-ins at a time; Jelly on this Apple TV is one of them."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Dein Konto erlaubt 1 gleichzeitige Anmeldung; Jelly auf diesem Apple TV ist eine davon.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your account allows 1 sign-in at a time; Jelly on this Apple TV is using it."
+          }
+        }
+      }
+    },
+    "Deine Bibliothek": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your Library"
+          }
+        }
+      }
+    },
+    "Deine Mediathek wird geladen …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading your library …"
+          }
+        }
+      }
+    },
+    "Deine Verbindung schafft %@ von %@ Mbit/s – es kann stocken": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Deine Verbindung schafft %1$@ von %2$@ Mbit/s – es kann stocken"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your connection manages %@ of %@ Mbit/s—playback may stutter"
+          }
+        }
+      }
+    },
+    "Deine Wünsche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your Requests"
+          }
+        }
+      }
+    },
+    "Der App Store ist gerade nicht erreichbar. Bitte versuch es gleich noch einmal.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The App Store can't be reached right now. Please try again in a moment."
+          }
+        }
+      }
+    },
+    "Der Code ist abgelaufen. Bitte erneut versuchen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The code has expired. Please try again."
+          }
+        }
+      }
+    },
+    "Der Player konnte nicht gestartet werden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The player couldn't be started."
+          }
+        }
+      }
+    },
+    "Der Server begrenzt Fernzugriffe auf %lld Mbit/s.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The server limits remote access to %lld Mbit/s."
+          }
+        }
+      }
+    },
+    "Der Server hat die Anmeldung abgelehnt. Meist ist das Geräte-Limit deines Kontos erreicht – melde ein anderes Gerät ab oder bitte den Admin, das Limit zu erhöhen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The server rejected the sign-in. Usually your account has reached its device limit—sign out another device or ask the admin to raise the limit."
+          }
+        }
+      }
+    },
+    "Der Server hat mit Fehler %lld geantwortet.": {
+      "comment": "HTTP status code",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The server responded with error %lld."
+          }
+        }
+      }
+    },
+    "Der Server läuft über Cloudflare. Cloudflare erlaubt im kostenlosen Tarif kein großes Video-Streaming und kann drosseln – eine direkte Verbindung (z. B. per VPN wie Tailscale oder WireGuard) ist meist schneller.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The server runs through Cloudflare. Cloudflare's free plan doesn't allow large-scale video streaming and may throttle it—a direct connection (e.g. via a VPN like Tailscale or WireGuard) is usually faster."
+          }
+        }
+      }
+    },
+    "Der Server rechnet %@-mal schneller als Echtzeit um – angepasste Qualität läuft flüssig.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The server converts %@× faster than real time—adjusted quality plays smoothly."
+          }
+        }
+      }
+    },
+    "Der Server rechnet das Bild herunter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The server lowers the video quality"
+          }
+        }
+      }
+    },
+    "Der Server rechnet nur %@-mal so schnell wie Echtzeit um – angepasste Qualität kann stocken. Hardware-Beschleunigung im Jellyfin-Dashboard hilft.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The server converts only %@× as fast as real time—adjusted quality may stutter. Turning on hardware acceleration in the Jellyfin dashboard helps."
+          }
+        }
+      }
+    },
+    "Der Server steht nicht in diesem Netzwerk": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The server isn't on this network"
+          }
+        }
+      }
+    },
+    "Der Server wird über das Internet erreicht. Die Grenze ist meist der Upload am Anschluss des Servers – mehr als dieser Upload kommt nirgends an.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The server is reached over the internet. The limit is usually the upload speed of the server's internet connection—nothing arrives faster than that upload."
+          }
+        }
+      }
+    },
+    "Der Titel liegt auf dem Jellyfin-Server, mit dem Jellyseerr verbunden ist – in deiner aktuellen Bibliothek wurde er nicht gefunden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This title is on the Jellyfin server that Jellyseerr is connected to—it wasn't found in your current library."
+          }
+        }
+      }
+    },
+    "Details": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Details"
+          }
+        }
+      }
+    },
+    "Details anzeigen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show Details"
+          }
+        }
+      }
+    },
+    "Diagnose": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostics"
+          }
+        }
+      }
+    },
+    "Diagnose-Overlay im Player": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostics Overlay in Player"
+          }
+        }
+      }
+    },
+    "Diagnose-Protokoll": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostic Log"
+          }
+        }
+      }
+    },
+    "Die Anmeldung bei Jellyseerr ist abgelaufen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your Jellyseerr sign-in has expired."
+          }
+        }
+      }
+    },
+    "Die Anmeldung konnte nicht sicher gespeichert werden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your sign-in couldn't be stored securely."
+          }
+        }
+      }
+    },
+    "Die Datei konnte nicht geöffnet werden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The file couldn't be opened."
+          }
+        }
+      }
+    },
+    "Die Datenschutzerklärung zum Lesen auf dem Handy: Code scannen oder die Adresse öffnen:\n\n%@\n\nDas Wichtigste steht auch hier darunter.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To read the privacy policy on your phone, scan the code or open this address:\n\n%@\n\nThe key points are also summarized below."
+          }
+        }
+      }
+    },
+    "Die Geschwindigkeit schwankt stark (zeitweise nur %@ Mbit/s). Ein größerer Puffer hilft – Jelly hält bis zu 30 s vor.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The speed fluctuates a lot (at times only %@ Mbit/s). A larger buffer helps—Jelly buffers up to 30 s ahead."
+          }
+        }
+      }
+    },
+    "Die Leitung trägt alle Titel im Original.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your connection can play every title in original quality."
+          }
+        }
+      }
+    },
+    "Die Leitung trägt auch die größten Dateien deiner Bibliothek.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your connection can handle even the largest files in your library."
+          }
+        }
+      }
+    },
+    "Die Ton-Synchronisation übernimmt bei diesem Titel Apples Player selbst.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For this title, Apple's player handles audio sync itself."
+          }
+        }
+      }
+    },
+    "Die Verbindung zum Server ist abgebrochen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The connection to the server was lost."
+          }
+        }
+      }
+    },
+    "Die Wiedergabe stockt – Details unter ↓ › Info": {
+      "comment": "↓ › Info: swipe down, then the Info tab of the player panel",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Playback is stuttering—details under ↓ › Info"
+          }
+        }
+      }
+    },
+    "Die meisten Titel muss der Server herunterrechnen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The server has to convert most titles to a lower quality."
+          }
+        }
+      }
+    },
+    "Diese Adresse sieht nicht richtig aus. Beispiel: 192.168.1.20 oder jellyfin.meinedomain.de": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This address doesn't look right. Example: 192.168.1.20 or jellyfin.mydomain.com"
+          }
+        }
+      }
+    },
+    "Diese App. Ihr Quellcode ist offen – damit lässt sie sich auch mit geänderten Bibliotheken neu bauen, wie die LGPL es verlangt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This app. Its source code is open, so it can be rebuilt with modified libraries, as the LGPL requires."
+          }
+        }
+      }
+    },
+    "Diese Bibliothek ist leer.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This library is empty."
+          }
+        }
+      }
+    },
+    "Diese Tonspur kann nicht wiedergegeben werden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This audio track can't be played"
+          }
+        }
+      }
+    },
+    "Dieses Apple TV": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This Apple TV"
+          }
+        }
+      }
+    },
+    "Direkt: %@": {
+      "comment": "Direct address of the server in the home network",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Direct: %@"
+          }
+        }
+      }
+    },
+    "Dolby Digital+ %@ · umgewandelt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dolby Digital+ %@ · converted"
+          }
+        }
+      }
+    },
+    "Dolby Vision Profil %lld": {
+      "comment": "Dolby Vision profile number",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dolby Vision Profile %lld"
+          }
+        }
+      }
+    },
+    "Dolby Vision Profil 7 als 8.1": {
+      "comment": "Dolby Vision profile 7 played as profile 8.1",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dolby Vision Profile 7 as 8.1"
+          }
+        }
+      }
+    },
+    "Dolby Vision als HDR10": {
+      "comment": "Dolby Vision video shown as HDR10",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dolby Vision as HDR10"
+          }
+        }
+      }
+    },
+    "Dolby Vision bereit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dolby Vision ready"
+          }
+        }
+      }
+    },
+    "Dolby Vision · Profil %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dolby Vision · Profile %lld"
+          }
+        }
+      }
+    },
+    "Dolby Vision · Profil 7 als 8.1": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dolby Vision · Profile 7 as 8.1"
+          }
+        }
+      }
+    },
+    "Download hängt · %@": {
+      "comment": "Download state with percentage",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Download stalled · %@"
+          }
+        }
+      }
+    },
+    "Drehbuch": {
+      "comment": "Crew role: writer",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Writer"
+          }
+        }
+      }
+    },
+    "E-Mail": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Email"
+          }
+        }
+      }
+    },
+    "Ein": {
+      "comment": "On",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On"
+          }
+        }
+      }
+    },
+    "Eine IP-Adresse oder Domain reicht – Protokoll und Port probiert Jelly automatisch aus.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "An IP address or domain is enough—Jelly tries the protocol and port automatically."
+          }
+        }
+      }
+    },
+    "Einstellungen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        }
+      }
+    },
+    "Endet um %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ends at %@"
+          }
+        }
+      }
+    },
+    "Erkunden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discover"
+          }
+        }
+      }
+    },
+    "Erkunden: Titel, Beschreibungen und Bilder stammen von The Movie Database (TMDB) und kommen über deinen Jellyseerr-Server. This product uses the TMDB API but is not endorsed or certified by TMDB.\n\nJelly ist eine unabhängige App und kein offizielles Produkt der Projekte Jellyfin oder Jellyseerr. Die Namen gehören ihren jeweiligen Projekten.": {
+      "comment": "Licences screen, data & trademark notices. Keep the English TMDB attribution as is.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discover: Titles, descriptions, and images come from The Movie Database (TMDB) via your Jellyseerr server. This product uses the TMDB API but is not endorsed or certified by TMDB.\n\nJelly is an independent app and not an official product of the Jellyfin or Jellyseerr projects. The names belong to their respective projects."
+          }
+        }
+      }
+    },
+    "Erneut analysieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analyze Again"
+          }
+        }
+      }
+    },
+    "Erneut suchen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search Again"
+          }
+        }
+      }
+    },
+    "Erneut versuchen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try Again"
+          }
+        }
+      }
+    },
+    "Erscheinungsdatum": {
+      "comment": "Library sort order: release date",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Release Date"
+          }
+        }
+      }
+    },
+    "Erzwungen": {
+      "comment": "Forced subtitles",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Forced"
+          }
+        }
+      }
+    },
+    "Extern": {
+      "comment": "Subtitles from a separate file",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "External"
+          }
+        }
+      }
+    },
+    "F%lld": {
+      "comment": "Episode number (F = Folge)",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E%lld"
+          }
+        }
+      }
+    },
+    "Farbe": {
+      "comment": "Subtitle colour",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color"
+          }
+        }
+      }
+    },
+    "Favoriten": {
+      "comment": "Library filter: favourites",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Favorites"
+          }
+        }
+      }
+    },
+    "Fehlende Staffeln wünschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Request Missing Seasons"
+          }
+        }
+      }
+    },
+    "Fernseher: %@": {
+      "comment": "TV: supported HDR formats",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TV: %@"
+          }
+        }
+      }
+    },
+    "Fernseher: kein HDR erkannt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TV: no HDR detected"
+          }
+        }
+      }
+    },
+    "Fertig": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        }
+      }
+    },
+    "Film": {
+      "comment": "Movie",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movie"
+          }
+        }
+      }
+    },
+    "Filme": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movies"
+          }
+        }
+      }
+    },
+    "Filme und Serien": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movies and Shows"
+          }
+        }
+      }
+    },
+    "Filme und Serien suchen und wünschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search for and request movies and shows"
+          }
+        }
+      }
+    },
+    "Filme, Serien, Folgen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movies, Shows, Episodes"
+          }
+        }
+      }
+    },
+    "Filter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filter"
+          }
+        }
+      }
+    },
+    "Finde Filme, Serien und Folgen in deiner Mediathek.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find movies, shows, and episodes in your library."
+          }
+        }
+      }
+    },
+    "Folgen": {
+      "comment": "TV episodes",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Episodes"
+          }
+        }
+      }
+    },
+    "Fortsetzen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume"
+          }
+        }
+      }
+    },
+    "Fortsetzen %@": {
+      "comment": "Resume <episode label, e.g. S1 · F3>",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume %@"
+          }
+        }
+      }
+    },
+    "Freigegeben – sobald der Titel geladen ist, steht er in deiner Bibliothek.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Approved—as soon as the title has downloaded, it will be in your library."
+          }
+        }
+      }
+    },
+    "Freigeschaltet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlocked"
+          }
+        }
+      }
+    },
+    "Für IMDb-Bewertungen lädt Jelly einmal pro Woche IMDbs öffentlichen Bewertungs-Datensatz direkt von IMDb und schickt dabei keine Angaben über dich mit. Abschaltbar unter Einstellungen › Bewertungen.": {
+      "comment": "Privacy notice, part 2 of 3 (only with IMDb ratings)",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For IMDb ratings, Jelly downloads IMDb's public ratings dataset directly from IMDb once a week, without sending any information about you. You can turn this off under Settings › Ratings."
+          }
+        }
+      }
+    },
+    "Für Jelly und das Jelly Jahresabo gilt die Standard-Lizenzvereinbarung von Apple für Apps aus dem App Store (EULA). Zum Lesen auf dem Handy den Code scannen oder die Adresse öffnen:\n\n%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jelly and the Jelly Annual Subscription are governed by Apple's Standard License Agreement for App Store apps (EULA). To read it on your phone, scan the code or open this address:\n\n%@"
+          }
+        }
+      }
+    },
+    "Für automatisches Umschalten auf HDR, Dolby Vision und 24 Hz: Apple-TV-Einstellungen › Video und Audio › Inhalt anpassen › Dynamikbereich und Bildfrequenz aktivieren.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To switch to HDR, Dolby Vision, and 24 Hz automatically: in Apple TV Settings › Video and Audio › Match Content, turn on Match Dynamic Range and Match Frame Rate."
+          }
+        }
+      }
+    },
+    "Für diese Apple-ID ist kein aktives Abo gespeichert.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No active subscription was found for this Apple ID."
+          }
+        }
+      }
+    },
+    "Für diese Untertitel spielt Jelly die Originaldatei": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For these subtitles, Jelly plays the original file"
+          }
+        }
+      }
+    },
+    "Für diesen Filter gibt es keine Titel.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No titles match this filter."
+          }
+        }
+      }
+    },
+    "Für diesen Titel ist keine abspielbare Datei verfügbar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No playable file is available for this title."
+          }
+        }
+      }
+    },
+    "Gefunden: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Found: %@"
+          }
+        }
+      }
+    },
+    "Gelb": {
+      "comment": "Subtitle color",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yellow"
+          }
+        }
+      }
+    },
+    "Gerade angesagt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trending"
+          }
+        }
+      }
+    },
+    "Geschwindigkeit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speed"
+          }
+        }
+      }
+    },
+    "Getestet mit %@": {
+      "comment": "Tested with <movie title>",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tested with %@"
+          }
+        }
+      }
+    },
+    "Gewünscht": {
+      "comment": "Jellyseerr status: the title was requested",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Requested"
+          }
+        }
+      }
+    },
+    "Gewünscht – ein Admin muss den Wunsch noch freigeben. Danach erscheint er automatisch in deiner Bibliothek.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Requested—an admin still has to approve your request. Then the title will appear in your library automatically."
+          }
+        }
+      }
+    },
+    "Groß": {
+      "comment": "Subtitle size",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Large"
+          }
+        }
+      }
+    },
+    "Grund": {
+      "comment": "Diagnostics label: reason",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reason"
+          }
+        }
+      }
+    },
+    "Größe": {
+      "comment": "Subtitle size",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Size"
+          }
+        }
+      }
+    },
+    "Größter Brocken: %@ (%@ Mbit/s)": {
+      "comment": "The title with the highest bitrate",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Größter Brocken: %1$@ (%2$@ Mbit/s)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Highest bitrate: %@ (%@ Mbit/s)"
+          }
+        }
+      }
+    },
+    "Gut für HD und die meisten 4K-Titel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Good for HD and most 4K titles"
+          }
+        }
+      }
+    },
+    "Gut für HD, 4K wird oft angepasst": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Good for HD, 4K is often adjusted"
+          }
+        }
+      }
+    },
+    "HDR-Formate des Fernsehers": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TV HDR Formats"
+          }
+        }
+      }
+    },
+    "HDR10+ dynamisch": {
+      "comment": "HDR10+ with dynamic metadata",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HDR10+ dynamic"
+          }
+        }
+      }
+    },
+    "Hallo %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hi, %@"
+          }
+        }
+      }
+    },
+    "Heimnetz": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Home Network"
+          }
+        }
+      }
+    },
+    "Hintergrund": {
+      "comment": "Subtitle background",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Background"
+          }
+        }
+      }
+    },
+    "Hänger": {
+      "comment": "Diagnostics label: number of stalls",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stalls"
+          }
+        }
+      }
+    },
+    "Höchstens %lld Mbit/s": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Up to %lld Mbit/s"
+          }
+        }
+      }
+    },
+    "IMDb": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMDb"
+          }
+        }
+      }
+    },
+    "IMDb %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMDb %@"
+          }
+        }
+      }
+    },
+    "IMDb-Bewertung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMDb Rating"
+          }
+        }
+      }
+    },
+    "IMDb-Bewertungen: Information courtesy of IMDb (https://www.imdb.com). Used with permission. Jelly lädt dafür IMDbs Datensatz für private, nicht-kommerzielle Nutzung direkt von IMDb auf dieses Apple TV.\n\nRotten Tomatoes: Die Kritikerwerte stammen aus den Metadaten deines Jellyfin-Servers. Rotten Tomatoes ist eine Marke der Fandango Media, LLC.": {
+      "comment": "Licences screen, data & trademark notices (with IMDb). Keep the English IMDb attribution as is.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMDb ratings: Information courtesy of IMDb (https://www.imdb.com). Used with permission. For this, Jelly downloads IMDb's dataset for personal, non-commercial use directly from IMDb to this Apple TV.\n\nRotten Tomatoes: Critic scores come from your Jellyfin server's metadata. Rotten Tomatoes is a trademark of Fandango Media, LLC."
+          }
+        }
+      }
+    },
+    "IMDb-Werte kommen aus IMDbs öffentlichem Bewertungs-Datensatz und werden wöchentlich aktualisiert. Rotten Tomatoes stammt aus den Metadaten deines Jellyfin-Servers und fehlt bei Titeln, für die der Server keinen Kritikerwert hat.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMDb scores come from IMDb's public ratings dataset and are updated weekly. Rotten Tomatoes scores come from your Jellyfin server's metadata and are missing for titles the server has no critic score for."
+          }
+        }
+      }
+    },
+    "Immer Original (kann stocken)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Always original (may stutter)"
+          }
+        }
+      }
+    },
+    "Immer Software-Decoder": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Always software decoder"
+          }
+        }
+      }
+    },
+    "In deiner Bibliothek": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In your library"
+          }
+        }
+      }
+    },
+    "In der Warteschlange": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Queued"
+          }
+        }
+      }
+    },
+    "Info": {
+      "comment": "Player panel tab: playback details\nSettings section: about the app",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Info"
+          }
+        }
+      }
+    },
+    "Inhalt anpassen": {
+      "comment": "Name of the Apple TV setting Match Content",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Match Content"
+          }
+        }
+      }
+    },
+    "Inhalt anpassen ist aus": {
+      "comment": "tvOS Match Content setting is off",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Match Content is off"
+          }
+        }
+      }
+    },
+    "Inhalt anpassen: an": {
+      "comment": "tvOS setting 'Match Content' (Inhalt anpassen) is on",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Match Content: on"
+          }
+        }
+      }
+    },
+    "Inhalt anpassen: aus": {
+      "comment": "tvOS setting 'Match Content' (Inhalt anpassen) is off",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Match Content: off"
+          }
+        }
+      }
+    },
+    "Internet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Internet"
+          }
+        }
+      }
+    },
+    "Intro überspringen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip Intro"
+          }
+        }
+      }
+    },
+    "Intro übersprungen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Intro skipped"
+          }
+        }
+      }
+    },
+    "Intros automatisch überspringen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip Intros Automatically"
+          }
+        }
+      }
+    },
+    "Jahresabo": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annual Subscription"
+          }
+        }
+      }
+    },
+    "Jahresabo abschließen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get Annual Subscription"
+          }
+        }
+      }
+    },
+    "Jahresabo abschließen – %@ pro Jahr": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscribe for %@ per Year"
+          }
+        }
+      }
+    },
+    "Jede Messung wird gespeichert – auch die automatischen vor großen Filmen. Nach Messungen zu verschiedenen Tageszeiten steht hier, wann die Leitung am schnellsten ist.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every measurement is saved—including the automatic ones before large movies. Once there are measurements from different times of day, this shows when your connection is fastest."
+          }
+        }
+      }
+    },
+    "Jelly %lld Wochen kostenlos testen": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Try Jelly free for %lld week"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Try Jelly free for %lld weeks"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Jelly Jahresabo": {
+      "comment": "Name of the yearly subscription",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jelly Annual Subscription"
+          }
+        }
+      }
+    },
+    "Jelly Jahresabo · 1 Jahr · %@ pro Jahr. Bezahlt wird über deine Apple-ID; das Abo gilt auf allen Apple TVs mit dieser Apple-ID. Kündigen: Apple-TV-Einstellungen › Benutzer und Accounts › Abonnements.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jelly Annual Subscription · 1 year · %@ per year. Payment is charged to your Apple ID; the subscription applies to all Apple TVs using this Apple ID. To cancel: Apple TV Settings › Users and Accounts › Subscriptions."
+          }
+        }
+      }
+    },
+    "Jelly ist eine unabhängige App und kein offizielles Produkt des Jellyfin-Projekts. %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jelly is an independent app and not an official product of the Jellyfin project. %@"
+          }
+        }
+      }
+    },
+    "Jelly ist freigeschaltet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jelly is unlocked"
+          }
+        }
+      }
+    },
+    "Jelly kann mit mehreren Jellyfin-Servern verbunden bleiben, zum Beispiel deinem eigenen und dem von Freunden. Gewechselt wird hier, ohne neue Anmeldung.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jelly can stay connected to multiple Jellyfin servers, for example your own and a friend's. Switch between them here without signing in again."
+          }
+        }
+      }
+    },
+    "Jelly meldet sich einmal an und merkt sich die Sitzung für dieses Profil. Dein Passwort wird nicht gespeichert.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jelly signs in once and remembers the session for this profile. Your password isn't stored."
+          }
+        }
+      }
+    },
+    "Jelly sammelt keine Daten über dich. Es gibt keine Werbung, keine Analyse und kein Tracking, und %@ erhält nichts von dieser App.\n\nJelly verbindet sich nur mit den Servern, die du selbst einrichtest: deinem Jellyfin-Server und, wenn du willst, deinem Jellyseerr. Dorthin gehen deine Anmeldung, was du abspielst, der Wiedergabefortschritt sowie Ton- und Untertitelwahl – damit „Weiterschauen“ auf all deinen Geräten stimmt.\n\nGespeichert werden auf diesem Apple TV nur die Sitzungsschlüssel deiner Server (im Schlüsselbund) und deine Einstellungen. Passwörter speichert Jelly nicht. Ein Abo wickelt Apple über deine Apple-ID ab; Jelly prüft den Abo-Status nur auf diesem Gerät und gibt nichts davon weiter.": {
+      "comment": "Privacy notice, part 1 of 3. %@ is the publisher. Keep the blank lines between paragraphs.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jelly doesn't collect any data about you. There are no ads, no analytics, and no tracking, and %@ receives nothing from this app.\n\nJelly connects only to the servers you set up yourself: your Jellyfin server and, if you like, your Jellyseerr. Your sign-in, what you play, your playback progress, and your audio and subtitle choices are sent there—so that “Continue Watching” stays in sync across all your devices.\n\nThe only things stored on this Apple TV are your servers' session keys (in the keychain) and your settings. Jelly doesn't store passwords. Subscriptions are handled by Apple through your Apple ID; Jelly checks your subscription status only on this device and doesn't share any of it."
+          }
+        }
+      }
+    },
+    "Jelly spielt Filme mit AetherEngine und FFmpeg ab und nutzt dafür die folgende freie Software. Danke an alle, die daran mitarbeiten. Ein Klick zeigt Herkunft und vollständigen Lizenztext.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jelly plays movies with AetherEngine and FFmpeg, using the following free software. Thanks to everyone who contributes to it. Click an entry to see where it comes from and its full license text."
+          }
+        }
+      }
+    },
+    "Jelly spielt immer das Original – Video wird nie neu kodiert. Was das Apple TV selbst decodiert, läuft über Apples Player mit echtem Dolby Vision (Profil 7 als 8.1), HDR10+ und Dolby Atmos; die Datei wird dafür auf dem Apple TV umverpackt, nicht auf dem Server. Alles andere – AV1, VC-1, MPEG-2 und mehr – decodiert Jelly selbst. Intros erkennt Jelly selbst, indem es den Ton benachbarter Folgen vergleicht – auch ohne Server-Plugin.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jelly always plays the original—video is never re-encoded. Anything Apple TV can decode itself plays through Apple's player with true Dolby Vision (Profile 7 as 8.1), HDR10+, and Dolby Atmos; for this, the file is repackaged on Apple TV, not on the server. Everything else—AV1, VC-1, MPEG-2, and more—Jelly decodes itself. Jelly detects intros on its own by comparing the audio of neighboring episodes—no server plugin needed."
+          }
+        }
+      }
+    },
+    "Jelly, AetherEngine, FFmpeg und %lld weitere": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jelly, AetherEngine, FFmpeg, and %lld more"
+          }
+        }
+      }
+    },
+    "Jellyfin-Benutzername": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jellyfin Username"
+          }
+        }
+      }
+    },
+    "Jellyseerr %@ erreichbar": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jellyseerr %@ reachable"
+          }
+        }
+      }
+    },
+    "Jellyseerr erlaubt das nicht: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jellyseerr doesn't allow this: %@"
+          }
+        }
+      }
+    },
+    "Jellyseerr ist unter dieser Adresse nicht erreichbar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jellyseerr can't be reached at this address."
+          }
+        }
+      }
+    },
+    "Jellyseerr konnte dich nicht bei Jellyfin anmelden. Meist ist das Passwort falsch oder dein Jellyfin-Konto hat die erlaubte Zahl gleichzeitiger Anmeldungen erreicht – dann ein anderes Gerät abmelden und erneut versuchen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jellyseerr couldn't sign you in to Jellyfin. Usually the password is wrong or your Jellyfin account has reached its limit of simultaneous sign-ins—in that case, sign out another device and try again."
+          }
+        }
+      }
+    },
+    "Jellyseerr lehnt die Anmeldung ab: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jellyseerr rejected the sign-in: %@"
+          }
+        }
+      }
+    },
+    "Jellyseerr meldet einen Fehler (%lld).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jellyseerr reported an error (%lld)."
+          }
+        }
+      }
+    },
+    "Jellyseerr meldet einen Fehler (%lld): %@.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Jellyseerr meldet einen Fehler (%1$lld): %2$@."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jellyseerr reported an error (%lld): %@."
+          }
+        }
+      }
+    },
+    "Jellyseerr trennen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disconnect Jellyseerr"
+          }
+        }
+      }
+    },
+    "Jellyseerr verbinden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connect Jellyseerr"
+          }
+        }
+      }
+    },
+    "Jellyseerr wird geladen …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading Jellyseerr …"
+          }
+        }
+      }
+    },
+    "Jetzt anzeigen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show Now"
+          }
+        }
+      }
+    },
+    "Kapitel": {
+      "comment": "Player panel tab: chapters",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chapters"
+          }
+        }
+      }
+    },
+    "Kapitel %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chapter %lld"
+          }
+        }
+      }
+    },
+    "Kein Abo": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No subscription"
+          }
+        }
+      }
+    },
+    "Kein Server automatisch gefunden. Gib die Adresse einfach ein.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No server found automatically. Just enter the address."
+          }
+        }
+      }
+    },
+    "Keine Sitzung erhalten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No session received"
+          }
+        }
+      }
+    },
+    "Keine Titel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No Titles"
+          }
+        }
+      }
+    },
+    "Keine Titel mit Bitrate gefunden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No titles with bitrate information found"
+          }
+        }
+      }
+    },
+    "Keine Treffer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No Results"
+          }
+        }
+      }
+    },
+    "Keine erkannt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None detected"
+          }
+        }
+      }
+    },
+    "Klein": {
+      "comment": "Subtitle size",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Small"
+          }
+        }
+      }
+    },
+    "Klicken zum Springen · Zurück zum Abbrechen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click to jump · Back to cancel"
+          }
+        }
+      }
+    },
+    "Klicken: jetzt abspielen · Zurück: schließen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click: play now · Back: close"
+          }
+        }
+      }
+    },
+    "Knapp – nur für kleinere Dateien": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tight—only enough for smaller files"
+          }
+        }
+      }
+    },
+    "Kostenlos testen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try It Free"
+          }
+        }
+      }
+    },
+    "Kritiker %lld Prozent": {
+      "comment": "Critics' score, e.g. Kritiker 85 Prozent",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Critics %lld percent"
+          }
+        }
+      }
+    },
+    "Kritikerwertung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Critics Score"
+          }
+        }
+      }
+    },
+    "Käufe wiederherstellen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restore Purchases"
+          }
+        }
+      }
+    },
+    "LAN-Kabel": {
+      "comment": "Network connection: Ethernet cable",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ethernet"
+          }
+        }
+      }
+    },
+    "LGPL-3.0 mit App-Store-Ausnahme": {
+      "comment": "Licence name: LGPL-3.0 with App Store exception",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LGPL-3.0 with App Store exception"
+          }
+        }
+      }
+    },
+    "Langsame Verbindung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slow Connection"
+          }
+        }
+      }
+    },
+    "Laufend": {
+      "comment": "Series status: still airing",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ongoing"
+          }
+        }
+      }
+    },
+    "Leitung": {
+      "comment": "Diagnostics label: measured connection",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connection"
+          }
+        }
+      }
+    },
+    "Leitung gerade bei %.0f Mbit/s – Jelly schaltet auf angepasste Qualität. Original unter ↓ › Qualität": {
+      "comment": "↓ › Qualität: swipe down, then the Quality tab of the player panel",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connection currently at %.0f Mbit/s—Jelly is switching to adjusted quality. Original under ↓ › Quality"
+          }
+        }
+      }
+    },
+    "Leitung wieder bei %.0f Mbit/s – bessere Qualität (bis %lld Mbit/s)": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Leitung wieder bei %1$.0f Mbit/s – bessere Qualität (bis %2$lld Mbit/s)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connection back at %.0f Mbit/s—better quality (up to %lld Mbit/s)"
+          }
+        }
+      }
+    },
+    "Leitung wieder bei %.0f Mbit/s – zurück zur Originalqualität": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connection back at %.0f Mbit/s—returning to original quality"
+          }
+        }
+      }
+    },
+    "Leitung: %@ Mbit/s – Jelly lässt ungenutzte Tonspuren weg, das Bild bleibt original": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connection: %@ Mbit/s—Jelly leaves out unused audio tracks, video stays original"
+          }
+        }
+      }
+    },
+    "Leitung: %@ von %@ Mbit/s – angepasste Qualität. Original unter ↓ › Qualität": {
+      "comment": "↓ › Qualität: swipe down, then the Quality tab of the player panel",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Leitung: %1$@ von %2$@ Mbit/s – angepasste Qualität. Original unter ↓ › Qualität"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connection: %@ of %@ Mbit/s—adjusted quality. Original under ↓ › Quality"
+          }
+        }
+      }
+    },
+    "Liest und wandelt Dolby-Vision-Metadaten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reads and converts Dolby Vision metadata"
+          }
+        }
+      }
+    },
+    "Lizenztext nicht gefunden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "License text not found."
+          }
+        }
+      }
+    },
+    "Lädt · %@": {
+      "comment": "Download state with percentage, e.g. Lädt · 42 %",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloading · %@"
+          }
+        }
+      }
+    },
+    "Läuft flüssig": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plays smoothly"
+          }
+        }
+      }
+    },
+    "Löschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        }
+      }
+    },
+    "Melde dich bei %@ an. Tipp: Mit der iPhone-Tastatur kannst du gespeicherte Passwörter einsetzen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in to %@. Tip: With the iPhone keyboard, you can fill in saved passwords."
+          }
+        }
+      }
+    },
+    "Messung fehlgeschlagen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Measurement failed"
+          }
+        }
+      }
+    },
+    "Misst den Weg zu deinem Server und zeigt, was in Originalqualität läuft, was angepasst wird, woran es hakt und zu welcher Tageszeit die Leitung am schnellsten ist.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Measures the route to your server and shows what plays in original quality, what gets adjusted, what's holding things back, and at what time of day your connection is fastest."
+          }
+        }
+      }
+    },
+    "Mit Code anmelden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign In with Code"
+          }
+        }
+      }
+    },
+    "Mit Code anmelden: Bestätige die Anmeldung in der Jellyfin-App auf deinem Handy – ganz ohne Tippen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in with code: Confirm the sign-in in the Jellyfin app on your phone—no typing needed."
+          }
+        }
+      }
+    },
+    "Mit Jellyseerr wünschst du dir Filme und Serien, die noch nicht auf deinem Server sind. Hier siehst du, was gerade angesagt ist und bald erscheint – ein Klick auf „Wünschen“ genügt, und sobald der Titel geladen ist, steht er in deiner Bibliothek.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With Jellyseerr, you can request movies and shows that aren't on your server yet. Here you'll see what's trending and coming soon—just click “Request,” and as soon as the title has downloaded, it'll be in your library."
+          }
+        }
+      }
+    },
+    "Mit deinem Jellyfin-Konto": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With your Jellyfin account"
+          }
+        }
+      }
+    },
+    "Mit deinem Jellyseerr-Konto": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With your Jellyseerr account"
+          }
+        }
+      }
+    },
+    "Mit dem Jelly Jahresabo für %@ pro Jahr spielst du deine Filme und Serien ab.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With the Jelly Annual Subscription for %@ per year, you can play your movies and shows."
+          }
+        }
+      }
+    },
+    "Mittags": {
+      "comment": "Time of day: midday/afternoon",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afternoon"
+          }
+        }
+      }
+    },
+    "Morgens": {
+      "comment": "Time of day: morning",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Morning"
+          }
+        }
+      }
+    },
+    "Nach %lld Minuten": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "After %lld minute"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "After %lld minutes"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Nachts": {
+      "comment": "Time of day: night",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Night"
+          }
+        }
+      }
+    },
+    "Name": {
+      "comment": "Library sort order: by name",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name"
+          }
+        }
+      }
+    },
+    "Netz": {
+      "comment": "Diagnostics label: network throughput",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Network"
+          }
+        }
+      }
+    },
+    "Netzwerk zu langsam: %.0f von %.0f Mbit/s": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Netzwerk zu langsam: %1$.0f von %2$.0f Mbit/s"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Network too slow: %.0f of %.0f Mbit/s"
+          }
+        }
+      }
+    },
+    "Neu in %@": {
+      "comment": "Shelf: recently added to <library name>",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New in %@"
+          }
+        }
+      }
+    },
+    "Neue Serien demnächst": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upcoming Shows"
+          }
+        }
+      }
+    },
+    "Neues finden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find Something New"
+          }
+        }
+      }
+    },
+    "Nie": {
+      "comment": "Screensaver: never start",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Never"
+          }
+        }
+      }
+    },
+    "Noch %@": {
+      "comment": "Time left to watch, e.g. Noch 45 Min.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ left"
+          }
+        }
+      }
+    },
+    "Noch %lld Tage kostenlos": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld free day left"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld free days left"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Noch 1 Tag kostenlos": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 free day left"
+          }
+        }
+      }
+    },
+    "Noch keine Einträge.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No entries yet."
+          }
+        }
+      }
+    },
+    "Noch keine Inhalte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No Content Yet"
+          }
+        }
+      }
+    },
+    "Nutzungsbedingungen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terms of Use"
+          }
+        }
+      }
+    },
+    "NÄCHSTE FOLGE IN %lld S": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NEXT EPISODE IN %lld S"
+          }
+        }
+      }
+    },
+    "Nächste Folge automatisch abspielen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autoplay Next Episode"
+          }
+        }
+      }
+    },
+    "Nächste Folgen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Up Next"
+          }
+        }
+      }
+    },
+    "Ohne Abo spielt Jelly nichts ab; deine Bibliothek und die Einstellungen bleiben erreichbar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Without a subscription, Jelly doesn't play anything; your library and settings remain accessible."
+          }
+        }
+      }
+    },
+    "Ohne Dolby Vision": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Without Dolby Vision"
+          }
+        }
+      }
+    },
+    "Open-Source-Lizenzen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Source Licenses"
+          }
+        }
+      }
+    },
+    "Original": {
+      "comment": "Quality: the original file",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Original"
+          }
+        }
+      }
+    },
+    "Original ohne ungenutzte Tonspuren · verlustfrei": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Original without unused audio tracks · lossless"
+          }
+        }
+      }
+    },
+    "Original, nur gewählte Tonspur": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Original, selected audio track only"
+          }
+        }
+      }
+    },
+    "Originaldatei": {
+      "comment": "Playback engine: the original file plays unchanged\nThe original media file (not a server stream)",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Original file"
+          }
+        }
+      }
+    },
+    "PCM %@ · auf dem Apple TV decodiert": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PCM %@ · decoded on Apple TV"
+          }
+        }
+      }
+    },
+    "Passt sich dem Inhalt an": {
+      "comment": "tvOS Match Content is on",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Matches content"
+          }
+        }
+      }
+    },
+    "Passwort": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Password"
+          }
+        }
+      }
+    },
+    "Pausiert · %@": {
+      "comment": "Download state with percentage",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paused · %@"
+          }
+        }
+      }
+    },
+    "Playlists": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Playlists"
+          }
+        }
+      }
+    },
+    "Positiv: Ton kommt später als das Bild": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Positive: audio plays later than video"
+          }
+        }
+      }
+    },
+    "Positiv: Untertitel erscheinen später": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Positive: subtitles appear later"
+          }
+        }
+      }
+    },
+    "Probezeit: noch %lld Tage": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Free trial: %lld day left"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Free trial: %lld days left"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Probezeit: noch 1 Tag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Free trial: 1 day left"
+          }
+        }
+      }
+    },
+    "Probier alle Funktionen %lld Wochen lang kostenlos aus. Danach kostet das Jelly Jahresabo %@ pro Jahr.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Probier alle Funktionen %1$lld Wochen lang kostenlos aus. Danach kostet das Jelly Jahresabo %2$@ pro Jahr."
+          }
+        },
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Try all features free for %lld week. After that, the Jelly Annual Subscription costs %@ per year."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Try all features free for %lld weeks. After that, the Jelly Annual Subscription costs %@ per year."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Produktion": {
+      "comment": "Crew role: producer",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Producer"
+          }
+        }
+      }
+    },
+    "Profil abmelden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign Out of Profile"
+          }
+        }
+      }
+    },
+    "Profil hinzufügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Profile"
+          }
+        }
+      }
+    },
+    "Profile auf %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profiles on %@"
+          }
+        }
+      }
+    },
+    "Profile auf diesem Server": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profiles on This Server"
+          }
+        }
+      }
+    },
+    "Protokoll anzeigen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show Log"
+          }
+        }
+      }
+    },
+    "Prüfe, ob der Server läuft und die Adresse stimmt (%@).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check that the server is running and the address is correct (%@)."
+          }
+        }
+      }
+    },
+    "Prüft den Weg zu %@: Erreichbarkeit, Geschwindigkeit, was davon in deiner Bibliothek im Original läuft und wann die Leitung am schnellsten ist.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checks the route to %@: reachability, speed, how much of your library plays in original quality, and when your connection is fastest."
+          }
+        }
+      }
+    },
+    "Puffer": {
+      "comment": "Diagnostics label: buffer",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buffer"
+          }
+        }
+      }
+    },
+    "Puffer knapp – Leitung am Limit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buffer low—connection at its limit"
+          }
+        }
+      }
+    },
+    "Qualität": {
+      "comment": "Player panel tab: stream quality",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quality"
+          }
+        }
+      }
+    },
+    "Quellcode folgt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source code coming soon"
+          }
+        }
+      }
+    },
+    "Quelle: %@": {
+      "comment": "Source: <URL>",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source: %@"
+          }
+        }
+      }
+    },
+    "Quick Connect ist auf diesem Server deaktiviert.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Connect is turned off on this server."
+          }
+        }
+      }
+    },
+    "Regie": {
+      "comment": "Crew role: director",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Director"
+          }
+        }
+      }
+    },
+    "Reicht für 4K-Streams (15–25 Mbit/s)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enough for 4K streams (15–25 Mbit/s)"
+          }
+        }
+      }
+    },
+    "Reicht für HD (5–15 Mbit/s)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enough for HD (5–15 Mbit/s)"
+          }
+        }
+      }
+    },
+    "Reicht für alles, auch 4K-Remuxe": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enough for everything, including 4K remuxes"
+          }
+        }
+      }
+    },
+    "Rotten Tomatoes %lld Prozent": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rotten Tomatoes %lld percent"
+          }
+        }
+      }
+    },
+    "S%lld": {
+      "comment": "Season number (S = Staffel)",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "S%lld"
+          }
+        }
+      }
+    },
+    "S%lld · F%lld": {
+      "comment": "Season and episode number, e.g. S1 · F3 (S = Staffel, F = Folge)",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "S%1$lld · F%2$lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "S%lld · E%lld"
+          }
+        }
+      }
+    },
+    "Sammlungen": {
+      "comment": "Movie collections (box sets)",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Collections"
+          }
+        }
+      }
+    },
+    "Schatten": {
+      "comment": "Subtitle background: drop shadow",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shadow"
+          }
+        }
+      }
+    },
+    "Schnell genug für flüssige Wiedergabe": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fast enough for smooth playback"
+          }
+        }
+      }
+    },
+    "Schwankung %@–%@ Mbit/s": {
+      "comment": "Speed range: lowest–highest measured",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Schwankung %1$@–%2$@ Mbit/s"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Varies %@–%@ Mbit/s"
+          }
+        }
+      }
+    },
+    "Sehr gut für HD und 4K": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Very good for HD and 4K"
+          }
+        }
+      }
+    },
+    "Serie": {
+      "comment": "Item type: TV series\nTV series",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show"
+          }
+        }
+      }
+    },
+    "Serien": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows"
+          }
+        }
+      }
+    },
+    "Server": {
+      "comment": "Settings section: Jellyfin servers\nThe Jellyfin server",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Server"
+          }
+        }
+      }
+    },
+    "Server antwortet nicht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Server not responding"
+          }
+        }
+      }
+    },
+    "Server entfernen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove Server"
+          }
+        }
+      }
+    },
+    "Server hat nicht umgerechnet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Server didn't convert"
+          }
+        }
+      }
+    },
+    "Server hinzufügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Server"
+          }
+        }
+      }
+    },
+    "Server nicht erreichbar": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Server unreachable"
+          }
+        }
+      }
+    },
+    "Server-Adresse": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Server Address"
+          }
+        }
+      }
+    },
+    "Server-Umrechnung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Server Conversion"
+          }
+        }
+      }
+    },
+    "Sobald dein Server Filme oder Serien enthält, erscheinen sie hier.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As soon as your server has movies or shows, they'll appear here."
+          }
+        }
+      }
+    },
+    "Software-Decoder · Originaldatei": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Software decoder · original file"
+          }
+        }
+      }
+    },
+    "Sortieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sort"
+          }
+        }
+      }
+    },
+    "Spur": {
+      "comment": "Column header: subtitle/audio tracks",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Track"
+          }
+        }
+      }
+    },
+    "Spur %lld": {
+      "comment": "Fallback name of an audio or subtitle track",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Track %lld"
+          }
+        }
+      }
+    },
+    "Später": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not Now"
+          }
+        }
+      }
+    },
+    "Staffel %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Season %lld"
+          }
+        }
+      }
+    },
+    "Standard": {
+      "comment": "Subtitle size",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Default"
+          }
+        }
+      }
+    },
+    "Start": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Home"
+          }
+        }
+      }
+    },
+    "Stattdessen mit dem Jellyfin-Konto anmelden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign In with Jellyfin Account Instead"
+          }
+        }
+      }
+    },
+    "Stattdessen mit einem Jellyseerr-Konto (E-Mail) anmelden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign In with a Jellyseerr Account (Email) Instead"
+          }
+        }
+      }
+    },
+    "Stellt ASS/SSA-Untertitel dar": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renders ASS/SSA subtitles"
+          }
+        }
+      }
+    },
+    "Stream": {
+      "comment": "Column header: stream quality options",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stream"
+          }
+        }
+      }
+    },
+    "Suche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search"
+          }
+        }
+      }
+    },
+    "Suche Jellyseerr …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Looking for Jellyseerr …"
+          }
+        }
+      }
+    },
+    "Suche fehlgeschlagen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search failed"
+          }
+        }
+      }
+    },
+    "Suche im Netzwerk …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Searching the network …"
+          }
+        }
+      }
+    },
+    "Suche nach Filmen und Serien, die du dir über Jellyseerr wünschen möchtest.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search for movies and shows you'd like to request through Jellyseerr."
+          }
+        }
+      }
+    },
+    "Synchronisation": {
+      "comment": "Player panel tab: audio/subtitle delay",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sync"
+          }
+        }
+      }
+    },
+    "Teilweise da": {
+      "comment": "Jellyseerr status: some seasons are in the library",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partly available"
+          }
+        }
+      }
+    },
+    "Tempo": {
+      "comment": "Connection analysis step: speed test",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speed"
+          }
+        }
+      }
+    },
+    "Tipps": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tips"
+          }
+        }
+      }
+    },
+    "Ton": {
+      "comment": "Sound (sync setting, diagnostics label)",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Audio"
+          }
+        }
+      }
+    },
+    "Ton: bis %lld Kanäle über HDMI": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Audio: up to %lld channel over HDMI"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Audio: up to %lld channels over HDMI"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Tonspur %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Audio Track %lld"
+          }
+        }
+      }
+    },
+    "TrueHD und DTS gibt das Apple TV verlustfrei als Mehrkanal-PCM aus; Atmos-Objekte überträgt tvOS nur aus Dolby Digital Plus.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple TV outputs TrueHD and DTS losslessly as multichannel PCM; tvOS passes through Atmos objects only from Dolby Digital Plus."
+          }
+        }
+      }
+    },
+    "UT": {
+      "comment": "Badge: the title has subtitles",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SUB"
+          }
+        }
+      }
+    },
+    "Umrechnung": {
+      "comment": "Connection analysis step: server transcoding test",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conversion"
+          }
+        }
+      }
+    },
+    "Unbekannt": {
+      "comment": "Network connection: unknown type",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unknown"
+          }
+        }
+      }
+    },
+    "Ungesehen": {
+      "comment": "Library filter: unwatched titles",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unwatched"
+          }
+        }
+      }
+    },
+    "Unter dieser Adresse antwortet kein Jellyseerr": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No Jellyseerr is responding at this address"
+          }
+        }
+      }
+    },
+    "Unter dieser Adresse wurde kein Jellyfin-Server gefunden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No Jellyfin server was found at this address."
+          }
+        }
+      }
+    },
+    "Untertitel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subtitles"
+          }
+        }
+      }
+    },
+    "Untertitel %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subtitle %lld"
+          }
+        }
+      }
+    },
+    "Untertitel konnten nicht geladen werden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subtitles couldn't be loaded"
+          }
+        }
+      }
+    },
+    "Untertitel werden vorbereitet – beim ersten Mal kann das etwas dauern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preparing subtitles—this may take a moment the first time"
+          }
+        }
+      }
+    },
+    "Untertitel, Audio & Kapitel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subtitles, Audio & Chapters"
+          }
+        }
+      }
+    },
+    "Untertitel-Hintergrund": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subtitle Background"
+          }
+        }
+      }
+    },
+    "Untertitelfarbe": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subtitle Color"
+          }
+        }
+      }
+    },
+    "Untertitelgröße": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subtitle Size"
+          }
+        }
+      }
+    },
+    "Unverschlüsselt (HTTP)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unencrypted (HTTP)"
+          }
+        }
+      }
+    },
+    "VERBINDUNG": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CONNECTION"
+          }
+        }
+      }
+    },
+    "Verbinde deinen Jellyseerr-Server": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connect Your Jellyseerr Server"
+          }
+        }
+      }
+    },
+    "Verbinde einen weiteren Jellyfin-Server. Deine bisherigen Anmeldungen bleiben erhalten; gewechselt wird in den Einstellungen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connect another Jellyfin server. Your existing sign-ins are kept; you can switch in Settings."
+          }
+        }
+      }
+    },
+    "Verbinde …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connecting …"
+          }
+        }
+      }
+    },
+    "Verbinden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connect"
+          }
+        }
+      }
+    },
+    "Verbinden …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connecting …"
+          }
+        }
+      }
+    },
+    "Verbindung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connection"
+          }
+        }
+      }
+    },
+    "Verbindung fehlgeschlagen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connection failed"
+          }
+        }
+      }
+    },
+    "Verbindung unterbrochen – Jelly verbindet neu …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connection lost—Jelly is reconnecting …"
+          }
+        }
+      }
+    },
+    "Verbindung wird geprüft …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking connection …"
+          }
+        }
+      }
+    },
+    "Verbindung zu langsam: %.0f von %.0f Mbit/s – ↓ › Qualität": {
+      "comment": "↓ › Qualität: swipe down, then the Quality tab of the player panel",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Verbindung zu langsam: %1$.0f von %2$.0f Mbit/s – ↓ › Qualität"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connection too slow: %.0f of %.0f Mbit/s—see ↓ › Quality"
+          }
+        }
+      }
+    },
+    "Verbindungsanalyse": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connection Analysis"
+          }
+        }
+      }
+    },
+    "Verbunden": {
+      "comment": "Server status: signed in",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Signed in"
+          }
+        }
+      }
+    },
+    "Verlustfrei · PCM %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lossless · PCM %@"
+          }
+        }
+      }
+    },
+    "Verschlüsselt (HTTPS)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encrypted (HTTPS)"
+          }
+        }
+      }
+    },
+    "Version": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version"
+          }
+        }
+      }
+    },
+    "Version %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version %@"
+          }
+        }
+      }
+    },
+    "Video": {
+      "comment": "Info panel label",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Video"
+          }
+        }
+      }
+    },
+    "Videotext-Untertitel. Ohne die drei GPL-Dateien gebaut, siehe FFmpegBuild": {
+      "comment": "Teletext subtitles",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Teletext subtitles. Built without the three GPL files, see FFmpegBuild"
+          }
+        }
+      }
+    },
+    "Viel Spaß mit deinen Filmen und Serien.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enjoy your movies and shows."
+          }
+        }
+      }
+    },
+    "Vom Server verpackt": {
+      "comment": "Playback engine: stream repackaged by the server",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repackaged by the server"
+          }
+        }
+      }
+    },
+    "Von Anfang an": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play from Beginning"
+          }
+        }
+      }
+    },
+    "Von vorn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start Over"
+          }
+        }
+      }
+    },
+    "Vor großen Dateien misst Jelly kurz, was die Leitung zum Server schafft. Reicht sie nicht, lässt Jelly zuerst ungenutzte Tonspuren weg (verlustfrei) und lässt erst danach den Server herunterrechnen. Im Player unter ↓ › Qualität jederzeit änderbar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Before large files, Jelly briefly measures what your connection to the server can handle. If it's not enough, Jelly first leaves out unused audio tracks (lossless) and only then has the server convert to a lower quality. You can change this anytime in the player under ↓ › Quality."
+          }
+        }
+      }
+    },
+    "WLAN": {
+      "comment": "Network connection: Wi-Fi",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wi-Fi"
+          }
+        }
+      }
+    },
+    "Wann ist die Leitung am schnellsten?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When is your connection fastest?"
+          }
+        }
+      }
+    },
+    "Warte auf Bestätigung …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for confirmation …"
+          }
+        }
+      }
+    },
+    "Wartet auf Download": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for download"
+          }
+        }
+      }
+    },
+    "Warum": {
+      "comment": "Info panel label: reason for the playback pipeline",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Why"
+          }
+        }
+      }
+    },
+    "Weg": {
+      "comment": "Connection analysis: network route to the server\nDiagnostics label: playback pipeline",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Path"
+          }
+        }
+      }
+    },
+    "Weiterschauen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continue Watching"
+          }
+        }
+      }
+    },
+    "Weiß": {
+      "comment": "Subtitle color",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "White"
+          }
+        }
+      }
+    },
+    "Welche Staffeln?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Which seasons?"
+          }
+        }
+      }
+    },
+    "Wenn du im Menü nichts tust, füllen deine Film- und Serien-Cover den Bildschirm und drehen sich nacheinander um – wie früher bei iTunes. Jeder Tastendruck beendet ihn; nach einer Stunde übernimmt der Ruhezustand des Apple TV.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When you're idle in the menus, your movie and show covers fill the screen and flip over one after another—just like iTunes used to. Any button press ends it; after an hour, Apple TV goes to sleep."
+          }
+        }
+      }
+    },
+    "Wer schaut gerade?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Who's watching?"
+          }
+        }
+      }
+    },
+    "Wiedergabe": {
+      "comment": "Info panel label: playback pipeline",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Playback"
+          }
+        }
+      }
+    },
+    "Wiedergabe nicht möglich": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unable to Play"
+          }
+        }
+      }
+    },
+    "Wiedergabe-Engine von Jelly": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jelly's playback engine"
+          }
+        }
+      }
+    },
+    "Willkommen bei Jelly": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome to Jelly"
+          }
+        }
+      }
+    },
+    "Wird geladen": {
+      "comment": "Jellyseerr: requested title is being downloaded",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloading"
+          }
+        }
+      }
+    },
+    "Wird geladen …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading …"
+          }
+        }
+      }
+    },
+    "Wird geprüft …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking …"
+          }
+        }
+      }
+    },
+    "Wird gewünscht …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Requesting …"
+          }
+        }
+      }
+    },
+    "Wird importiert": {
+      "comment": "Download finished, being moved into the library",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importing"
+          }
+        }
+      }
+    },
+    "Wähle deinen Jellyfin-Server. Server in deinem Netzwerk werden automatisch gefunden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose your Jellyfin server. Servers on your network are found automatically."
+          }
+        }
+      }
+    },
+    "Wähle einen Server, um zu wechseln – Bibliothek, Weiterschauen und Top Shelf folgen dem aktiven Server. Die Anmeldungen bleiben gespeichert.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a server to switch to it—Library, Continue Watching, and Top Shelf follow the active server. Your sign-ins stay saved."
+          }
+        }
+      }
+    },
+    "Wünschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Request"
+          }
+        }
+      }
+    },
+    "Ziel %lld Mbit/s · Ergebnis %@": {
+      "comment": "Target bitrate · resulting video range (HDR10/HLG/SDR)",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Ziel %1$lld Mbit/s · Ergebnis %2$@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Target %lld Mbit/s · result %@"
+          }
+        }
+      }
+    },
+    "Zu Favoriten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add to Favorites"
+          }
+        }
+      }
+    },
+    "Zu Hause spricht Jelly den Server direkt im Heimnetz an (%@) – schneller als über das Internet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "At home, Jelly talks to the server directly on your home network (%@)—faster than going over the internet."
+          }
+        }
+      }
+    },
+    "Zu langsam – angepasste Qualität kann stocken": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Too slow—adjusted quality may stutter"
+          }
+        }
+      }
+    },
+    "Zuletzt hinzugefügt": {
+      "comment": "Library sort order: recently added",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recently Added"
+          }
+        }
+      }
+    },
+    "Zuletzt verwendet": {
+      "comment": "Server status: used before",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Previously used"
+          }
+        }
+      }
+    },
+    "Zum Wünschen neuer Filme und Serien im Tab „Erkunden“. Die Anmeldung gilt für dieses Profil.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For requesting new movies and shows in the “Discover” tab. The sign-in applies to this profile."
+          }
+        }
+      }
+    },
+    "Zur Serie": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go to Show"
+          }
+        }
+      }
+    },
+    "Zurück": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back"
+          }
+        }
+      }
+    },
+    "Zurücksetzen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset"
+          }
+        }
+      }
+    },
+    "deinem Server": {
+      "comment": "Fallback server name in 'Prüft den Weg zu …'",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "your server"
+          }
+        }
+      }
+    },
+    "gleich fertig": {
+      "comment": "Download time left: less than a minute",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "almost done"
+          }
+        }
+      }
+    },
+    "nicht nötig": {
+      "comment": "Server transcoding is not needed",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "not needed"
+          }
+        }
+      }
+    },
+    "noch %@": {
+      "comment": "Download time left, e.g. noch 12 Min.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ left"
+          }
+        }
+      }
+    },
+    "und %lld weitere Folgen": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "and %lld more episode"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "and %lld more episodes"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "wartet": {
+      "comment": "Episode download is queued",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "waiting"
+          }
+        }
+      }
+    },
+    "z. B. 192.168.1.20 oder jellyfin.example.com": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "e.g. 192.168.1.20 or jellyfin.example.com"
+          }
+        }
+      }
+    },
+    "Öffne Jellyfin auf deinem Handy oder Computer, tippe auf dein Profil › Quick Connect und gib diesen Code ein.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Jellyfin on your phone or computer, tap your profile › Quick Connect, and enter this code."
+          }
+        }
+      }
+    },
+    "Öffnet und decodiert Video, Ton und Untertitel. Gebaut ohne GPL-Teile von FFmpegBuild 3.9.0, Quellcode, Änderungen und Build-Skript: https://github.com/superuser404notfound/FFmpegBuild": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens and decodes video, audio, and subtitles. Built without GPL components using FFmpegBuild 3.9.0; source code, changes, and build script: https://github.com/superuser404notfound/FFmpegBuild"
+          }
+        }
+      }
+    },
+    "Über %@": {
+      "comment": "Connection runs through a proxy, e.g. 'Über Cloudflare'",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Via %@"
+          }
+        }
+      }
+    },
+    "Über Jellyseerr · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Via Jellyseerr · %@"
+          }
+        }
+      }
+    },
+    "übersprungen": {
+      "comment": "Analysis step was skipped",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "skipped"
+          }
+        }
+      }
+    },
+    "„Inhalt anpassen“ ist aus: Für automatisches HDR, Dolby Vision und 24 Hz in den Apple-TV-Einstellungen unter Video und Audio aktivieren.": {
+      "comment": "Refers to the tvOS setting 'Match Content' in Settings › Video and Audio",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“Match Content” is off: For automatic HDR, Dolby Vision, and 24 Hz, turn it on in Apple TV Settings under Video and Audio."
+          }
+        }
+      }
+    },
+    "„Original“ spielt die Datei unverändert. „Nur gewählte Tonspur“ bleibt verlustfrei. Bei einer Bitrate-Grenze rechnet der Server das Bild herunter – nur sinnvoll, wenn die Leitung nicht reicht.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“Original” plays the file unchanged. “Selected audio track only” stays lossless. With a bitrate limit, the server converts the video to a lower quality—only useful if your connection isn't fast enough."
+          }
+        }
+      }
+    },
+    "−%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "−%@"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

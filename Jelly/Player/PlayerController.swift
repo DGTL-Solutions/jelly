@@ -79,13 +79,13 @@ final class PlayerController: ObservableObject {
 
     /// The pipeline in words.
     var streamTitle: String {
-        if plan?.maxBitrate != nil { return "Apple-Player · vom Server umgerechnet" }
-        if engine == .server { return "Apple-Player · vom Server verpackt, Bild original" }
+        if plan?.maxBitrate != nil { return String(localized: "Apple-Player · vom Server umgerechnet", comment: "Apple-Player = Apple's AVPlayer") }
+        if engine == .server { return String(localized: "Apple-Player · vom Server verpackt, Bild original") }
         switch route {
-        case .loopback: return "Apple-Player · Originaldatei, auf dem Apple TV umverpackt"
-        case .software: return "Software-Decoder · Originaldatei"
-        case .remoteBypass: return "Apple-Player · Originaldatei"
-        default: return "Originaldatei"
+        case .loopback: return String(localized: "Apple-Player · Originaldatei, auf dem Apple TV umverpackt")
+        case .software: return String(localized: "Software-Decoder · Originaldatei")
+        case .remoteBypass: return String(localized: "Apple-Player · Originaldatei")
+        default: return String(localized: "Originaldatei", comment: "The original media file (not a server stream)")
         }
     }
 
@@ -145,17 +145,20 @@ final class PlayerController: ObservableObject {
     var audioOptions: [TrackOption] {
         (source?.audioStreams ?? []).map { stream in
             let detail = [stream.languageName == nil ? nil : stream.title, TechInfo.audioFormat(stream), TechInfo.channels(stream)]
-            return TrackOption(id: stream.index, title: stream.languageName ?? stream.title ?? "Tonspur \(stream.index)",
+            return TrackOption(id: stream.index, title: stream.languageName ?? stream.title ?? String(localized: "Tonspur \(stream.index)"),
                                detail: detail.compactMap { $0 }.joined(separator: " · ").nonEmpty)
         }
     }
 
     var subtitleOptions: [TrackOption] {
-        [TrackOption(id: -1, title: "Aus")] + (source?.subtitleStreams ?? []).map { stream in
+        [TrackOption(id: -1, title: String(localized: "Aus", comment: "Subtitles off"))] + (source?.subtitleStreams ?? []).map { stream in
             let switches = engine == .server && stream.isImageSubtitle
-            let detail = [stream.languageName == nil ? nil : stream.title, stream.isForced == true ? "Erzwungen" : nil,
-                          stream.isExternal == true ? "Extern" : nil, stream.subtitleFormat, switches ? "Originaldatei" : nil]
-            return TrackOption(id: stream.index, title: stream.languageName ?? stream.title ?? "Untertitel \(stream.index)",
+            let detail = [stream.languageName == nil ? nil : stream.title,
+                          stream.isForced == true ? String(localized: "Erzwungen", comment: "Forced subtitles") : nil,
+                          stream.isExternal == true ? String(localized: "Extern", comment: "Subtitles from a separate file") : nil,
+                          stream.subtitleFormat,
+                          switches ? String(localized: "Originaldatei", comment: "The original media file (not a server stream)") : nil]
+            return TrackOption(id: stream.index, title: stream.languageName ?? stream.title ?? String(localized: "Untertitel \(stream.index)"),
                                detail: detail.compactMap { $0 }.joined(separator: " · ").nonEmpty)
         }
     }
@@ -164,16 +167,17 @@ final class PlayerController: ObservableObject {
     var audioOutput: String? {
         guard let stream = source?.audioStreams.first(where: { $0.index == audioIndex }), let aether else { return nil }
         let format = TechInfo.audioFormat(stream) ?? "", channels = TechInfo.channels(stream) ?? ""
-        if plan?.maxBitrate != nil { return "AAC · vom Server umgerechnet" }
+        if plan?.maxBitrate != nil { return String(localized: "AAC · vom Server umgerechnet") }
         switch aether.audioDelivery {
         case .streamCopy, .playerManaged:
-            return TechInfo.isAtmosPassthrough(stream) ? "Dolby Atmos (Bitstream)" : "\(format) \(channels) · unverändert"
+            return TechInfo.isAtmosPassthrough(stream) ? "Dolby Atmos (Bitstream)" : String(localized: "\(format) \(channels) · unverändert")
         case .bridged:
-            return bridgeMode == .lossless ? "Verlustfrei · PCM \(channels)" : "Dolby Digital+ \(channels) · umgewandelt"
+            return bridgeMode == .lossless ? String(localized: "Verlustfrei · PCM \(channels)")
+                : String(localized: "Dolby Digital+ \(channels) · umgewandelt")
         case .decoded:
-            return "PCM \(channels) · auf dem Apple TV decodiert"
+            return String(localized: "PCM \(channels) · auf dem Apple TV decodiert")
         case .droppedNoPipeline:
-            return "Diese Tonspur kann nicht wiedergegeben werden"
+            return String(localized: "Diese Tonspur kann nicht wiedergegeben werden")
         default:
             return nil
         }
@@ -191,7 +195,7 @@ final class PlayerController: ObservableObject {
         phase = .preparing
         self.preference = preference
         guard aether != nil else {
-            phase = .failed("Der Player konnte nicht gestartet werden.")
+            phase = .failed(String(localized: "Der Player konnte nicht gestartet werden."))
             return
         }
         bindEngine()
@@ -325,7 +329,7 @@ final class PlayerController: ObservableObject {
         let required = plan.requiredBitrate(source: source, audio: audio)
         stats.required = required
         guard required > 15_000_000, !ServerLocator.isPrivate(client.server) else { return plan }
-        if NetworkProbe.recent(for: client.server) == nil { status = "Verbindung wird geprüft …" }
+        if NetworkProbe.recent(for: client.server) == nil { status = String(localized: "Verbindung wird geprüft …") }
         let measured: NetworkProbe.Result?
         if let recent = NetworkProbe.recent(for: client.server) {
             measured = recent
@@ -340,13 +344,14 @@ final class PlayerController: ObservableObject {
         if policy == .adapt { stats.required = fitted.requiredBitrate(source: source, audio: audio) }
         let line = String(format: "%.0f", measured.megabits), need = String(format: "%.0f", required / 1_000_000)
         if policy == .original {
-            notice = "Deine Verbindung schafft \(line) von \(need) Mbit/s – es kann stocken"
+            notice = String(localized: "Deine Verbindung schafft \(line) von \(need) Mbit/s – es kann stocken")
             return plan
         }
         quality = fitted.maxBitrate.map { $0 / 1_000_000 } ?? 1
         notice = fitted.maxBitrate == nil
-            ? "Leitung: \(line) Mbit/s – Jelly lässt ungenutzte Tonspuren weg, das Bild bleibt original"
-            : "Leitung: \(line) von \(need) Mbit/s – angepasste Qualität. Original unter ↓ › Qualität"
+            ? String(localized: "Leitung: \(line) Mbit/s – Jelly lässt ungenutzte Tonspuren weg, das Bild bleibt original")
+            : String(localized: "Leitung: \(line) von \(need) Mbit/s – angepasste Qualität. Original unter ↓ › Qualität",
+                     comment: "↓ › Qualität: swipe down, then the Quality tab of the player panel")
         Diagnostics.log("adapt \(line)/\(need) Mbit/s → \(fitted.reason)")
         return fitted
     }
@@ -388,8 +393,8 @@ final class PlayerController: ObservableObject {
     private static func describe(_ format: VideoFormat, profile: Int?, conversion: DolbyVisionConversion?) -> String {
         switch format {
         case .dolbyVision:
-            if conversion == .profile7ToProfile81 { return "Dolby Vision · Profil 7 als 8.1" }
-            return profile.map { "Dolby Vision · Profil \($0)" } ?? "Dolby Vision"
+            if conversion == .profile7ToProfile81 { return String(localized: "Dolby Vision · Profil 7 als 8.1") }
+            return profile.map { String(localized: "Dolby Vision · Profil \($0)") } ?? "Dolby Vision"
         case .hdr10Plus: return "HDR10+"
         case .hdr10: return "HDR10"
         case .hlg: return "HLG"
@@ -459,7 +464,7 @@ final class PlayerController: ObservableObject {
                 quality = 0
                 Task { try? await open(originalPlan, at: position) }
             } else {
-                phase = .failed("Die Datei konnte nicht geöffnet werden.")
+                phase = .failed(String(localized: "Die Datei konnte nicht geöffnet werden."))
             }
         case .idle:
             break
@@ -493,13 +498,16 @@ final class PlayerController: ObservableObject {
         guard let source else { return [] }
         let audio = source.audioStreams.first { $0.index == audioIndex }
         let original = Double(source.bitrate ?? 0) / 1_000_000
-        var options = [TrackOption(id: 0, title: "Original", detail: original > 0 ? String(format: "%.0f Mbit/s · Datei unverändert", original) : nil)]
+        var options = [TrackOption(id: 0, title: String(localized: "Original", comment: "Quality: the original file"),
+                                   detail: original > 0 ? String(localized: "\(original, specifier: "%.0f") Mbit/s · Datei unverändert") : nil)]
         if let compact = PlaybackPlan.compactBitrate(source: source, audio: audio), Double(compact) / 1_000_000 < original - 2 {
-            options.append(TrackOption(id: 1, title: "Original, nur gewählte Tonspur",
-                                       detail: String(format: "%.0f Mbit/s · verlustfrei, der Server lässt ungenutzte Spuren weg", Double(compact) / 1_000_000)))
+            let rate = Double(compact) / 1_000_000
+            let detail = String(localized: "\(rate, specifier: "%.0f") Mbit/s · verlustfrei, der Server lässt ungenutzte Spuren weg")
+            options.append(TrackOption(id: 1, title: String(localized: "Original, nur gewählte Tonspur"), detail: detail))
         }
         for limit in [40, 30, 20, 15, 10, 6] where Double(limit) < original {
-            options.append(TrackOption(id: limit, title: "Höchstens \(limit) Mbit/s", detail: "Der Server rechnet das Bild herunter"))
+            options.append(TrackOption(id: limit, title: String(localized: "Höchstens \(limit) Mbit/s"),
+                                       detail: String(localized: "Der Server rechnet das Bild herunter")))
         }
         return options
     }
@@ -607,12 +615,12 @@ final class PlayerController: ObservableObject {
         guard reconnectAttempts < 3 else {
             reconnecting = false
             Diagnostics.log("reconnect gave up at \(Int(position))s")
-            phase = .failed("Die Verbindung zum Server ist abgebrochen.")
+            phase = .failed(String(localized: "Die Verbindung zum Server ist abgebrochen."))
             return
         }
         reconnectAttempts += 1
         reconnecting = true
-        notice = "Verbindung unterbrochen – Jelly verbindet neu …"
+        notice = String(localized: "Verbindung unterbrochen – Jelly verbindet neu …")
         Diagnostics.log("reconnect #\(reconnectAttempts) at \(Int(position))s")
         try? await Task.sleep(for: .seconds(Double(1 << reconnectAttempts)))
         guard !stopped else { return }
@@ -653,8 +661,9 @@ final class PlayerController: ObservableObject {
         stallHintShown = true
         stats.capacity = line
         quality = fitted.maxBitrate.map { $0 / 1_000_000 } ?? 1
-        notice = String(format: "Leitung gerade bei %.0f Mbit/s – Jelly schaltet auf angepasste Qualität. Original unter ↓ › Qualität",
-                        line / 1_000_000)
+        notice = String(localized:
+            "Leitung gerade bei \(line / 1_000_000, specifier: "%.0f") Mbit/s – Jelly schaltet auf angepasste Qualität. Original unter ↓ › Qualität",
+            comment: "↓ › Qualität: swipe down, then the Quality tab of the player panel")
         Diagnostics.log(String(format: "adapt during playback at %.0fs: line %.1f Mbit → %@", position, line / 1_000_000, fitted.reason))
         // The next film starts with the line as it is now instead of an older, faster measurement.
         NetworkProbe.remember(throughput: line, for: client.server)
@@ -690,8 +699,9 @@ final class PlayerController: ObservableObject {
         stallTimes.removeAll()
         stats.capacity = line
         quality = better.maxBitrate.map { $0 / 1_000_000 } ?? (better == base ? 0 : 1)
-        notice = better.maxBitrate.map { String(format: "Leitung wieder bei %.0f Mbit/s – bessere Qualität (bis %d Mbit/s)", line / 1_000_000, $0 / 1_000_000) }
-            ?? String(format: "Leitung wieder bei %.0f Mbit/s – zurück zur Originalqualität", line / 1_000_000)
+        notice = better.maxBitrate.map {
+            String(localized: "Leitung wieder bei \(line / 1_000_000, specifier: "%.0f") Mbit/s – bessere Qualität (bis \($0 / 1_000_000) Mbit/s)")
+        } ?? String(localized: "Leitung wieder bei \(line / 1_000_000, specifier: "%.0f") Mbit/s – zurück zur Originalqualität")
         Diagnostics.log(String(format: "upgrade at %.0fs (%@): line %.1f Mbit → %@", seconds, moment, line / 1_000_000, better.reason))
         reload(better, at: seconds, paused: paused)
     }
@@ -760,7 +770,7 @@ final class PlayerController: ObservableObject {
             return
         }
         // Picture subtitles exist only in the original file, not in the server's package.
-        notice = "Für diese Untertitel spielt Jelly die Originaldatei"
+        notice = String(localized: "Für diese Untertitel spielt Jelly die Originaldatei")
         qualityChosenByViewer = true
         quality = 0
         reload(base, at: currentTime, paused: !isPlaying)
@@ -818,7 +828,7 @@ final class PlayerController: ObservableObject {
         let hint = slowLoadingHint()
         defer { hint.cancel() }
         guard let script = await fetch(client.subtitleURL(itemID: item.id, sourceID: source.id, stream: stream)) else {
-            notice = "Untertitel konnten nicht geladen werden"
+            notice = String(localized: "Untertitel konnten nicht geladen werden")
             return
         }
         var fonts: [(name: String, data: Data)] = []
@@ -855,7 +865,7 @@ final class PlayerController: ObservableObject {
         Task { [weak self] in
             try? await Task.sleep(for: .seconds(1.5))
             guard !Task.isCancelled else { return }
-            self?.notice = "Untertitel werden vorbereitet – beim ersten Mal kann das etwas dauern"
+            self?.notice = String(localized: "Untertitel werden vorbereitet – beim ersten Mal kann das etwas dauern")
         }
     }
 
@@ -1024,9 +1034,12 @@ final class PlayerController: ObservableObject {
         stallHintShown = true
         let available = stats.capacity ?? stats.throughput
         if let available, available < stats.required {
-            notice = String(format: "Verbindung zu langsam: %.0f von %.0f Mbit/s – ↓ › Qualität", available / 1_000_000, stats.required / 1_000_000)
+            let have = available / 1_000_000, need = stats.required / 1_000_000
+            notice = String(localized: "Verbindung zu langsam: \(have, specifier: "%.0f") von \(need, specifier: "%.0f") Mbit/s – ↓ › Qualität",
+                            comment: "↓ › Qualität: swipe down, then the Quality tab of the player panel")
         } else {
-            notice = "Die Wiedergabe stockt – Details unter ↓ › Info"
+            notice = String(localized: "Die Wiedergabe stockt – Details unter ↓ › Info",
+                            comment: "↓ › Info: swipe down, then the Info tab of the player panel")
         }
     }
 

@@ -106,22 +106,19 @@ func topShelf(_ rect: CGRect) {
             .draw(fromCenter: center, radius: 0, toCenter: center, radius: h * r, options: [])
     }
 
-    let markHeight = h * 0.24, mark = markHeight * 1.42
+    // Logo and name only: the image can't follow the device language, so it carries no sentence.
+    let markHeight = h * 0.26, mark = markHeight * 1.42
     let title = NSAttributedString(string: "Jelly", attributes: [
-        .font: NSFont.systemFont(ofSize: h * 0.19, weight: .bold), .foregroundColor: NSColor.white, .kern: -h * 0.004
+        .font: NSFont.systemFont(ofSize: h * 0.22, weight: .bold), .foregroundColor: NSColor.white, .kern: -h * 0.004
     ])
-    let tagline = NSAttributedString(string: "Deine Filme und Serien von Jellyfin – direkt auf dem Apple TV.", attributes: [
-        .font: NSFont.systemFont(ofSize: h * 0.05, weight: .medium), .foregroundColor: NSColor.white.withAlphaComponent(0.78)
-    ])
-    let gap = h * 0.07
-    let textWidth = max(title.size().width, tagline.size().width)
-    let left = rect.midX - (mark + gap + textWidth) / 2
+    let gap = h * 0.075
+    let size = title.size()
+    let left = rect.midX - (mark + gap + size.width) / 2
     let middle = h * 0.54
     logo(center: CGPoint(x: left + mark / 2, y: middle), height: markHeight)
-
-    let textLeft = left + mark + gap
-    title.draw(at: CGPoint(x: textLeft - h * 0.008, y: middle - h * 0.02))
-    tagline.draw(at: CGPoint(x: textLeft, y: middle - h * 0.105))
+    // Centres the capital letters on the logo; draw(at:) places the bottom of the descenders.
+    let font = NSFont.systemFont(ofSize: h * 0.22, weight: .bold)
+    title.draw(at: CGPoint(x: left + mark + gap, y: middle - font.capHeight / 2 + font.descender))
 }
 
 try? FileManager.default.removeItem(at: brand)

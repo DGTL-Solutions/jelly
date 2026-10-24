@@ -182,10 +182,13 @@ struct BaseItem: Decodable, Identifiable, Hashable {
 
     var episodeLabel: String? {
         guard isEpisode else { return nil }
-        let season = parentIndexNumber.map { "S\($0)" } ?? ""
-        let episode = indexNumber.map { "F\($0)" } ?? ""
-        let label = [season, episode].filter { !$0.isEmpty }.joined(separator: " · ")
-        return label.isEmpty ? nil : label
+        switch (parentIndexNumber, indexNumber) {
+        case let (season?, episode?):
+            return String(localized: "S\(season) · F\(episode)", comment: "Season and episode number, e.g. S1 · F3 (S = Staffel, F = Folge)")
+        case let (season?, nil): return String(localized: "S\(season)", comment: "Season number (S = Staffel)")
+        case let (nil, episode?): return String(localized: "F\(episode)", comment: "Episode number (F = Folge)")
+        case (nil, nil): return nil
+        }
     }
 
     var runtimeText: String? {
@@ -195,14 +198,16 @@ struct BaseItem: Decodable, Identifiable, Hashable {
 
     var remainingText: String? {
         guard progress > 0, runtimeSeconds > 0 else { return nil }
-        return "Noch " + Format.duration(runtimeSeconds - resumeSeconds)
+        return String(localized: "Noch \(Format.duration(runtimeSeconds - resumeSeconds))", comment: "Time left to watch, e.g. Noch 45 Min.")
     }
 
     /// Year, age rating, runtime and rating joined for metadata rows.
     var metadataLine: String {
         var parts: [String] = []
         if let year = productionYear { parts.append(String(year)) }
-        if isSeries, let status, status == "Continuing" { parts.append("Laufend") }
+        if isSeries, let status, status == "Continuing" {
+            parts.append(String(localized: "Laufend", comment: "Series status: still airing"))
+        }
         if let rating = officialRating, !rating.isEmpty { parts.append(rating) }
         if !isSeries, let runtime = runtimeText { parts.append(runtime) }
         return parts.joined(separator: "  ·  ")
@@ -212,7 +217,8 @@ struct BaseItem: Decodable, Identifiable, Hashable {
         if isEpisode {
             return [seriesName, episodeLabel].compactMap { $0 }.joined(separator: " · ")
         }
-        return [productionYear.map(String.init), isSeries ? "Serie" : runtimeText].compactMap { $0 }.joined(separator: " · ")
+        let kind = isSeries ? String(localized: "Serie", comment: "Item type: TV series") : runtimeText
+        return [productionYear.map(String.init), kind].compactMap { $0 }.joined(separator: " · ")
     }
 }
 
@@ -313,12 +319,13 @@ struct MediaStream: Decodable, Hashable, Identifiable {
 
     var languageName: String? {
         guard let language, !language.isEmpty, language != "und" else { return nil }
-        return Locale(identifier: "de").localizedString(forLanguageCode: language) ?? language
+        return Locale(identifier: Bundle.main.preferredLocalizations.first ?? "en").localizedString(forLanguageCode: language) ?? language
     }
 
     var label: String {
         if let displayTitle, !displayTitle.isEmpty { return displayTitle }
-        return [languageName, title].compactMap { $0 }.joined(separator: " – ").nonEmpty ?? "Spur \(index)"
+        return [languageName, title].compactMap { $0 }.joined(separator: " – ").nonEmpty
+            ?? String(localized: "Spur \(index)", comment: "Fallback name of an audio or subtitle track")
     }
 
     /// Bitmap subtitles (PGS, VobSub, DVB) that only the FFmpeg pipeline can render.
@@ -352,8 +359,12 @@ enum Format {
     static func duration(_ seconds: Double) -> String {
         let total = Int(max(0, seconds) / 60)
         let hours = total / 60, minutes = total % 60
-        if hours > 0 { return minutes > 0 ? "\(hours) Std. \(minutes) Min." : "\(hours) Std." }
-        return "\(max(minutes, 1)) Min."
+        if hours > 0 {
+            return minutes > 0
+                ? String(localized: "\(hours) Std. \(minutes) Min.", comment: "Duration: hours and minutes, abbreviated")
+                : String(localized: "\(hours) Std.", comment: "Duration: hours, abbreviated")
+        }
+        return String(localized: "\(max(minutes, 1)) Min.", comment: "Duration: minutes, abbreviated")
     }
 
     static func clock(_ seconds: Double) -> String {
@@ -368,15 +379,17 @@ enum JellyError: LocalizedError, Equatable {
 
     var errorDescription: String? {
         switch self {
-        case .invalidURL: return "Diese Adresse sieht nicht richtig aus. Beispiel: 192.168.1.20 oder jellyfin.meinedomain.de"
-        case .serverNotFound: return "Unter dieser Adresse wurde kein Jellyfin-Server gefunden."
-        case .unauthorized: return "Benutzername oder Passwort stimmen nicht."
-        case .forbidden: return "Dafür fehlt deinem Konto die Berechtigung."
-        case .loginRejected: return "Der Server hat die Anmeldung abgelehnt. Meist ist das Geräte-Limit deines Kontos erreicht – melde ein anderes Gerät ab oder bitte den Admin, das Limit zu erhöhen."
-        case .server(let code): return "Der Server hat mit Fehler \(code) geantwortet."
-        case .unsupported: return "Für diesen Titel ist keine abspielbare Datei verfügbar."
-        case .keychain: return "Die Anmeldung konnte nicht sicher gespeichert werden."
-        case .quickConnectDisabled: return "Quick Connect ist auf diesem Server deaktiviert."
+        case .invalidURL:
+            return String(localized: "Diese Adresse sieht nicht richtig aus. Beispiel: 192.168.1.20 oder jellyfin.meinedomain.de")
+        case .serverNotFound: return String(localized: "Unter dieser Adresse wurde kein Jellyfin-Server gefunden.")
+        case .unauthorized: return String(localized: "Benutzername oder Passwort stimmen nicht.")
+        case .forbidden: return String(localized: "Dafür fehlt deinem Konto die Berechtigung.")
+        case .loginRejected:
+            return String(localized: "Der Server hat die Anmeldung abgelehnt. Meist ist das Geräte-Limit deines Kontos erreicht – melde ein anderes Gerät ab oder bitte den Admin, das Limit zu erhöhen.")
+        case .server(let code): return String(localized: "Der Server hat mit Fehler \(code) geantwortet.", comment: "HTTP status code")
+        case .unsupported: return String(localized: "Für diesen Titel ist keine abspielbare Datei verfügbar.")
+        case .keychain: return String(localized: "Die Anmeldung konnte nicht sicher gespeichert werden.")
+        case .quickConnectDisabled: return String(localized: "Quick Connect ist auf diesem Server deaktiviert.")
         }
     }
 }

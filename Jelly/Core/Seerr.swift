@@ -187,7 +187,11 @@ struct SeerrClient: Sendable {
         value.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? value
     }
 
-    private var language: String { "language=de" }
+    /// TMDB titles and overviews in the app's UI language.
+    private var language: String {
+        let code = Bundle.main.preferredLocalizations.first.flatMap { Locale(identifier: $0).language.languageCode?.identifier }
+        return "language=\(code ?? "de")"
+    }
 
     // MARK: Server & sign-in
 
@@ -213,7 +217,9 @@ struct SeerrClient: Sendable {
         }
         let headers = response.allHeaderFields.reduce(into: [String: String]()) { $0["\($1.key)"] = "\($1.value)" }
         guard let cookie = HTTPCookie.cookies(withResponseHeaderFields: headers, for: response.url ?? server)
-            .first(where: { $0.name == "connect.sid" })?.value else { throw SeerrError.server(response.statusCode, "Keine Sitzung erhalten") }
+            .first(where: { $0.name == "connect.sid" })?.value else {
+            throw SeerrError.server(response.statusCode, String(localized: "Keine Sitzung erhalten"))
+        }
         return (try JSONDecoder().decode(User.self, from: data), cookie)
     }
 
@@ -229,11 +235,11 @@ struct SeerrClient: Sendable {
 
         var title: String {
             switch self {
-            case .trending: "Gerade angesagt"
-            case .popularMovies: "Beliebte Filme"
-            case .popularSeries: "Beliebte Serien"
-            case .upcomingMovies: "Bald im Kino"
-            case .upcomingSeries: "Neue Serien demnächst"
+            case .trending: String(localized: "Gerade angesagt")
+            case .popularMovies: String(localized: "Beliebte Filme")
+            case .popularSeries: String(localized: "Beliebte Serien")
+            case .upcomingMovies: String(localized: "Bald im Kino")
+            case .upcomingSeries: String(localized: "Neue Serien demnächst")
             }
         }
 
@@ -379,10 +385,10 @@ enum SeerrStatus: Equatable {
     var label: String? {
         switch self {
         case .none: nil
-        case .pending: "Gewünscht"
-        case .processing: "Wird geladen"
-        case .partial: "Teilweise da"
-        case .available: "In deiner Bibliothek"
+        case .pending: String(localized: "Gewünscht", comment: "Jellyseerr status: the title was requested")
+        case .processing: String(localized: "Wird geladen", comment: "Jellyseerr: requested title is being downloaded")
+        case .partial: String(localized: "Teilweise da", comment: "Jellyseerr status: some seasons are in the library")
+        case .available: String(localized: "In deiner Bibliothek")
         }
     }
 
@@ -465,23 +471,26 @@ struct DownloadProgress: Equatable {
     }
 
     /// "42 %", rounded down so 100 % only shows once everything is there.
-    static func percent(_ fraction: Double) -> String { "\(Int((fraction * 100).rounded(.down))) %" }
+    static func percent(_ fraction: Double) -> String {
+        String(localized: "\(Int((fraction * 100).rounded(.down))) %", comment: "Percentage; German puts a space before the sign")
+    }
     var percent: String { Self.percent(fraction) }
 
     /// The state in a few words: "Lädt · 42 %", "In der Warteschlange" …
     var summary: String {
         switch phase {
-        case .downloading: "Lädt · \(percent)"
-        case .queued: "In der Warteschlange"
-        case .paused: "Pausiert · \(percent)"
-        case .importing: "Wird importiert"
-        case .stalled: "Download hängt · \(percent)"
+        case .downloading: String(localized: "Lädt · \(percent)", comment: "Download state with percentage, e.g. Lädt · 42 %")
+        case .queued: String(localized: "In der Warteschlange")
+        case .paused: String(localized: "Pausiert · \(percent)", comment: "Download state with percentage")
+        case .importing: String(localized: "Wird importiert", comment: "Download finished, being moved into the library")
+        case .stalled: String(localized: "Download hängt · \(percent)", comment: "Download state with percentage")
         }
     }
 
     var remainingText: String? {
         guard phase == .downloading, let remaining else { return nil }
-        return remaining < 60 ? "gleich fertig" : "noch \(Format.duration(remaining))"
+        return remaining < 60 ? String(localized: "gleich fertig", comment: "Download time left: less than a minute")
+            : String(localized: "noch \(Format.duration(remaining))", comment: "Download time left, e.g. noch 12 Min.")
     }
 
     /// The line under a poster: "42 % · noch 12 Min.", or the state when nothing is running.
@@ -516,13 +525,16 @@ enum SeerrError: LocalizedError, Equatable {
 
     var errorDescription: String? {
         switch self {
-        case .unreachable: "Jellyseerr ist unter dieser Adresse nicht erreichbar."
-        case .signedOut: "Die Anmeldung bei Jellyseerr ist abgelaufen."
-        case .wrongPassword: "Benutzername oder Passwort stimmen nicht."
-        case .jellyfinRefused: "Jellyseerr konnte dich nicht bei Jellyfin anmelden. Meist ist das Passwort falsch oder dein Jellyfin-Konto hat die erlaubte Zahl gleichzeitiger Anmeldungen erreicht – dann ein anderes Gerät abmelden und erneut versuchen."
-        case .rejected(let message): "Jellyseerr lehnt die Anmeldung ab: \(message)"
-        case .forbidden(let message): message.map { "Jellyseerr erlaubt das nicht: \($0)" } ?? "Dein Jellyseerr-Konto darf das nicht."
-        case .server(let code, let message): "Jellyseerr meldet einen Fehler (\(code))\(message.map { ": \($0)" } ?? "")."
+        case .unreachable: String(localized: "Jellyseerr ist unter dieser Adresse nicht erreichbar.")
+        case .signedOut: String(localized: "Die Anmeldung bei Jellyseerr ist abgelaufen.")
+        case .wrongPassword: String(localized: "Benutzername oder Passwort stimmen nicht.")
+        case .jellyfinRefused: String(localized: "Jellyseerr konnte dich nicht bei Jellyfin anmelden. Meist ist das Passwort falsch oder dein Jellyfin-Konto hat die erlaubte Zahl gleichzeitiger Anmeldungen erreicht – dann ein anderes Gerät abmelden und erneut versuchen.")
+        case .rejected(let message): String(localized: "Jellyseerr lehnt die Anmeldung ab: \(message)")
+        case .forbidden(let message):
+            message.map { String(localized: "Jellyseerr erlaubt das nicht: \($0)") } ?? String(localized: "Dein Jellyseerr-Konto darf das nicht.")
+        case .server(let code, let message):
+            message.map { String(localized: "Jellyseerr meldet einen Fehler (\(code)): \($0).") }
+                ?? String(localized: "Jellyseerr meldet einen Fehler (\(code)).")
         }
     }
 }

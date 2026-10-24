@@ -4,7 +4,7 @@ title: Jelly – Hilfe und Kontakt
 
 # Jelly – Hilfe und Kontakt
 
-Jelly spielt deine eigene Jellyfin-Bibliothek auf dem Apple TV ab – in Originalqualität, mit Dolby Vision und Atmos.
+Jelly spielt deine eigene Jellyfin-Bibliothek auf dem Apple TV ab – in Originalqualität, mit Dolby Vision und Atmos. · [English](../help/)
 
 ## Häufige Fragen
 

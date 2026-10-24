@@ -29,7 +29,7 @@ final class Purchases: ObservableObject {
     var isActive: Bool { Self.isEnforced || forcedForTesting }
 
     /// Shown until the App Store answers with the local price.
-    var price: String { product?.displayPrice ?? "9,99 €" }
+    var price: String { product?.displayPrice ?? Decimal(string: "9.99")!.formatted(.currency(code: "EUR")) }
 
     init(bundleID: String = Bundle.main.bundleIdentifier ?? "net.dgtl24.jelly") {
         productID = "\(bundleID).yearly"
@@ -88,7 +88,7 @@ final class Purchases: ObservableObject {
     func subscribe() async {
         message = nil
         guard let product else {
-            message = "Der App Store ist gerade nicht erreichbar. Bitte versuch es gleich noch einmal."
+            message = String(localized: "Der App Store ist gerade nicht erreichbar. Bitte versuch es gleich noch einmal.")
             if isActive, !forcedForTesting { await load() }
             return
         }
@@ -100,7 +100,7 @@ final class Purchases: ObservableObject {
                 if case .verified(let transaction) = result { await transaction.finish() }
                 await refresh()
             case .pending:
-                message = "Das Abo wartet noch auf eine Bestätigung, zum Beispiel aus der Familienfreigabe."
+                message = String(localized: "Das Abo wartet noch auf eine Bestätigung, zum Beispiel aus der Familienfreigabe.")
             case .userCancelled:
                 break
             @unknown default:
@@ -118,6 +118,6 @@ final class Purchases: ObservableObject {
         defer { busy = false }
         try? await AppStore.sync()
         await refresh()
-        if !access.isActive { message = "Für diese Apple-ID ist kein aktives Abo gespeichert." }
+        if !access.isActive { message = String(localized: "Für diese Apple-ID ist kein aktives Abo gespeichert.") }
     }
 }

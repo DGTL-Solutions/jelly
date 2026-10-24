@@ -21,6 +21,9 @@ settings:
     CURRENT_PROJECT_VERSION: '1'
     # LibDovi (Dolby Vision in AetherEngine) ships no Intel simulator slice; this Mac is Apple silicon.
     EXCLUDED_ARCHS[sdk=appletvsimulator*]: x86_64
+    # German is the source language of the string catalogs; English translations live next to it.
+    SWIFT_EMIT_LOC_STRINGS: YES
+    LOCALIZATION_PREFERS_STRING_CATALOGS: YES
 targets:
   Jelly:
     type: application
@@ -47,8 +50,9 @@ targets:
         UIUserInterfaceStyle: Dark
         # HTTPS only through Apple's URLSession, SHA-256 only for cache names: no non-exempt encryption.
         ITSAppUsesNonExemptEncryption: false
-        CFBundleDevelopmentRegion: de
-        CFBundleLocalizations: [de]
+        # German and English; any other device language gets English.
+        CFBundleDevelopmentRegion: en
+        CFBundleLocalizations: [de, en]
         CFBundleURLTypes:
           - CFBundleURLName: de.jelly.tv
             CFBundleURLSchemes: [jelly]
@@ -75,6 +79,8 @@ targets:
         # Like the app: Jellyfin servers at home often answer on plain http.
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: true
+        CFBundleDevelopmentRegion: en
+        CFBundleLocalizations: [de, en]
         NSExtension:
           NSExtensionPointIdentifier: com.apple.tv-top-shelf
           NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ContentProvider

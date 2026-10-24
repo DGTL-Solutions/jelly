@@ -77,34 +77,38 @@ struct PaywallView: View {
 
     private var subscribeTitle: String {
         purchases.trialAvailable
-            ? "\(Access.trialDays / 7) Wochen gratis, dann \(purchases.price) pro Jahr"
-            : "Jahresabo abschließen – \(purchases.price) pro Jahr"
+            ? String(localized: "\(Access.trialDays / 7) Wochen gratis, dann \(purchases.price) pro Jahr")
+            : String(localized: "Jahresabo abschließen – \(purchases.price) pro Jahr")
     }
 
     private var title: String {
         switch purchases.access {
-        case .notSubscribed, .checking: return purchases.trialAvailable ? "Jelly \(Access.trialDays / 7) Wochen kostenlos testen" : "Jelly Jahresabo"
-        case .trial(let days): return days == 1 ? "Noch 1 Tag kostenlos" : "Noch \(days) Tage kostenlos"
-        case .subscribed: return "Dein Jahresabo ist aktiv"
-        case .expired: return "Dein Abo ist abgelaufen"
-        case .unlocked: return "Jelly ist freigeschaltet"
+        case .notSubscribed, .checking:
+            return purchases.trialAvailable ? String(localized: "Jelly \(Access.trialDays / 7) Wochen kostenlos testen")
+                                            : String(localized: "Jelly Jahresabo", comment: "Name of the yearly subscription")
+        case .trial(let days): return days == 1 ? String(localized: "Noch 1 Tag kostenlos") : String(localized: "Noch \(days) Tage kostenlos")
+        case .subscribed: return String(localized: "Dein Jahresabo ist aktiv")
+        case .expired: return String(localized: "Dein Abo ist abgelaufen")
+        case .unlocked: return String(localized: "Jelly ist freigeschaltet")
         }
     }
 
     private var explanation: String {
-        let renewal = "Das Abo verlängert sich automatisch um ein Jahr für \(purchases.price), wenn du es nicht spätestens 24 Stunden vor Ablauf kündigst."
+        let renewal = String(localized: "Das Abo verlängert sich automatisch um ein Jahr für \(purchases.price), wenn du es nicht spätestens 24 Stunden vor Ablauf kündigst.")
         switch purchases.access {
         case .notSubscribed, .checking, .expired:
             let start = purchases.trialAvailable
-                ? "Probier alle Funktionen \(Access.trialDays / 7) Wochen lang kostenlos aus. Danach kostet das Jelly Jahresabo \(purchases.price) pro Jahr. "
-                : "Mit dem Jelly Jahresabo für \(purchases.price) pro Jahr spielst du deine Filme und Serien ab. "
-            return start + renewal + " Ohne Abo spielt Jelly nichts ab; deine Bibliothek und die Einstellungen bleiben erreichbar."
+                ? String(localized: "Probier alle Funktionen \(Access.trialDays / 7) Wochen lang kostenlos aus. Danach kostet das Jelly Jahresabo \(purchases.price) pro Jahr.")
+                : String(localized: "Mit dem Jelly Jahresabo für \(purchases.price) pro Jahr spielst du deine Filme und Serien ab.")
+            return [start, renewal, String(localized: "Ohne Abo spielt Jelly nichts ab; deine Bibliothek und die Einstellungen bleiben erreichbar.")]
+                .joined(separator: " ")
         case .trial:
-            return "Bis zum Ende des Probezeitraums ist alles kostenlos. Danach kostet das Jelly Jahresabo \(purchases.price) pro Jahr. " + renewal
+            let start = String(localized: "Bis zum Ende des Probezeitraums ist alles kostenlos. Danach kostet das Jelly Jahresabo \(purchases.price) pro Jahr.")
+            return [start, renewal].joined(separator: " ")
         case .subscribed:
             return renewal
         case .unlocked:
-            return "Viel Spaß mit deinen Filmen und Serien."
+            return String(localized: "Viel Spaß mit deinen Filmen und Serien.")
         }
     }
 }
@@ -126,8 +130,8 @@ struct LegalDocumentView: View {
                 HStack(alignment: .top, spacing: 40) {
                     QRCode(text: url).frame(width: 260, height: 260)
                     ScrollableText(document == .terms
-                        ? "Für Jelly und das Jelly Jahresabo gilt die Standard-Lizenzvereinbarung von Apple für Apps aus dem App Store (EULA). Zum Lesen auf dem Handy den Code scannen oder die Adresse öffnen:\n\n\(url)"
-                        : "Die Datenschutzerklärung zum Lesen auf dem Handy: Code scannen oder die Adresse öffnen:\n\n\(url)\n\nDas Wichtigste steht auch hier darunter.",
+                        ? String(localized: "Für Jelly und das Jelly Jahresabo gilt die Standard-Lizenzvereinbarung von Apple für Apps aus dem App Store (EULA). Zum Lesen auf dem Handy den Code scannen oder die Adresse öffnen:\n\n\(url)")
+                        : String(localized: "Die Datenschutzerklärung zum Lesen auf dem Handy: Code scannen oder die Adresse öffnen:\n\n\(url)\n\nDas Wichtigste steht auch hier darunter."),
                                    font: .callout)
                 }
                 if document == .privacy { ScrollableText(PrivacyNoticeView.text, font: .callout) }
