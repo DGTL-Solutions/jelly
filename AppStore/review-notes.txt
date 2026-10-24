@@ -1,9 +1,9 @@
 Jelly is a client for Jellyfin, the free and open-source media server that people run on their own computer or NAS. The app contains no content of its own; it plays the user's own library from the user's own server.
 
 HOW TO REVIEW (public demo server of the Jellyfin project, public-domain and Creative Commons films only)
-1. Launch Jelly. If no server is found automatically, choose "Adresse eingeben" (Enter address).
+1. Launch Jelly. If no server is found automatically, choose "Enter Address".
 2. Enter: demo.jellyfin.org/stable
-3. Select the profile "demo", leave the password empty and choose "Anmelden" (Sign in).
+3. Select the profile "demo", leave the password empty and choose "Sign In".
 4. Browse the library and play e.g. "Caminandes: Llama Drama". Swipe down during playback for subtitles, audio and info.
 
 SUBSCRIPTION (Guideline 3.1.2)
@@ -16,4 +16,4 @@ NOTES
 - App Transport Security exception: home media servers are usually reached via plain HTTP on the local network (e.g. http://192.168.1.10:8096) or user-chosen host names, so per-domain exceptions are not possible.
 - The "Erkunden" (Discover) tab is optional. It connects to the user's own Jellyseerr server, a companion request manager for Jellyfin; without one it only explains how to connect it. The demo server has no Jellyseerr.
 - No data is collected; there is no analytics, advertising or tracking.
-- The app's interface is in German.
+- The interface is in English and German and follows the device language.

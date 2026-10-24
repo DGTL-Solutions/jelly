@@ -1,11 +1,12 @@
 #!/bin/zsh
-# Builds Jelly for the App Store (with the APPSTORE flag: 14-day trial, one-time purchase, no IMDb dataset), signs it with an Apple Distribution certificate and uploads it to App Store Connect
+# Builds Jelly for the App Store – the Apple TV app, or with PLATFORM=ios the iPhone and iPad app – (with the APPSTORE flag: paywall with the annual subscription, no IMDb dataset), signs it with an Apple Distribution certificate and uploads it to App Store Connect
 # (TestFlight first, review later in the web UI) – headless like install-appletv.sh: no Xcode account, no keychain.
 #   ASC_KEY_ID, ASC_ISSUER_ID   API key with role Admin or App Manager; key file ~/.appstoreconnect/private_keys/AuthKey_<id>.p8
 #   DIST_CERT_DIR               folder with dist.key + dist.pem of an Apple Distribution certificate
 #                               (once per team: python3 Scripts/asc_certificate.py <key id> <issuer> <key file> <folder>)
 #   BUILD_NUMBER                default: date +%Y%m%d%H%M; must grow with every upload
 #   UPLOAD=0                    only build, sign and package: .build/AppStore/Jelly-<build>.ipa
+#   PLATFORM=ios                the iPhone and iPad app (target JellyMobile) instead of the Apple TV app
 # The app must already exist in App Store Connect (Apps › +) with this bundle ID: the API can't create apps.
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -19,21 +20,30 @@ KEY_PATH=${ASC_KEY_PATH:-$HOME/.appstoreconnect/private_keys/AuthKey_$ASC_KEY_ID
 RCODESIGN=${RCODESIGN:-$(command -v rcodesign || echo "$HOME/.t3tv-tools/bin/rcodesign")}
 [[ -x "$RCODESIGN" ]] || { echo "rcodesign fehlt: cargo install apple-codesign --bin rcodesign" >&2; exit 1; }
 TEAM=$(openssl x509 -in "$DIST_CERT_DIR/dist.pem" -noout -subject | sed -nE 's/.*OU ?= ?([A-Z0-9]{10}).*/\1/p')
-APP=.build/AppStoreData/Build/Products/Release-appletvos/Jelly.app
+if [[ "${PLATFORM:-tvos}" == ios ]]; then
+  SCHEME=JellyMobile; DESTINATION="generic/platform=iOS"; DATA=.build/AppStoreDataIOS; PRODUCTS=Release-iphoneos
+  PROFILE_TYPE=IOS_APP_STORE; PROFILE_NAME="Jelly iOS App Store"; ALTOOL_TYPE=ios
+else
+  SCHEME=Jelly; DESTINATION="generic/platform=tvOS"; DATA=.build/AppStoreData; PRODUCTS=Release-appletvos
+  PROFILE_TYPE=TVOS_APP_STORE; PROFILE_NAME="Jelly tvOS App Store"; ALTOOL_TYPE=appletvos
+fi
+APP=$DATA/Build/Products/$PRODUCTS/Jelly.app
 OUT=.build/AppStore
 WORK=$(mktemp -d)
 trap 'rm -rf "$WORK"' EXIT
 
 echo "App-Store-Profile …"
 python3 Scripts/asc_profile.py "$ASC_KEY_ID" "$ASC_ISSUER_ID" "$KEY_PATH" "$BUNDLE_ID" "$DIST_CERT_DIR/dist.pem" - \
-  "$WORK/jelly.mobileprovision" "Jelly tvOS App Store" TVOS_APP_STORE
-python3 Scripts/asc_profile.py "$ASC_KEY_ID" "$ASC_ISSUER_ID" "$KEY_PATH" "$BUNDLE_ID.topshelf" "$DIST_CERT_DIR/dist.pem" - \
-  "$WORK/topshelf.mobileprovision" "Jelly Top Shelf App Store" TVOS_APP_STORE
+  "$WORK/jelly.mobileprovision" "$PROFILE_NAME" $PROFILE_TYPE
+if [[ $SCHEME == Jelly ]]; then
+  python3 Scripts/asc_profile.py "$ASC_KEY_ID" "$ASC_ISSUER_ID" "$KEY_PATH" "$BUNDLE_ID.topshelf" "$DIST_CERT_DIR/dist.pem" - \
+    "$WORK/topshelf.mobileprovision" "Jelly Top Shelf App Store" TVOS_APP_STORE
+fi
 
 echo "Build $BUILD_NUMBER …"
 rm -rf "$APP"
-xcodebuild -project Jelly.xcodeproj -scheme Jelly -configuration Release -destination "generic/platform=tvOS" \
-  -derivedDataPath .build/AppStoreData -clonedSourcePackagesDirPath .build/Packages \
+xcodebuild -project Jelly.xcodeproj -scheme $SCHEME -configuration Release -destination "$DESTINATION" \
+  -derivedDataPath $DATA -clonedSourcePackagesDirPath .build/Packages \
   JELLY_BUNDLE_ID="$BUNDLE_ID" CURRENT_PROJECT_VERSION="$BUILD_NUMBER" CODE_SIGNING_ALLOWED=NO \
   SWIFT_ACTIVE_COMPILATION_CONDITIONS='$(inherited) APPSTORE' build 2>&1 \
   | grep -E "error:|BUILD (SUCCEEDED|FAILED)" || true
@@ -72,6 +82,6 @@ echo "Paket: $IPA"
 [[ "${UPLOAD:-1}" == 1 ]] || exit 0
 # altool finds the key in ~/.appstoreconnect/private_keys by its ID.
 echo "Prüfen und hochladen …"
-xcrun altool --validate-app "$IPA" -t appletvos --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID"
-xcrun altool --upload-app -f "$IPA" -t appletvos --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID"
+xcrun altool --validate-app "$IPA" -t $ALTOOL_TYPE --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID"
+xcrun altool --upload-app -f "$IPA" -t $ALTOOL_TYPE --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID"
 echo "Hochgeladen. Nach der Verarbeitung (etwa 15 min) erscheint Build $BUILD_NUMBER in App Store Connect › TestFlight."

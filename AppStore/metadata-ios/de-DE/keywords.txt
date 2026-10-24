@@ -1,0 +1,1 @@
+Jellyfin,Mediaplayer,MKV,Bild-in-Bild,AirPlay,Untertitel,Mediathek,Serien,Filme,Jellyseerr,Heimkino

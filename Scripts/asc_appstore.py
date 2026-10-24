@@ -7,6 +7,9 @@ Usage: asc_appstore.py KEY_ID ISSUER_ID KEY_PATH setup             texts, screen
        asc_appstore.py KEY_ID ISSUER_ID KEY_PATH attach BUILDNUMBER  puts an uploaded, processed build on version 1.0
        asc_appstore.py KEY_ID ISSUER_ID KEY_PATH submit --yes       sends version and subscription to App Review
 App Review contact (seen by Apple only, never committed): REVIEW_FIRST_NAME, REVIEW_LAST_NAME, REVIEW_PHONE, REVIEW_EMAIL.
+PLATFORM=ios works on the iPhone and iPad version instead: its texts come from AppStore/metadata-ios/<locale> where a file
+exists there (else AppStore/metadata), screenshots from AppStore/screenshots-ios/<locale>/iphone and /ipad, review notes
+from review-notes-ios.txt. App name, subtitle, price and subscription are shared by both platforms.
 """
 import hashlib, os, sys
 
@@ -29,7 +32,15 @@ SUBSCRIPTION_TEXTS = {"de": ("Jelly Jahresabo", "Alle Funktionen von Jelly, ein 
 SUBSCRIPTION_ID = f"{BUNDLE_ID}.yearly"
 PRICE = "9.99"
 BASE_TERRITORY = "DEU"
-SCREENSHOTS = ["1-start.png", "2-details.png", "3-player.png", "4-info.png"]
+# Countries with their own price instead of Apple's conversion from the German one, e.g. {"USA": "9.99"}.
+# Empty: every country gets Apple's conversion (US prices exclude sales tax, so 9,99 € becomes $8.99).
+MANUAL_PRICES = {}
+IOS = os.environ.get("PLATFORM", "tvos") == "ios"
+ASC_PLATFORM = "IOS" if IOS else "TV_OS"
+PLATFORM_NAME = "iOS" if IOS else "tvOS"
+# Screenshot sets of the version: display type and folder per locale.
+SCREENSHOT_SETS = ([("APP_IPHONE_67", "screenshots-ios", "iphone"), ("APP_IPAD_PRO_3GEN_129", "screenshots-ios", "ipad")] if IOS
+                   else [("APP_APPLE_TV", "screenshots", "")])
 
 
 def text(name):
@@ -37,16 +48,19 @@ def text(name):
         return file.read().strip()
 
 
-def meta(locale, name):
+def meta(locale, name, version_text=False):
+    """A store text; the iOS version's own texts (description, keywords …) take precedence where they exist."""
+    if IOS and version_text and os.path.exists(os.path.join(ROOT, "metadata-ios", locale, name)):
+        return text(os.path.join("metadata-ios", locale, name))
     return text(os.path.join("metadata", locale, name))
 
 
-def screenshot_dir(locale):
+def screenshot_dir(locale, base="screenshots", device=""):
     for candidate in [locale, "en-US" if locale.startswith("en") else "de-DE"]:
-        path = os.path.join(ROOT, "screenshots", candidate)
+        path = os.path.join(ROOT, base, candidate, device)
         if os.path.isdir(path):
             return path
-    sys.exit(f"Keine Screenshots für {locale} in AppStore/screenshots.")
+    sys.exit(f"Keine Screenshots für {locale} in AppStore/{base}.")
 
 
 def ref(kind, identifier):
@@ -72,10 +86,10 @@ if not apps:
     sys.exit(f"Keine App mit der Bundle-ID {BUNDLE_ID} in App Store Connect. Erst im Browser anlegen: Apps › + › Neue App "
              f"(tvOS, Name „Jelly“, Primärsprache Deutsch, Bundle-ID {BUNDLE_ID}, SKU jelly-tvos).")
 app = apps[0]["id"]
-versions = [v for v in call("GET", f"/apps/{app}/appStoreVersions?filter[platform]=TV_OS&limit=10")["data"]
+versions = [v for v in call("GET", f"/apps/{app}/appStoreVersions?filter[platform]={ASC_PLATFORM}&limit=10")["data"]
             if v["attributes"]["appStoreState"] in ("PREPARE_FOR_SUBMISSION", "DEVELOPER_REJECTED", "REJECTED", "METADATA_REJECTED")]
 if not versions:
-    sys.exit("Keine bearbeitbare tvOS-Version gefunden.")
+    sys.exit(f"Keine bearbeitbare {PLATFORM_NAME}-Version gefunden.")
 version = versions[0]["id"]
 territories = [t["id"] for t in pages("/territories?limit=200")[0]]
 
@@ -105,13 +119,13 @@ if COMMAND == "setup":
     call("PATCH", f"/ageRatingDeclarations/{rating}", {"data": {"type": "ageRatingDeclarations", "id": rating, "attributes": {**none, **no}}},
          fatal=False)
 
-    step("Version 1.0: Copyright, Beschreibung, Stichwörter, Werbetext, Support-Seite")
+    step(f"Version 1.0 ({PLATFORM_NAME}): Copyright, Beschreibung, Stichwörter, Werbetext, Support-Seite")
     call("PATCH", f"/appStoreVersions/{version}", {"data": {"type": "appStoreVersions", "id": version, "attributes": {
         "copyright": "2026 DGTL Solutions GmbH"}}}, fatal=False)
     existing = {l["attributes"]["locale"]: l["id"] for l in call("GET", f"/appStoreVersions/{version}/appStoreVersionLocalizations")["data"]}
     for locale in LOCALES:
-        attributes = {"description": meta(locale, "description.txt"), "keywords": meta(locale, "keywords.txt"),
-                      "promotionalText": meta(locale, "promotional_text.txt"), "supportUrl": meta(locale, "support_url.txt"),
+        attributes = {"description": meta(locale, "description.txt", True), "keywords": meta(locale, "keywords.txt", True),
+                      "promotionalText": meta(locale, "promotional_text.txt", True), "supportUrl": meta(locale, "support_url.txt"),
                       "marketingUrl": "https://dgtl-solutions.github.io/jelly/"}
         if locale in existing:
             call("PATCH", f"/appStoreVersionLocalizations/{existing[locale]}", {"data": {"type": "appStoreVersionLocalizations",
@@ -123,33 +137,34 @@ if COMMAND == "setup":
             if created:
                 existing[locale] = created["data"]["id"]
 
-    step("Screenshots (Apple TV, 1920×1080), pro Sprache")
+    step(f"Screenshots ({PLATFORM_NAME}), pro Sprache")
     for locale in LOCALES:
         if locale not in existing:
             continue
-        folder = screenshot_dir(locale)
-        files = sorted(f for f in os.listdir(folder) if f.endswith(".png"))
-        sets = call("GET", f"/appStoreVersionLocalizations/{existing[locale]}/appScreenshotSets?include=appScreenshots")
-        tv = next((s for s in sets["data"] if s["attributes"]["screenshotDisplayType"] == "APP_APPLE_TV"), None)
-        if tv is None:
-            tv = call("POST", "/appScreenshotSets", {"data": {"type": "appScreenshotSets", "attributes": {"screenshotDisplayType": "APP_APPLE_TV"},
-                      "relationships": {"appStoreVersionLocalization": ref("appStoreVersionLocalizations", existing[locale])}}})["data"]
-        present = {s["attributes"]["fileName"]: s for s in sets.get("included", []) if s["type"] == "appScreenshots"}
-        # Same name and same bytes stay; changed or removed images are replaced, so the store always shows these files.
-        for name, shot in present.items():
-            path = os.path.join(folder, name)
-            current = os.path.exists(path) and hashlib.md5(open(path, "rb").read()).hexdigest()
-            if current != shot["attributes"].get("sourceFileChecksum"):
-                call("DELETE", f"/appScreenshots/{shot['id']}", fatal=False)
-                present[name] = None
-        for name in files:
-            if not present.get(name):
-                put_asset("/appScreenshots", "appScreenshots", "appScreenshotSet", "appScreenshotSets", tv["id"], os.path.join(folder, name))
-                print(f"  {locale}: {name}")
-        shots = call("GET", f"/appScreenshotSets/{tv['id']}/appScreenshots")["data"]
-        order = sorted(shots, key=lambda shot: shot["attributes"]["fileName"])
-        call("PATCH", f"/appScreenshotSets/{tv['id']}/relationships/appScreenshots",
-             {"data": [{"type": "appScreenshots", "id": shot["id"]} for shot in order]}, fatal=False)
+        sets = call("GET", f"/appStoreVersionLocalizations/{existing[locale]}/appScreenshotSets")
+        for display, base, device in SCREENSHOT_SETS:
+            folder = screenshot_dir(locale, base, device)
+            files = sorted(f for f in os.listdir(folder) if f.endswith(".png"))
+            screens = next((s for s in sets["data"] if s["attributes"]["screenshotDisplayType"] == display), None)
+            if screens is None:
+                screens = call("POST", "/appScreenshotSets", {"data": {"type": "appScreenshotSets", "attributes": {"screenshotDisplayType": display},
+                               "relationships": {"appStoreVersionLocalization": ref("appStoreVersionLocalizations", existing[locale])}}})["data"]
+            present = {s["attributes"]["fileName"]: s for s in call("GET", f"/appScreenshotSets/{screens['id']}/appScreenshots")["data"]}
+            # Same name and same bytes stay; changed or removed images are replaced, so the store always shows these files.
+            for name, shot in present.items():
+                path = os.path.join(folder, name)
+                current = os.path.exists(path) and hashlib.md5(open(path, "rb").read()).hexdigest()
+                if current != shot["attributes"].get("sourceFileChecksum"):
+                    call("DELETE", f"/appScreenshots/{shot['id']}", fatal=False)
+                    present[name] = None
+            for name in files:
+                if not present.get(name):
+                    put_asset("/appScreenshots", "appScreenshots", "appScreenshotSet", "appScreenshotSets", screens["id"], os.path.join(folder, name))
+                    print(f"  {locale} {device or 'tv'}: {name}")
+            shots = call("GET", f"/appScreenshotSets/{screens['id']}/appScreenshots")["data"]
+            order = sorted(shots, key=lambda shot: shot["attributes"]["fileName"])
+            call("PATCH", f"/appScreenshotSets/{screens['id']}/relationships/appScreenshots",
+                 {"data": [{"type": "appScreenshots", "id": shot["id"]} for shot in order]}, fatal=False)
 
     # Apple only switches the primary language once that language has its screenshots.
     if PRIMARY_LOCALE in LOCALES and apps[0]["attributes"]["primaryLocale"] != PRIMARY_LOCALE:
@@ -159,7 +174,8 @@ if COMMAND == "setup":
     step("App-Review-Angaben")
     contact = {k: os.environ.get(v) for k, v in [("contactFirstName", "REVIEW_FIRST_NAME"), ("contactLastName", "REVIEW_LAST_NAME"),
                                                  ("contactPhone", "REVIEW_PHONE"), ("contactEmail", "REVIEW_EMAIL")] if os.environ.get(v)}
-    review = {**contact, "demoAccountRequired": False, "notes": text("review-notes.txt")[:4000]}
+    notes = "review-notes-ios.txt" if IOS and os.path.exists(os.path.join(ROOT, "review-notes-ios.txt")) else "review-notes.txt"
+    review = {**contact, "demoAccountRequired": False, "notes": text(notes)[:4000]}
     existing = find(f"/appStoreVersions/{version}/appStoreReviewDetail")
     if existing and len(contact) == 4:
         call("PATCH", f"/appStoreReviewDetails/{existing['id']}", {"data": {"type": "appStoreReviewDetails",
@@ -221,13 +237,17 @@ if COMMAND == "setup":
              "relationships": {"subscription": ref("subscriptions", subscription),
                                "availableTerritories": {"data": [{"type": "territories", "id": t} for t in territories]}}}}, fatal=False)
 
-    step(f"Abo-Preis: {PRICE.replace('.', ',')} € in Deutschland, andere Länder von Apple umgerechnet")
+    step(f"Abo-Preis: {PRICE.replace('.', ',')} € in Deutschland, "
+         f"{''.join(f'{t} {p}, ' for t, p in MANUAL_PRICES.items())}andere Länder von Apple umgerechnet")
     if not call("GET", f"/subscriptions/{subscription}/prices?limit=1")["data"]:
         points, _ = pages(f"/subscriptions/{subscription}/pricePoints?filter[territory]={BASE_TERRITORY}&limit=200")
         base = next(p for p in points if float(p["attributes"]["customerPrice"]) == float(PRICE))
         equal, _ = pages(f"/subscriptionPricePoints/{base['id']}/equalizations?include=territory&limit=200")
         for point in [base] + equal:
             territory = point.get("relationships", {}).get("territory", {}).get("data", {}).get("id", BASE_TERRITORY)
+            if territory in MANUAL_PRICES:
+                own, _ = pages(f"/subscriptions/{subscription}/pricePoints?filter[territory]={territory}&limit=200")
+                point = next(p for p in own if float(p["attributes"]["customerPrice"]) == float(MANUAL_PRICES[territory]))
             call("POST", "/subscriptionPrices", {"data": {"type": "subscriptionPrices", "attributes": {"startDate": None, "preserveCurrentPrice": False},
                  "relationships": {"subscription": ref("subscriptions", subscription), "territory": ref("territories", territory),
                                    "subscriptionPricePoint": ref("subscriptionPricePoints", point["id"])}}}, fatal=False)
@@ -255,7 +275,7 @@ elif COMMAND == "attach":
     if state != "VALID":
         sys.exit(f"Build {number} ist noch in Verarbeitung ({state}).")
     call("PATCH", f"/appStoreVersions/{version}/relationships/build", ref("builds", builds[0]["id"]))
-    print(f"Build {number} hängt an Version 1.0.")
+    print(f"Build {number} hängt an Version 1.0 ({PLATFORM_NAME}).")
 
 elif COMMAND == "submit":
     if "--yes" not in sys.argv:
@@ -265,7 +285,7 @@ elif COMMAND == "submit":
         for subscription in call("GET", f"/subscriptionGroups/{group['id']}/subscriptions?limit=50")["data"]:
             call("POST", "/subscriptionSubmissions", {"data": {"type": "subscriptionSubmissions",
                  "relationships": {"subscription": ref("subscriptions", subscription["id"])}}}, fatal=False)
-    submission = call("POST", "/reviewSubmissions", {"data": {"type": "reviewSubmissions", "attributes": {"platform": "TV_OS"},
+    submission = call("POST", "/reviewSubmissions", {"data": {"type": "reviewSubmissions", "attributes": {"platform": ASC_PLATFORM},
                       "relationships": {"app": ref("apps", app)}}})["data"]["id"]
     call("POST", "/reviewSubmissionItems", {"data": {"type": "reviewSubmissionItems", "relationships": {
         "reviewSubmission": ref("reviewSubmissions", submission), "appStoreVersion": ref("appStoreVersions", version)}}})

@@ -1,0 +1,34 @@
+Jelly brings your Jellyfin library to iPhone and iPad – native, fast and in original quality. All you need is your own Jellyfin server (free at jellyfin.org).
+
+ORIGINAL, NOT CONVERTED
+Jelly plays your files as they are: MKV, MP4, AVI and TS with H.264, HEVC, AV1, VC-1 or MPEG-2. Your server doesn't have to re-encode anything, and the picture stays untouched.
+
+SUBTITLES AS THEY WERE MEANT TO BE
+ASS/SSA subtitles with embedded fonts, positions and effects, plus PGS, VobSub, SRT and external subtitles. You choose size, color and background.
+
+MADE FOR TOUCH
+Browse your library with large artwork, double-tap to skip 10 seconds, scrub with thumbnail previews and pinch to fill the screen. Picture in Picture keeps the movie playing while you use other apps, and AirPlay sends it to your TV. On iPad, Jelly uses the whole screen with a sidebar and wider layouts.
+
+MADE FOR TV SHOWS
+Continue watching and next episodes right on the home screen. Jelly detects intros and credits by their sound – even without a server plugin – and starts the next episode as soon as the credits roll.
+
+AT HOME AND ON THE GO
+Jelly measures the connection to your server and picks the best quality that plays without stuttering. If the connection drops mid-movie, Jelly adapts and goes back to the better quality later. At home, Jelly talks to your server directly.
+
+EASY SIGN-IN
+Jelly finds your server on your home network. Sign in with your password or with Quick Connect from another device, and keep several servers and profiles with "Who's watching?" at launch.
+
+DISCOVER WITH JELLYSEERR
+Connect your Jellyseerr and request movies and shows that aren't on your server yet – with trends, new releases, search and live download progress.
+
+Also: ratings on detail pages, chapters, audio and subtitle sync, and detailed playback information.
+
+TRY IT FREE FOR 2 WEEKS
+Try Jelly with all features free for 2 weeks. After that, the Jelly annual subscription renews every year at the price shown in the App Store for your country. One subscription covers Jelly on iPhone, iPad and Apple TV with your Apple ID. Payment is charged to your Apple ID. The subscription renews automatically for another year unless you cancel at least 24 hours before it ends; you can cancel at any time in Settings › your name › Subscriptions.
+
+Terms of Use: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Privacy Policy: https://dgtl-solutions.github.io/jelly/privacy/
+
+No ads, no tracking, no data collection. Jelly only talks to your own servers.
+
+Jelly is an independent app and not an official product of the Jellyfin project.

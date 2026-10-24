@@ -85,6 +85,19 @@ ASC_KEY_ID=<Key-ID> ASC_ISSUER_ID=<Issuer-ID> DIST_CERT_DIR=~/.appstoreconnect/j
 
 Das Skript erzeugt die App-Store-Profile über die API, baut mit fortlaufender Build-Nummer, signiert ohne Schlüsselbund (rcodesign) und lädt per `altool` hoch. Es ist noch nie gelaufen – der erste Durchgang zeigt, ob Apple die Signatur und die eingebetteten Frameworks so annimmt.
 
+## 4a. iPhone und iPad
+
+Dieselbe App in App Store Connect (gleiche Bundle-ID, ein Abo für alle Geräte), mit eigener Version 1.0 für iOS:
+
+```sh
+PLATFORM=ios ASC_KEY_ID=… ASC_ISSUER_ID=… DIST_CERT_DIR=~/.appstoreconnect/jelly-dist Scripts/release-appstore.sh   # Build → TestFlight
+Scripts/screenshots-ios.sh                                                                                       # iPhone 6.9″ und iPad 13″
+PLATFORM=ios python3 Scripts/asc_appstore.py <Key-ID> <Issuer-ID> <Key-Datei> setup                             # Texte, Screenshots, Review-Angaben
+PLATFORM=ios python3 Scripts/asc_appstore.py <Key-ID> <Issuer-ID> <Key-Datei> attach <Build-Nummer>
+```
+
+Eigene Texte für iOS liegen in `metadata-ios/<Sprache>` (Beschreibung, Stichwörter, Werbetext; Name und Untertitel teilen sich beide Plattformen), die Hinweise für App Review in `review-notes-ios.txt`. TestFlight: Gruppe „Intern“ (Team, jeder Build automatisch) und „Tester“ (externe Tester, der erste Build jeder Version braucht Apples Beta-Prüfung).
+
 ## 5. Was in der App schon vorbereitet ist
 
 - Einstellungen › Info: Version mit Build-Nummer, **Open-Source-Lizenzen** (AetherEngine zuerst, 11 Komponenten mit Version, Copyright, Quelle und vollständigem Lizenztext aus `Jelly/Resources/Licenses/`), Hinweise zu IMDb, TMDB, Rotten Tomatoes und Jellyfin sowie **Datenschutz**.
