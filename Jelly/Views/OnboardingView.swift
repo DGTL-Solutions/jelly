@@ -64,7 +64,7 @@ struct OnboardingLayout<Content: View>: View {
     var body: some View {
         HStack(alignment: .center, spacing: 120) {
             VStack(alignment: .leading, spacing: 28) {
-                AppMark(size: 120)
+                AppMark(size: 160)
                 Text(title).font(.system(size: 64, weight: .bold)).fixedSize(horizontal: false, vertical: true)
                 Text(subtitle).font(.title3).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             }
@@ -84,19 +84,20 @@ struct OnboardingLayout<Content: View>: View {
     }
 }
 
+/// Jelly's logo as in the app icon: a flat play button in the brand gradient. `size` is its width.
 struct AppMark: View {
     var size: CGFloat = 120
     var body: some View {
-        RoundedRectangle(cornerRadius: size * 0.26, style: .continuous)
+        RoundedRectangle(cornerRadius: size * 0.2, style: .continuous)
             .fill(Theme.brand)
-            .frame(width: size, height: size)
+            .frame(width: size, height: size / 1.42)
             .overlay {
                 Image(systemName: "play.fill")
-                    .font(.system(size: size * 0.42, weight: .bold))
+                    .font(.system(size: size * 0.24, weight: .bold))
                     .foregroundStyle(.white)
-                    .offset(x: size * 0.03)
+                    .offset(x: size * 0.012)
             }
-            .shadow(color: Color(red: 0.4, green: 0.3, blue: 0.9).opacity(0.5), radius: 30, y: 10)
+            .shadow(color: Color(red: 0.4, green: 0.3, blue: 0.9).opacity(0.35), radius: 24, y: 8)
     }
 }
 

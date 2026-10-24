@@ -14,7 +14,7 @@ struct PaywallView: View {
 
     var body: some View {
         VStack(spacing: 28) {
-            AppMark(size: 110)
+            AppMark(size: 150)
             Text(title).font(.system(size: 50, weight: .bold)).multilineTextAlignment(.center)
             // The whole offer has to be readable before subscribing: never truncated.
             Text(explanation)
