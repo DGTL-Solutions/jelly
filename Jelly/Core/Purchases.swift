@@ -2,8 +2,8 @@ import Foundation
 import StoreKit
 
 /// The App Store version's yearly subscription (9,99 € a year, auto-renewing) with two free weeks as its introductory
-/// offer, through StoreKit 2. It belongs to the Apple ID: one subscription unlocks every Apple TV of the household,
-/// reinstalling doesn't restart the trial, and cancelling happens in the Apple TV's own settings.
+/// offer, through StoreKit 2. It belongs to the Apple ID: one subscription unlocks Jelly on every Apple TV, iPhone and
+/// iPad of the household, reinstalling doesn't restart the trial, and cancelling happens in the system's own settings.
 @MainActor
 final class Purchases: ObservableObject {
     @Published private(set) var access: Access

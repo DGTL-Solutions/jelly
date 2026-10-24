@@ -44,7 +44,7 @@ struct PaywallView: View {
                 } else if let message = purchases.message {
                     Label(message, systemImage: "exclamationmark.circle").foregroundStyle(.orange)
                 } else {
-                    Text("Jelly Jahresabo · 1 Jahr · \(purchases.price) pro Jahr. Bezahlt wird über deine Apple-ID; das Abo gilt auf allen Apple TVs mit dieser Apple-ID. Kündigen: Apple-TV-Einstellungen › Benutzer und Accounts › Abonnements.")
+                    Text("Jelly Jahresabo · 1 Jahr · \(purchases.price) pro Jahr. Bezahlt wird über deine Apple-ID; das Abo gilt auf Apple TV, iPhone und iPad mit dieser Apple-ID. Kündigen: Apple-TV-Einstellungen › Benutzer und Accounts › Abonnements.")
                         .foregroundStyle(.secondary)
                 }
             }

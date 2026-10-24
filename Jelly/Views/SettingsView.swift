@@ -163,7 +163,7 @@ struct SettingsView: View {
 extension SettingsView {
     /// The App Store version's subscription.
     var purchase: some View {
-        SettingsSection(String(localized: "Jahresabo"), footer: purchases.message ?? String(localized: "\(purchases.price) pro Jahr, verlängert sich automatisch – gilt für alle Apple TVs mit deiner Apple-ID. Kündigen: Apple-TV-Einstellungen › Benutzer und Accounts › Abonnements.")) {
+        SettingsSection(String(localized: "Jahresabo"), footer: purchases.message ?? String(localized: "\(purchases.price) pro Jahr, verlängert sich automatisch – gilt auf Apple TV, iPhone und iPad mit deiner Apple-ID. Kündigen: Apple-TV-Einstellungen › Benutzer und Accounts › Abonnements.")) {
             SettingsInfo("Jelly", value: purchaseStatus)
             Button { model.showsPaywall = true } label: {
                 SettingsRowLabel(purchases.access.isActive ? String(localized: "Abo, Nutzungsbedingungen & Datenschutz")
