@@ -109,6 +109,9 @@ if COMMAND == "setup":
             print(f"  Sprache angelegt: {locale}")
     call("PATCH", f"/appInfos/{info}", {"data": {"type": "appInfos", "id": info, "relationships": {
         "primaryCategory": ref("appCategories", "ENTERTAINMENT")}}}, fatal=False)
+    # Jelly shows the viewer's own library and TMDB artwork (credited in the app's notices).
+    call("PATCH", f"/apps/{app}", {"data": {"type": "apps", "id": app, "attributes": {
+        "contentRightsDeclaration": "USES_THIRD_PARTY_CONTENT"}}}, fatal=False)
     rating = call("GET", f"/appInfos/{info}/ageRatingDeclaration")["data"]["id"]
     none = {k: "NONE" for k in ["alcoholTobaccoOrDrugUseOrReferences", "contests", "gamblingSimulated", "gunsOrOtherWeapons",
                                  "medicalOrTreatmentInformation", "profanityOrCrudeHumor", "sexualContentGraphicAndNudity",
