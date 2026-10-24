@@ -13,17 +13,35 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 START = time.time()
 GB = 1024 ** 3
 
-# tmdb id, type, title, year, poster, media status (2 pending, 3 processing, 4 partial, 5 available), downloads
+# The public demo server's own films and series (public domain or Creative Commons), so screenshots show nothing
+# we have no rights to. tmdb id, type, title, date, poster, media status (2 pending, 3 processing, 4 partial,
+# 5 available), downloads
 TITLES = [
-    (693134, "movie", "Dune: Part Two", "2024-02-27", "/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg", 3, "movie-running"),
-    (100088, "tv", "The Last of Us", "2023-01-15", "/uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg", 4, "season-pack"),
-    (872585, "movie", "Oppenheimer", "2023-07-19", "/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg", 3, "queued"),
-    (27205, "movie", "Inception", "2010-07-15", "/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg", 3, "paused"),
-    (157336, "movie", "Interstellar", "2014-11-05", "/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg", 3, None),
-    (1396, "tv", "Breaking Bad", "2008-01-20", "/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg", 5, None),
-    (603, "movie", "Matrix", "1999-03-31", "/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg", None, None),
-    (1399, "tv", "Game of Thrones", "2011-04-17", "/1XS1oqL89opfnbLl8WnZY1O1uJx.jpg", 2, None),
+    (10331, "movie", "Night of the Living Dead", "1968-10-04", "/rb2NWyb008u1EcKCOyXs2Nmj0ra.jpg", 3, "movie-running"),
+    (33050, "tv", "Pioneer One", "2010-06-16", "/p53wbsukyhJ8TieisoeU1zZr9iA.jpg", 4, "season-pack"),
+    (5698, "movie", "The Great Train Robbery", "1903-12-07", "/vEYr1sJR1dOFGXwXawpBN6hDRGF.jpg", 3, "queued"),
+    (225117, "movie", "King Lear", "1953-10-18", "/gSyCFr1mC6xdA78k8TSTVDtNhtv.jpg", 3, "paused"),
+    (18783, "movie", "Sahara", "1943-11-11", "/roVIPqVLMdvs7uOcqDuwO891t8s.jpg", 3, None),
+    (138, "movie", "Dracula", "1931-02-12", "/ueVSPt7vAba0XScHWTDWS5tNxYX.jpg", 5, None),
+    (23033, "movie", "Jungle Book", "1942-04-03", "/zYkffyYCFO1Li1f20MyaAYUaYC4.jpg", None, None),
+    (406956, "movie", "Caminandes: Llamigos", "2016-09-30", "/753kJbZ5iS7DUomTKX9qF5Cs5NY.jpg", 2, None),
+    (5926, "movie", "The Great St. Louis Bank Robbery", "1959-06-01", "/zodT2zxrTpCTWZp1jrz2xNZhSq7.jpg", None, None),
+    (253774, "movie", "Caminandes: Gran Dillama", "2013-11-22", "/7YtEiEzRBVCr8Sbgo1kVsr3OCMk.jpg", None, None),
 ]
+BACKDROPS = {10331: "/duPDqFFRkwKcGfVibBvtVKA7VNh.jpg", 138: "/p4WwQJmJzVHywWWFoHRHCAdZ8wa.jpg", 23033: "/iSqKGCO5W2vIcwHfJXIrkTEtAFV.jpg"}
+VOTES = {10331: 7.5, 33050: 6.9, 5698: 6.9, 225117: 6.2, 18783: 7.1, 138: 7.3, 23033: 6.6, 406956: 7.6, 5926: 6.1, 253774: 6.8}
+OVERVIEWS = {
+    10331: "A group of strangers barricade themselves in a farmhouse as the recently dead rise and close in.",
+    33050: "An object falls from the sky over Canada, and two agents follow its trail to a stranger claiming to come from space.",
+    5698: "A gang of bandits holds up a steam train and flees on horseback, with a posse close behind.",
+    225117: "Orson Welles plays the ageing king who divides his realm between his daughters, with tragic consequences.",
+    18783: "A tank crew and a band of stragglers hold a desert well against a German battalion.",
+    138: "Count Dracula leaves Transylvania for London, where he sets his sights on Mina Seward.",
+    23033: "Raised by wolves, Mowgli returns to his village and must choose between the jungle and the people.",
+    406956: "Koro the llama and a penguin compete for the last berry on a windswept Patagonian plain.",
+    5926: "Career criminals and a local youth carefully plan and rehearse the robbery of a Missouri bank.",
+    253774: "Koro the llama tries every trick to reach the greener grass behind an electric fence.",
+}
 
 
 def iso(seconds_from_now):
@@ -56,16 +74,16 @@ def downloads(kind):
     if kind == "movie-running":  # 35 % at start, done after about 15 minutes
         size = 18 * GB
         done = min(0.35 + elapsed * 0.65 / 900, 1)
-        return [item(size, done, "downloading", size * 0.65 / 900, "dune")]
-    if kind == "season-pack":  # three episodes in one pack, a fourth waits
+        return [item(size, done, "downloading", size * 0.65 / 900, "living-dead")]
+    if kind == "season-pack":  # two episodes in one pack, a third waits
         size = 6 * GB
         done = min(0.12 + elapsed / 1500, 1)
-        pack = [item(size, done, "downloading", size / 1500, "tlou-s2", (2, n)) for n in (1, 2, 3)]
-        return pack + [item(2 * GB, 0, "queued", 1, "tlou-s2e4", (2, 4))]
+        pack = [item(size, done, "downloading", size / 1500, "pioneer-one-s1", (1, n)) for n in (4, 5)]
+        return pack + [item(2 * GB, 0, "queued", 1, "pioneer-one-s1e6", (1, 6))]
     if kind == "queued":
-        return [item(9 * GB, 0, "queued", 1, "opp")]
+        return [item(9 * GB, 0, "queued", 1, "great-train-robbery")]
     if kind == "paused":
-        return [item(12 * GB, 0.6, "paused", 1, "inc")]
+        return [item(12 * GB, 0.6, "paused", 1, "king-lear")]
     return []
 
 
@@ -75,7 +93,7 @@ def media(entry):
         return None
     info = {"id": tmdb, "tmdbId": tmdb, "mediaType": kind, "status": status, "downloadStatus": downloads(dl), "downloadStatus4k": []}
     if kind == "tv":
-        info["seasons"] = [{"seasonNumber": 1, "status": 5}, {"seasonNumber": 2, "status": 3}] if status == 4 else []
+        info["seasons"] = [{"seasonNumber": 1, "status": 4}] if status == 4 else []
     if status == 5:
         info["jellyfinMediaId"] = "mock"
     return info
@@ -83,8 +101,8 @@ def media(entry):
 
 def title(entry):
     tmdb, kind, name, date, poster, _, _ = entry
-    result = {"id": tmdb, "mediaType": kind, "posterPath": poster, "backdropPath": poster, "voteAverage": 8.1,
-              "overview": "Ein Testtitel des Jellyseerr-Mocks.", "mediaInfo": media(entry)}
+    result = {"id": tmdb, "mediaType": kind, "posterPath": poster, "backdropPath": BACKDROPS.get(tmdb, poster),
+              "voteAverage": VOTES.get(tmdb, 7.0), "overview": OVERVIEWS.get(tmdb, ""), "mediaInfo": media(entry)}
     result.update({"title": name, "releaseDate": date} if kind == "movie" else {"name": name, "firstAirDate": date})
     return result
 
@@ -92,7 +110,7 @@ def title(entry):
 def details(entry):
     result = title(entry)
     if entry[1] == "tv":
-        result.update({"numberOfSeasons": 2, "seasons": [{"seasonNumber": n, "name": f"Staffel {n}", "episodeCount": 9} for n in (1, 2)]})
+        result.update({"numberOfSeasons": 1, "seasons": [{"seasonNumber": 1, "name": "Season 1", "episodeCount": 6}]})
     else:
         result["runtime"] = 150
     return result
