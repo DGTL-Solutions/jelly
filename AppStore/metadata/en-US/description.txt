@@ -24,7 +24,7 @@ Connect your Jellyseerr and request films and shows that aren't on your server y
 Also: ratings on detail pages, chapters, thumbnail previews while scrubbing, audio and subtitle sync, a connection analysis and a cover art screensaver like iTunes used to have.
 
 TRY IT FREE FOR 2 WEEKS
-Try Jelly with all features free for 2 weeks. After that, the Jelly annual subscription renews every year at the price shown in the App Store for your country and works on every Apple TV with your Apple ID. Payment is charged to your Apple ID. The subscription renews automatically for another year unless you cancel at least 24 hours before it ends; you can cancel at any time in the Apple TV settings under Users and Accounts › Subscriptions.
+Try Jelly with all features free for 2 weeks. After that, the Jelly annual subscription renews every year at the price shown in the App Store for your country. One subscription covers Jelly on Apple TV, iPhone and iPad with your Apple ID. Payment is charged to your Apple ID. The subscription renews automatically for another year unless you cancel at least 24 hours before it ends; you can cancel at any time in the Apple TV settings under Users and Accounts › Subscriptions.
 
 Terms of Use: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Privacy Policy: https://dgtl-solutions.github.io/jelly/privacy/

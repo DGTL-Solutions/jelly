@@ -7,13 +7,13 @@ HOW TO REVIEW (public demo server of the Jellyfin project, public-domain and Cre
 4. Browse the library and play e.g. "Caminandes: Llama Drama". Swipe down during playback for subtitles, audio and info.
 
 SUBSCRIPTION (Guideline 3.1.2)
-- The app is free to download and unlocked by the auto-renewable subscription "Jelly Jahresabo" (1 year, 9.99 EUR) with a 2-week free trial as introductory offer.
+- The app is free to download and unlocked by the auto-renewable subscription "Jelly Annual" (1 year, 9.99 EUR) with a 2-week free trial as introductory offer. The same subscription unlocks Jelly on iPhone and iPad (universal purchase).
 - The offer appears once after signing in and whenever playback is started without an active subscription. It states the price per year, the trial, automatic renewal, how to cancel, and links to the terms of use (Apple's standard EULA) and the privacy policy (shown as address and QR code, the privacy policy also as text, since tvOS has no browser).
-- Settings > Jahresabo shows the status and offers subscribing and "Käufe wiederherstellen" (restore purchases). Browsing the library works without a subscription.
+- Settings > Annual Subscription shows the status and offers subscribing and "Restore Purchases". Browsing the library works without a subscription.
 
 NOTES
 - Local network access is used only to discover Jellyfin servers in the user's home network (UDP 7359 and TCP 8096).
 - App Transport Security exception: home media servers are usually reached via plain HTTP on the local network (e.g. http://192.168.1.10:8096) or user-chosen host names, so per-domain exceptions are not possible.
-- The "Erkunden" (Discover) tab is optional. It connects to the user's own Jellyseerr server, a companion request manager for Jellyfin; without one it only explains how to connect it. The demo server has no Jellyseerr.
+- The "Discover" tab is optional. It connects to the user's own Jellyseerr server, a companion request manager for Jellyfin; without one it only explains how to connect it. The demo server has no Jellyseerr.
 - No data is collected; there is no analytics, advertising or tracking.
 - The interface is in English and German and follows the device language.

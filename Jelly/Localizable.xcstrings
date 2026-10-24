@@ -220,12 +220,12 @@
         }
       }
     },
-    "%@ pro Jahr, verlängert sich automatisch – gilt für alle Apple TVs mit deiner Apple-ID. Kündigen: Apple-TV-Einstellungen › Benutzer und Accounts › Abonnements." : {
+    "%@ pro Jahr, verlängert sich automatisch – gilt auf Apple TV, iPhone und iPad mit deiner Apple-ID. Kündigen: Apple-TV-Einstellungen › Benutzer und Accounts › Abonnements." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ per year, renews automatically—applies to all Apple TVs using your Apple ID. To cancel: Apple TV Settings › Users and Accounts › Subscriptions."
+            "value" : "%@ per year, renews automatically—applies to Apple TV, iPhone, and iPad using your Apple ID. To cancel: Apple TV Settings › Users and Accounts › Subscriptions."
           }
         }
       }
@@ -3023,12 +3023,12 @@
         }
       }
     },
-    "Jelly Jahresabo · 1 Jahr · %@ pro Jahr. Bezahlt wird über deine Apple-ID; das Abo gilt auf allen Apple TVs mit dieser Apple-ID. Kündigen: Apple-TV-Einstellungen › Benutzer und Accounts › Abonnements." : {
+    "Jelly Jahresabo · 1 Jahr · %@ pro Jahr. Bezahlt wird über deine Apple-ID; das Abo gilt auf Apple TV, iPhone und iPad mit dieser Apple-ID. Kündigen: Apple-TV-Einstellungen › Benutzer und Accounts › Abonnements." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jelly Annual Subscription · 1 year · %@ per year. Payment is charged to your Apple ID; the subscription applies to all Apple TVs using this Apple ID. To cancel: Apple TV Settings › Users and Accounts › Subscriptions."
+            "value" : "Jelly Annual Subscription · 1 year · %@ per year. Payment is charged to your Apple ID; the subscription applies to Apple TV, iPhone, and iPad using this Apple ID. To cancel: Apple TV Settings › Users and Accounts › Subscriptions."
           }
         }
       }

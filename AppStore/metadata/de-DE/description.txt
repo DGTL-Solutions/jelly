@@ -24,7 +24,7 @@ Verbinde deinen Jellyseerr und wünsch dir Filme und Serien, die noch nicht auf 
 Außerdem: Bewertungen auf den Detailseiten, Kapitel, Bildvorschau beim Spulen, Ton- und Untertitel-Synchronisation, eine Verbindungsanalyse und ein Cover-Bildschirmschoner wie früher bei iTunes.
 
 2 WOCHEN GRATIS, DANN 9,99 € IM JAHR
-Probier Jelly 2 Wochen lang kostenlos mit allen Funktionen. Danach kostet das Jelly Jahresabo 9,99 € pro Jahr und gilt auf allen Apple TVs mit deiner Apple-ID. Die Zahlung erfolgt über deine Apple-ID. Das Abo verlängert sich automatisch um ein Jahr, wenn du es nicht spätestens 24 Stunden vor Ablauf kündigst; kündigen kannst du jederzeit in den Apple-TV-Einstellungen unter Benutzer und Accounts › Abonnements.
+Probier Jelly 2 Wochen lang kostenlos mit allen Funktionen. Danach kostet das Jelly Jahresabo 9,99 € pro Jahr. Ein Abo gilt für Jelly auf Apple TV, iPhone und iPad mit deiner Apple-ID. Die Zahlung erfolgt über deine Apple-ID. Das Abo verlängert sich automatisch um ein Jahr, wenn du es nicht spätestens 24 Stunden vor Ablauf kündigst; kündigen kannst du jederzeit in den Apple-TV-Einstellungen unter Benutzer und Accounts › Abonnements.
 
 Nutzungsbedingungen: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Datenschutz: https://dgtl-solutions.github.io/jelly/datenschutz/
