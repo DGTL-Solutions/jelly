@@ -20,7 +20,12 @@ configure(KEY_ID, ISSUER, KEY_PATH)
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "AppStore")
 BUNDLE_ID = os.environ.get("BUNDLE_ID", "net.dgtl24.jelly")
-LOCALE = "de-DE"
+# One folder per store language in AppStore/metadata; screenshots in AppStore/screenshots/<locale> (en-GB uses en-US).
+LOCALES = sorted(d for d in os.listdir(os.path.join(ROOT, "metadata")) if not d.startswith("."))
+# The store shows the primary language wherever none of the others fits, so English rather than German.
+PRIMARY_LOCALE = "en-US"
+SUBSCRIPTION_TEXTS = {"de": ("Jelly Jahresabo", "Alle Funktionen von Jelly, ein Jahr lang"),
+                      "en": ("Jelly Annual", "All Jelly features for one year")}
 SUBSCRIPTION_ID = f"{BUNDLE_ID}.yearly"
 PRICE = "9.99"
 BASE_TERRITORY = "DEU"
@@ -32,8 +37,16 @@ def text(name):
         return file.read().strip()
 
 
-def meta(name):
-    return text(os.path.join("metadata", LOCALE, name))
+def meta(locale, name):
+    return text(os.path.join("metadata", locale, name))
+
+
+def screenshot_dir(locale):
+    for candidate in [locale, "en-US" if locale.startswith("en") else "de-DE"]:
+        path = os.path.join(ROOT, "screenshots", candidate)
+        if os.path.isdir(path):
+            return path
+    sys.exit(f"Keine Screenshots für {locale} in AppStore/screenshots.")
 
 
 def ref(kind, identifier):
@@ -69,10 +82,20 @@ territories = [t["id"] for t in pages("/territories?limit=200")[0]]
 if COMMAND == "setup":
     step("App-Infos: Name, Untertitel, Datenschutz, Kategorie, Altersfreigabe")
     info = call("GET", f"/apps/{app}/appInfos")["data"][0]["id"]
-    for loc in call("GET", f"/appInfos/{info}/appInfoLocalizations")["data"]:
-        if loc["attributes"]["locale"] == LOCALE:
-            call("PATCH", f"/appInfoLocalizations/{loc['id']}", {"data": {"type": "appInfoLocalizations", "id": loc["id"], "attributes": {
-                "name": meta("name.txt"), "subtitle": meta("subtitle.txt"), "privacyPolicyUrl": meta("privacy_url.txt")}}}, fatal=False)
+    existing = {l["attributes"]["locale"]: l["id"] for l in call("GET", f"/appInfos/{info}/appInfoLocalizations")["data"]}
+    for locale in LOCALES:
+        attributes = {"name": meta(locale, "name.txt"), "subtitle": meta(locale, "subtitle.txt"),
+                      "privacyPolicyUrl": meta(locale, "privacy_url.txt")}
+        if locale in existing:
+            call("PATCH", f"/appInfoLocalizations/{existing[locale]}", {"data": {"type": "appInfoLocalizations", "id": existing[locale],
+                 "attributes": attributes}}, fatal=False)
+        else:
+            call("POST", "/appInfoLocalizations", {"data": {"type": "appInfoLocalizations", "attributes": {"locale": locale, **attributes},
+                 "relationships": {"appInfo": ref("appInfos", info)}}}, fatal=False)
+            print(f"  Sprache angelegt: {locale}")
+    if PRIMARY_LOCALE in LOCALES and apps[0]["attributes"]["primaryLocale"] != PRIMARY_LOCALE:
+        call("PATCH", f"/apps/{app}", {"data": {"type": "apps", "id": app, "attributes": {"primaryLocale": PRIMARY_LOCALE}}}, fatal=False)
+        print(f"  Hauptsprache: {PRIMARY_LOCALE}")
     call("PATCH", f"/appInfos/{info}", {"data": {"type": "appInfos", "id": info, "relationships": {
         "primaryCategory": ref("appCategories", "ENTERTAINMENT")}}}, fatal=False)
     rating = call("GET", f"/appInfos/{info}/ageRatingDeclaration")["data"]["id"]
@@ -88,23 +111,48 @@ if COMMAND == "setup":
     step("Version 1.0: Copyright, Beschreibung, Stichwörter, Werbetext, Support-Seite")
     call("PATCH", f"/appStoreVersions/{version}", {"data": {"type": "appStoreVersions", "id": version, "attributes": {
         "copyright": "2026 DGTL Solutions GmbH"}}}, fatal=False)
-    localization = next(l for l in call("GET", f"/appStoreVersions/{version}/appStoreVersionLocalizations")["data"]
-                        if l["attributes"]["locale"] == LOCALE)["id"]
-    call("PATCH", f"/appStoreVersionLocalizations/{localization}", {"data": {"type": "appStoreVersionLocalizations", "id": localization,
-         "attributes": {"description": meta("description.txt"), "keywords": meta("keywords.txt"), "promotionalText": meta("promotional_text.txt"),
-                        "supportUrl": meta("support_url.txt"), "marketingUrl": "https://dgtl-solutions.github.io/jelly/"}}}, fatal=False)
+    existing = {l["attributes"]["locale"]: l["id"] for l in call("GET", f"/appStoreVersions/{version}/appStoreVersionLocalizations")["data"]}
+    for locale in LOCALES:
+        attributes = {"description": meta(locale, "description.txt"), "keywords": meta(locale, "keywords.txt"),
+                      "promotionalText": meta(locale, "promotional_text.txt"), "supportUrl": meta(locale, "support_url.txt"),
+                      "marketingUrl": "https://dgtl-solutions.github.io/jelly/"}
+        if locale in existing:
+            call("PATCH", f"/appStoreVersionLocalizations/{existing[locale]}", {"data": {"type": "appStoreVersionLocalizations",
+                 "id": existing[locale], "attributes": attributes}}, fatal=False)
+        else:
+            created = call("POST", "/appStoreVersionLocalizations", {"data": {"type": "appStoreVersionLocalizations",
+                           "attributes": {"locale": locale, **attributes},
+                           "relationships": {"appStoreVersion": ref("appStoreVersions", version)}}}, fatal=False)
+            if created:
+                existing[locale] = created["data"]["id"]
 
-    step("Screenshots (Apple TV, 1920×1080)")
-    sets = call("GET", f"/appStoreVersionLocalizations/{localization}/appScreenshotSets?include=appScreenshots")
-    tv = next((s for s in sets["data"] if s["attributes"]["screenshotDisplayType"] == "APP_APPLE_TV"), None)
-    if tv is None:
-        tv = call("POST", "/appScreenshotSets", {"data": {"type": "appScreenshotSets", "attributes": {"screenshotDisplayType": "APP_APPLE_TV"},
-                  "relationships": {"appStoreVersionLocalization": ref("appStoreVersionLocalizations", localization)}}})["data"]
-    present = {s["attributes"]["fileName"] for s in sets.get("included", []) if s["type"] == "appScreenshots"}
-    for name in SCREENSHOTS:
-        if name not in present:
-            put_asset("/appScreenshots", "appScreenshots", "appScreenshotSet", "appScreenshotSets", tv["id"], os.path.join(ROOT, "screenshots", name))
-            print(f"  hochgeladen: {name}")
+    step("Screenshots (Apple TV, 1920×1080), pro Sprache")
+    for locale in LOCALES:
+        if locale not in existing:
+            continue
+        folder = screenshot_dir(locale)
+        files = sorted(f for f in os.listdir(folder) if f.endswith(".png"))
+        sets = call("GET", f"/appStoreVersionLocalizations/{existing[locale]}/appScreenshotSets?include=appScreenshots")
+        tv = next((s for s in sets["data"] if s["attributes"]["screenshotDisplayType"] == "APP_APPLE_TV"), None)
+        if tv is None:
+            tv = call("POST", "/appScreenshotSets", {"data": {"type": "appScreenshotSets", "attributes": {"screenshotDisplayType": "APP_APPLE_TV"},
+                      "relationships": {"appStoreVersionLocalization": ref("appStoreVersionLocalizations", existing[locale])}}})["data"]
+        present = {s["attributes"]["fileName"]: s for s in sets.get("included", []) if s["type"] == "appScreenshots"}
+        # Same name and same bytes stay; changed or removed images are replaced, so the store always shows these files.
+        for name, shot in present.items():
+            path = os.path.join(folder, name)
+            current = os.path.exists(path) and hashlib.md5(open(path, "rb").read()).hexdigest()
+            if current != shot["attributes"].get("sourceFileChecksum"):
+                call("DELETE", f"/appScreenshots/{shot['id']}", fatal=False)
+                present[name] = None
+        for name in files:
+            if not present.get(name):
+                put_asset("/appScreenshots", "appScreenshots", "appScreenshotSet", "appScreenshotSets", tv["id"], os.path.join(folder, name))
+                print(f"  {locale}: {name}")
+        shots = call("GET", f"/appScreenshotSets/{tv['id']}/appScreenshots")["data"]
+        order = sorted(shots, key=lambda shot: shot["attributes"]["fileName"])
+        call("PATCH", f"/appScreenshotSets/{tv['id']}/relationships/appScreenshots",
+             {"data": [{"type": "appScreenshots", "id": shot["id"]} for shot in order]}, fatal=False)
 
     step("App-Review-Angaben")
     contact = {k: os.environ.get(v) for k, v in [("contactFirstName", "REVIEW_FIRST_NAME"), ("contactLastName", "REVIEW_LAST_NAME"),
@@ -145,9 +193,12 @@ if COMMAND == "setup":
     if group is None:
         group = call("POST", "/subscriptionGroups", {"data": {"type": "subscriptionGroups", "attributes": {"referenceName": "Jelly"},
                      "relationships": {"app": ref("apps", app)}}})["data"]["id"]
-    if not call("GET", f"/subscriptionGroups/{group}/subscriptionGroupLocalizations")["data"]:
-        call("POST", "/subscriptionGroupLocalizations", {"data": {"type": "subscriptionGroupLocalizations",
-             "attributes": {"name": "Jelly", "locale": LOCALE}, "relationships": {"subscriptionGroup": ref("subscriptionGroups", group)}}}, fatal=False)
+    named = {l["attributes"]["locale"] for l in call("GET", f"/subscriptionGroups/{group}/subscriptionGroupLocalizations")["data"]}
+    for locale in LOCALES:
+        if locale not in named:
+            call("POST", "/subscriptionGroupLocalizations", {"data": {"type": "subscriptionGroupLocalizations",
+                 "attributes": {"name": "Jelly", "locale": locale}, "relationships": {"subscriptionGroup": ref("subscriptionGroups", group)}}},
+                 fatal=False)
     subscriptions = call("GET", f"/subscriptionGroups/{group}/subscriptions?limit=50")["data"]
     subscription = next((s["id"] for s in subscriptions if s["attributes"]["productId"] == SUBSCRIPTION_ID), None)
     if subscription is None:
@@ -156,10 +207,13 @@ if COMMAND == "setup":
             "groupLevel": 1, "reviewNote": "Unlocks playback for one year; new subscribers get a 2-week free trial. Offer screen: "
             "after sign-in or when pressing play; Settings › Jahresabo shows status and restore."},
             "relationships": {"group": ref("subscriptionGroups", group)}}})["data"]["id"]
-    if not call("GET", f"/subscriptions/{subscription}/subscriptionLocalizations")["data"]:
-        call("POST", "/subscriptionLocalizations", {"data": {"type": "subscriptionLocalizations", "attributes": {
-            "name": "Jelly Jahresabo", "locale": LOCALE, "description": "Alle Funktionen von Jelly, ein Jahr lang"},
-            "relationships": {"subscription": ref("subscriptions", subscription)}}}, fatal=False)
+    named = {l["attributes"]["locale"] for l in call("GET", f"/subscriptions/{subscription}/subscriptionLocalizations")["data"]}
+    for locale in LOCALES:
+        if locale not in named:
+            name, description = SUBSCRIPTION_TEXTS[locale[:2]]
+            call("POST", "/subscriptionLocalizations", {"data": {"type": "subscriptionLocalizations", "attributes": {
+                "name": name, "locale": locale, "description": description},
+                "relationships": {"subscription": ref("subscriptions", subscription)}}}, fatal=False)
     if not find(f"/subscriptions/{subscription}/subscriptionAvailability"):
         call("POST", "/subscriptionAvailabilities", {"data": {"type": "subscriptionAvailabilities", "attributes": {"availableInNewTerritories": True},
              "relationships": {"subscription": ref("subscriptions", subscription),
@@ -187,7 +241,7 @@ if COMMAND == "setup":
     step("Review-Screenshot des Abo-Angebots")
     if not find(f"/subscriptions/{subscription}/appStoreReviewScreenshot"):
         put_asset("/subscriptionAppStoreReviewScreenshots", "subscriptionAppStoreReviewScreenshots", "subscription", "subscriptions",
-                  subscription, os.path.join(ROOT, "screenshots", "iap-review-angebot.png"))
+                  subscription, os.path.join(ROOT, "screenshots", "iap-review-offer.png"))
     print("Fertig. Fehlt nur noch der Build: Scripts/release-appstore.sh, dann „attach <Build-Nummer>“.")
 
 elif COMMAND == "attach":

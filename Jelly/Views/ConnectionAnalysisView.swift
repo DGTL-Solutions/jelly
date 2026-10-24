@@ -39,7 +39,7 @@ struct ConnectionAnalysisView: View {
         HStack(alignment: .center, spacing: 40) {
             VStack(alignment: .leading, spacing: 10) {
                 Text("Verbindungsanalyse").font(.system(size: 56, weight: .bold))
-                Text("Prüft den Weg zu \(model.session?.serverName ?? "deinem Server"): Erreichbarkeit, Geschwindigkeit, was davon in deiner Bibliothek im Original läuft und wann die Leitung am schnellsten ist.")
+                Text("Prüft den Weg zu \(model.session?.serverName ?? String(localized: "deinem Server", comment: "Fallback server name in 'Prüft den Weg zu …'")): Erreichbarkeit, Geschwindigkeit, was davon in deiner Bibliothek im Original läuft und wann die Leitung am schnellsten ist.")
                     .font(.callout).foregroundStyle(.secondary).frame(maxWidth: 1100, alignment: .leading)
             }
             Spacer()
@@ -80,56 +80,76 @@ struct ConnectionAnalysisView: View {
             .focusable()
 
         LazyVGrid(columns: columns, alignment: .leading, spacing: 40) {
-            AnalysisCard(icon: "server.rack", tint: Theme.accent, title: "Server", value: report.serverName, lines: [
+            AnalysisCard(icon: "server.rack", tint: Theme.accent,
+                         title: String(localized: "Server", comment: "The Jellyfin server"), value: report.serverName, lines: [
                 "Jellyfin \(report.version)",
-                report.latencyAverage.map { String(format: "Antwortzeit %.0f ms", $0 * 1000) + (report.jitter.map { String(format: " (±%.0f ms)", $0 * 500) } ?? "") },
-                report.https ? "Verschlüsselt (HTTPS)" : "Unverschlüsselt (HTTP)",
-                report.proxy.map { "Über \($0)" }
+                report.latencyAverage.map { average -> String in
+                    let latency = (average * 1000).formatted(.number.precision(.fractionLength(0)))
+                    guard let jitter = report.jitter else { return String(localized: "Antwortzeit \(latency) ms") }
+                    let spread = (jitter * 500).formatted(.number.precision(.fractionLength(0)))
+                    return String(localized: "Antwortzeit \(latency) ms (±\(spread) ms)")
+                },
+                report.https ? String(localized: "Verschlüsselt (HTTPS)") : String(localized: "Unverschlüsselt (HTTP)"),
+                report.proxy.map { String(localized: "Über \($0)", comment: "Connection runs through a proxy, e.g. 'Über Cloudflare'") }
             ].compactMap { $0 })
             .focusable()
 
-            AnalysisCard(icon: report.publicAddress && report.homeAddress == nil ? "globe" : "house", tint: Theme.accent, title: "Weg",
-                         value: report.homeAddress != nil || !report.publicAddress ? "Heimnetz" : "Internet", lines: [
-                "Apple TV per \(report.interface)",
-                report.homeAddress.map { "Direkt: \($0.host() ?? "")" },
-                report.publicAddress && report.homeAddress == nil ? "Der Server steht nicht in diesem Netzwerk" : nil
+            AnalysisCard(icon: report.publicAddress && report.homeAddress == nil ? "globe" : "house", tint: Theme.accent,
+                         title: String(localized: "Weg", comment: "Connection analysis: network route to the server"),
+                         value: report.homeAddress != nil || !report.publicAddress ? String(localized: "Heimnetz") : String(localized: "Internet"),
+                         lines: [
+                String(localized: "Apple TV per \(report.interface)", comment: "e.g. 'Apple TV per WLAN' / 'Apple TV per LAN-Kabel'"),
+                report.homeAddress.map { String(localized: "Direkt: \($0.host() ?? "")", comment: "Direct address of the server in the home network") },
+                report.publicAddress && report.homeAddress == nil ? String(localized: "Der Server steht nicht in diesem Netzwerk") : nil
             ].compactMap { $0 })
             .focusable()
 
-            AnalysisCard(icon: "speedometer", tint: Theme.accent, title: "Geschwindigkeit",
+            AnalysisCard(icon: "speedometer", tint: Theme.accent, title: String(localized: "Geschwindigkeit"),
                          value: report.speed.map { String(format: "%.0f Mbit/s", $0.megabits) } ?? "–", lines: speedLines(report))
                 .focusable()
 
-            AnalysisCard(icon: "film.stack", tint: Theme.accent, title: "Deine Bibliothek",
-                         value: report.library.count > 0 ? "\(Int((Double(report.library.original + report.library.compact) / Double(report.library.count) * 100).rounded())) % im Original" : "–",
+            AnalysisCard(icon: "film.stack", tint: Theme.accent, title: String(localized: "Deine Bibliothek"),
+                         value: report.library.count > 0 ? originalShare(report.library) : "–",
                          lines: libraryLines(report.library))
                 .focusable()
 
-            AnalysisCard(icon: "cpu", tint: Theme.accent, title: "Server-Umrechnung",
-                         value: report.conversion.map { "\($0.factor.formatted(.number.precision(.fractionLength(1))))× Echtzeit" } ?? "nicht nötig",
+            AnalysisCard(icon: "cpu", tint: Theme.accent, title: String(localized: "Server-Umrechnung"),
+                         value: report.conversion.map { String(localized: "\($0.factor.formatted(.number.precision(.fractionLength(1))))× Echtzeit") }
+                            ?? String(localized: "nicht nötig", comment: "Server transcoding is not needed"),
                          lines: report.conversion.map { [
-                             "Getestet mit \($0.title)",
-                             "Ziel \($0.limit / 1_000_000) Mbit/s · Ergebnis \($0.range)",
-                             $0.factor >= 1.3 ? "Schnell genug für flüssige Wiedergabe" : "Zu langsam – angepasste Qualität kann stocken"
-                         ] } ?? ["Die Leitung trägt alle Titel im Original."])
+                             String(localized: "Getestet mit \($0.title)", comment: "Tested with <movie title>"),
+                             String(localized: "Ziel \($0.limit / 1_000_000) Mbit/s · Ergebnis \($0.range)",
+                                    comment: "Target bitrate · resulting video range (HDR10/HLG/SDR)"),
+                             $0.factor >= 1.3
+                                ? String(localized: "Schnell genug für flüssige Wiedergabe")
+                                : String(localized: "Zu langsam – angepasste Qualität kann stocken")
+                         ] } ?? [String(localized: "Die Leitung trägt alle Titel im Original.")])
                 .focusable()
 
-            AnalysisCard(icon: "appletv", tint: Theme.accent, title: "Dieses Apple TV",
-                         value: report.dolbyVision ? "Dolby Vision bereit" : "Ohne Dolby Vision", lines: [
-                "Fernseher: \(report.hdrFormats.isEmpty ? "kein HDR erkannt" : report.hdrFormats.joined(separator: ", "))",
-                "Ton: bis \(report.audioChannels) Kanäle über HDMI",
-                report.matchingEnabled ? "Inhalt anpassen: an" : "Inhalt anpassen: aus"
+            AnalysisCard(icon: "appletv", tint: Theme.accent, title: String(localized: "Dieses Apple TV"),
+                         value: report.dolbyVision ? String(localized: "Dolby Vision bereit") : String(localized: "Ohne Dolby Vision"), lines: [
+                report.hdrFormats.isEmpty
+                    ? String(localized: "Fernseher: kein HDR erkannt")
+                    : String(localized: "Fernseher: \(report.hdrFormats.joined(separator: ", "))", comment: "TV: supported HDR formats"),
+                String(localized: "Ton: bis \(report.audioChannels) Kanäle über HDMI"),
+                report.matchingEnabled
+                    ? String(localized: "Inhalt anpassen: an", comment: "tvOS setting 'Match Content' (Inhalt anpassen) is on")
+                    : String(localized: "Inhalt anpassen: aus", comment: "tvOS setting 'Match Content' (Inhalt anpassen) is off")
             ])
             .focusable()
         }
 
         if let server = model.session?.server {
             let times = ConnectionAnalyzer.timeOfDay(for: server)
-            AnalysisCard(icon: "clock", tint: Theme.accent, title: "Wann ist die Leitung am schnellsten?",
+            AnalysisCard(icon: "clock", tint: Theme.accent, title: String(localized: "Wann ist die Leitung am schnellsten?"),
                          value: times.count > 1 ? times.max { $0.megabits < $1.megabits }.map { "\($0.label)" } : nil,
                          lines: times.isEmpty || times.count < 2
-                            ? ["Jede Messung wird gespeichert – auch die automatischen vor großen Filmen. Nach Messungen zu verschiedenen Tageszeiten steht hier, wann die Leitung am schnellsten ist."]
-                            : times.map { String(format: "%@: Ø %.0f Mbit/s (%d Messungen)", $0.label, $0.megabits, $0.count) })
+                            ? [String(localized: "Jede Messung wird gespeichert – auch die automatischen vor großen Filmen. Nach Messungen zu verschiedenen Tageszeiten steht hier, wann die Leitung am schnellsten ist.")]
+                            : times.map { time -> String in
+                                let megabits = time.megabits.formatted(.number.precision(.fractionLength(0)))
+                                return String(localized: "\(time.label): Ø \(megabits) Mbit/s (\(time.count) Messungen)",
+                                              comment: "Time of day: average speed (number of measurements)")
+                            })
                 .focusable()
         }
 
@@ -148,23 +168,35 @@ struct ConnectionAnalysisView: View {
     }
 
     private func speedLines(_ report: ConnectionAnalyzer.Report) -> [String] {
-        guard let speed = report.speed else { return ["Messung fehlgeschlagen"] }
+        guard let speed = report.speed else { return [String(localized: "Messung fehlgeschlagen")] }
         var lines = [String]()
         if let minimum = speed.minimum, let maximum = speed.samples.max() {
-            lines.append(String(format: "Schwankung %.0f–%.0f Mbit/s", minimum / 1_000_000, maximum / 1_000_000))
+            let low = (minimum / 1_000_000).formatted(.number.precision(.fractionLength(0)))
+            let high = (maximum / 1_000_000).formatted(.number.precision(.fractionLength(0)))
+            lines.append(String(localized: "Schwankung \(low)–\(high) Mbit/s", comment: "Speed range: lowest–highest measured"))
         }
         let mbit = speed.megabits
-        lines.append(mbit >= 100 ? "Reicht für alles, auch 4K-Remuxe" : mbit >= 30 ? "Reicht für 4K-Streams (15–25 Mbit/s)" : mbit >= 10 ? "Reicht für HD (5–15 Mbit/s)" : "Knapp – nur für kleinere Dateien")
+        lines.append(mbit >= 100 ? String(localized: "Reicht für alles, auch 4K-Remuxe")
+                     : mbit >= 30 ? String(localized: "Reicht für 4K-Streams (15–25 Mbit/s)")
+                     : mbit >= 10 ? String(localized: "Reicht für HD (5–15 Mbit/s)")
+                     : String(localized: "Knapp – nur für kleinere Dateien"))
         return lines
     }
 
+    private func originalShare(_ stats: ConnectionAnalyzer.LibraryStats) -> String {
+        let share = Double(stats.original + stats.compact) / Double(stats.count)
+        return String(localized: "\(share.formatted(.percent.precision(.fractionLength(0)))) im Original",
+                      comment: "Share of titles that play in original quality")
+    }
+
     private func libraryLines(_ stats: ConnectionAnalyzer.LibraryStats) -> [String] {
-        guard stats.count > 0 else { return ["Keine Titel mit Bitrate gefunden"] }
-        var lines = ["\(stats.original) von \(stats.count) Titeln unverändert"]
-        if stats.compact > 0 { lines.append("\(stats.compact) ohne ungenutzte Tonspuren (verlustfrei)") }
-        if stats.adapted > 0 { lines.append("\(stats.adapted) werden vom Server angepasst") }
+        guard stats.count > 0 else { return [String(localized: "Keine Titel mit Bitrate gefunden")] }
+        var lines = [String(localized: "\(stats.original) von \(stats.count) Titeln unverändert")]
+        if stats.compact > 0 { lines.append(String(localized: "\(stats.compact) ohne ungenutzte Tonspuren (verlustfrei)")) }
+        if stats.adapted > 0 { lines.append(String(localized: "\(stats.adapted) werden vom Server angepasst")) }
         if let biggest = stats.largest.first {
-            lines.append(String(format: "Größter Brocken: %@ (%.0f Mbit/s)", biggest.name, biggest.bitrate / 1_000_000))
+            let megabits = (biggest.bitrate / 1_000_000).formatted(.number.precision(.fractionLength(0)))
+            lines.append(String(localized: "Größter Brocken: \(biggest.name) (\(megabits) Mbit/s)", comment: "The title with the highest bitrate"))
         }
         return lines
     }

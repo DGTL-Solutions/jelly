@@ -24,11 +24,14 @@ final class ContentProvider: TVTopShelfContentProvider {
             return nil
         }
         let client = JellyfinClient(server: session.server, token: session.token, deviceID: store.deviceID)
-        var newest = JellyfinClient.ItemQuery()
-        newest.sortBy = "DateCreated"
-        newest.sortOrder = "Descending"
-        newest.limit = 16
-        newest.fields = fields
+        let newest: JellyfinClient.ItemQuery = {
+            var query = JellyfinClient.ItemQuery()
+            query.sortBy = "DateCreated"
+            query.sortOrder = "Descending"
+            query.limit = 16
+            query.fields = fields
+            return query
+        }()
         async let resume = loaded("resume") { try await client.resume(user: session.userID, limit: 6, fields: fields) }
         async let nextUp = loaded("next up") { try await client.nextUp(user: session.userID, limit: 6, fields: fields) }
         async let latest = loaded("latest") { try await client.items(user: session.userID, newest).items }
@@ -62,9 +65,11 @@ final class ContentProvider: TVTopShelfContentProvider {
         let item = TVTopShelfCarouselItem(identifier: base.id)
         item.title = base.isEpisode ? base.seriesName ?? base.name : base.name
         switch reason {
-        case .resume: item.contextTitle = ["Weiterschauen", base.remainingText].compactMap { $0 }.joined(separator: " · ")
-        case .nextUp: item.contextTitle = "Nächste Folge"
-        case .new: item.contextTitle = "Neu in deiner Mediathek"
+        case .resume:
+            item.contextTitle = [String(localized: "Weiterschauen", comment: "Continue watching"), base.remainingText].compactMap { $0 }
+                .joined(separator: " · ")
+        case .nextUp: item.contextTitle = String(localized: "Nächste Folge", comment: "Next TV episode")
+        case .new: item.contextTitle = String(localized: "Neu in deiner Mediathek")
         }
         item.summary = base.overview?.nonEmpty
         item.genre = base.genres?.prefix(2).joined(separator: ", ").nonEmpty
@@ -73,7 +78,7 @@ final class ContentProvider: TVTopShelfContentProvider {
         item.mediaOptions = mediaOptions(base.mediaSources?.first)
         if base.isEpisode {
             let episode = [base.episodeLabel, base.name].compactMap { $0 }.joined(separator: " – ")
-            item.namedAttributes = [TVTopShelfNamedAttribute(name: "Folge", values: [episode])]
+            item.namedAttributes = [TVTopShelfNamedAttribute(name: String(localized: "Folge", comment: "TV episode"), values: [episode])]
         }
         // Full-screen 16:9: the film's or series' backdrop rather than an episode still.
         if let url = client.artworkURL(base, .backdrop, width: 1920) { item.setImageURL(url, for: .screenScale1x) }

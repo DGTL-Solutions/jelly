@@ -9,8 +9,8 @@ struct MainView: View {
     var body: some View {
         TabView(selection: $tab) {
             Tab("Start", systemImage: "house", value: 0) { BrowseStack { HomeView() } }
-            Tab("Filme", systemImage: "film", value: 1) { BrowseStack { LibraryGridView(title: "Filme", types: ["Movie"]) } }
-            Tab("Serien", systemImage: "tv", value: 2) { BrowseStack { LibraryGridView(title: "Serien", types: ["Series"]) } }
+            Tab("Filme", systemImage: "film", value: 1) { BrowseStack { LibraryGridView(title: String(localized: "Filme"), types: ["Movie"]) } }
+            Tab("Serien", systemImage: "tv", value: 2) { BrowseStack { LibraryGridView(title: String(localized: "Serien"), types: ["Series"]) } }
             Tab("Erkunden", systemImage: "sparkles", value: 5) { DiscoverView() }
             Tab("Suche", systemImage: "magnifyingglass", value: 3, role: .search) { BrowseStack { SearchView() } }
             Tab("Einstellungen", systemImage: "gearshape", value: 4) { SettingsView() }
@@ -58,7 +58,7 @@ struct HomeView: View {
             if let error, !loaded {
                 ErrorView(message: error) { Task { await load() } }
             } else if !loaded {
-                LoadingView(text: "Deine Mediathek wird geladen …")
+                LoadingView(text: String(localized: "Deine Mediathek wird geladen …"))
             } else if featured.isEmpty && resume.isEmpty && latest.isEmpty {
                 ContentUnavailableView("Noch keine Inhalte", systemImage: "film.stack",
                                        description: Text("Sobald dein Server Filme oder Serien enthält, erscheinen sie hier."))
@@ -78,37 +78,38 @@ struct HomeView: View {
             LazyVStack(alignment: .leading, spacing: 56) {
                 if !featured.isEmpty { HeroCarousel(items: featured) }
                 if !resume.isEmpty {
-                    Shelf(title: "Weiterschauen", items: resume) { item in
+                    Shelf(title: String(localized: "Weiterschauen"), items: resume) { item in
                         MediaCard(item: item, style: .landscape, width: 460) { model.play(item) }
                     }
                 }
                 if !nextUp.isEmpty {
-                    Shelf(title: "Nächste Folgen", items: nextUp) { item in
+                    Shelf(title: String(localized: "Nächste Folgen"), items: nextUp) { item in
                         MediaCard(item: item, style: .landscape, width: 460) { model.play(item) }
                     }
                 }
                 ForEach(latest) { row in
-                    Shelf(title: "Neu in \(row.library.name)", items: row.items) { item in
+                    let title = String(localized: "Neu in \(row.library.name)", comment: "Shelf: recently added to <library name>")
+                    Shelf(title: title, items: row.items) { item in
                         MediaCard(item: item, style: .poster, width: 250)
                     }
                 }
                 if !favorites.isEmpty {
-                    Shelf(title: "Favoriten", items: favorites) { item in
+                    Shelf(title: String(localized: "Favoriten"), items: favorites) { item in
                         MediaCard(item: item, style: .poster, width: 250)
                     }
                 }
                 if !collections.isEmpty {
-                    Shelf(title: "Sammlungen", items: collections) { item in
+                    Shelf(title: String(localized: "Sammlungen", comment: "Movie collections (box sets)"), items: collections) { item in
                         MediaCard(item: item, style: .poster, width: 250)
                     }
                 }
                 if !playlists.isEmpty {
-                    Shelf(title: "Playlists", items: playlists) { item in
+                    Shelf(title: String(localized: "Playlists"), items: playlists) { item in
                         MediaCard(item: item, style: .landscape, width: 460)
                     }
                 }
                 if libraries.count > 1 {
-                    Shelf(title: "Bibliotheken", items: libraries) { library in
+                    Shelf(title: String(localized: "Bibliotheken"), items: libraries) { library in
                         MediaCard(item: library, style: .landscape, width: 460)
                     }
                 }

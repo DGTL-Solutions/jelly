@@ -53,7 +53,7 @@ private struct ConnectSeerrPrompt: View {
                 Label("Jellyseerr verbinden", systemImage: "link").padding(.horizontal, 20)
             }
             .padding(.top, 10)
-            Text(found.map { "Gefunden: \($0.host(percentEncoded: false) ?? $0.absoluteString)" } ?? " ")
+            Text(found.map { String(localized: "Gefunden: \($0.host(percentEncoded: false) ?? $0.absoluteString)") } ?? " ")
                 .font(.caption).foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -86,8 +86,8 @@ struct SeerrConnectView: View {
     private enum Field { case address, username, password }
 
     var body: some View {
-        OnboardingLayout(title: "Jellyseerr verbinden",
-                         subtitle: "Jelly meldet sich einmal an und merkt sich die Sitzung für dieses Profil. Dein Passwort wird nicht gespeichert.") {
+        OnboardingLayout(title: String(localized: "Jellyseerr verbinden"),
+                         subtitle: String(localized: "Jelly meldet sich einmal an und merkt sich die Sitzung für dieses Profil. Dein Passwort wird nicht gespeichert.")) {
             VStack(alignment: .leading, spacing: 22) {
                 TextField("Adresse, z. B. jellyseerr.example.com", text: $address)
                     .keyboardType(.URL)
@@ -200,7 +200,9 @@ struct SeerrConnectView: View {
                 password = ""
                 var text = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
                 if case SeerrError.jellyfinRefused = error, let limit = model.user?.policy?.maxActiveSessions, limit > 0 {
-                    text += " Dein Konto erlaubt \(limit) gleichzeitige Anmeldung\(limit == 1 ? "" : "en"); Jelly auf diesem Apple TV ist eine davon."
+                    text += " " + (limit == 1
+                        ? String(localized: "Dein Konto erlaubt 1 gleichzeitige Anmeldung; Jelly auf diesem Apple TV ist eine davon.")
+                        : String(localized: "Dein Konto erlaubt \(limit) gleichzeitige Anmeldungen; Jelly auf diesem Apple TV ist eine davon."))
                 }
                 self.error = text
             }
@@ -250,16 +252,16 @@ private struct DiscoverHome: View {
                     if let error {
                         ErrorView(message: error) { Task { await load() } }
                     } else {
-                        LoadingView(text: "Jellyseerr wird geladen …").frame(height: 500)
+                        LoadingView(text: String(localized: "Jellyseerr wird geladen …")).frame(height: 500)
                     }
                 }
                 if !loading.isEmpty {
-                    Shelf(title: "Wird geladen", items: loading) { title in
+                    Shelf(title: String(localized: "Wird geladen", comment: "Jellyseerr: requested title is being downloaded"), items: loading) { title in
                         SeerrCard(title: title) { path.append(.title(title)) }
                     }
                 }
                 if !wishes.isEmpty {
-                    Shelf(title: "Deine Wünsche", items: wishes) { title in
+                    Shelf(title: String(localized: "Deine Wünsche"), items: wishes) { title in
                         SeerrCard(title: title) { path.append(.title(title)) }
                     }
                 }
@@ -401,7 +403,8 @@ struct SeerrCard: View {
                     } else if title.status == .processing {
                         Text("Wartet auf Download").foregroundStyle(.secondary)
                     } else {
-                        Text([title.year, title.isSeries ? "Serie" : "Film"].compactMap { $0 }.joined(separator: " · "))
+                        let kind = title.isSeries ? String(localized: "Serie", comment: "TV series") : String(localized: "Film", comment: "Movie")
+                        Text([title.year, kind].compactMap { $0 }.joined(separator: " · "))
                             .foregroundStyle(.secondary)
                     }
                 }
@@ -551,11 +554,16 @@ struct SeerrDetailView: View {
     }
 
     private var metadata: String {
-        var parts = [title.year, title.isSeries ? "Serie" : "Film"].compactMap { $0 }
+        let kind = title.isSeries ? String(localized: "Serie", comment: "TV series") : String(localized: "Film", comment: "Movie")
+        var parts = [title.year, kind].compactMap { $0 }
         if let runtime = details?.runtime, runtime > 0 { parts.append(Format.duration(Double(runtime) * 60)) }
-        if let seasons = details?.numberOfSeasons { parts.append(seasons == 1 ? "1 Staffel" : "\(seasons) Staffeln") }
+        if let seasons = details?.numberOfSeasons {
+            parts.append(seasons == 1 ? String(localized: "1 Staffel") : String(localized: "\(seasons) Staffeln"))
+        }
         if let genres = details?.genres?.prefix(3).map(\.name), !genres.isEmpty { parts.append(genres.joined(separator: ", ")) }
-        if let vote = details?.voteAverage ?? title.voteAverage, vote > 0 { parts.append(String(format: "TMDB %.1f", vote).replacingOccurrences(of: ".", with: ",")) }
+        if let vote = details?.voteAverage ?? title.voteAverage, vote > 0 {
+            parts.append("TMDB " + vote.formatted(.number.precision(.fractionLength(1))))
+        }
         return parts.joined(separator: "  ·  ")
     }
 
@@ -589,8 +597,8 @@ struct SeerrDetailView: View {
             let result = try await account.client.request(title, seasons: seasons)
             status = result == 2 ? .processing : .pending
             message = result == 2
-                ? "Freigegeben – sobald der Titel geladen ist, steht er in deiner Bibliothek."
-                : "Gewünscht – ein Admin muss den Wunsch noch freigeben. Danach erscheint er automatisch in deiner Bibliothek."
+                ? String(localized: "Freigegeben – sobald der Titel geladen ist, steht er in deiner Bibliothek.")
+                : String(localized: "Gewünscht – ein Admin muss den Wunsch noch freigeben. Danach erscheint er automatisch in deiner Bibliothek.")
             Diagnostics.log("jellyseerr request \(title.id) status=\(result)")
             model.contentChanged()
         } catch {
@@ -602,7 +610,7 @@ struct SeerrDetailView: View {
     private func openInLibrary() async {
         guard let id = (details?.mediaInfo ?? title.mediaInfo)?.jellyfinMediaId, let client = model.client, let session = model.session,
               let item = try? await client.item(user: session.userID, id: id) else {
-            message = "Der Titel liegt auf dem Jellyfin-Server, mit dem Jellyseerr verbunden ist – in deiner aktuellen Bibliothek wurde er nicht gefunden."
+            message = String(localized: "Der Titel liegt auf dem Jellyfin-Server, mit dem Jellyseerr verbunden ist – in deiner aktuellen Bibliothek wurde er nicht gefunden.")
             return
         }
         model.pendingOpen = item
@@ -631,7 +639,8 @@ private struct SeerrDownloadPanel: View {
                         HStack(spacing: 12) {
                             Text(part.label ?? "–").monospacedDigit().frame(width: 100, alignment: .leading)
                             DownloadBar(fraction: part.fraction, phase: part.phase).frame(width: 80, height: 8)
-                            Text(part.phase == .queued ? "wartet" : DownloadProgress.percent(part.fraction))
+                            Text(part.phase == .queued
+                                 ? String(localized: "wartet", comment: "Episode download is queued") : DownloadProgress.percent(part.fraction))
                                 .monospacedDigit().lineLimit(1).fixedSize()
                         }
                     }
@@ -651,8 +660,10 @@ private struct SeerrDownloadPanel: View {
         let end = Date().addingTimeInterval(remaining)
         let calendar = Calendar.current
         let time = end.formatted(date: .omitted, time: .shortened)
-        if calendar.isDateInToday(end) { return "\(left) · fertig gegen \(time)" }
-        if calendar.isDateInTomorrow(end) { return "\(left) · fertig morgen gegen \(time)" }
+        if calendar.isDateInToday(end) { return String(localized: "\(left) · fertig gegen \(time)", comment: "Time left · done at <time>") }
+        if calendar.isDateInTomorrow(end) {
+            return String(localized: "\(left) · fertig morgen gegen \(time)", comment: "Time left · done tomorrow at <time>")
+        }
         return left
     }
 }
@@ -681,13 +692,14 @@ private struct SeerrSeasonsView: View {
                         guard state == .none else { return }
                         if selected.contains(season.seasonNumber) { selected.remove(season.seasonNumber) } else { selected.insert(season.seasonNumber) }
                     } label: {
-                        SettingsRowLabel(season.name ?? "Staffel \(season.seasonNumber)",
-                                         detail: season.episodeCount.map { "\($0) Folgen" },
+                        SettingsRowLabel(season.name ?? String(localized: "Staffel \(season.seasonNumber)"),
+                                         detail: season.episodeCount.map { String(localized: "\($0) Folgen") },
                                          value: state.label, checked: selected.contains(season.seasonNumber))
                     }
                 }
                 Button { onRequest(selected.sorted()) } label: {
-                    SettingsRowLabel(selected.count == 1 ? "1 Staffel wünschen" : "\(selected.count) Staffeln wünschen", icon: "plus")
+                    SettingsRowLabel(selected.count == 1 ? String(localized: "1 Staffel wünschen")
+                                                         : String(localized: "\(selected.count) Staffeln wünschen"), icon: "plus")
                 }
                 .disabled(selected.isEmpty)
                 .focused($requestFocused)

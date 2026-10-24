@@ -10,11 +10,11 @@ final class ConnectionAnalyzer: ObservableObject {
         var id: Int { rawValue }
         var title: String {
             switch self {
-            case .server: return "Server"
-            case .route: return "Weg"
-            case .speed: return "Tempo"
-            case .library: return "Bibliothek"
-            case .conversion: return "Umrechnung"
+            case .server: return String(localized: "Server", comment: "The Jellyfin server")
+            case .route: return String(localized: "Weg", comment: "Connection analysis: network route to the server")
+            case .speed: return String(localized: "Tempo", comment: "Connection analysis step: speed test")
+            case .library: return String(localized: "Bibliothek", comment: "Connection analysis step: media library check")
+            case .conversion: return String(localized: "Umrechnung", comment: "Connection analysis step: server transcoding test")
             case .device: return "Apple TV"
             }
         }
@@ -107,11 +107,11 @@ final class ConnectionAnalyzer: ObservableObject {
             report.policy = (try? await client.currentUser())?.policy
             states[.server] = .done
         } catch {
-            states[.server] = .failed("Server antwortet nicht")
-            report.verdict = "Server nicht erreichbar"
-            report.verdictDetail = "Prüfe, ob der Server läuft und die Adresse stimmt (\(client.server.host() ?? ""))."
+            states[.server] = .failed(String(localized: "Server antwortet nicht"))
+            report.verdict = String(localized: "Server nicht erreichbar")
+            report.verdictDetail = String(localized: "Prüfe, ob der Server läuft und die Adresse stimmt (\(client.server.host() ?? "")).")
             report.level = .poor
-            Step.allCases.dropFirst().forEach { states[$0] = .failed("übersprungen") }
+            Step.allCases.dropFirst().forEach { states[$0] = .failed(String(localized: "übersprungen", comment: "Analysis step was skipped")) }
             return
         }
 
@@ -133,7 +133,7 @@ final class ConnectionAnalyzer: ObservableObject {
         if case let (item, source)? = largest {
             report.speed = await NetworkProbe.measure(client: client, itemID: item.id, source: source, seconds: 8)
         }
-        states[.speed] = report.speed == nil ? .failed("Messung fehlgeschlagen") : .done
+        states[.speed] = report.speed == nil ? .failed(String(localized: "Messung fehlgeschlagen")) : .done
 
         // 4. Library: how much plays in original quality on this line.
         states[.library] = .running
@@ -164,7 +164,7 @@ final class ConnectionAnalyzer: ObservableObject {
         if case let (item, source)? = largest, (source.bitrate ?? 0) > Int(throughput / 1.15) || throughput == 0 {
             report.conversion = await Self.conversionTest(client: client, user: session.userID, item: item, source: source,
                                                           limit: max(4, Int(throughput * 0.7 / 1_000_000)) * 1_000_000)
-            states[.conversion] = report.conversion == nil ? .failed("Server hat nicht umgerechnet") : .done
+            states[.conversion] = report.conversion == nil ? .failed(String(localized: "Server hat nicht umgerechnet")) : .done
         } else {
             states[.conversion] = .done
         }
@@ -192,9 +192,13 @@ final class ConnectionAnalyzer: ObservableObject {
             let monitor = NWPathMonitor()
             monitor.pathUpdateHandler = { path in
                 monitor.cancel()
-                if path.usesInterfaceType(.wiredEthernet) { continuation.resume(returning: "LAN-Kabel") }
-                else if path.usesInterfaceType(.wifi) { continuation.resume(returning: "WLAN") }
-                else { continuation.resume(returning: "Unbekannt") }
+                if path.usesInterfaceType(.wiredEthernet) {
+                    continuation.resume(returning: String(localized: "LAN-Kabel", comment: "Network connection: Ethernet cable"))
+                } else if path.usesInterfaceType(.wifi) {
+                    continuation.resume(returning: String(localized: "WLAN", comment: "Network connection: Wi-Fi"))
+                } else {
+                    continuation.resume(returning: String(localized: "Unbekannt", comment: "Network connection: unknown type"))
+                }
             }
             monitor.start(queue: .global())
         }
@@ -236,72 +240,91 @@ final class ConnectionAnalyzer: ObservableObject {
         let mbit = (report.speed?.throughput ?? 0) / 1_000_000
         let library = report.library
         let share = library.count > 0 ? Double(library.original + library.compact) / Double(library.count) : 1
+        let percent = share.formatted(.percent.precision(.fractionLength(0)))
         switch mbit {
         case _ where library.maxBitrate > 0 && mbit * 1_000_000 >= library.maxBitrate * 1.15:
             report.level = .good
-            report.verdict = "Alles läuft in Originalqualität"
-            report.verdictDetail = "Die Leitung trägt auch die größten Dateien deiner Bibliothek."
+            report.verdict = String(localized: "Alles läuft in Originalqualität")
+            report.verdictDetail = String(localized: "Die Leitung trägt auch die größten Dateien deiner Bibliothek.")
         case 25...:
             report.level = share > 0.85 ? .good : .fair
-            report.verdict = share > 0.85 ? "Sehr gut für HD und 4K" : "Gut für HD und die meisten 4K-Titel"
-            report.verdictDetail = String(format: "%.0f %% deiner Titel laufen im Original. Sehr große 4K-Remuxe passt Jelly automatisch an.", share * 100)
+            report.verdict = share > 0.85 ? String(localized: "Sehr gut für HD und 4K") : String(localized: "Gut für HD und die meisten 4K-Titel")
+            report.verdictDetail = String(localized: "\(percent) deiner Titel laufen im Original. Sehr große 4K-Remuxe passt Jelly automatisch an.")
         case 8..<25:
             report.level = .fair
-            report.verdict = "Gut für HD, 4K wird oft angepasst"
-            report.verdictDetail = String(format: "%.0f %% deiner Titel laufen im Original.", share * 100)
+            report.verdict = String(localized: "Gut für HD, 4K wird oft angepasst")
+            report.verdictDetail = String(localized: "\(percent) deiner Titel laufen im Original.")
         default:
             report.level = .poor
-            report.verdict = "Langsame Verbindung"
-            report.verdictDetail = "Die meisten Titel muss der Server herunterrechnen."
+            report.verdict = String(localized: "Langsame Verbindung")
+            report.verdictDetail = String(localized: "Die meisten Titel muss der Server herunterrechnen.")
         }
 
-        if report.interface == "WLAN" {
-            report.tips.append(Tip(icon: "cable.connector", text: "Das Apple TV hängt im WLAN. Ein LAN-Kabel macht große Dateien stabiler – besonders 4K."))
+        if report.interface == String(localized: "WLAN", comment: "Network connection: Wi-Fi") {
+            report.tips.append(Tip(icon: "cable.connector",
+                                   text: String(localized: "Das Apple TV hängt im WLAN. Ein LAN-Kabel macht große Dateien stabiler – besonders 4K.")))
         }
         if let minimum = report.speed?.minimum, let speed = report.speed, minimum < speed.throughput * 0.5 {
-            report.tips.append(Tip(icon: "waveform.path.ecg", text: String(format: "Die Geschwindigkeit schwankt stark (zeitweise nur %.0f Mbit/s). Ein größerer Puffer hilft – Jelly hält bis zu 30 s vor.", minimum / 1_000_000)))
+            let low = (minimum / 1_000_000).formatted(.number.precision(.fractionLength(0)))
+            report.tips.append(Tip(icon: "waveform.path.ecg",
+                                   text: String(localized: "Die Geschwindigkeit schwankt stark (zeitweise nur \(low) Mbit/s). Ein größerer Puffer hilft – Jelly hält bis zu 30 s vor.")))
         }
         if report.publicAddress, report.homeAddress == nil, mbit < 60 {
-            report.tips.append(Tip(icon: "globe", text: "Der Server wird über das Internet erreicht. Die Grenze ist meist der Upload am Anschluss des Servers – mehr als dieser Upload kommt nirgends an."))
+            report.tips.append(Tip(icon: "globe",
+                                   text: String(localized: "Der Server wird über das Internet erreicht. Die Grenze ist meist der Upload am Anschluss des Servers – mehr als dieser Upload kommt nirgends an.")))
         }
         if report.proxy == "Cloudflare" {
-            report.tips.append(Tip(icon: "cloud", text: "Der Server läuft über Cloudflare. Cloudflare erlaubt im kostenlosen Tarif kein großes Video-Streaming und kann drosseln – eine direkte Verbindung (z. B. per VPN wie Tailscale oder WireGuard) ist meist schneller."))
+            report.tips.append(Tip(icon: "cloud",
+                                   text: String(localized: "Der Server läuft über Cloudflare. Cloudflare erlaubt im kostenlosen Tarif kein großes Video-Streaming und kann drosseln – eine direkte Verbindung (z. B. per VPN wie Tailscale oder WireGuard) ist meist schneller.")))
         }
         if let home = report.homeAddress {
-            report.tips.append(Tip(icon: "house", text: "Zu Hause spricht Jelly den Server direkt im Heimnetz an (\(home.host() ?? "")) – schneller als über das Internet."))
+            report.tips.append(Tip(icon: "house",
+                                   text: String(localized: "Zu Hause spricht Jelly den Server direkt im Heimnetz an (\(home.host() ?? "")) – schneller als über das Internet.")))
         }
         if let conversion = report.conversion {
+            let factor = conversion.factor.formatted(.number.precision(.fractionLength(1)))
             if conversion.factor >= 1.3 {
-                report.tips.append(Tip(icon: "cpu", text: "Der Server rechnet \(conversion.factor.formatted(.number.precision(.fractionLength(1))))-mal schneller als Echtzeit um – angepasste Qualität läuft flüssig."))
+                report.tips.append(Tip(icon: "cpu",
+                                       text: String(localized: "Der Server rechnet \(factor)-mal schneller als Echtzeit um – angepasste Qualität läuft flüssig.")))
             } else {
-                report.tips.append(Tip(icon: "cpu", text: "Der Server rechnet nur \(conversion.factor.formatted(.number.precision(.fractionLength(1))))-mal so schnell wie Echtzeit um – angepasste Qualität kann stocken. Hardware-Beschleunigung im Jellyfin-Dashboard hilft."))
+                report.tips.append(Tip(icon: "cpu",
+                                       text: String(localized: "Der Server rechnet nur \(factor)-mal so schnell wie Echtzeit um – angepasste Qualität kann stocken. Hardware-Beschleunigung im Jellyfin-Dashboard hilft.")))
             }
             if conversion.range == "SDR" {
-                report.tips.append(Tip(icon: "sun.max", text: "Beim Umrechnen macht der Server aus HDR normales SDR. Für HDR in angepasster Qualität braucht der Server einen 10-Bit-fähigen HEVC-Encoder."))
+                report.tips.append(Tip(icon: "sun.max",
+                                       text: String(localized: "Beim Umrechnen macht der Server aus HDR normales SDR. Für HDR in angepasster Qualität braucht der Server einen 10-Bit-fähigen HEVC-Encoder.")))
             }
         }
         if report.policy?.enableVideoPlaybackTranscoding == false {
-            report.tips.append(Tip(icon: "lock", text: "Dein Konto darf nicht umrechnen lassen. Titel über der Leitungsgeschwindigkeit werden stocken."))
+            report.tips.append(Tip(icon: "lock",
+                                   text: String(localized: "Dein Konto darf nicht umrechnen lassen. Titel über der Leitungsgeschwindigkeit werden stocken.")))
         }
         if let limit = report.policy?.remoteClientBitrateLimit, limit > 0 {
-            report.tips.append(Tip(icon: "speedometer", text: "Der Server begrenzt Fernzugriffe auf \(limit / 1_000_000) Mbit/s."))
+            report.tips.append(Tip(icon: "speedometer", text: String(localized: "Der Server begrenzt Fernzugriffe auf \(limit / 1_000_000) Mbit/s.")))
         }
         if !report.matchingEnabled {
-            report.tips.append(Tip(icon: "tv", text: "„Inhalt anpassen“ ist aus: Für automatisches HDR, Dolby Vision und 24 Hz in den Apple-TV-Einstellungen unter Video und Audio aktivieren."))
+            report.tips.append(Tip(icon: "tv",
+                                   text: String(localized: "„Inhalt anpassen“ ist aus: Für automatisches HDR, Dolby Vision und 24 Hz in den Apple-TV-Einstellungen unter Video und Audio aktivieren.",
+                                                           comment: "Refers to the tvOS setting 'Match Content' in Settings › Video and Audio")))
         }
     }
 
     /// Average throughput per time of day from all stored measurements of this server.
     static func timeOfDay(for server: URL) -> [(label: String, megabits: Double, count: Int)] {
         let entries = NetworkProbe.history.filter { $0.server == server.absoluteString }
-        let buckets: [(String, ClosedRange<Int>)] = [("Morgens", 6...11), ("Mittags", 12...17), ("Abends", 18...22)]
+        let buckets: [(String, ClosedRange<Int>)] = [(String(localized: "Morgens", comment: "Time of day: morning"), 6...11),
+                                                     (String(localized: "Mittags", comment: "Time of day: midday/afternoon"), 12...17),
+                                                     (String(localized: "Abends", comment: "Time of day: evening"), 18...22)]
         let calendar = Calendar.current
         var result = buckets.compactMap { label, hours -> (String, Double, Int)? in
             let values = entries.filter { hours.contains(calendar.component(.hour, from: $0.date)) }.map(\.throughput)
             return values.isEmpty ? nil : (label, values.reduce(0, +) / Double(values.count) / 1_000_000, values.count)
         }
         let night = entries.filter { let hour = calendar.component(.hour, from: $0.date); return hour >= 23 || hour < 6 }.map(\.throughput)
-        if !night.isEmpty { result.append(("Nachts", night.reduce(0, +) / Double(night.count) / 1_000_000, night.count)) }
+        if !night.isEmpty {
+            let label = String(localized: "Nachts", comment: "Time of day: night")
+            result.append((label, night.reduce(0, +) / Double(night.count) / 1_000_000, night.count))
+        }
         return result
     }
 }

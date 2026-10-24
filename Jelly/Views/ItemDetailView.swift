@@ -33,10 +33,10 @@ struct ItemDetailView: View {
                             .containerRelativeFrame(.vertical, alignment: .bottomLeading)
                         if current.isSeries && !seasons.isEmpty { episodesSection.id("episodes") }
                         if let people = current.people?.filter({ ["Actor", "Director", "GuestStar"].contains($0.type ?? "") }), !people.isEmpty {
-                            Shelf(title: "Besetzung & Crew", items: Array(people.prefix(24)), spacing: 44) { PersonCard(person: $0) }
+                            Shelf(title: String(localized: "Besetzung & Crew"), items: Array(people.prefix(24)), spacing: 44) { PersonCard(person: $0) }
                         }
                         if !similar.isEmpty {
-                            Shelf(title: "Das könnte dir auch gefallen", items: similar) { MediaCard(item: $0, style: .poster, width: 230) }
+                            Shelf(title: String(localized: "Das könnte dir auch gefallen"), items: similar) { MediaCard(item: $0, style: .poster, width: 230) }
                         }
                     }
                     .padding(.bottom, 80)
@@ -128,7 +128,8 @@ struct ItemDetailView: View {
                 } label: { Label("Version", systemImage: "square.stack") }
             }
             if current.isEpisode, let seriesID = current.seriesId {
-                Button { openItem(BaseItem(id: seriesID, name: current.seriesName ?? "Serie", type: "Series")) } label: {
+                let seriesName = current.seriesName ?? String(localized: "Serie", comment: "Item type: TV series")
+                Button { openItem(BaseItem(id: seriesID, name: seriesName, type: "Series")) } label: {
                     Label("Zur Serie", systemImage: "tv")
                 }
             }
@@ -139,9 +140,13 @@ struct ItemDetailView: View {
     }
 
     private var seriesPlayTitle: String {
-        guard let nextUp else { return "Abspielen" }
-        let label = nextUp.episodeLabel.map { "\($0) " } ?? ""
-        return (nextUp.progress > 0 ? "Fortsetzen " : "Ansehen ") + label
+        guard let nextUp else { return String(localized: "Abspielen") }
+        guard let label = nextUp.episodeLabel else {
+            return nextUp.progress > 0 ? String(localized: "Fortsetzen") : String(localized: "Ansehen")
+        }
+        return nextUp.progress > 0
+            ? String(localized: "Fortsetzen \(label)", comment: "Resume <episode label, e.g. S1 · F3>")
+            : String(localized: "Ansehen \(label)", comment: "Watch <episode label, e.g. S1 · F3>")
     }
 
     // MARK: Episodes
@@ -312,7 +317,9 @@ struct PersonCard: View {
     }
 
     private var roleName: String {
-        ["Director": "Regie", "Writer": "Drehbuch", "Producer": "Produktion"][person.type ?? ""] ?? ""
+        ["Director": String(localized: "Regie", comment: "Crew role: director"),
+         "Writer": String(localized: "Drehbuch", comment: "Crew role: writer"),
+         "Producer": String(localized: "Produktion", comment: "Crew role: producer")][person.type ?? ""] ?? ""
     }
 }
 

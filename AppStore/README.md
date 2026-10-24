@@ -19,7 +19,7 @@ Jelly spielt seit dem 23.10.2026 mit **AetherEngine** statt KSPlayer (KSPlayer h
 Die App ist **gratis**, freigeschaltet wird sie mit dem **automatisch verlängerten Jahresabo „Jelly Jahresabo“ für 9,99 € pro Jahr**; neue Abonnenten bekommen als Einführungsangebot **2 Wochen gratis**. Das Abo gehört zur Apple-ID: ein Abo gilt auf allen Apple TVs dieser Apple-ID, Neuinstallieren gibt keinen neuen Probezeitraum, gekündigt wird in den Apple-TV-Einstellungen (Benutzer und Accounts › Abonnements). Ohne Abo bleiben Bibliothek und Einstellungen offen, nur das Abspielen verlangt das Abo.
 
 In der App fertig (nur im App-Store-Build mit dem Schalter `APPSTORE`, den `Scripts/release-appstore.sh` setzt):
-- Angebot nach der ersten Anmeldung und bei jedem Abspielen ohne Abo, mit allem, was Apple für Abos verlangt (Richtlinie 3.1.2): Name, Laufzeit, Preis pro Jahr, Probezeit und was danach passiert, automatische Verlängerung und Kündigung bis 24 h vor Ablauf, wo man kündigt, **Nutzungsbedingungen** (Apples Standard-EULA) und **Datenschutz** – auf dem Fernseher ohne Browser als Adresse mit QR-Code, den Datenschutz zusätzlich als Text (Screenshot für die Prüfung: `screenshots/iap-review-angebot.png`).
+- Angebot nach der ersten Anmeldung und bei jedem Abspielen ohne Abo, mit allem, was Apple für Abos verlangt (Richtlinie 3.1.2): Name, Laufzeit, Preis pro Jahr, Probezeit und was danach passiert, automatische Verlängerung und Kündigung bis 24 h vor Ablauf, wo man kündigt, **Nutzungsbedingungen** (Apples Standard-EULA) und **Datenschutz** – auf dem Fernseher ohne Browser als Adresse mit QR-Code, den Datenschutz zusätzlich als Text (Screenshot für die Prüfung: `screenshots/iap-review-offer.png`, englisch).
 - Einstellungen › Jahresabo: Status (Probezeit mit Resttagen, aktiv, abgelaufen), Abo abschließen, **Käufe wiederherstellen**.
 - StoreKit 2 mit Apples signierten Transaktionen: Verlängerungen, Kündigungen, Erstattungen, Kulanzfrist bei Zahlungsproblemen und Käufe von anderen Geräten kommen automatisch an.
 - Ohne `APPSTORE` (eigene Builds, Quellcode) gibt es keine Sperre.
@@ -55,7 +55,7 @@ Rechtliches, kurz: Apple ist beim Verkauf im App Store in der EU Wiederverkäufe
 4. **Altersfreigabe:** Alle Fragen zu Inhalten mit „Keine“ beantworten (Jelly hat keine eigenen Inhalte); bei „Uneingeschränkter Webzugriff“ Nein. Apple kann für Mediaplayer, die beliebige Inhalte abspielen, trotzdem eine höhere Stufe verlangen.
 5. **Kategorie:** Unterhaltung. **Preis:** Gratis, freigeschaltet wird per Jahresabo (siehe 1a).
 6. **Texte** aus `metadata/de-DE/`, **Review-Hinweise** aus `review-notes.txt` (Demo-Server `demo.jellyfin.org/stable`, Konto „demo“ ohne Passwort – getestet am 23.10.2026: 11 frei lizenzierte Filme, kein Admin).
-7. **Screenshots:** 1920×1080 oder 3840×2160, 1–10 Stück. Am besten im Simulator mit dem Demo-Server – dessen Filme (Caminandes, Dracula …) sind frei lizenziert, fremde Filmplakate könnten in der Prüfung abgelehnt werden.
+7. **Screenshots:** 1920×1080 oder 3840×2160, 1–10 Stück, je Sprache in `screenshots/<Sprache>` (en-GB nimmt en-US). Mit einem App-Store-Build aufnehmen (`SWIFT_ACTIVE_COMPILATION_CONDITIONS="DEBUG APPSTORE"`), damit sie zeigen, was die Store-Version zeigt. Am besten im Simulator mit dem Demo-Server – dessen Filme (Caminandes, Dracula …) sind frei lizenziert, fremde Filmplakate könnten in der Prüfung abgelehnt werden.
 
 ## 3a. Alles Weitere per Skript
 

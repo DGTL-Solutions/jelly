@@ -9,3 +9,5 @@ Nativer Jellyfin-Client für Apple TV: Originalqualität, Dolby Vision, HDR10+ u
 - [Hilfe und Kontakt](support/)
 - [Datenschutz](datenschutz/)
 - [Quellcode (MPL-2.0)](https://github.com/DGTL-Solutions/jelly)
+
+**English:** [Help and contact](help/) · [Privacy policy](privacy/)

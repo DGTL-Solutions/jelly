@@ -13,13 +13,13 @@ ANMELDEN OHNE TIPPEN
 Jelly findet deinen Server im Heimnetz von selbst. Profile ohne Passwort öffnen sich mit einem Klick, alle anderen per Code über die Jellyfin-App auf dem Handy. Mehrere Server und Profile auf einem Apple TV, mit „Wer schaut gerade?“ beim Start.
 
 FÜR SERIEN GEMACHT
-Weiterschauen und nächste Folgen auf der Startseite und im Top Shelf. Jelly erkennt Intros und Abspann selbst am Ton – auch ohne Server-Plugin – und startet die nächste Folge, sobald der Abspann beginnt.
+Weiterschauen und nächste Folgen auf der Startseite und bildschirmfüllend im Top Shelf. Jelly erkennt Intros und Abspann selbst am Ton – auch ohne Server-Plugin – und startet die nächste Folge, sobald der Abspann beginnt.
 
 UNTERWEGS UND BEI LANGSAMER LEITUNG
 Jelly misst die Verbindung zu deinem Server und wählt die beste Qualität, die ohne Stocken läuft. Bricht die Leitung mitten im Film ein, passt Jelly sich an und geht später wieder auf die bessere Qualität. Zu Hause spricht Jelly den Server direkt an.
 
 ERKUNDEN MIT JELLYSEERR
-Verbinde deinen Jellyseerr und wünsch dir Filme und Serien, die noch nicht auf deinem Server sind – mit Trends, Neuerscheinungen und Suche.
+Verbinde deinen Jellyseerr und wünsch dir Filme und Serien, die noch nicht auf deinem Server sind – mit Trends, Neuerscheinungen, Suche und Live-Download-Fortschritt.
 
 Außerdem: Bewertungen auf den Detailseiten, Kapitel, Bildvorschau beim Spulen, Ton- und Untertitel-Synchronisation, eine Verbindungsanalyse und ein Cover-Bildschirmschoner wie früher bei iTunes.
 

@@ -24,12 +24,12 @@ enum PanelTab: String, CaseIterable, Identifiable {
     var id: String { rawValue }
     var title: String {
         switch self {
-        case .subtitles: return "Untertitel"
-        case .audio: return "Audio"
-        case .quality: return "Qualität"
-        case .chapters: return "Kapitel"
-        case .sync: return "Synchronisation"
-        case .info: return "Info"
+        case .subtitles: return String(localized: "Untertitel")
+        case .audio: return String(localized: "Audio", comment: "Audio (player panel tab, info label)")
+        case .quality: return String(localized: "Qualität", comment: "Player panel tab: stream quality")
+        case .chapters: return String(localized: "Kapitel", comment: "Player panel tab: chapters")
+        case .sync: return String(localized: "Synchronisation", comment: "Player panel tab: audio/subtitle delay")
+        case .info: return String(localized: "Info", comment: "Player panel tab: playback details")
         }
     }
 }
@@ -179,7 +179,7 @@ struct PlaybackScreen: View {
             guard shown, skipIntros, !introSkipped, let intro = player.intro else { return }
             introSkipped = true
             player.seek(to: intro.upperBound)
-            player.notice = "Intro übersprungen"
+            player.notice = String(localized: "Intro übersprungen")
         }
         .onChange(of: player.notice) { _, notice in
             guard notice != nil else { return }
@@ -360,7 +360,7 @@ struct PlaybackScreen: View {
                     }
                     .lineLimit(1)
                     Spacer()
-                    TechBadges(badges: TechInfo.badges(player.source).filter { $0 != "UT" })
+                    TechBadges(badges: TechInfo.badges(player.source).filter { $0 != TechInfo.subtitlesBadge })
                 }
                 ProgressTrack(progress: player.duration > 0 ? shownPosition / player.duration : 0, emphasized: seekTarget != nil,
                               intro: player.intro.map { ($0.lowerBound / max(player.duration, 1))...($0.upperBound / max(player.duration, 1)) },
@@ -377,7 +377,8 @@ struct PlaybackScreen: View {
                         Text(delta >= 0 ? "+\(Format.clock(Double(delta)))" : "−\(Format.clock(Double(-delta)))").foregroundStyle(Theme.accent)
                     }
                     Spacer()
-                    Text(scrubbing ? "Klicken zum Springen · Zurück zum Abbrechen" : "Endet um \(Date().addingTimeInterval(max(0, player.duration - shownPosition)).formatted(date: .omitted, time: .shortened))")
+                    let end = Date().addingTimeInterval(max(0, player.duration - shownPosition)).formatted(date: .omitted, time: .shortened)
+                    Text(scrubbing ? String(localized: "Klicken zum Springen · Zurück zum Abbrechen") : String(localized: "Endet um \(end)"))
                     Spacer()
                     Text("−" + Format.clock(player.duration - shownPosition))
                 }
@@ -465,19 +466,22 @@ struct PlaybackScreen: View {
 
     private var subtitlesTab: some View {
         HStack(alignment: .top, spacing: 60) {
-            TrackColumn(title: "Spur", options: player.subtitleOptions, selected: player.subtitleIndex ?? -1,
+            TrackColumn(title: String(localized: "Spur", comment: "Column header: subtitle/audio tracks"),
+                        options: player.subtitleOptions, selected: player.subtitleIndex ?? -1,
                         focus: $focus, focusValue: Focus.subtitle) { player.selectSubtitle($0) }
             VStack(alignment: .leading, spacing: 26) {
-                choice("Größe", SubtitleSize.allCases, $subtitleSize) { $0.title }
-                choice("Hintergrund", SubtitleBackground.allCases, $subtitleBackground) { $0.title }
-                choice("Farbe", SubtitleColor.allCases, $subtitleColor) { $0.title }
+                choice(String(localized: "Größe", comment: "Subtitle size"), SubtitleSize.allCases, $subtitleSize) { $0.title }
+                choice(String(localized: "Hintergrund", comment: "Subtitle background"), SubtitleBackground.allCases,
+                       $subtitleBackground) { $0.title }
+                choice(String(localized: "Farbe", comment: "Subtitle colour"), SubtitleColor.allCases, $subtitleColor) { $0.title }
             }
         }
     }
 
     private var audioTab: some View {
         HStack(alignment: .top, spacing: 60) {
-            TrackColumn(title: "Spur", options: player.audioOptions, selected: player.audioIndex ?? Int.min,
+            TrackColumn(title: String(localized: "Spur", comment: "Column header: subtitle/audio tracks"),
+                        options: player.audioOptions, selected: player.audioIndex ?? Int.min,
                         focus: $focus, focusValue: Focus.audio) { player.selectAudio($0) }
             VStack(alignment: .leading, spacing: 10) {
                 Text("AUSGABE").font(.caption.weight(.bold)).tracking(2).foregroundStyle(.secondary)
@@ -490,14 +494,15 @@ struct PlaybackScreen: View {
 
     private var qualityTab: some View {
         HStack(alignment: .top, spacing: 60) {
-            TrackColumn(title: "Stream", options: player.qualityOptions, selected: player.quality,
+            TrackColumn(title: String(localized: "Stream", comment: "Column header: stream quality options"),
+                        options: player.qualityOptions, selected: player.quality,
                         focus: $focus, focusValue: Focus.quality) { player.selectQuality($0) }
             VStack(alignment: .leading, spacing: 14) {
                 Text("VERBINDUNG").font(.caption.weight(.bold)).tracking(2).foregroundStyle(.secondary)
                 if let capacity = player.stats.capacity ?? player.stats.throughput {
-                    Text(String(format: "%.0f Mbit/s verfügbar", capacity / 1_000_000)).font(.callout)
+                    Text("\(capacity / 1_000_000, specifier: "%.0f") Mbit/s verfügbar").font(.callout)
                 }
-                Text(String(format: "%.0f Mbit/s benötigt", player.stats.required / 1_000_000)).font(.callout)
+                Text("\(player.stats.required / 1_000_000, specifier: "%.0f") Mbit/s benötigt").font(.callout)
                 Text("„Original“ spielt die Datei unverändert. „Nur gewählte Tonspur“ bleibt verlustfrei. Bei einer Bitrate-Grenze rechnet der Server das Bild herunter – nur sinnvoll, wenn die Leitung nicht reicht.")
                     .font(.caption2).foregroundStyle(.secondary).frame(maxWidth: 560, alignment: .leading)
             }
@@ -523,7 +528,7 @@ struct PlaybackScreen: View {
                             }
                             .frame(width: 360, height: 202)
                             .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                            Text(chapter.name ?? "Kapitel \(index + 1)").font(.caption.weight(.semibold)).lineLimit(1)
+                            Text(chapter.name ?? String(localized: "Kapitel \(index + 1)")).font(.caption.weight(.semibold)).lineLimit(1)
                             Text(Format.clock(chapter.start)).font(.caption2).foregroundStyle(.secondary)
                         }
                         .frame(width: 360)
@@ -539,11 +544,11 @@ struct PlaybackScreen: View {
 
     private var syncTab: some View {
         VStack(alignment: .leading, spacing: 34) {
-            stepper("Untertitel", value: player.subtitleDelay, step: 0.1, unit: "s",
-                    hint: "Positiv: Untertitel erscheinen später") { player.setSubtitleDelay($0) }
+            stepper(String(localized: "Untertitel"), value: player.subtitleDelay, step: 0.1, unit: "s",
+                    hint: String(localized: "Positiv: Untertitel erscheinen später")) { player.setSubtitleDelay($0) }
             if player.canDelayAudio {
-                stepper("Ton", value: player.audioDelay, step: 0.05, unit: "s",
-                        hint: "Positiv: Ton kommt später als das Bild") { player.setAudioDelay($0) }
+                stepper(String(localized: "Ton", comment: "Sound (sync setting, diagnostics label)"), value: player.audioDelay, step: 0.05, unit: "s",
+                        hint: String(localized: "Positiv: Ton kommt später als das Bild")) { player.setAudioDelay($0) }
             } else {
                 Text("Die Ton-Synchronisation übernimmt bei diesem Titel Apples Player selbst.")
                     .font(.caption).foregroundStyle(.secondary)
@@ -797,18 +802,22 @@ struct PlaybackInfoColumn: View {
     var body: some View {
         HStack(alignment: .top, spacing: 80) {
             VStack(alignment: .leading, spacing: 18) {
-                row("Video", TechInfo.videoDescription(player.source?.video))
-                row("Audio", TechInfo.audioDescription(player.source?.audioStreams.first { $0.index == player.audioIndex }))
-                row("Ausgabe", player.audioOutput)
-                row("Datei", [JellyfinClient.fileExtension(container: player.source?.container).uppercased(), TechInfo.bitrate(player.source)]
-                    .compactMap { $0 }.joined(separator: " · "))
+                row(String(localized: "Video", comment: "Info panel label"), TechInfo.videoDescription(player.source?.video))
+                row(String(localized: "Audio", comment: "Audio (player panel tab, info label)"),
+                    TechInfo.audioDescription(player.source?.audioStreams.first { $0.index == player.audioIndex }))
+                row(String(localized: "Ausgabe", comment: "Info panel label: audio output"), player.audioOutput)
+                row(String(localized: "Datei", comment: "Info panel label: file"),
+                    [JellyfinClient.fileExtension(container: player.source?.container).uppercased(), TechInfo.bitrate(player.source)]
+                        .compactMap { $0 }.joined(separator: " · "))
             }
             .frame(width: 760, alignment: .leading)
             VStack(alignment: .leading, spacing: 18) {
-                row("Wiedergabe", player.streamTitle)
-                row("Bildausgabe", player.outputVideo)
-                row("Warum", player.plan?.reason)
-                row("Bildschirm", display.matchingEnabled ? "Passt sich dem Inhalt an" : "Inhalt anpassen ist aus")
+                row(String(localized: "Wiedergabe", comment: "Info panel label: playback pipeline"), player.streamTitle)
+                row(String(localized: "Bildausgabe", comment: "Info panel label: video output"), player.outputVideo)
+                row(String(localized: "Warum", comment: "Info panel label: reason for the playback pipeline"), player.plan?.reason)
+                row(String(localized: "Bildschirm", comment: "Info panel label: TV display"),
+                    display.matchingEnabled ? String(localized: "Passt sich dem Inhalt an", comment: "tvOS Match Content is on")
+                        : String(localized: "Inhalt anpassen ist aus", comment: "tvOS Match Content setting is off"))
             }
         }
         .onAppear { display = DisplayCapabilities.current() }
@@ -840,7 +849,7 @@ struct PreparingView: View {
                 }
                 ProgressView().controlSize(.large)
                 if let status { Text(status).font(.callout).foregroundStyle(.secondary) }
-                TechBadges(badges: TechInfo.badges(source).filter { $0 != "UT" })
+                TechBadges(badges: TechInfo.badges(source).filter { $0 != TechInfo.subtitlesBadge })
             }
         }
     }
@@ -858,21 +867,28 @@ struct DiagnosticsOverlay: View {
                 .font(.caption.weight(.bold))
                 .foregroundStyle(verdictColor(stats.verdict))
             Divider().overlay(.white.opacity(0.3))
-            row("Weg", player.streamTitle)
-            row("Grund", player.plan?.reason)
-            row("Datei", [TechInfo.videoDescription(player.source?.video), rate(Double(player.source?.bitrate ?? 0))]
+            row(String(localized: "Weg", comment: "Diagnostics label: playback pipeline"), player.streamTitle)
+            row(String(localized: "Grund", comment: "Diagnostics label: reason"), player.plan?.reason)
+            row(String(localized: "Datei", comment: "Info panel label: file"),
+                [TechInfo.videoDescription(player.source?.video), rate(Double(player.source?.bitrate ?? 0))]
                 .compactMap { $0 }.joined(separator: " · "))
-            row("Bild", player.outputVideo)
-            row("Ton", player.audioOutput)
-            row("Netz", rate(stats.throughput).map { "\($0) ankommend" })
-            row("Leitung", rate(stats.capacity).map { "\($0) gemessen" })
-            row("Bedarf", rate(stats.required).map { "\($0) für diesen Stream" })
-            row("Puffer", stats.bufferAhead.map { String(format: "%.1f s voraus", $0) })
-            row("Hänger", "\(stats.stalls)")
-            row("Bilder", [stats.displayFPS.map { String(format: "%.1f fps", $0) },
-                           "\(stats.droppedFrames) verloren", String(format: "%.0f/min", stats.droppedPerMinute)]
+            row(String(localized: "Bild", comment: "Diagnostics label: video output"), player.outputVideo)
+            row(String(localized: "Ton", comment: "Sound (sync setting, diagnostics label)"), player.audioOutput)
+            row(String(localized: "Netz", comment: "Diagnostics label: network throughput"),
+                rate(stats.throughput).map { String(localized: "\($0) ankommend", comment: "Network rate arriving, e.g. 12.3 Mbit/s") })
+            row(String(localized: "Leitung", comment: "Diagnostics label: measured connection"),
+                rate(stats.capacity).map { String(localized: "\($0) gemessen", comment: "Measured connection rate") })
+            row(String(localized: "Bedarf", comment: "Diagnostics label: required bitrate"),
+                rate(stats.required).map { String(localized: "\($0) für diesen Stream") })
+            row(String(localized: "Puffer", comment: "Diagnostics label: buffer"),
+                stats.bufferAhead.map { String(localized: "\($0, specifier: "%.1f") s voraus", comment: "Seconds buffered ahead") })
+            row(String(localized: "Hänger", comment: "Diagnostics label: number of stalls"), "\(stats.stalls)")
+            row(String(localized: "Bilder", comment: "Diagnostics label: video frames"),
+                [stats.displayFPS.map { String(format: "%.1f fps", $0) },
+                 String(localized: "\(stats.droppedFrames) verloren", comment: "Dropped frames"), String(format: "%.0f/min", stats.droppedPerMinute)]
                 .compactMap { $0 }.joined(separator: " · "))
-            row("A/V-Sync", stats.avSyncMs.map { String(format: "%+.0f ms", $0) })
+            row(String(localized: "A/V-Sync", comment: "Diagnostics label: audio/video sync offset"),
+                stats.avSyncMs.map { String(format: "%+.0f ms", $0) })
         }
         .font(.system(size: 20, design: .monospaced))
         .padding(22)
@@ -900,12 +916,12 @@ struct DiagnosticsOverlay: View {
 
     private func verdictText(_ stats: PlaybackStats) -> String {
         switch stats.verdict {
-        case .good: return "Läuft flüssig"
-        case .tight: return "Puffer knapp – Leitung am Limit"
+        case .good: return String(localized: "Läuft flüssig")
+        case .tight: return String(localized: "Puffer knapp – Leitung am Limit")
         case .network:
-            let available = (stats.capacity ?? stats.throughput ?? 0) / 1_000_000
-            return String(format: "Netzwerk zu langsam: %.0f von %.0f Mbit/s", available, stats.required / 1_000_000)
-        case .decoder: return "Decoder kommt nicht hinterher"
+            let available = (stats.capacity ?? stats.throughput ?? 0) / 1_000_000, required = stats.required / 1_000_000
+            return String(localized: "Netzwerk zu langsam: \(available, specifier: "%.0f") von \(required, specifier: "%.0f") Mbit/s")
+        case .decoder: return String(localized: "Decoder kommt nicht hinterher")
         }
     }
 

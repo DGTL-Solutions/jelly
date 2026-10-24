@@ -1,0 +1,1 @@
+Jellyfin,media player,Dolby Vision,HDR10,Atmos,MKV,home theatre,movies,TV shows,library,Jellyseerr

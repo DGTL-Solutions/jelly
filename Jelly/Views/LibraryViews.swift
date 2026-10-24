@@ -5,10 +5,10 @@ enum LibrarySort: String, CaseIterable, Identifiable {
     var id: String { rawValue }
     var title: String {
         switch self {
-        case .name: return "Name"
-        case .added: return "Zuletzt hinzugefügt"
-        case .released: return "Erscheinungsdatum"
-        case .rating: return "Bewertung"
+        case .name: return String(localized: "Name", comment: "Library sort order: by name")
+        case .added: return String(localized: "Zuletzt hinzugefügt", comment: "Library sort order: recently added")
+        case .released: return String(localized: "Erscheinungsdatum", comment: "Library sort order: release date")
+        case .rating: return String(localized: "Bewertung", comment: "Library sort order: by rating")
         }
     }
     var fields: (String, String) {
@@ -24,7 +24,11 @@ enum LibrarySort: String, CaseIterable, Identifiable {
 enum LibraryFilter: String, CaseIterable, Identifiable {
     case all, unwatched, favorites
     var id: String { rawValue }
-    var title: String { ["all": "Alle", "unwatched": "Ungesehen", "favorites": "Favoriten"][rawValue]! }
+    var title: String {
+        ["all": String(localized: "Alle", comment: "Library filter: all titles"),
+         "unwatched": String(localized: "Ungesehen", comment: "Library filter: unwatched titles"),
+         "favorites": String(localized: "Favoriten", comment: "Library filter: favourites")][rawValue]!
+    }
     var filters: [String] { ["all": [], "unwatched": ["IsUnplayed"], "favorites": ["IsFavorite"]][rawValue]! }
 }
 
@@ -156,10 +160,10 @@ struct SearchView: View {
                 } else if results.isEmpty && !searching {
                     ContentUnavailableView.search(text: query).frame(maxWidth: .infinity).padding(.top, 120)
                 }
-                if !movies.isEmpty { Shelf(title: "Filme", items: movies) { MediaCard(item: $0, style: .poster, width: 230) } }
-                if !series.isEmpty { Shelf(title: "Serien", items: series) { MediaCard(item: $0, style: .poster, width: 230) } }
+                if !movies.isEmpty { Shelf(title: String(localized: "Filme"), items: movies) { MediaCard(item: $0, style: .poster, width: 230) } }
+                if !series.isEmpty { Shelf(title: String(localized: "Serien"), items: series) { MediaCard(item: $0, style: .poster, width: 230) } }
                 if !episodes.isEmpty {
-                    Shelf(title: "Folgen", items: episodes) { episode in
+                    Shelf(title: String(localized: "Folgen", comment: "TV episodes"), items: episodes) { episode in
                         MediaCard(item: episode, style: .landscape, width: 420) { model.play(episode) }
                     }
                 }
@@ -189,7 +193,8 @@ struct PersonView: View {
     @EnvironmentObject private var model: AppModel
 
     var body: some View {
-        LibraryGridView(title: "Bekannt aus", types: ["Movie", "Series"], personID: person.id, header: AnyView(header))
+        LibraryGridView(title: String(localized: "Bekannt aus", comment: "Titles a person is known for"), types: ["Movie", "Series"],
+                        personID: person.id, header: AnyView(header))
     }
 
     private var header: some View {

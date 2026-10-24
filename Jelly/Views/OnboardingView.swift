@@ -116,14 +116,16 @@ struct ServerPickerView: View {
     }
 
     var body: some View {
-        OnboardingLayout(title: model.addingAccount ? "Server hinzufügen" : "Willkommen bei Jelly",
+        OnboardingLayout(title: model.addingAccount ? String(localized: "Server hinzufügen") : String(localized: "Willkommen bei Jelly"),
                          subtitle: model.addingAccount
-                            ? "Verbinde einen weiteren Jellyfin-Server. Deine bisherigen Anmeldungen bleiben erhalten; gewechselt wird in den Einstellungen."
-                            : "Wähle deinen Jellyfin-Server. Server in deinem Netzwerk werden automatisch gefunden.") {
+                            ? String(localized: "Verbinde einen weiteren Jellyfin-Server. Deine bisherigen Anmeldungen bleiben erhalten; gewechselt wird in den Einstellungen.")
+                            : String(localized: "Wähle deinen Jellyfin-Server. Server in deinem Netzwerk werden automatisch gefunden.")) {
             VStack(alignment: .leading, spacing: 18) {
                 ForEach(model.knownServers) { server in
                     serverButton(id: server.id, name: server.name, url: server.url,
-                                 detail: model.accounts.contains { $0.serverKey == server.id } ? "Verbunden" : "Zuletzt verwendet")
+                                 detail: model.accounts.contains { $0.serverKey == server.id }
+                                    ? String(localized: "Verbunden", comment: "Server status: signed in")
+                                    : String(localized: "Zuletzt verwendet", comment: "Server status: used before"))
                         .contextMenu { Button("Server entfernen", role: .destructive) { model.forget(server) } }
                 }
                 ForEach(found) { server in
@@ -190,7 +192,8 @@ struct ServerPickerView: View {
             let info = try await model.anonymousClient(url).publicInfo()
             path.append(.users(ServerTarget(url: url, info: info)))
         } catch {
-            self.error = "\(url.host() ?? "Server") ist gerade nicht erreichbar."
+            let host = url.host() ?? String(localized: "Server", comment: "The Jellyfin server")
+            self.error = String(localized: "\(host) ist gerade nicht erreichbar.", comment: "<server address> is currently unreachable")
         }
     }
 }
@@ -203,7 +206,8 @@ struct ManualServerView: View {
     @FocusState private var fieldFocused: Bool
 
     var body: some View {
-        OnboardingLayout(title: "Server-Adresse", subtitle: "Eine IP-Adresse oder Domain reicht – Protokoll und Port probiert Jelly automatisch aus.") {
+        OnboardingLayout(title: String(localized: "Server-Adresse"),
+                         subtitle: String(localized: "Eine IP-Adresse oder Domain reicht – Protokoll und Port probiert Jelly automatisch aus.")) {
             VStack(alignment: .leading, spacing: 26) {
                 TextField("z. B. 192.168.1.20 oder jellyfin.example.com", text: $address)
                     .textContentType(.URL)
@@ -461,7 +465,8 @@ struct ManualLoginView: View {
     @State private var error: String?
 
     var body: some View {
-        OnboardingLayout(title: "Anmelden", subtitle: "Melde dich bei \(server.name) an. Tipp: Mit der iPhone-Tastatur kannst du gespeicherte Passwörter einsetzen.") {
+        OnboardingLayout(title: String(localized: "Anmelden"),
+                         subtitle: String(localized: "Melde dich bei \(server.name) an. Tipp: Mit der iPhone-Tastatur kannst du gespeicherte Passwörter einsetzen.")) {
             VStack(alignment: .leading, spacing: 24) {
                 TextField("Benutzername", text: $username)
                     .textContentType(.username)
@@ -507,7 +512,8 @@ struct QuickConnectView: View {
     @State private var error: String?
 
     var body: some View {
-        OnboardingLayout(title: "Mit Code anmelden", subtitle: "Öffne Jellyfin auf deinem Handy oder Computer, tippe auf dein Profil › Quick Connect und gib diesen Code ein.") {
+        OnboardingLayout(title: String(localized: "Mit Code anmelden"),
+                         subtitle: String(localized: "Öffne Jellyfin auf deinem Handy oder Computer, tippe auf dein Profil › Quick Connect und gib diesen Code ein.")) {
             VStack(spacing: 44) {
                 if let code {
                     HStack(spacing: 18) {
@@ -554,7 +560,7 @@ struct QuickConnectView: View {
         } catch is CancellationError {
         } catch {
             code = nil
-            self.error = (error as? LocalizedError)?.errorDescription ?? "Der Code ist abgelaufen. Bitte erneut versuchen."
+            self.error = (error as? LocalizedError)?.errorDescription ?? String(localized: "Der Code ist abgelaufen. Bitte erneut versuchen.")
         }
     }
 }
