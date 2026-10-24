@@ -1,67 +1,6 @@
 import SwiftUI
 
-/// Version, open-source licences and privacy, reached from Einstellungen › Info.
-enum AppInfo {
-    static var version: String {
-        let info = Bundle.main.infoDictionary
-        let short = info?["CFBundleShortVersionString"] as? String ?? "1.0"
-        return (info?["CFBundleVersion"] as? String).map { "\(short) (\($0))" } ?? short
-    }
-
-    static let publisher = "DGTL Solutions GmbH"
-    static let copyright = "© 2026 \(publisher)"
-    /// Jelly's own source code (MPL-2.0).
-    static let sourceURL: String? = "https://github.com/DGTL-Solutions/jelly"
-    /// The subscription's terms: Apple's standard licence agreement for App Store apps.
-    static let termsURL = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
-    /// The privacy policy as published for the App Store listing.
-    static let privacyURL = "https://dgtl-solutions.github.io/jelly/datenschutz/"
-}
-
-/// A library inside Jelly and the licence it ships under. `file` names the text in Resources/Licenses.
-struct OpenSourceComponent: Identifiable {
-    let name: String
-    var version: String?
-    let license: String
-    let file: String
-    var copyright: String?
-    let url: String
-    var role: String?
-
-    var id: String { name }
-
-    /// Everything inside the app (versions as resolved: AetherEngine 7.46.0, FFmpegBuild 3.9.0, LibDovi 2.1.0, libass-build 0.17.5).
-    static let all: [OpenSourceComponent] = [
-        .init(name: "Jelly", version: AppInfo.version, license: "MPL-2.0", file: "MPL-2.0",
-              copyright: "Copyright \(AppInfo.copyright)", url: AppInfo.sourceURL ?? String(localized: "Quellcode folgt"),
-              role: String(localized: "Diese App. Ihr Quellcode ist offen – damit lässt sie sich auch mit geänderten Bibliotheken neu bauen, wie die LGPL es verlangt.")),
-        .init(name: "AetherEngine", version: "7.46.0",
-              license: String(localized: "LGPL-3.0 mit App-Store-Ausnahme", comment: "Licence name: LGPL-3.0 with App Store exception"), file: "AetherEngine",
-              copyright: "Copyright © 2026 Vincent Herbst", url: "https://github.com/superuser404notfound/AetherEngine/tree/7.46.0",
-              role: String(localized: "Wiedergabe-Engine von Jelly")),
-        .init(name: "FFmpeg", version: "8.1.3", license: "LGPL-2.1-or-later", file: "LGPL-2.1",
-              copyright: "Copyright © 2000–2026 the FFmpeg developers", url: "https://ffmpeg.org",
-              role: String(localized: "Öffnet und decodiert Video, Ton und Untertitel. Gebaut ohne GPL-Teile von FFmpegBuild 3.9.0, Quellcode, Änderungen und Build-Skript: https://github.com/superuser404notfound/FFmpegBuild")),
-        .init(name: "dav1d", version: "1.5.4", license: "BSD-2-Clause", file: "dav1d", url: "https://code.videolan.org/videolan/dav1d",
-              role: String(localized: "Decodiert AV1")),
-        .init(name: "zimg", version: "3.0.6", license: "WTFPL", file: "zimg", url: "https://github.com/sekrit-twc/zimg"),
-        .init(name: "ZVBI", version: "0.2.45", license: "LGPL-2.1-or-later, ure.c MIT", file: "libzvbi",
-              copyright: "Copyright © Michael H. Schimek, Iñaki García Etxebarria and others", url: "https://github.com/zapping-vbi/zvbi",
-              role: String(localized: "Videotext-Untertitel. Ohne die drei GPL-Dateien gebaut, siehe FFmpegBuild", comment: "Teletext subtitles")),
-        .init(name: "libdovi (dovi_tool)", version: "2.1.0", license: "MIT", file: "LibDovi",
-              copyright: "Copyright © quietvoid and contributors", url: "https://github.com/quietvoid/dovi_tool",
-              role: String(localized: "Liest und wandelt Dolby-Vision-Metadaten")),
-        .init(name: "libass", version: "0.17.5", license: "ISC", file: "libass", url: "https://github.com/libass/libass",
-              role: String(localized: "Stellt ASS/SSA-Untertitel dar")),
-        .init(name: "FreeType", license: "FreeType License", file: "FreeType",
-              copyright: "Portions of this software are copyright © The FreeType Project (www.freetype.org). All rights reserved.",
-              url: "https://freetype.org"),
-        .init(name: "HarfBuzz", license: "MIT (Old MIT)", file: "HarfBuzz", url: "https://harfbuzz.github.io"),
-        .init(name: "GNU FriBidi", license: "LGPL-2.1-or-later", file: "LGPL-2.1",
-              copyright: "Copyright © Behdad Esfahbod, Dov Grobgeld and Roozbeh Pournader", url: "https://github.com/fribidi/fribidi"),
-        .init(name: "libunibreak", license: "zlib", file: "libunibreak", url: "https://github.com/adah1972/libunibreak"),
-    ]
-}
+// AppInfo, OpenSourceComponent and the privacy and notice texts live in Shared/AboutData.swift (shared with iPhone and iPad).
 
 /// Long text split into focusable blocks, so the Siri Remote can scroll through it.
 struct ScrollableText: View {
@@ -134,23 +73,7 @@ struct LicensesView: View {
         .background(Theme.background.ignoresSafeArea())
     }
 
-    static var notices: String { [IMDbRatings.isAvailable ? imdbNotice : serverRatingsNotice, otherNotices].joined(separator: "\n\n") }
-
-    private static let imdbNotice = String(localized: """
-    IMDb-Bewertungen: Information courtesy of IMDb (https://www.imdb.com). Used with permission. Jelly lädt dafür IMDbs Datensatz für private, nicht-kommerzielle Nutzung direkt von IMDb auf dieses Apple TV.
-
-    Rotten Tomatoes: Die Kritikerwerte stammen aus den Metadaten deines Jellyfin-Servers. Rotten Tomatoes ist eine Marke der Fandango Media, LLC.
-    """, comment: "Licences screen, data & trademark notices (with IMDb). Keep the English IMDb attribution as is.")
-
-    private static let serverRatingsNotice = String(localized: """
-    Bewertungen: Publikums- und Kritikerwerte stammen aus den Metadaten deines Jellyfin-Servers.
-    """, comment: "Licences screen, data notice (without IMDb)")
-
-    private static let otherNotices = String(localized: """
-    Erkunden: Titel, Beschreibungen und Bilder stammen von The Movie Database (TMDB) und kommen über deinen Jellyseerr-Server. This product uses the TMDB API but is not endorsed or certified by TMDB.
-
-    Jelly ist eine unabhängige App und kein offizielles Produkt der Projekte Jellyfin oder Jellyseerr. Die Namen gehören ihren jeweiligen Projekten.
-    """, comment: "Licences screen, data & trademark notices. Keep the English TMDB attribution as is.")
+    static var notices: String { AboutTexts.dataNotices }
 }
 
 struct LicenseTextView: View {
@@ -174,10 +97,7 @@ struct LicenseTextView: View {
             .frame(maxWidth: .infinity)
         }
         .background(Theme.background.ignoresSafeArea())
-        .task {
-            let url = Bundle.main.url(forResource: "License-\(component.file)", withExtension: "txt")
-            text = url.flatMap { try? String(contentsOf: $0, encoding: .utf8) } ?? String(localized: "Lizenztext nicht gefunden.")
-        }
+        .task { text = component.licenseText }
     }
 }
 
@@ -196,25 +116,5 @@ struct PrivacyNoticeView: View {
         .background(Theme.background.ignoresSafeArea())
     }
 
-    static var text: String { [intro, IMDbRatings.isAvailable ? imdb : nil, rest].compactMap { $0 }.joined(separator: "\n\n") }
-
-    private static let intro = String(localized: """
-    Jelly sammelt keine Daten über dich. Es gibt keine Werbung, keine Analyse und kein Tracking, und \(AppInfo.publisher) erhält nichts von dieser App.
-
-    Jelly verbindet sich nur mit den Servern, die du selbst einrichtest: deinem Jellyfin-Server und, wenn du willst, deinem Jellyseerr. Dorthin gehen deine Anmeldung, was du abspielst, der Wiedergabefortschritt sowie Ton- und Untertitelwahl – damit „Weiterschauen“ auf all deinen Geräten stimmt.
-
-    Gespeichert werden auf diesem Apple TV nur die Sitzungsschlüssel deiner Server (im Schlüsselbund) und deine Einstellungen. Passwörter speichert Jelly nicht. Ein Abo wickelt Apple über deine Apple-ID ab; Jelly prüft den Abo-Status nur auf diesem Gerät und gibt nichts davon weiter.
-    """, comment: "Privacy notice, part 1 of 3. %@ is the publisher. Keep the blank lines between paragraphs.")
-
-    private static let imdb = String(localized: """
-    Für IMDb-Bewertungen lädt Jelly einmal pro Woche IMDbs öffentlichen Bewertungs-Datensatz direkt von IMDb und schickt dabei keine Angaben über dich mit. Abschaltbar unter Einstellungen › Bewertungen.
-    """, comment: "Privacy notice, part 2 of 3 (only with IMDb ratings)")
-
-    private static let rest = String(localized: """
-    Bilder im Tab „Erkunden“ lädt Jelly von The Movie Database (image.tmdb.org).
-
-    Um deinen Server ohne Tippen zu finden, sucht Jelly im lokalen Netzwerk nach Jellyfin-Servern.
-
-    Das Diagnose-Protokoll bleibt auf diesem Apple TV. Es enthält keine Passwörter oder Zugangsschlüssel und lässt sich unter Einstellungen › Diagnose löschen.
-    """, comment: "Privacy notice, part 3 of 3. Keep the blank lines between paragraphs.")
+    static var text: String { AboutTexts.privacyNotice }
 }
