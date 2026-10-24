@@ -17,42 +17,38 @@ func png(_ width: Int, _ height: Int, _ draw: (CGRect) -> Void) -> Data {
     return rep.representation(using: .png, properties: [:])!
 }
 
-func background(_ rect: CGRect) {
-    NSGradient(starting: purple, ending: blue)!.draw(in: rect, angle: -25)
-    // Soft "jelly" bubbles for depth behind the parallax front layer.
-    for (x, y, r, a) in [(0.18, 0.85, 0.55, 0.16), (0.9, 0.1, 0.5, 0.12), (0.75, 0.95, 0.25, 0.10)] as [(CGFloat, CGFloat, CGFloat, CGFloat)] {
-        let radius = rect.height * r
-        let center = CGPoint(x: rect.minX + rect.width * x, y: rect.minY + rect.height * y)
-        NSGradient(starting: NSColor.white.withAlphaComponent(a), ending: NSColor.white.withAlphaComponent(0))!
-            .draw(fromCenter: center, radius: 0, toCenter: center, radius: radius, options: [])
-    }
+/// Jelly's logo, flat and crisp like YouTube's: a rounded play button in the brand gradient with a white triangle.
+let brandStart = NSColor(calibratedRed: 0.67, green: 0.36, blue: 0.86, alpha: 1)   // Theme.brand in the app
+let brandEnd = NSColor(calibratedRed: 0.0, green: 0.64, blue: 0.86, alpha: 1)
+
+func logoButton(center: CGPoint, height: CGFloat) {
+    let width = height * 1.42
+    let rect = CGRect(x: center.x - width / 2, y: center.y - height / 2, width: width, height: height)
+    let path = NSBezierPath(roundedRect: rect, xRadius: height * 0.28, yRadius: height * 0.28)
+    NSGradient(starting: brandStart, ending: brandEnd)!.draw(in: path, angle: -32)
 }
 
-func playMark(center: CGPoint, height: CGFloat, alpha: CGFloat = 1) {
-    let w = height * 0.9
+/// A right-pointing triangle with just slightly softened corners, optically centred on `center`.
+func logoTriangle(center: CGPoint, height: CGFloat, color: NSColor = .white) {
+    let round = height * 0.09
+    let h = height - round, w = h * 0.88
+    let x = center.x - w / 2 + w * 0.06
     let path = NSBezierPath()
-    let left = center.x - w * 0.4
-    path.move(to: CGPoint(x: left, y: center.y + height / 2))
-    path.line(to: CGPoint(x: left + w, y: center.y))
-    path.line(to: CGPoint(x: left, y: center.y - height / 2))
+    path.move(to: CGPoint(x: x, y: center.y + h / 2))
+    path.line(to: CGPoint(x: x + w, y: center.y))
+    path.line(to: CGPoint(x: x, y: center.y - h / 2))
     path.close()
     path.lineJoinStyle = .round
-    path.lineWidth = height * 0.16
-    let shadow = NSShadow()
-    shadow.shadowColor = NSColor.black.withAlphaComponent(0.35)
-    shadow.shadowBlurRadius = height * 0.12
-    shadow.shadowOffset = NSSize(width: 0, height: -height * 0.05)
-    // One transparency layer so the shadow is cast by the finished shape, not separately by fill and stroke.
-    let context = NSGraphicsContext.current!.cgContext
-    NSGraphicsContext.saveGraphicsState()
-    shadow.set()
-    context.beginTransparencyLayer(auxiliaryInfo: nil)
-    NSColor.white.withAlphaComponent(alpha).setFill()
-    NSColor.white.withAlphaComponent(alpha).setStroke()
+    path.lineWidth = round
+    color.setFill()
+    color.setStroke()
     path.fill()
     path.stroke()
-    context.endTransparencyLayer()
-    NSGraphicsContext.restoreGraphicsState()
+}
+
+func logo(center: CGPoint, height: CGFloat) {
+    logoButton(center: center, height: height)
+    logoTriangle(center: center, height: height * 0.44)
 }
 
 func write(_ data: Data, _ path: URL) {
@@ -76,27 +72,6 @@ func imageset(_ dir: URL, base: String, sizes: [(Int, Int, String)], draw: @esca
     json(["images": images, "info": info], dir.appendingPathComponent("Contents.json"))
 }
 
-/// The glossy "jelly" drop between background and play mark: a third layer, so the focused icon tilts with depth.
-func jellyDrop(_ rect: CGRect) {
-    let size = rect.height * 0.62
-    let drop = NSBezierPath(roundedRect: CGRect(x: rect.midX - size / 2, y: rect.midY - size / 2, width: size, height: size),
-                            xRadius: size * 0.32, yRadius: size * 0.32)
-    let shadow = NSShadow()
-    shadow.shadowColor = NSColor(calibratedRed: 0.12, green: 0.05, blue: 0.35, alpha: 0.45)
-    shadow.shadowBlurRadius = size * 0.12
-    shadow.shadowOffset = NSSize(width: 0, height: -size * 0.05)
-    NSGraphicsContext.saveGraphicsState()
-    shadow.set()
-    NSColor.white.withAlphaComponent(0.16).setFill()
-    drop.fill()
-    NSGraphicsContext.restoreGraphicsState()
-    // Light from above, like on glass.
-    NSGradient(starting: NSColor.white.withAlphaComponent(0.34), ending: NSColor.white.withAlphaComponent(0.02))!.draw(in: drop, angle: -90)
-    NSColor.white.withAlphaComponent(0.35).setStroke()
-    drop.lineWidth = size * 0.012
-    drop.stroke()
-}
-
 func imagestack(_ name: String, sizes: [(Int, Int, String)]) {
     let stack = brand.appendingPathComponent("\(name).imagestack")
     let layers = ["Front", "Middle", "Back"]
@@ -105,10 +80,12 @@ func imagestack(_ name: String, sizes: [(Int, Int, String)]) {
         let dir = stack.appendingPathComponent("\(layer).imagestacklayer")
         json(["info": info], dir.appendingPathComponent("Contents.json"))
         imageset(dir.appendingPathComponent("Content.imageset"), base: layer.lowercased(), sizes: sizes) { rect in
+            // White ground, the button above it and the triangle on top: three layers that tilt apart when focused.
+            let center = CGPoint(x: rect.midX, y: rect.midY)
             switch layer {
-            case "Back": background(rect)
-            case "Middle": jellyDrop(rect)
-            default: playMark(center: CGPoint(x: rect.midX + rect.height * 0.025, y: rect.midY), height: rect.height * 0.3)
+            case "Back": NSColor.white.setFill(); rect.fill()
+            case "Middle": logoButton(center: center, height: rect.height * 0.56)
+            default: logoTriangle(center: center, height: rect.height * 0.56 * 0.44)
             }
         }
     }
@@ -129,35 +106,18 @@ func topShelf(_ rect: CGRect) {
             .draw(fromCenter: center, radius: 0, toCenter: center, radius: h * r, options: [])
     }
 
-    let mark = h * 0.30
+    let markHeight = h * 0.24, mark = markHeight * 1.42
     let title = NSAttributedString(string: "Jelly", attributes: [
         .font: NSFont.systemFont(ofSize: h * 0.19, weight: .bold), .foregroundColor: NSColor.white, .kern: -h * 0.004
     ])
     let tagline = NSAttributedString(string: "Deine Filme und Serien von Jellyfin – direkt auf dem Apple TV.", attributes: [
         .font: NSFont.systemFont(ofSize: h * 0.05, weight: .medium), .foregroundColor: NSColor.white.withAlphaComponent(0.78)
     ])
-    let gap = h * 0.075
+    let gap = h * 0.07
     let textWidth = max(title.size().width, tagline.size().width)
     let left = rect.midX - (mark + gap + textWidth) / 2
     let middle = h * 0.54
-
-    // The app's mark: the icon's gradient tile with its play symbol.
-    let tile = CGRect(x: left, y: middle - mark / 2, width: mark, height: mark)
-    let tilePath = NSBezierPath(roundedRect: tile, xRadius: mark * 0.26, yRadius: mark * 0.26)
-    let glow = NSShadow()
-    glow.shadowColor = NSColor(calibratedRed: 0.45, green: 0.3, blue: 1, alpha: 0.6)
-    glow.shadowBlurRadius = mark * 0.3
-    glow.shadowOffset = NSSize(width: 0, height: -mark * 0.06)
-    NSGraphicsContext.saveGraphicsState()
-    glow.set()
-    purple.setFill()
-    tilePath.fill()
-    NSGraphicsContext.restoreGraphicsState()
-    NSGraphicsContext.saveGraphicsState()
-    tilePath.addClip()
-    background(tile)
-    NSGraphicsContext.restoreGraphicsState()
-    playMark(center: CGPoint(x: tile.midX + mark * 0.03, y: tile.midY), height: mark * 0.42)
+    logo(center: CGPoint(x: left + mark / 2, y: middle), height: markHeight)
 
     let textLeft = left + mark + gap
     title.draw(at: CGPoint(x: textLeft - h * 0.008, y: middle - h * 0.02))
