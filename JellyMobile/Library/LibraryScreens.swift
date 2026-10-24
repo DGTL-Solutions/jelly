@@ -9,13 +9,15 @@ import SwiftUI
 /// Sizes that follow the space a screen gets: compact on iPhone, more and larger cards on iPad and in landscape.
 private struct LibraryLayout: Equatable {
     var size = CGSize(width: 390, height: 800)
+    /// Pages with a large navigation title line their content up with it.
+    var alignsWithTitle = false
 
     /// iPad, or an iPhone in landscape: side-by-side layouts, more columns.
     var isWide: Bool { size.width >= 700 }
     var isLarge: Bool { size.width >= 1000 }
-    var edge: CGFloat { isLarge ? 32 : isWide ? 24 : 16 }
+    var edge: CGFloat { alignsWithTitle ? (isWide ? 20 : 16) : isLarge ? 32 : isWide ? 24 : 16 }
     var posterWidth: CGFloat { isLarge ? 168 : isWide ? 148 : 118 }
-    var wideCardWidth: CGFloat { isLarge ? 340 : isWide ? 300 : min(290, (size.width - 2 * edge) * 0.82) }
+    var wideCardWidth: CGFloat { isLarge ? 340 : isWide ? 300 : min(280, (size.width - 2 * edge) * 0.76) }
     var cardSpacing: CGFloat { isWide ? 18 : 12 }
 }
 
@@ -32,6 +34,47 @@ private extension View {
 private struct LibraryOpenTopClip: Shape {
     func path(in rect: CGRect) -> Path {
         Path(CGRect(x: rect.minX, y: rect.minY - 4000, width: rect.width, height: rect.height + 4000))
+    }
+}
+
+/// Shows a view sized for the TV (the shared RatingBadges) smaller, taking only the space it is drawn in.
+private struct LibraryScaledLayout: Layout {
+    var scale: CGFloat
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        guard let size = subviews.first?.sizeThatFits(.unspecified) else { return .zero }
+        return CGSize(width: size.width * scale, height: size.height * scale)
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        guard let view = subviews.first else { return }
+        view.place(at: CGPoint(x: bounds.midX, y: bounds.midY), anchor: .center, proposal: ProposedViewSize(view.sizeThatFits(.unspecified)))
+    }
+}
+
+/// IMDb / critics badges at the size of the metadata text next to them.
+private struct LibraryRatings: View {
+    let item: BaseItem
+
+    var body: some View {
+        LibraryScaledLayout(scale: 0.78) {
+            RatingBadges(item: item).scaleEffect(0.78)
+        }
+    }
+}
+
+private extension View {
+    /// Simulator testing only: JELLY_SCROLL=<section id> scrolls the page to that section once it has loaded.
+    @ViewBuilder func libraryDebugScroll(_ proxy: ScrollViewProxy, ready: Bool) -> some View {
+        #if DEBUG
+        task(id: ready) {
+            guard ready, let target = ProcessInfo.processInfo.environment["JELLY_SCROLL"] else { return }
+            try? await Task.sleep(for: .seconds(1.5))
+            withAnimation { proxy.scrollTo(target, anchor: .top) }
+        }
+        #else
+        self
+        #endif
     }
 }
 
@@ -323,7 +366,6 @@ private struct LibraryEpisodeTile: View {
     var showsSeries = false
     var stillWidth: CGFloat = 150
     @EnvironmentObject private var model: AppModel
-    @Environment(\.openMobileItem) private var openItem
 
     var body: some View {
         Button { model.play(episode) } label: {
@@ -366,10 +408,7 @@ private struct LibraryEpisodeTile: View {
             .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         }
         .buttonStyle(.plain)
-        .contextMenu {
-            MobileItemActions(item: episode)
-            Button { openItem(episode) } label: { Label("Details anzeigen", systemImage: "info.circle") }
-        }
+        .contextMenu { MobileItemActions(item: episode, includesDetails: true) }
     }
 
     private var still: some View {
@@ -444,6 +483,11 @@ struct HomeScreen: View {
     @State private var loaded = false
     @State private var error: String?
     @State private var layout = LibraryLayout()
+    @State private var scrolledDown = false
+    #if DEBUG
+    @State private var debugPerson: Person?
+    @State private var debugSearch = false
+    #endif
 
     var body: some View {
         Group {
@@ -464,23 +508,61 @@ struct HomeScreen: View {
         .navigationTitle("Start")
         .toolbar(.hidden, for: .navigationBar)
         .task(id: model.refreshID) { await load() }
+        #if DEBUG
+        .task(id: model.session?.key) { await openDebugRoute() }
+        .navigationDestination(item: $debugPerson) { PersonScreen(person: $0) }
+        .navigationDestination(isPresented: $debugSearch) { SearchScreen() }
+        #endif
     }
 
-    private var content: some View {
-        ScrollView(.vertical) {
-            LazyVStack(alignment: .leading, spacing: layout.isWide ? 36 : 28) {
-                if !featured.isEmpty {
-                    HomeHeroCarousel(items: featured, layout: layout)
-                } else {
-                    Color.clear.frame(height: 60)
-                }
-                rows
-            }
-            .padding(.bottom, 32)
+    #if DEBUG
+    /// Simulator testing only: JELLY_ROUTE=item:<id> | person:<id> | search:<term> opens that screen on this stack.
+    private func openDebugRoute() async {
+        guard let route = ProcessInfo.processInfo.environment["JELLY_ROUTE"], let client = model.client, let session = model.session else { return }
+        let parts = route.split(separator: ":", maxSplits: 1).map(String.init)
+        if route == "search" { debugSearch = true }
+        guard parts.count == 2 else { return }
+        switch parts[0] {
+        case "search": debugSearch = true
+        case "person":
+            guard let person = try? await client.item(user: session.userID, id: parts[1]) else { return }
+            debugPerson = Person(id: person.id, name: person.name, primaryImageTag: person.imageTags?["Primary"])
+        default:
+            if let item = try? await client.item(user: session.userID, id: parts[1]) { openItem(item) }
         }
-        .scrollIndicators(.hidden)
-        .ignoresSafeArea(edges: .top)
-        .refreshable { await load() }
+    }
+    #endif
+
+    private var content: some View {
+        ScrollViewReader { proxy in
+            ScrollView(.vertical) {
+                LazyVStack(alignment: .leading, spacing: layout.isWide ? 36 : 28) {
+                    if !featured.isEmpty {
+                        HomeHeroCarousel(items: featured, layout: layout)
+                    } else {
+                        Color.clear.frame(height: 60)
+                    }
+                    rows
+                }
+                .padding(.bottom, 32)
+            }
+            .scrollIndicators(.hidden)
+            .ignoresSafeArea(edges: .top)
+            .refreshable { await load() }
+            .onScrollGeometryChange(for: Bool.self) { $0.contentOffset.y > 140 } action: { _, value in
+                withAnimation(.easeOut(duration: 0.2)) { scrolledDown = value }
+            }
+            .overlay(alignment: .top) {
+                // Keeps the status bar legible over the rows once the hero has scrolled away.
+                LinearGradient(colors: [Theme.background, Theme.background.opacity(0.85), Theme.background.opacity(0)],
+                               startPoint: .top, endPoint: .bottom)
+                    .frame(height: 24)
+                    .ignoresSafeArea(edges: .top)
+                    .opacity(scrolledDown ? 1 : 0)
+                    .allowsHitTesting(false)
+            }
+            .libraryDebugScroll(proxy, ready: loaded)
+        }
     }
 
     @ViewBuilder private var rows: some View {
@@ -488,17 +570,20 @@ struct HomeScreen: View {
             LibraryShelf(title: String(localized: "Weiterschauen"), items: resume, layout: layout) { item in
                 WideCard(item: item, width: layout.wideCardWidth) { model.play(item) }
             }
+            .id("resume")
         }
         if !nextUp.isEmpty {
             LibraryShelf(title: String(localized: "Nächste Folgen"), items: nextUp, layout: layout) { item in
                 WideCard(item: item, width: layout.wideCardWidth) { model.play(item) }
             }
+            .id("nextup")
         }
         ForEach(latest) { row in
             LibraryShelf(title: String(localized: "Neu in \(row.library.name)", comment: "Shelf: recently added to <library name>"),
                         items: row.items, layout: layout, action: { openItem(row.library) }) { item in
                 PosterCard(item: item, width: layout.posterWidth)
             }
+            .id(row.id)
         }
         if !favorites.isEmpty {
             LibraryShelf(title: String(localized: "Favoriten"), items: favorites, layout: layout) { item in
@@ -519,6 +604,7 @@ struct HomeScreen: View {
             LibraryShelf(title: String(localized: "Bibliotheken"), items: libraries, layout: layout) { library in
                 WideCard(item: library, width: layout.wideCardWidth)
             }
+            .id("libraries")
         }
     }
 
@@ -658,14 +744,15 @@ private struct HomeHeroCarousel: View {
             }
             LinearGradient(stops: [.init(color: .black.opacity(0.5), location: 0), .init(color: .clear, location: 0.22)],
                            startPoint: .top, endPoint: .bottom)
-            LinearGradient(stops: [.init(color: .clear, location: wide ? 0.35 : 0.4),
-                                   .init(color: Theme.background.opacity(0.75), location: 0.78),
-                                   .init(color: Theme.background, location: 1)],
-                           startPoint: .top, endPoint: .bottom)
             if wide {
                 LinearGradient(stops: [.init(color: .black.opacity(0.65), location: 0), .init(color: .clear, location: 0.6)],
                                startPoint: .leading, endPoint: .trailing)
             }
+            // Last, so the artwork always ends in exactly the page colour.
+            LinearGradient(stops: [.init(color: .clear, location: wide ? 0.35 : 0.4),
+                                   .init(color: Theme.background.opacity(0.75), location: 0.78),
+                                   .init(color: Theme.background, location: 0.98)],
+                           startPoint: .top, endPoint: .bottom)
             slideText(item)
                 .padding(.horizontal, wide ? layout.edge + 8 : 24)
                 .padding(.bottom, items.count > 1 ? 40 : 24)
@@ -680,7 +767,7 @@ private struct HomeHeroCarousel: View {
                          font: wide ? .largeTitle.weight(.bold) : .title.weight(.bold))
             HStack(spacing: 12) {
                 if !item.metadataLine.isEmpty { Text(item.metadataLine) }
-                RatingBadges(item: item)
+                LibraryRatings(item: item)
             }
             .font(.footnote)
             .foregroundStyle(.white.opacity(0.8))
@@ -837,7 +924,7 @@ private struct LibraryPosterGrid<Header: View>: View {
     @State private var error: String?
     @State private var sort: LibrarySort?
     @State private var filter = LibraryFilter.all
-    @State private var layout = LibraryLayout()
+    @State private var layout = LibraryLayout(alignsWithTitle: true)
     @State private var showsInlineTitle = false
 
     private var activeSort: LibrarySort { sort ?? initialSort }
@@ -847,7 +934,7 @@ private struct LibraryPosterGrid<Header: View>: View {
     /// As many columns as fit at the minimum card width: 3 on a phone, 6 and more in landscape and on iPad.
     private var cardWidth: CGFloat {
         let available = max(200, layout.size.width - 2 * layout.edge)
-        let minimum: CGFloat = layout.isLarge ? 150 : layout.isWide ? 132 : 104
+        let minimum: CGFloat = layout.isLarge ? 136 : layout.isWide ? 124 : 104
         let count = max(3, Int((available + gridSpacing) / (minimum + gridSpacing)))
         return floor((available - gridSpacing * CGFloat(count - 1)) / CGFloat(count))
     }
@@ -998,6 +1085,19 @@ private struct LibraryPosterGrid<Header: View>: View {
     }
 }
 
+/// The artwork reaches under the navigation bar until the page scrolls past it (iOS 26 draws an edge effect there).
+private struct LibraryTopEdgeEffect: ViewModifier {
+    let hidden: Bool
+
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, *) {
+            content.scrollEdgeEffectHidden(hidden, for: .top)
+        } else {
+            content
+        }
+    }
+}
+
 /// "123 Titel" under the large title (iOS 26 and later; earlier versions show it above the grid).
 private struct LibraryCountSubtitle: ViewModifier {
     let text: String?
@@ -1020,7 +1120,7 @@ struct SearchScreen: View {
     @State private var searchedTerm = ""
     @State private var searching = false
     @State private var failed = false
-    @State private var layout = LibraryLayout()
+    @State private var layout = LibraryLayout(alignsWithTitle: true)
     @AppStorage("mobileRecentSearches") private var recentStorage = ""
 
     private var term: String { query.trimmingCharacters(in: .whitespacesAndNewlines) }
@@ -1065,6 +1165,14 @@ struct SearchScreen: View {
             if term.count >= 2, !results.isEmpty { remember(term) }
         }
         .task(id: term) { await search(term, debounce: true) }
+        #if DEBUG
+        .onAppear {
+            // Simulator testing only: JELLY_ROUTE=search:<term> types the term.
+            if query.isEmpty, let route = ProcessInfo.processInfo.environment["JELLY_ROUTE"], route.hasPrefix("search:") {
+                query = String(route.dropFirst("search:".count))
+            }
+        }
+        #endif
     }
 
     @ViewBuilder private var idleContent: some View {
@@ -1206,26 +1314,32 @@ struct ItemDetailScreen: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                header
-                VStack(alignment: .leading, spacing: 34) {
-                    summary
-                    if current.isSeries && !seasons.isEmpty { seriesEpisodes }
-                    if current.isEpisode && episodes.count > 1 { seasonEpisodes }
-                    cast
-                    if !similar.isEmpty {
-                        LibraryShelf(title: String(localized: "Das könnte dir auch gefallen"), items: similar, layout: layout) {
-                            PosterCard(item: $0, width: layout.posterWidth)
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    header
+                    VStack(alignment: .leading, spacing: 34) {
+                        summary
+                        if current.isSeries && !seasons.isEmpty { seriesEpisodes.id("episodes") }
+                        if current.isEpisode && episodes.count > 1 { seasonEpisodes.id("episodes") }
+                        cast.id("cast")
+                        if !similar.isEmpty {
+                            LibraryShelf(title: String(localized: "Das könnte dir auch gefallen"), items: similar, layout: layout) {
+                                PosterCard(item: $0, width: layout.posterWidth)
+                            }
+                            .id("similar")
                         }
+                        info.id("info")
                     }
-                    info
+                    .padding(.bottom, 40)
                 }
-                .padding(.bottom, 40)
             }
+            .scrollIndicators(.hidden)
+            .ignoresSafeArea(edges: .top)
+            .modifier(LibraryTopEdgeEffect(hidden: !showsTitle))
+            .libraryDebugScroll(proxy, ready: current.isSeries || current.isEpisode ? !episodes.isEmpty : details != nil)
         }
-        .scrollIndicators(.hidden)
-        .ignoresSafeArea(edges: .top)
+        .toolbarBackground(showsTitle ? .automatic : .hidden, for: .navigationBar)
         .background(Theme.background.ignoresSafeArea())
         .measuringLayout($layout)
         .onScrollGeometryChange(for: Bool.self) { $0.contentOffset.y > headerHeight - 110 } action: { _, value in
@@ -1265,14 +1379,15 @@ struct ItemDetailScreen: View {
             .clipShape(LibraryOpenTopClip())
             LinearGradient(stops: [.init(color: .black.opacity(0.45), location: 0), .init(color: .clear, location: 0.25)],
                            startPoint: .top, endPoint: .bottom)
-            LinearGradient(stops: [.init(color: .clear, location: 0.4),
-                                   .init(color: Theme.background.opacity(0.8), location: 0.8),
-                                   .init(color: Theme.background, location: 1)],
-                           startPoint: .top, endPoint: .bottom)
             if wide {
                 LinearGradient(stops: [.init(color: .black.opacity(0.6), location: 0), .init(color: .clear, location: 0.65)],
                                startPoint: .leading, endPoint: .trailing)
             }
+            // Last, so the artwork always ends in exactly the page colour.
+            LinearGradient(stops: [.init(color: .clear, location: 0.4),
+                                   .init(color: Theme.background.opacity(0.8), location: 0.8),
+                                   .init(color: Theme.background, location: 0.98)],
+                           startPoint: .top, endPoint: .bottom)
             headerText
                 .padding(.leading, wide ? textLeading : 20)
                 .padding(.trailing, wide ? layout.edge : 20)
@@ -1299,7 +1414,7 @@ struct ItemDetailScreen: View {
         VStack(alignment: wide ? .leading : .center, spacing: 8) {
             HStack(spacing: 12) {
                 if !current.metadataLine.isEmpty { Text(current.metadataLine) }
-                RatingBadges(item: current)
+                LibraryRatings(item: current)
             }
             .font(.footnote)
             .foregroundStyle(.white.opacity(0.8))

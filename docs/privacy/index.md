@@ -2,7 +2,7 @@
 title: Jelly – Privacy Policy
 ---
 
-# Privacy Policy for Jelly (Apple TV)
+# Privacy Policy for Jelly (Apple TV, iPhone and iPad)
 
 Last updated: October 24, 2026 · [Deutsche Fassung](../datenschutz/)
 
@@ -21,13 +21,13 @@ Jelly does not collect personal data. There is no advertising, no analytics, no 
 - **The Movie Database (TMDB):** Jelly loads images in the Discover tab from image.tmdb.org. TMDB sees your IP address.
 - **Local network:** To find your server without typing, Jelly looks for Jellyfin servers on your home network.
 
-## What is stored on your Apple TV
+## What is stored on your device
 
-- Session keys for your servers (in the Apple TV keychain) – no passwords.
+- Session keys for your servers (in the device keychain) – no passwords.
 - Your settings, the most recently loaded home screen rows, the results of intro and credits detection and measurements of your connection speed.
 - A diagnostics log for troubleshooting, without passwords or access keys. It never leaves the device and can be deleted under Settings › Diagnostics.
 
-When you delete Jelly, tvOS removes this data.
+When you delete Jelly, the system removes this data.
 
 ## Your rights
 

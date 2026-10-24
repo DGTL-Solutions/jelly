@@ -11,7 +11,7 @@ struct ProfilePickerScreen: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var chosen: String?
 
-    private var avatarSize: CGFloat { sizeClass == .regular ? 132 : 96 }
+    private var avatarSize: CGFloat { sizeClass == .regular ? 132 : 88 }
 
     var body: some View {
         GeometryReader { proxy in
@@ -21,8 +21,7 @@ struct ProfilePickerScreen: View {
                     Text("Wer schaut gerade?")
                         .font(.largeTitle.bold())
                         .multilineTextAlignment(.center)
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: avatarSize + 12, maximum: avatarSize + 48), spacing: 20, alignment: .top)],
-                              spacing: 28) {
+                    AccountTileGrid(count: model.accounts.count + 1, tileWidth: avatarSize + 16, maxColumns: sizeClass == .regular ? 4 : 3) {
                         ForEach(model.accounts, id: \.key) { account in
                             Button {
                                 chosen = account.key
@@ -37,7 +36,6 @@ struct ProfilePickerScreen: View {
                         Button { model.addProfile() } label: { AddProfileTile(size: avatarSize) }
                             .buttonStyle(AccountPressStyle())
                     }
-                    .frame(maxWidth: sizeClass == .regular ? 760 : 420)
                 }
                 .padding(.horizontal, 24)
                 .padding(.vertical, 40)
@@ -56,6 +54,19 @@ struct ProfilePickerScreen: View {
             }
         }
         .sensoryFeedback(.selection, trigger: chosen)
+        #if DEBUG
+        .task {
+            switch AccountDebug.take("JELLY_ACCOUNT_ADD") {
+            case "profile": model.addProfile()
+            case "server": model.addServer()
+            default: break
+            }
+            // JELLY_TAB opens a tab (see MainTabs): continue with the first profile to get there.
+            if ProcessInfo.processInfo.environment["JELLY_TAB"] != nil, let first = model.accounts.first {
+                model.switchTo(first)
+            }
+        }
+        #endif
     }
 }
 
@@ -105,6 +116,23 @@ private struct AddProfileTile: View {
     }
 }
 
+/// Profile tiles in centred rows: one profile sits in the middle instead of at the left edge.
+struct AccountTileGrid<Content: View>: View {
+    let count: Int
+    let tileWidth: CGFloat
+    var maxColumns = 3
+    @ViewBuilder let content: Content
+
+    var body: some View {
+        LazyVGrid(columns: Array(repeating: GridItem(.fixed(tileWidth), spacing: 16, alignment: .top),
+                                 count: max(1, min(count, maxColumns))),
+                  spacing: 24) {
+            content
+        }
+        .frame(maxWidth: .infinity)
+    }
+}
+
 // MARK: - Shared pieces
 
 /// Jelly's logo as in the app icon: a flat play button in the brand gradient. `size` is its width.
@@ -133,19 +161,34 @@ struct AccountAvatar: View {
     var size: CGFloat = 96
     @EnvironmentObject private var model: AppModel
 
+    @State private var image: UIImage?
+
     var body: some View {
         ZStack {
             Circle().fill(gradient)
-            Text(user.name.prefix(1).uppercased())
-                .font(.system(size: size * 0.42, weight: .semibold, design: .rounded))
-                .foregroundStyle(.white)
-            if user.primaryImageTag != nil {
-                RemoteImage(url: model.anonymousClient(server).userImageURL(user: user.id, tag: user.primaryImageTag, width: Int(size * 3)))
-                    .clipShape(Circle())
+            if let image {
+                // Pictures may be transparent (the demo server's logo): the initial stays hidden behind them.
+                Image(uiImage: image).resizable().scaledToFill().clipShape(Circle()).transition(.opacity)
+            } else {
+                Text(user.name.prefix(1).uppercased())
+                    .font(.system(size: size * 0.42, weight: .semibold, design: .rounded))
+                    .foregroundStyle(.white)
             }
         }
         .frame(width: size, height: size)
         .accessibilityHidden(true)
+        .task(id: imageURL) {
+            guard let imageURL else { image = nil; return }
+            if let cached = ImagePipeline.shared.cached(imageURL) { image = cached; return }
+            let loaded = await ImagePipeline.shared.image(imageURL)
+            guard !Task.isCancelled else { return }
+            withAnimation(.easeOut(duration: 0.25)) { image = loaded }
+        }
+    }
+
+    private var imageURL: URL? {
+        user.primaryImageTag == nil ? nil
+            : model.anonymousClient(server).userImageURL(user: user.id, tag: user.primaryImageTag, width: Int(size * 3))
     }
 
     private var gradient: LinearGradient {
@@ -206,4 +249,20 @@ enum AccountFormat {
         guard let host = url.host(percentEncoded: false) else { return url.absoluteString }
         return url.port.map { "\(host):\($0)" } ?? host
     }
+}
+
+/// Keeps forms and lists at a comfortable reading width on a wide iPad screen instead of stretching rows edge to edge.
+private struct AccountReadableWidth: ViewModifier {
+    var maxWidth: CGFloat = 760
+    @State private var width: CGFloat = 0
+
+    func body(content: Content) -> some View {
+        content
+            .contentMargins(.horizontal, max(0, (width - maxWidth) / 2), for: .scrollContent)
+            .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { width = $0 }
+    }
+}
+
+extension View {
+    func accountReadableWidth(_ maxWidth: CGFloat = 760) -> some View { modifier(AccountReadableWidth(maxWidth: maxWidth)) }
 }

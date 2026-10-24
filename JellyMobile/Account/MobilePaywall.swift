@@ -30,10 +30,8 @@ struct MobilePaywall: View {
                             .multilineTextAlignment(.center)
                             .fixedSize(horizontal: false, vertical: true)
                     }
-                    Spacer(minLength: 32)
-                    actions
-                    Spacer(minLength: 24)
-                    footer
+                    actions.padding(.top, 32)
+                    footer.padding(.top, 28)
                 }
                 .frame(maxWidth: 480)
                 .padding(.horizontal, 24)

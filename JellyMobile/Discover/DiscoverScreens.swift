@@ -23,7 +23,7 @@ struct DiscoverScreen: View {
         NavigationStack(path: $path) {
             Group {
                 if let account = model.seerr {
-                    SeerrHome(account: account, zoom: zoom)
+                    SeerrHome(account: account, zoom: zoom) { path.append($0) }
                 } else {
                     SeerrInvitation(connecting: $connecting)
                 }
@@ -37,8 +37,26 @@ struct DiscoverScreen: View {
         .sheet(isPresented: $connecting) { SeerrConnectSheet() }
         // An expired or ended Jellyseerr session leaves no detail pages of it behind.
         .onChange(of: model.seerr == nil) { _, signedOut in if signedOut { path = [] } }
+        #if DEBUG
+        .task { if SeerrDebug.take("JELLY_SEERR_RESET") != nil { await model.disconnectSeerr() } }
+        #endif
     }
 }
+
+#if DEBUG
+/// Simulator testing only, read from the launch environment (JELLY_TAB=discover opens this tab, see MainTabs): JELLY_SEERR_RESET
+/// signs out of Jellyseerr, JELLY_SEERR_OPEN=<TMDB id> opens a title from the rows, JELLY_SEERR_SEARCH=<text> searches,
+/// JELLY_SEERR_SEASONS opens the season choice of the opened series. Each is used once per launch.
+private enum SeerrDebug {
+    private static var used: Set<String> = []
+
+    static func take(_ key: String) -> String? {
+        guard let value = ProcessInfo.processInfo.environment[key], used.insert(key).inserted else { return nil }
+        return value
+    }
+
+}
+#endif
 
 // MARK: - Not connected
 
@@ -118,6 +136,8 @@ struct SeerrConnectSheet: View {
     @State private var version: String?
     @State private var settings: SeerrClient.PublicSettings?
     @State private var searching = true
+    /// Counts address checks; only the latest one may update the status line.
+    @State private var checks = 0
     @State private var started = false
     @State private var local = false
     @State private var username = ""
@@ -159,7 +179,6 @@ struct SeerrConnectSheet: View {
                             focus = username.isEmpty ? .username : .password
                             Task { await check() }
                         }
-                } footer: {
                     statusLine
                 }
 
@@ -232,6 +251,7 @@ struct SeerrConnectSheet: View {
         .task(id: address) {
             // Typing a new address: check it once the viewer pauses.
             guard started, address != checkedAddress else { return }
+            checks += 1
             searching = false
             version = nil
             guard !address.isEmpty else { checkedAddress = nil; return }
@@ -241,10 +261,14 @@ struct SeerrConnectSheet: View {
         }
     }
 
+    /// Whether the address answers, as a quiet row under it while there is something to say.
     @ViewBuilder private var statusLine: some View {
         Group {
             if searching {
-                Label { Text("Suche Jellyseerr …") } icon: { ProgressView().controlSize(.mini) }
+                HStack(spacing: 8) {
+                    ProgressView().controlSize(.small)
+                    Text("Suche Jellyseerr …").foregroundStyle(.secondary)
+                }
             } else if let version, address == checkedAddress {
                 Label("Jellyseerr \(version) erreichbar", systemImage: "checkmark.circle.fill").foregroundStyle(.green)
             } else if !address.isEmpty, address == checkedAddress {
@@ -252,6 +276,7 @@ struct SeerrConnectSheet: View {
             }
         }
         .font(.footnote)
+        .transition(.opacity)
     }
 
     private func start() async {
@@ -292,18 +317,20 @@ struct SeerrConnectSheet: View {
     }
 
     private func check() async {
+        checks += 1
+        let token = checks
         let text = address
         guard !text.isEmpty else { searching = false; version = nil; checkedAddress = nil; return }
         searching = true
         let found = await resolve(text)
         // The viewer typed on meanwhile: the newer address gets its own check.
-        guard address == text else { return }
+        guard token == checks else { return }
         searching = false
-        guard let found else { version = nil; checkedAddress = text; return }
+        guard let found else { version = nil; checkedAddress = address; return }
         withAnimation {
             version = found.version
             settings = found.settings
-            address = found.url.absoluteString
+            if address == text { address = found.url.absoluteString }
             checkedAddress = address
             // Servers without Jellyfin sign-in only take Jellyseerr's own accounts.
             if found.settings?.mediaServerLogin == false, !local { local = true; username = "" }
@@ -345,6 +372,8 @@ struct SeerrConnectSheet: View {
 private struct SeerrHome: View {
     let account: SeerrAccount
     let zoom: Namespace.ID
+    /// Opens a title on the Discover stack.
+    let open: (SeerrRoute) -> Void
     @EnvironmentObject private var model: AppModel
     @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var shelves: [SeerrClient.Shelf: [SeerrClient.Title]] = [:]
@@ -375,11 +404,18 @@ private struct SeerrHome: View {
         .scrollDismissesKeyboard(.immediately)
         .background(Theme.background.ignoresSafeArea())
         .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always),
-                    prompt: Text("Filme und Serien suchen und wünschen"))
+                    prompt: Text("Filme und Serien"))
         .task(id: model.refreshID) {
             // Coming back from a title reloads only when something changed or the rows have grown old.
             if loaded, loadedFor == model.refreshID, Date.now.timeIntervalSince(loadedAt) < 120 { return }
             await load()
+            #if DEBUG
+            if let text = SeerrDebug.take("JELLY_SEERR_SEARCH") { query = text }
+            if let id = SeerrDebug.take("JELLY_SEERR_OPEN").flatMap(Int.init),
+               let title = (loading + wishes + SeerrClient.Shelf.allCases.flatMap { shelves[$0] ?? [] }).first(where: { $0.tmdbID == id }) {
+                open(SeerrRoute(title: title, source: "debug"))
+            }
+            #endif
         }
         .task(id: following) {
             if following { await follow() }
@@ -566,6 +602,7 @@ private struct SeerrSearchResults: View {
         searching = true
         try? await Task.sleep(for: .milliseconds(350))
         guard !Task.isCancelled else { return }
+        error = nil
         do {
             let found = try await account.client.search(term)
             guard !Task.isCancelled else { return }
@@ -760,6 +797,14 @@ private struct SeerrDetailScreen: View {
     private var info: SeerrClient.MediaInfo? { details?.mediaInfo ?? title.mediaInfo }
     private var download: DownloadProgress? { info?.download }
     private var isLoading: Bool { status == .processing || download != nil }
+    /// Whether a series still has seasons that are neither there nor wished for; assumed until the details are in.
+    private var hasMissingSeasons: Bool {
+        guard let details else { return true }
+        return (details.seasons ?? []).contains { season in
+            season.seasonNumber > 0
+                && SeerrStatus(details.mediaInfo?.seasons?.first { $0.seasonNumber == season.seasonNumber }?.status) == .none
+        }
+    }
 
     var body: some View {
         ScrollView {
@@ -796,6 +841,9 @@ private struct SeerrDetailScreen: View {
         .task {
             if details == nil { status = title.status }
             await reload()
+            #if DEBUG
+            if title.isSeries, details != nil, SeerrDebug.take("JELLY_SEERR_SEASONS") != nil { choosingSeasons = true }
+            #endif
         }
         .task(id: isLoading) {
             // Follow the download while the page is open, as often as Jellyseerr learns something new.
@@ -873,7 +921,7 @@ private struct SeerrDetailScreen: View {
     @ViewBuilder private var actions: some View {
         // Whatever part is already on the server can be watched, also while more is wished for.
         let canWatch = status == .available || status == .partial || info?.jellyfinMediaId != nil
-        let canRequest = status == .none || (status == .partial && title.isSeries)
+        let canRequest = status == .none || (status == .partial && title.isSeries && hasMissingSeasons)
         let stateLabel = status != .available && (status != .partial || !title.isSeries) ? status.label : nil
         let count = [canWatch, canRequest, stateLabel != nil].filter { $0 }.count
         let layout = !regular && count > 1 ? AnyLayout(VStackLayout(spacing: 10)) : AnyLayout(HStackLayout(spacing: 12))
@@ -1118,9 +1166,12 @@ private struct SeerrSeasonSheet: View {
                             }
                             Spacer()
                             if let label = state.label {
-                                Label(label, systemImage: state.symbol)
-                                    .font(.footnote.weight(.medium))
-                                    .foregroundStyle(state.seerrTint)
+                                HStack(spacing: 5) {
+                                    Image(systemName: state.symbol)
+                                    Text(label)
+                                }
+                                .font(.footnote.weight(.medium))
+                                .foregroundStyle(state.seerrTint)
                             } else {
                                 Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
                                     .font(.title3)
@@ -1146,7 +1197,8 @@ private struct SeerrSeasonSheet: View {
             }
             .safeAreaInset(edge: .bottom) {
                 Button { onRequest(selected.sorted()) } label: {
-                    Text(selected.count == 1 ? String(localized: "1 Staffel wünschen") : String(localized: "\(selected.count) Staffeln wünschen"))
+                    Text(selected.isEmpty ? String(localized: "Wünschen")
+                         : selected.count == 1 ? String(localized: "1 Staffel wünschen") : String(localized: "\(selected.count) Staffeln wünschen"))
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
                 }

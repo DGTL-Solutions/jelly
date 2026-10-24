@@ -6,7 +6,7 @@ struct LicensesScreen: View {
         List {
             Section {
                 ForEach(OpenSourceComponent.all) { component in
-                    NavigationLink { LicenseTextScreen(component: component) } label: {
+                    NavigationLink(value: SettingsRoute.license(component.name)) {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(verbatim: component.name)
                             Text([component.version, component.license].compactMap { $0 }.joined(separator: " · "))
@@ -29,6 +29,7 @@ struct LicensesScreen: View {
                     .padding(.vertical, 4)
             }
         }
+        .accountReadableWidth()
         .navigationTitle("Open-Source-Lizenzen")
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -64,7 +65,7 @@ struct LicenseTextScreen: View {
                 Divider()
                 if let text {
                     Text(text)
-                        .font(.system(.caption, design: .monospaced))
+                        .font(.footnote)
                         .foregroundStyle(.secondary)
                         .textSelection(.enabled)
                 } else {
@@ -79,8 +80,24 @@ struct LicenseTextScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .task {
             let component = component
-            text = await Task.detached { component.licenseText }.value
+            text = await Task.detached { Self.reflow(component.licenseText) }.value
         }
+    }
+
+    /// Licence files are wrapped for 80-column terminals; on a phone the paragraphs read better rejoined.
+    nonisolated static func reflow(_ text: String) -> String {
+        var paragraphs: [String] = []
+        var current: [String] = []
+        for line in text.replacingOccurrences(of: "\r\n", with: "\n").components(separatedBy: "\n") {
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            if trimmed.isEmpty {
+                if !current.isEmpty { paragraphs.append(current.joined(separator: " ")); current = [] }
+            } else {
+                current.append(trimmed)
+            }
+        }
+        if !current.isEmpty { paragraphs.append(current.joined(separator: " ")) }
+        return paragraphs.joined(separator: "\n\n")
     }
 }
 

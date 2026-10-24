@@ -15,12 +15,9 @@ struct PlayerControlsOverlay: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(stops: [.init(color: .black.opacity(0.6), location: 0), .init(color: .clear, location: 0.3),
-                                   .init(color: .clear, location: 0.55), .init(color: .black.opacity(0.8), location: 1)],
-                           startPoint: .top, endPoint: .bottom)
-                .ignoresSafeArea()
-                .allowsHitTesting(false)
             transport
+                .opacity(ui.scrubbing ? 0 : 1)
+                .animation(.easeOut(duration: 0.15), value: ui.scrubbing)
             VStack(spacing: 0) {
                 topBar
                 Spacer(minLength: 0)
@@ -147,7 +144,7 @@ struct PlayerControlsOverlay: View {
             Spacer()
             Text(verbatim: "−" + Format.clock(player.duration - ui.shownPosition)).foregroundStyle(.white.opacity(0.85))
         }
-        .font(.caption.monospacedDigit().weight(.medium))
+        .font((regular ? Font.subheadline : .caption).monospacedDigit().weight(.medium))
         .lineLimit(1)
     }
 
@@ -155,6 +152,18 @@ struct PlayerControlsOverlay: View {
         player.chapters.last { $0.start <= ui.shownPosition }?.name.flatMap { name in
             name.lowercased().hasPrefix("chapter") ? nil : name
         }
+    }
+}
+
+/// Darkens the top and bottom of the picture behind the controls; drawn under the subtitles so they stay bright.
+struct PlayerControlsScrim: View {
+    var body: some View {
+        LinearGradient(stops: [.init(color: .black.opacity(0.6), location: 0), .init(color: .clear, location: 0.3),
+                               .init(color: .clear, location: 0.55), .init(color: .black.opacity(0.8), location: 1)],
+                       startPoint: .top, endPoint: .bottom)
+            .ignoresSafeArea()
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
     }
 }
 

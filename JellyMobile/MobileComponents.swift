@@ -44,12 +44,9 @@ struct MobileBrowseStack<Root: View>: View {
         }
     }
 
+    /// Seasons go to the detail screen too: it shows their series with that season selected.
     static func route(for item: BaseItem) -> MobileRoute {
-        if item.isFolder && item.type != "Season" { return .library(item) }
-        if item.type == "Season", let seriesID = item.seriesId {
-            return .item(BaseItem(id: seriesID, name: item.seriesName ?? item.name, type: "Series"))
-        }
-        return .item(item)
+        item.isFolder && item.type != "Season" ? .library(item) : .item(item)
     }
 }
 
@@ -150,7 +147,7 @@ struct WideCard: View {
             .frame(width: width, alignment: .leading)
         }
         .buttonStyle(.plain)
-        .contextMenu { MobileItemActions(item: item) }
+        .contextMenu { MobileItemActions(item: item, includesDetails: action != nil) }
     }
 
     private var subtitle: String? {
@@ -160,23 +157,30 @@ struct WideCard: View {
     }
 }
 
-/// Long-press menu shared by cards: play, mark watched, favourite.
+/// Long-press menu shared by cards: play, details (when tapping the card plays), mark watched, favourite.
 struct MobileItemActions: View {
     let item: BaseItem
+    var includesDetails = false
     @EnvironmentObject private var model: AppModel
+    @Environment(\.openMobileItem) private var openItem
 
     var body: some View {
         if item.isPlayable {
             Button { model.play(item) } label: { Label(item.progress > 0 ? "Fortsetzen" : "Abspielen", systemImage: "play.fill") }
             if item.progress > 0 {
-                Button { model.play(item, fromBeginning: true) } label: { Label("Von vorn", systemImage: "arrow.counterclockwise") }
+                Button { model.play(item, fromBeginning: true) } label: { Label("Von Anfang an", systemImage: "arrow.counterclockwise") }
             }
         }
-        Button { Task { await model.setWatched(item, !item.isWatched) } } label: {
-            Label(item.isWatched ? "Als ungesehen markieren" : "Als gesehen markieren", systemImage: item.isWatched ? "eye.slash" : "eye")
+        if includesDetails {
+            Button { openItem(item) } label: { Label("Details anzeigen", systemImage: "info.circle") }
         }
-        Button { Task { await model.setFavorite(item, !item.isFavorite) } } label: {
-            Label(item.isFavorite ? "Aus Favoriten entfernen" : "Zu Favoriten", systemImage: item.isFavorite ? "heart.slash" : "heart")
+        if item.isPlayable || item.isSeries {
+            Button { Task { await model.setWatched(item, !item.isWatched) } } label: {
+                Label(item.isWatched ? "Als ungesehen markieren" : "Als gesehen markieren", systemImage: item.isWatched ? "eye.slash" : "checkmark.circle")
+            }
+            Button { Task { await model.setFavorite(item, !item.isFavorite) } } label: {
+                Label(item.isFavorite ? "Aus Favoriten entfernen" : "Zu Favoriten", systemImage: item.isFavorite ? "heart.slash" : "heart")
+            }
         }
     }
 }

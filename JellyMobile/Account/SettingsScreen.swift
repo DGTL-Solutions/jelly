@@ -19,16 +19,22 @@ struct SettingsScreen: View {
     @State private var connectingSeerr = false
     @State private var managingSubscription = false
     @State private var confirmingSignOut = false
+    @State private var path: [SettingsRoute] = []
+    /// On iPhone the settings open as a sheet from the profile button; on iPad they are a tab.
+    @Environment(\.isPresented) private var isPresented
+    @Environment(\.dismiss) private var dismiss
+
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
+            ScrollViewReader { proxy in
             Form {
                 profileHeader
                 servers
                 profiles
                 jellyseerr
-                playback
-                subtitles
+                playback.id("playback")
+                subtitles.id("subtitles")
                 Section {
                     Picker("Bei zu langsamer Verbindung", selection: $slowConnection) {
                         ForEach(SlowConnectionPolicy.allCases) { Text($0.title).tag($0) }
@@ -40,15 +46,42 @@ struct SettingsScreen: View {
                     Text("Vor großen Dateien misst Jelly kurz, was die Leitung zum Server schafft. Reicht sie nicht, lässt Jelly zuerst ungenutzte Tonspuren weg (verlustfrei) und lässt erst danach den Server herunterrechnen.")
                 }
                 ratings
-                if purchases.isActive { subscription }
+                if purchases.isActive { subscription.id("subscription") }
                 Section("Diagnose") {
-                    NavigationLink { DiagnosticsLogScreen() } label: {
+                    NavigationLink(value: SettingsRoute.log) {
                         Label("Protokoll anzeigen", systemImage: "list.bullet.rectangle")
                     }
                 }
-                info
+                info.id("info")
             }
+            #if DEBUG
+            .task {
+                // Simulator testing only: JELLY_SETTINGS_SCROLL=playback|subtitles|subscription|info scrolls there.
+                guard let anchor = ProcessInfo.processInfo.environment["JELLY_SETTINGS_SCROLL"] else { return }
+                try? await Task.sleep(for: .seconds(1))
+                proxy.scrollTo(anchor, anchor: .top)
+            }
+            #endif
+            }
+            .accountReadableWidth()
             .navigationTitle("Einstellungen")
+            .toolbar {
+                if isPresented {
+                    ToolbarItem(placement: .confirmationAction) { Button("Fertig") { dismiss() } }
+                }
+            }
+            .navigationDestination(for: SettingsRoute.self) { route in
+                switch route {
+                case .licenses: LicensesScreen()
+                case .license(let name):
+                    if let component = OpenSourceComponent.all.first(where: { $0.name == name }) { LicenseTextScreen(component: component) }
+                case .privacy: PrivacyNoticeScreen()
+                case .log: DiagnosticsLogScreen()
+                }
+            }
+            #if DEBUG
+            .task { if let route = AccountDebug.settingsRoute() { path = route } }
+            #endif
             .sheet(isPresented: $connectingSeerr) { SeerrConnectSheet() }
             .manageSubscriptionsSheet(isPresented: $managingSubscription)
             .confirmationDialog(signOutTitle, isPresented: $confirmingSignOut, titleVisibility: .hidden) {
@@ -85,8 +118,8 @@ struct SettingsScreen: View {
                     HStack(spacing: 14) {
                         Image(systemName: "server.rack").foregroundStyle(Theme.accent).frame(width: 28)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(server.name).foregroundStyle(.primary)
-                            Text(serverDetail(server)).font(.footnote).foregroundStyle(.secondary).lineLimit(1)
+                            Text(server.name).foregroundStyle(Color.primary)
+                            Text(serverDetail(server)).font(.footnote).foregroundStyle(Color.secondary).lineLimit(1)
                         }
                         Spacer(minLength: 8)
                         if server.id == model.session?.serverKey {
@@ -120,7 +153,7 @@ struct SettingsScreen: View {
                     HStack(spacing: 14) {
                         AccountAvatar(user: UserDto(id: account.userID, name: account.name, primaryImageTag: account.imageTag),
                                       server: account.server, size: 30)
-                        Text(account.name).foregroundStyle(.primary)
+                        Text(account.name).foregroundStyle(Color.primary)
                         Spacer(minLength: 8)
                         if account.key == model.session?.key {
                             Image(systemName: "checkmark").font(.body.weight(.semibold)).foregroundStyle(Theme.accent)
@@ -256,7 +289,7 @@ struct SettingsScreen: View {
     private var info: some View {
         Section {
             LabeledContent("Jelly", value: String(localized: "Version \(AppInfo.version)"))
-            NavigationLink { LicensesScreen() } label: {
+            NavigationLink(value: SettingsRoute.licenses) {
                 Label {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Open-Source-Lizenzen")
@@ -265,7 +298,7 @@ struct SettingsScreen: View {
                     }
                 } icon: { Image(systemName: "doc.text") }
             }
-            NavigationLink { PrivacyNoticeScreen() } label: { Label("Datenschutz", systemImage: "hand.raised") }
+            NavigationLink(value: SettingsRoute.privacy) { Label("Datenschutz", systemImage: "hand.raised") }
             if let source = AppInfo.sourceURL.flatMap(URL.init(string:)) {
                 AccountLinkRow(title: String(localized: "Quellcode"), icon: "chevron.left.forwardslash.chevron.right", url: source)
             }
@@ -283,6 +316,39 @@ struct SettingsScreen: View {
     }
 }
 
+enum SettingsRoute: Hashable {
+    case licenses
+    /// A library from `OpenSourceComponent.all`, by name.
+    case license(String)
+    case privacy
+    case log
+}
+
+#if DEBUG
+/// Simulator testing only, read from the launch environment (JELLY_TAB=settings opens the settings, see MainTabs):
+/// JELLY_SETTINGS=licenses|privacy|log|license:<name> opens that page in it, JELLY_ACCOUNT_ADD=profile|server starts adding
+/// one from "Wer schaut gerade?".
+enum AccountDebug {
+    private static var used: Set<String> = []
+
+    static func take(_ key: String) -> String? {
+        guard let value = ProcessInfo.processInfo.environment[key], used.insert(key).inserted else { return nil }
+        return value
+    }
+
+    static func settingsRoute() -> [SettingsRoute]? {
+        switch take("JELLY_SETTINGS") {
+        case "licenses": return [.licenses]
+        case "privacy": return [.privacy]
+        case "log": return [.log]
+        case let value? where value.hasPrefix("license:"): return [.licenses, .license(String(value.dropFirst(8)))]
+        default: return nil
+        }
+    }
+
+}
+#endif
+
 /// A row that opens a web page in Safari.
 struct AccountLinkRow: View {
     let title: String
@@ -292,7 +358,7 @@ struct AccountLinkRow: View {
     var body: some View {
         Link(destination: url) {
             HStack {
-                Label(title, systemImage: icon).foregroundStyle(.primary)
+                Label { Text(title).foregroundStyle(Color.primary) } icon: { Image(systemName: icon) }
                 Spacer()
                 Image(systemName: "arrow.up.right").font(.footnote.weight(.semibold)).foregroundStyle(.tertiary)
             }
