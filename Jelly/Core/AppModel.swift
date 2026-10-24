@@ -1,5 +1,7 @@
 import SwiftUI
+#if os(tvOS)
 import TVServices
+#endif
 
 struct PlaybackRequest: Identifiable {
     let id = UUID()
@@ -354,7 +356,9 @@ final class AppModel: ObservableObject {
     func contentChanged() {
         refreshID = UUID()
         // Keeps "Weiterschauen" on the Apple TV home screen current.
+        #if os(tvOS)
         TVTopShelfContentProvider.topShelfContentDidChange()
+        #endif
     }
 
     func setWatched(_ item: BaseItem, _ watched: Bool) async {
@@ -407,4 +411,16 @@ final class AppModel: ObservableObject {
         }
     }
     #endif
+}
+
+extension AppModel {
+    /// Plays the next unwatched episode of a series, or its first episode.
+    func playSeries(_ series: BaseItem) async {
+        guard let client, let session else { return }
+        if let next = try? await client.nextUp(user: session.userID, seriesID: series.id, limit: 1).first {
+            play(next)
+        } else if let first = try? await client.episodes(user: session.userID, seriesID: series.id).first {
+            play(first)
+        }
+    }
 }

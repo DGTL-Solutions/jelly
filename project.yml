@@ -84,6 +84,51 @@ targets:
         NSExtension:
           NSExtensionPointIdentifier: com.apple.tv-top-shelf
           NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ContentProvider
+  # iPhone and iPad: same bundle ID as the Apple TV app, so one App Store record and one subscription cover all of them.
+  JellyMobile:
+    type: application
+    platform: iOS
+    deploymentTarget: '18.0'
+    sources:
+      - JellyMobile
+      - Jelly/Core
+      - Jelly/Shared
+      - Jelly/Player/PlayerController.swift
+      - Jelly/Player/ASSRenderer.swift
+      - Jelly/Resources
+      - Jelly/Localizable.xcstrings
+      - Jelly/InfoPlist.xcstrings
+      - Jelly/PrivacyInfo.xcprivacy
+    dependencies:
+      - package: AetherEngine
+      - package: libass
+    settings:
+      base:
+        PRODUCT_NAME: Jelly
+        PRODUCT_BUNDLE_IDENTIFIER: $(JELLY_BUNDLE_ID)
+        TARGETED_DEVICE_FAMILY: '1,2'
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Jelly
+        INFOPLIST_KEY_NSLocalNetworkUsageDescription: Jelly verbindet sich mit deinem Jellyfin-Server im Heimnetz.
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight
+    info:
+      path: JellyMobile/Info.plist
+      properties:
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+        UIUserInterfaceStyle: Dark
+        ITSAppUsesNonExemptEncryption: false
+        CFBundleDevelopmentRegion: en
+        CFBundleLocalizations: [de, en]
+        # Sound keeps playing in the background and in Picture in Picture.
+        UIBackgroundModes: [audio]
+        CFBundleURLTypes:
+          - CFBundleURLName: de.jelly.tv
+            CFBundleURLSchemes: [jelly]
   JellyTests:
     type: bundle.unit-test
     platform: tvOS
@@ -94,6 +139,10 @@ targets:
       base:
         GENERATE_INFOPLIST_FILE: YES
 schemes:
+  JellyMobile:
+    build:
+      targets:
+        JellyMobile: all
   Jelly:
     build:
       targets:
