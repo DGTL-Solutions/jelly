@@ -163,20 +163,24 @@ struct PlayerUpNextCard: View {
 /// button, so its symbol takes the arrow's place.
 struct PlayerNotice: View {
     let text: String
+    /// Below the top bar while the controls show.
+    var lifted = false
 
     var body: some View {
         VStack {
             Label { message } icon: { Image(systemName: "info.circle.fill") }
                 .font(.footnote.weight(.semibold))
                 .multilineTextAlignment(.leading)
+                // As wide as the text, at most about two thirds of a phone in landscape; longer messages wrap.
+                .frame(maxWidth: 520)
+                .fixedSize(horizontal: true, vertical: false)
                 .padding(.horizontal, 16).padding(.vertical, 10)
-                .frame(maxWidth: 560)
-                .fixedSize(horizontal: false, vertical: true)
                 .playerGlass(RoundedRectangle(cornerRadius: 20, style: .continuous), interactive: false)
                 .padding(.horizontal, 20)
-                .padding(.top, 10)
+                .padding(.top, lifted ? 64 : 10)
             Spacer()
         }
+        .animation(.easeInOut(duration: 0.25), value: lifted)
         .allowsHitTesting(false)
     }
 

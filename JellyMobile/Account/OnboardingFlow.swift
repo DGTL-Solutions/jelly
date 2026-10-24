@@ -337,7 +337,7 @@ private struct ProfileChoiceScreen: View {
     @State private var busyUser: String?
     @State private var error: String?
 
-    private var avatarSize: CGFloat { sizeClass == .regular ? 120 : 92 }
+    private var avatarSize: CGFloat { sizeClass == .regular ? 96 : 88 }
 
     var body: some View {
         OnboardingPage(title: !loaded || !users.isEmpty ? String(localized: "Wer schaut gerade?") : String(localized: "Anmelden"),
@@ -348,8 +348,7 @@ private struct ProfileChoiceScreen: View {
                 // Servers on the internet usually hide their profiles: name and password straight away.
                 SignInForm(server: server)
             } else {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: avatarSize + 8, maximum: avatarSize + 40), spacing: 16, alignment: .top)],
-                          spacing: 24) {
+                AccountTileGrid(count: users.count, tileWidth: avatarSize + 16, maxColumns: sizeClass == .regular ? 4 : 3) {
                     ForEach(users) { user in
                         Button { select(user) } label: {
                             AccountProfileTile(user: user, server: server.url, size: avatarSize, busy: busyUser == user.id)

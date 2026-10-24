@@ -25,7 +25,11 @@ final class PlayerPictureInPicture: NSObject, ObservableObject {
     private var possibleObservation: NSKeyValueObservation?
 
     func bind(_ engine: AetherEngine) {
-        guard isSupported, self.engine !== engine else { return }
+        guard isSupported else {
+            Diagnostics.log("pip not supported on this device")
+            return
+        }
+        guard self.engine !== engine else { return }
         self.engine = engine
         subscriptions.removeAll()
         engine.$videoRoute.map { _ in () }
@@ -86,6 +90,7 @@ final class PlayerPictureInPicture: NSObject, ObservableObject {
         isPossible = false
         layer = nextLayer
         guard let source else { return }
+        Diagnostics.log("pip source route=\(engine.videoRoute.rawValue)")
         let controller = AVPictureInPictureController(contentSource: source)
         controller.delegate = self
         // Going home while a film plays opens the window (if the system setting allows it).
@@ -287,22 +292,40 @@ struct PlayerAirPlayButton: UIViewRepresentable {
 /// iPhone plays in landscape and returns to portrait afterwards; iPad keeps whatever the viewer holds.
 @MainActor
 enum PlayerOrientation {
+    private static var playing = false
+
     static func enterPlayback() {
         guard UIDevice.current.userInterfaceIdiom == .phone else { return }
-        request(.landscape)
+        playing = true
+        request(.landscape, attempt: 0)
     }
 
     static func leavePlayback() {
         guard UIDevice.current.userInterfaceIdiom == .phone else { return }
-        request(.portrait)
+        playing = false
+        request(.portrait, attempt: 0)
     }
 
-    private static func request(_ orientations: UIInterfaceOrientationMask) {
-        let scenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
-        guard let scene = scenes.first(where: { $0.activationState == .foregroundActive }) ?? scenes.first else { return }
-        scene.keyWindow?.rootViewController?.setNeedsUpdateOfSupportedInterfaceOrientations()
-        scene.requestGeometryUpdate(.iOS(interfaceOrientations: orientations)) { error in
-            Diagnostics.log("orientation request failed: \(error.localizedDescription)")
+    /// While the full-screen cover is still sliding in (or out), UIKit only allows the current orientation, so the
+    /// request waits for the transition and tries again a few times.
+    private static func request(_ orientations: UIInterfaceOrientationMask, attempt: Int) {
+        Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(attempt == 0 ? 450 : 400))
+            guard playing == (orientations == .landscape) else { return }
+            let scenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
+            guard let scene = scenes.first(where: { $0.activationState == .foregroundActive }) ?? scenes.first else { return }
+            var top = scene.keyWindow?.rootViewController
+            while let presented = top?.presentedViewController { top = presented }
+            top?.setNeedsUpdateOfSupportedInterfaceOrientations()
+            scene.requestGeometryUpdate(.iOS(interfaceOrientations: orientations)) { error in
+                Task { @MainActor in
+                    if attempt < 4 {
+                        request(orientations, attempt: attempt + 1)
+                    } else {
+                        Diagnostics.log("orientation request failed: \(error.localizedDescription)")
+                    }
+                }
+            }
         }
     }
 }

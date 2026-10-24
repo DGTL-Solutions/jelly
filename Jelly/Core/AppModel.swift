@@ -207,7 +207,12 @@ final class AppModel: ObservableObject {
 
     /// Opens the onboarding for another profile, starting at the current server's user picker.
     func addProfile() {
-        preselectedServer = knownServers.first { $0.url == session?.server }
+        // The server list lives in user defaults, the profiles in the keychain: after a reinstall only the profiles
+        // remain, so the active session stands in for its server.
+        preselectedServer = knownServers.first { $0.url == session?.server } ?? session.map {
+            KnownServer(id: $0.serverID ?? $0.server.absoluteString, name: $0.serverName ?? $0.server.host() ?? $0.server.absoluteString,
+                        url: $0.server, version: nil)
+        }
         withAnimation { addingAccount = true; choosingProfile = false }
     }
 

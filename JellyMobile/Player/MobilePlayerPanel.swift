@@ -2,7 +2,7 @@ import SwiftUI
 import AetherEngine
 
 /// Subtitles, audio, quality, chapters, sync and playback details – the Apple TV panel as a side panel in landscape
-/// and a bottom sheet in portrait, with the picture still visible.
+/// and on iPad, a bottom sheet on an iPhone held upright, with the picture still visible.
 struct PlayerOptionsPanel: View {
     @ObservedObject var ui: PlaybackUI
     @ObservedObject var player: PlayerController
@@ -15,7 +15,7 @@ struct PlayerOptionsPanel: View {
 
     var body: some View {
         GeometryReader { proxy in
-            let side = proxy.size.width > proxy.size.height
+            let side = proxy.size.width > proxy.size.height || proxy.size.width >= 700
             ZStack(alignment: side ? .trailing : .bottom) {
                 if ui.panelOpen {
                     Color.black.opacity(0.35)
@@ -24,7 +24,7 @@ struct PlayerOptionsPanel: View {
                         .accessibilityHidden(true)
                         .transition(.opacity)
                     panel
-                        .frame(width: side ? min(460, max(360, proxy.size.width * 0.44)) : nil)
+                        .frame(width: side ? min(460, max(360, proxy.size.width * 0.44)) : min(proxy.size.width - 16, 640))
                         .frame(maxHeight: side ? .infinity : max(320, proxy.size.height * 0.62))
                         .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
                         .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
@@ -42,23 +42,7 @@ struct PlayerOptionsPanel: View {
     private var panel: some View {
         VStack(spacing: 0) {
             HStack(spacing: 10) {
-                ScrollView(.horizontal) {
-                    HStack(spacing: 6) {
-                        ForEach(tabs) { tab in
-                            Button { withAnimation(.easeOut(duration: 0.2)) { ui.selectTab(tab) } } label: {
-                                Text(tab.title)
-                                    .font(.subheadline.weight(.semibold))
-                                    .padding(.horizontal, 14).padding(.vertical, 8)
-                                    .foregroundStyle(ui.panelTab == tab ? .black : .white)
-                                    .background(ui.panelTab == tab ? AnyShapeStyle(Color.white) : AnyShapeStyle(Color.white.opacity(0.1)), in: Capsule())
-                            }
-                            .buttonStyle(.plain)
-                            .accessibilityAddTraits(ui.panelTab == tab ? .isSelected : [])
-                        }
-                    }
-                    .padding(.horizontal, 16)
-                }
-                .scrollIndicators(.hidden)
+                tabBar
                 Button { ui.closePanel() } label: {
                     Image(systemName: "xmark")
                         .font(.footnote.weight(.bold))
@@ -87,6 +71,35 @@ struct PlayerOptionsPanel: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             .scrollIndicators(.hidden)
+        }
+    }
+
+    /// The tabs as capsules; the chosen one scrolls into view, the rest fade out at the edges.
+    private var tabBar: some View {
+        ScrollViewReader { reader in
+            ScrollView(.horizontal) {
+                HStack(spacing: 6) {
+                    ForEach(tabs) { tab in
+                        Button { withAnimation(.easeOut(duration: 0.2)) { ui.selectTab(tab) } } label: {
+                            Text(tab.title)
+                                .font(.subheadline.weight(.semibold))
+                                .padding(.horizontal, 14).padding(.vertical, 8)
+                                .foregroundStyle(ui.panelTab == tab ? .black : .white)
+                                .background(ui.panelTab == tab ? AnyShapeStyle(Color.white) : AnyShapeStyle(Color.white.opacity(0.1)), in: Capsule())
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityAddTraits(ui.panelTab == tab ? .isSelected : [])
+                        .id(tab)
+                    }
+                }
+                .padding(.horizontal, 16)
+            }
+            .scrollIndicators(.hidden)
+            .mask(LinearGradient(stops: [.init(color: .clear, location: 0), .init(color: .black, location: 0.04),
+                                         .init(color: .black, location: 0.9), .init(color: .clear, location: 1)],
+                                 startPoint: .leading, endPoint: .trailing))
+            .onAppear { reader.scrollTo(ui.panelTab, anchor: .center) }
+            .onChange(of: ui.panelTab) { _, tab in withAnimation { reader.scrollTo(tab, anchor: .center) } }
         }
     }
 

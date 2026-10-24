@@ -160,7 +160,7 @@
 /* Begin PBXFileReference section */
 		00DE28B54B3028E50DC3ADBC /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		02BA6945B83B6AA63240D0B1 /* LibraryViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViews.swift; sourceTree = "<group>"; };
-		05962768906AE4D3CC3E3EE1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		05962768906AE4D3CC3E3EE1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		087D8D8292398E791F68EE4C /* SharedUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUI.swift; sourceTree = "<group>"; };
 		08F3A30EEB28D3F88CE40A9A /* License-dav1d.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "License-dav1d.txt"; sourceTree = "<group>"; };
 		0BFB9B1CF9F62518A909A69E /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
@@ -168,7 +168,7 @@
 		1AB99804C998295075348B78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1E6C40E354F80135D447511D /* Diagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagnostics.swift; sourceTree = "<group>"; };
 		2ACF811CD4EC85BBDF1A3323 /* License-libzvbi.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "License-libzvbi.txt"; sourceTree = "<group>"; };
-		331870C9FF562BC483C1626D /* JellyMobile.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = JellyMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		331870C9FF562BC483C1626D /* JellyMobile.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; name = JellyMobile.app; path = Jelly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3479D4451BFB1B7D96190F4A /* ConnectionAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionAnalyzer.swift; sourceTree = "<group>"; };
 		367CDB6E705F7CAC972C3837 /* AccountScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountScreens.swift; sourceTree = "<group>"; };
 		37C89F7300311B0E0259B6A3 /* LibraryScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryScreens.swift; sourceTree = "<group>"; };
@@ -236,7 +236,7 @@
 		F4EF9BA392D7270B068F109D /* License-HarfBuzz.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "License-HarfBuzz.txt"; sourceTree = "<group>"; };
 		F7F28D3BCC628DFA5E490CBC /* MobilePlayerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobilePlayerScreen.swift; sourceTree = "<group>"; };
 		F864BBA926651A6EAD30A6A2 /* JellyMobileApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyMobileApp.swift; sourceTree = "<group>"; };
-		FAC47C69309861DA2C6C61E3 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		FAC47C69309861DA2C6C61E3 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		FD7FE3D4BBE044B0BF3893C9 /* IMDbRatings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMDbRatings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -567,8 +567,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = E8D38CFA49B723766D205681 /* Build configuration list for PBXProject "Jelly" */;
 			developmentRegion = de;

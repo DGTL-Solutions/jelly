@@ -2,7 +2,7 @@
 title: Jelly – Datenschutz
 ---
 
-# Datenschutzerklärung für Jelly (Apple TV)
+# Datenschutzerklärung für Jelly (Apple TV, iPhone und iPad)
 
 Stand: 24. Oktober 2026 · [English version](../privacy/)
 
@@ -21,13 +21,13 @@ Jelly sammelt keine personenbezogenen Daten. Es gibt keine Werbung, keine Analys
 - **The Movie Database (TMDB):** Bilder im Tab „Erkunden“ lädt Jelly von image.tmdb.org. Auch hier sieht TMDB deine IP-Adresse.
 - **Lokales Netzwerk:** Um deinen Server ohne Tippen zu finden, sucht Jelly im Heimnetz nach Jellyfin-Servern.
 
-## Was auf deinem Apple TV gespeichert wird
+## Was auf deinem Gerät gespeichert wird
 
-- Sitzungsschlüssel deiner Server (im Schlüsselbund des Apple TV) – keine Passwörter.
+- Sitzungsschlüssel deiner Server (im Schlüsselbund des Geräts) – keine Passwörter.
 - Deine Einstellungen, die zuletzt geladenen Startseiten-Reihen, Ergebnisse der Intro- und Abspann-Erkennung sowie Messungen der Verbindungsgeschwindigkeit.
 - Ein Diagnose-Protokoll für die Fehlersuche, ohne Passwörter oder Zugangsschlüssel. Es verlässt das Gerät nicht und lässt sich unter Einstellungen › Diagnose löschen.
 
-Wenn du Jelly löschst, entfernt tvOS diese Daten.
+Wenn du Jelly löschst, entfernt das System diese Daten.
 
 ## Deine Rechte
 

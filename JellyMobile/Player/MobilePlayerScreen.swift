@@ -288,7 +288,9 @@ struct PlaybackStage: View {
                 }
                 .transition(.move(edge: .trailing).combined(with: .opacity))
             }
-            if let notice = player.notice { PlayerNotice(text: notice).transition(.move(edge: .top).combined(with: .opacity)) }
+            if let notice = player.notice {
+                PlayerNotice(text: notice, lifted: showsControls).transition(.move(edge: .top).combined(with: .opacity))
+            }
             PlayerOptionsPanel(ui: ui, player: player)
             if player.phase == .preparing {
                 PlayerPreparingView(item: player.item, source: player.source, status: player.status) { dismiss() }
@@ -391,6 +393,7 @@ struct PlaybackStage: View {
             if let engine = player.aether {
                 AetherPlayerSurface(engine: engine).ignoresSafeArea()
             }
+            PlayerControlsScrim().opacity(showsControls ? 1 : 0)
             if !pip.isActive {
                 PlayerASSLayer(model: player.assOverlay, fills: ui.fills)
                 if let engine = player.aether {
@@ -504,6 +507,15 @@ struct PlaybackStage: View {
         if env["JELLY_FILL"] != nil { later { ui.setFill(true) } }
         if env["JELLY_DOUBLETAP"] != nil { later { ui.doubleTap(forward: true); ui.doubleTap(forward: true) } }
         if env["JELLY_PIP"] != nil { later { pip.toggle() } }
+        if env["JELLY_TEST_SUBTITLES"] != nil, let engine = player.aether {
+            // The demo server has no subtitles: a local file with one long cue shows how they are laid out.
+            later {
+                let url = FileManager.default.temporaryDirectory.appendingPathComponent("jelly-test.srt")
+                try? Data("1\n00:00:00,000 --> 05:00:00,000\nI never drink … wine.\nListen to them – children of the night.\n".utf8).write(to: url)
+                let track = engine.addExternalSubtitleTrack(ExternalSubtitleTrack(url: url, name: "Test", language: "en"))
+                engine.selectSubtitleTrack(index: track.id)
+            }
+        }
         if let offset = env["JELLY_SCRUB"].flatMap(Double.init) {
             later {
                 player.pause()
