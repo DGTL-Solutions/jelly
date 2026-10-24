@@ -1,1 +1,1 @@
-Jellyfin,media player,Dolby Vision,HDR10,Atmos,MKV,home theatre,movies,TV shows,library,Jellyseerr
+home cinema,HEVC,AV1,TrueHD,DTS,ASS,SRT,films,series,server,streaming,self-hosted,library

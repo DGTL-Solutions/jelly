@@ -1,27 +1,20 @@
-Jelly brings your Jellyfin library to Apple TV – native, fast and in original quality. All you need is your own Jellyfin server (free at jellyfin.org).
+Jelly is the Jellyfin player for everyone who wants to see their films the way they are: in original quality, without your server having to transcode – with Dolby Vision, Atmos and fully styled subtitles. All you need is your own Jellyfin server (free at jellyfin.org).
 
-ORIGINAL, NOT CONVERTED
-Jelly plays your files as they are: MKV, MP4, AVI and TS with H.264, HEVC, AV1, VC-1 or MPEG-2. Your server doesn't have to re-encode anything, and the picture stays untouched.
+WHAT MAKES JELLY DIFFERENT
+• The original, not a transcode: MKV, MP4, AVI and TS with H.264, HEVC, AV1, VC-1 or MPEG-2. Whatever the device can't decode itself, Jelly decodes – your server doesn't have to re-encode anything, so even a small NAS is enough.
+• Subtitles as they were meant to be: ASS/SSA with embedded fonts, positions and effects, plus PGS, VobSub, SRT and external subtitles. You choose size, colour and background.
+• Made for TV shows: Jelly detects intros and credits by their sound – no server plugin needed – and starts the next episode as soon as the credits roll.
+• Smart on slow connections: Jelly measures the connection and first drops unused audio tracks – losslessly – before the server scales the picture down. At home, Jelly talks to your server directly.
+• Jellyseerr built in: request movies and shows, search, and follow the download live.
+• One subscription for everything: Jelly on Apple TV, iPhone and iPad with the same Apple ID.
 
-DOLBY VISION, HDR10+ AND ATMOS
-Dolby Vision (profiles 5 and 8) and HDR10+ play through Apple's player with dynamic metadata, Dolby Atmos in Dolby Digital Plus reaches your receiver as a bitstream, and TrueHD and DTS-HD play losslessly as multichannel audio. HDR10 and HLG work for everything else. Frame rate and dynamic range adapt to every film.
-
-SUBTITLES AS THEY WERE MEANT TO BE
-ASS/SSA subtitles with embedded fonts, positions and effects, plus PGS, VobSub, SRT and external subtitles. You choose size, colour and background.
+ON APPLE TV
+Dolby Vision (profiles 5 and 8) and HDR10+ play through Apple's player with dynamic metadata, Dolby Atmos in Dolby Digital Plus reaches your receiver as a bitstream, and TrueHD and DTS-HD play losslessly as multichannel audio. Frame rate and dynamic range adapt to every film. Continue watching and next episodes appear full-screen in the Top Shelf, plus a cover art screensaver like iTunes used to have.
 
 SIGN IN WITHOUT TYPING
-Jelly finds your server on your home network by itself. Profiles without a password open with one click, all others with a code from the Jellyfin app on your phone. Several servers and profiles on one Apple TV, with "Who's watching?" at launch.
+Jelly finds your server on your home network by itself. Profiles without a password open with one click, all others with a code from the Jellyfin app on your phone. Several servers and profiles, with "Who's watching?" at launch.
 
-MADE FOR TV SHOWS
-Continue watching and next episodes on the home screen and full-screen in the Top Shelf. Jelly detects intros and credits by their sound – even without a server plugin – and starts the next episode as soon as the credits roll.
-
-ON THE GO AND ON SLOW CONNECTIONS
-Jelly measures the connection to your server and picks the best quality that plays without stuttering. If the connection drops mid-film, Jelly adapts and goes back to the better quality later. At home, Jelly talks to your server directly.
-
-DISCOVER WITH JELLYSEERR
-Connect your Jellyseerr and request films and shows that aren't on your server yet – with trends, new releases, search and live download progress.
-
-Also: ratings on detail pages, chapters, thumbnail previews while scrubbing, audio and subtitle sync, a connection analysis and a cover art screensaver like iTunes used to have.
+Also: ratings on detail pages, chapters, thumbnail previews while scrubbing, audio and subtitle sync and detailed playback information.
 
 TRY IT FREE FOR 2 WEEKS
 Try Jelly with all features free for 2 weeks. After that, the Jelly annual subscription renews every year at the price shown in the App Store for your country. One subscription covers Jelly on Apple TV, iPhone and iPad with your Apple ID. Payment is charged to your Apple ID. The subscription renews automatically for another year unless you cancel at least 24 hours before it ends; you can cancel at any time in the Apple TV settings under Users and Accounts › Subscriptions.

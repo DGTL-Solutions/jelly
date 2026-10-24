@@ -1,1 +1,1 @@
-Jellyfin,video player,MKV,Picture in Picture,AirPlay,subtitles,movies,TV shows,Jellyseerr,NAS
+home cinema,HEVC,AV1,films,series,server,streaming,self-hosted,library,ASS,SRT,Dolby

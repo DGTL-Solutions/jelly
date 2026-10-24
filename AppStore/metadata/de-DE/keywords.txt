@@ -1,1 +1,1 @@
-Jellyfin,Mediaplayer,Dolby Vision,HDR10,Atmos,MKV,Heimkino,Mediathek,Serien,Filme,Jellyseerr
+Mediaplayer,MKV,Dolby Vision,HDR10,Atmos,4K,Heimkino,Untertitel,Serien,Filme,NAS,Jellyseerr

@@ -1,1 +1,1 @@
-Jellyfin,video player,MKV,Picture in Picture,AirPlay,subtitles,movies,TV shows,Jellyseerr,NAS
+video,MKV,Picture in Picture,AirPlay,subtitles,movies,TV shows,NAS,Jellyseerr,HDR,4K

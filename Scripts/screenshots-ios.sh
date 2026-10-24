@@ -1,6 +1,7 @@
 #!/bin/zsh
-# App Store screenshots of the iPhone and iPad app (AppStore/screenshots-ios/<locale>/{iphone,ipad}), with the public
-# Jellyfin demo server's free films and the Jellyseerr mock for "Erkunden". Boots one simulator at a time.
+# Raw App Store screenshots of the iPhone and iPad app (AppStore/screenshots-raw/{iphone,ipad}/<locale>), with the
+# public Jellyfin demo server's free films and the Jellyseerr mock for "Erkunden". Boots one simulator at a time; then
+# Scripts/FrameScreenshots.swift adds the headlines (AppStore/captions.json) and writes the store images.
 #   Scripts/screenshots-ios.sh            both devices
 #   Scripts/screenshots-ios.sh ipad       only one of them (iphone | ipad)
 # Builds the store variant first (Debug for the JELLY_* launch settings, APPSTORE for what the store version shows).
@@ -47,7 +48,7 @@ shoot() { # device file lang seconds env…
 for kind in ${1:-iphone ipad}; do
   device=$([[ $kind == iphone ]] && echo $IPHONE || echo $IPAD)
   for lang in de en; do
-    dir=AppStore/screenshots-ios/$([[ $lang == de ]] && echo de-DE || echo en-US)/$kind
+    dir=AppStore/screenshots-raw/$kind/$([[ $lang == de ]] && echo de-DE || echo en-US)
     boot $device $lang
     shoot $device $dir/1-start.png $lang 30 SIMCTL_CHILD_JELLY_TAB=home
     shoot $device $dir/2-details.png $lang 25 SIMCTL_CHILD_JELLY_TAB=home SIMCTL_CHILD_JELLY_OPEN=$DRACULA
@@ -64,4 +65,5 @@ for kind in ${1:-iphone ipad}; do
     xcrun simctl shutdown "$device"
   done
 done
+swift Scripts/FrameScreenshots.swift
 echo "Hochladen: PLATFORM=ios python3 Scripts/asc_appstore.py <Key-ID> <Issuer-ID> <Key-Datei> setup"

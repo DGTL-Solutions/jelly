@@ -1,0 +1,148 @@
+{
+  "tv": {
+    "1-start": {
+      "de": [
+        "Deine Mediathek auf dem Apple TV",
+        "Weiterschauen, nächste Folgen und alles Neue – auf einen Blick"
+      ],
+      "en": [
+        "Your Jellyfin library on Apple TV",
+        "Continue watching, next episodes and everything new at a glance"
+      ]
+    },
+    "2-details": {
+      "de": [
+        "Dolby Vision, HDR10+ und Atmos",
+        "Bildfrequenz und Dynamikbereich passen sich jedem Film an"
+      ],
+      "en": [
+        "Dolby Vision, HDR10+ and Atmos",
+        "Frame rate and dynamic range match every film"
+      ]
+    },
+    "3-player": {
+      "de": [
+        "Ein Player, der mitdenkt",
+        "Intros überspringen, nächste Folge, Kapitel und Vorschau beim Spulen"
+      ],
+      "en": [
+        "A player that thinks ahead",
+        "Skip intros, next episode, chapters and previews while scrubbing"
+      ]
+    },
+    "4-info": {
+      "de": [
+        "Das Original – ohne Umrechnen",
+        "MKV, AV1, VC-1, TrueHD, DTS-HD: Jelly spielt die Datei, wie sie ist"
+      ],
+      "en": [
+        "The original – no transcoding",
+        "MKV, AV1, VC-1, TrueHD, DTS-HD: Jelly plays the file as it is"
+      ]
+    }
+  },
+  "iphone": {
+    "1-start": {
+      "de": [
+        "Deine Mediathek.\nÜberall.",
+        "In Originalqualität auf iPhone, iPad und Apple TV"
+      ],
+      "en": [
+        "Your Jellyfin library.\nEverywhere.",
+        "In original quality on iPhone, iPad and Apple TV"
+      ]
+    },
+    "2-details": {
+      "de": [
+        "Alles über deinen Film",
+        "Bewertungen, Besetzung, Versionen und ähnliche Titel"
+      ],
+      "en": [
+        "Everything about your film",
+        "Ratings, cast, versions and similar titles"
+      ]
+    },
+    "3-player": {
+      "de": [
+        "Das Original – ohne Umrechnen",
+        "Bild-in-Bild, AirPlay und Untertitel mit allen Effekten"
+      ],
+      "en": [
+        "The original – no transcoding",
+        "Picture in Picture, AirPlay and fully styled subtitles"
+      ]
+    },
+    "4-discover": {
+      "de": [
+        "Wünschen, was noch fehlt",
+        "Jellyseerr eingebaut – mit Live-Download-Fortschritt"
+      ],
+      "en": [
+        "Request what's missing",
+        "Jellyseerr built in – with live download progress"
+      ]
+    },
+    "5-library": {
+      "de": [
+        "Ein Abo für alle Geräte",
+        "Apple TV, iPhone und iPad – 2 Wochen gratis testen"
+      ],
+      "en": [
+        "One subscription, every device",
+        "Apple TV, iPhone and iPad – try it free for 2 weeks"
+      ]
+    }
+  },
+  "ipad": {
+    "1-start": {
+      "de": [
+        "Deine Mediathek.\nÜberall.",
+        "In Originalqualität auf iPad, iPhone und Apple TV"
+      ],
+      "en": [
+        "Your Jellyfin library.\nEverywhere.",
+        "In original quality on iPad, iPhone and Apple TV"
+      ]
+    },
+    "2-details": {
+      "de": [
+        "Alles über deinen Film",
+        "Bewertungen, Besetzung, Versionen und ähnliche Titel"
+      ],
+      "en": [
+        "Everything about your film",
+        "Ratings, cast, versions and similar titles"
+      ]
+    },
+    "3-series": {
+      "de": [
+        "Für Serien gemacht",
+        "Nächste Folge und Intros überspringen – ohne Server-Plugin"
+      ],
+      "en": [
+        "Made for TV shows",
+        "Next episode and intro skipping – no server plugin needed"
+      ]
+    },
+    "4-discover": {
+      "de": [
+        "Wünschen, was noch fehlt",
+        "Jellyseerr eingebaut – mit Live-Download-Fortschritt"
+      ],
+      "en": [
+        "Request what's missing",
+        "Jellyseerr built in – with live download progress"
+      ]
+    },
+    "5-library": {
+      "de": [
+        "Ein Abo für alle Geräte",
+        "Apple TV, iPhone und iPad – 2 Wochen gratis testen"
+      ],
+      "en": [
+        "One subscription, every device",
+        "Apple TV, iPhone and iPad – try it free for 2 weeks"
+      ]
+    }
+  }
+}

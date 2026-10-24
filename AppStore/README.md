@@ -91,12 +91,12 @@ Dieselbe App in App Store Connect (gleiche Bundle-ID, ein Abo für alle Geräte)
 
 ```sh
 PLATFORM=ios ASC_KEY_ID=… ASC_ISSUER_ID=… DIST_CERT_DIR=~/.appstoreconnect/jelly-dist Scripts/release-appstore.sh   # Build → TestFlight
-Scripts/screenshots-ios.sh                                                                                       # iPhone 6.9″ und iPad 13″
+Scripts/screenshots-ios.sh                                                                                       # iPhone 6.9″ und iPad 13″, gerahmt
 PLATFORM=ios python3 Scripts/asc_appstore.py <Key-ID> <Issuer-ID> <Key-Datei> setup                             # Texte, Screenshots, Review-Angaben
 PLATFORM=ios python3 Scripts/asc_appstore.py <Key-ID> <Issuer-ID> <Key-Datei> attach <Build-Nummer>
 ```
 
-Eigene Texte für iOS liegen in `metadata-ios/<Sprache>` (Beschreibung, Stichwörter, Werbetext; Name und Untertitel teilen sich beide Plattformen), die Hinweise für App Review in `review-notes-ios.txt`. TestFlight: Gruppe „Intern“ (Team, jeder Build automatisch) und „Tester“ (externe Tester, der erste Build jeder Version braucht Apples Beta-Prüfung).
+Die Store-Screenshots sind gerahmt: Rohbilder in `screenshots-raw/<tv|iphone|ipad>/<Sprache>`, Überschriften in `captions.json`, `swift Scripts/FrameScreenshots.swift` erzeugt daraus `screenshots/` (Apple TV) und `screenshots-ios/`. Eigene Texte für iOS liegen in `metadata-ios/<Sprache>` (Beschreibung, Stichwörter, Werbetext; Name und Untertitel teilen sich beide Plattformen), die Hinweise für App Review in `review-notes-ios.txt`. TestFlight: Gruppe „Intern“ (Team, jeder Build automatisch) und „Tester“ (externe Tester, der erste Build jeder Version braucht Apples Beta-Prüfung).
 
 ## 5. Was in der App schon vorbereitet ist
 
