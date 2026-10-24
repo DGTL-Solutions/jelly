@@ -93,9 +93,6 @@ if COMMAND == "setup":
             call("POST", "/appInfoLocalizations", {"data": {"type": "appInfoLocalizations", "attributes": {"locale": locale, **attributes},
                  "relationships": {"appInfo": ref("appInfos", info)}}}, fatal=False)
             print(f"  Sprache angelegt: {locale}")
-    if PRIMARY_LOCALE in LOCALES and apps[0]["attributes"]["primaryLocale"] != PRIMARY_LOCALE:
-        call("PATCH", f"/apps/{app}", {"data": {"type": "apps", "id": app, "attributes": {"primaryLocale": PRIMARY_LOCALE}}}, fatal=False)
-        print(f"  Hauptsprache: {PRIMARY_LOCALE}")
     call("PATCH", f"/appInfos/{info}", {"data": {"type": "appInfos", "id": info, "relationships": {
         "primaryCategory": ref("appCategories", "ENTERTAINMENT")}}}, fatal=False)
     rating = call("GET", f"/appInfos/{info}/ageRatingDeclaration")["data"]["id"]
@@ -153,6 +150,11 @@ if COMMAND == "setup":
         order = sorted(shots, key=lambda shot: shot["attributes"]["fileName"])
         call("PATCH", f"/appScreenshotSets/{tv['id']}/relationships/appScreenshots",
              {"data": [{"type": "appScreenshots", "id": shot["id"]} for shot in order]}, fatal=False)
+
+    # Apple only switches the primary language once that language has its screenshots.
+    if PRIMARY_LOCALE in LOCALES and apps[0]["attributes"]["primaryLocale"] != PRIMARY_LOCALE:
+        if call("PATCH", f"/apps/{app}", {"data": {"type": "apps", "id": app, "attributes": {"primaryLocale": PRIMARY_LOCALE}}}, fatal=False):
+            print(f"  Hauptsprache: {PRIMARY_LOCALE}")
 
     step("App-Review-Angaben")
     contact = {k: os.environ.get(v) for k, v in [("contactFirstName", "REVIEW_FIRST_NAME"), ("contactLastName", "REVIEW_LAST_NAME"),
