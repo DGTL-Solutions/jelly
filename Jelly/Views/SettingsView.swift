@@ -422,18 +422,3 @@ struct DiagnosticsLogView: View {
     }
 }
 
-struct DisplayCapabilities {
-    var matchingEnabled: Bool
-    var hdrFormats: [String]
-
-    @MainActor
-    static func current() -> DisplayCapabilities {
-        let window = UIApplication.shared.connectedScenes.compactMap { ($0 as? UIWindowScene)?.keyWindow }.first
-        let modes = AVPlayer.availableHDRModes
-        var formats: [String] = []
-        if modes.contains(.dolbyVision) { formats.append("Dolby Vision") }
-        if modes.contains(.hdr10) { formats.append("HDR10") }
-        if modes.contains(.hlg) { formats.append("HLG") }
-        return DisplayCapabilities(matchingEnabled: window?.avDisplayManager.isDisplayCriteriaMatchingEnabled ?? false, hdrFormats: formats)
-    }
-}

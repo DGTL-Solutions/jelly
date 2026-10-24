@@ -281,15 +281,3 @@ private struct HeroDetailsButton: View {
         Button { openItem(item) } label: { Label("Details", systemImage: "info.circle") }
     }
 }
-
-extension AppModel {
-    /// Plays the next unwatched episode of a series, or its first episode.
-    func playSeries(_ series: BaseItem) async {
-        guard let client, let session else { return }
-        if let next = try? await client.nextUp(user: session.userID, seriesID: series.id, limit: 1).first {
-            play(next)
-        } else if let first = try? await client.episodes(user: session.userID, seriesID: series.id).first {
-            play(first)
-        }
-    }
-}

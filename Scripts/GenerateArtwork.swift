@@ -133,4 +133,18 @@ imagestack("App Icon", sizes: [(400, 240, "1x"), (800, 480, "2x")])
 imagestack("App Icon - App Store", sizes: [(1280, 768, "1x")])
 imageset(brand.appendingPathComponent("Top Shelf Image.imageset"), base: "topshelf", sizes: [(1920, 720, "1x"), (3840, 1440, "2x")], draw: topShelf)
 imageset(brand.appendingPathComponent("Top Shelf Image Wide.imageset"), base: "topshelf-wide", sizes: [(2320, 720, "1x"), (4640, 1440, "2x")], draw: topShelf)
-print("Artwork written to \(brand.path)")
+// iPhone and iPad: one 1024 pt icon, flat like the Apple TV icon, plus the dark-mode variant.
+let mobile = URL(fileURLWithPath: "JellyMobile/Assets.xcassets")
+let iconSet = mobile.appendingPathComponent("AppIcon.appiconset")
+json(["info": info], mobile.appendingPathComponent("Contents.json"))
+for (file, ground) in [("icon.png", NSColor.white), ("icon-dark.png", NSColor(calibratedWhite: 0.07, alpha: 1))] {
+    write(png(1024, 1024) { rect in
+        ground.setFill()
+        rect.fill()
+        logo(center: CGPoint(x: rect.midX, y: rect.midY), height: rect.height * 0.42)
+    }, iconSet.appendingPathComponent(file))
+}
+json(["images": [["filename": "icon.png", "idiom": "universal", "platform": "ios", "size": "1024x1024"],
+                 ["appearances": [["appearance": "luminosity", "value": "dark"]], "filename": "icon-dark.png", "idiom": "universal",
+                  "platform": "ios", "size": "1024x1024"]], "info": info], iconSet.appendingPathComponent("Contents.json"))
+print("Artwork written to \(brand.path) and \(mobile.path)")
