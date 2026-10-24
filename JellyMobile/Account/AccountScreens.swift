@@ -252,14 +252,16 @@ enum AccountFormat {
 }
 
 /// Keeps forms and lists at a comfortable reading width on a wide iPad screen instead of stretching rows edge to edge.
+/// Keeps forms at a readable width on iPad by narrowing the list itself. The system still keeps the narrower list clear
+/// of the sidebar and other safe areas, which margins set by hand would override.
 private struct AccountReadableWidth: ViewModifier {
     var maxWidth: CGFloat = 760
-    @State private var width: CGFloat = 0
 
     func body(content: Content) -> some View {
         content
-            .contentMargins(.horizontal, max(0, (width - maxWidth) / 2), for: .scrollContent)
-            .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { width = $0 }
+            .frame(maxWidth: maxWidth)
+            .frame(maxWidth: .infinity)
+            .background(Color(.systemGroupedBackground).ignoresSafeArea())
     }
 }
 
