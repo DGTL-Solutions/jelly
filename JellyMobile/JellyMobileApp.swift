@@ -1,4 +1,5 @@
 import SwiftUI
+import StoreKit
 import AetherEngine
 
 /// Jelly on iPhone and iPad: the same server, profiles, subscription and player engine as on Apple TV, with a touch UI.
@@ -29,6 +30,7 @@ struct JellyMobileApp: App {
 
 struct MobileRootView: View {
     @EnvironmentObject private var model: AppModel
+    @Environment(\.requestReview) private var requestReview
 
     var body: some View {
         ZStack {
@@ -50,6 +52,36 @@ struct MobileRootView: View {
             }
         }
         .onOpenURL { url in Task { await model.open(url) } }
+        // Back from the player is a good moment to ask for a rating – never in the middle of a film.
+        .onChange(of: model.playback == nil) { _, closed in
+            guard closed, !model.showsPaywall, ReviewPrompt.shouldAsk() else { return }
+            Task {
+                try? await Task.sleep(for: .seconds(1.5))
+                requestReview()
+            }
+        }
+    }
+}
+
+/// Asks for an App Store rating once someone has watched three films or episodes (almost) to the end, and at most once
+/// per app version; the system itself shows the request at most three times a year.
+enum ReviewPrompt {
+    private static let watchedKey = "watchedToEnd"
+    private static let askedVersionKey = "reviewAskedVersion"
+
+    static func notePlayback(fraction: Double, ended: Bool) {
+        guard ended || fraction >= 0.85 else { return }
+        UserDefaults.standard.set(UserDefaults.standard.integer(forKey: watchedKey) + 1, forKey: watchedKey)
+    }
+
+    /// Whether to ask now; remembers the version it asked in.
+    static func shouldAsk() -> Bool {
+        let defaults = UserDefaults.standard
+        guard defaults.integer(forKey: watchedKey) >= 3, defaults.string(forKey: askedVersionKey) != JellyfinClient.version else {
+            return false
+        }
+        defaults.set(JellyfinClient.version, forKey: askedVersionKey)
+        return true
     }
 }
 

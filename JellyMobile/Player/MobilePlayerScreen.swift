@@ -330,6 +330,8 @@ struct PlaybackStage: View {
             ui.cancelTasks()
             pip.tearDown()
             system.tearDown()
+            ReviewPrompt.notePlayback(fraction: player.duration > 0 ? player.position / player.duration : 0,
+                                      ended: player.phase == .ended)
             player.stop()
             model.contentChanged()
         }
