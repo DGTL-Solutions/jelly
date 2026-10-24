@@ -4,16 +4,16 @@ title: Jelly – Hilfe und Kontakt
 
 # Jelly – Hilfe und Kontakt
 
-Jelly spielt deine eigene Jellyfin-Bibliothek auf Apple TV, iPhone und iPad ab – in Originalqualität, mit Dolby Vision und Atmos. · [English](../help/)
+Jelly spielt deine eigene Jellyfin-Bibliothek auf Apple TV, iPhone und iPad ab – in Originalqualität, auf dem Apple TV mit Dolby Vision und Atmos. · [English](../help/)
 
 ## Häufige Fragen
 
 - **Was brauche ich?** Einen eigenen Jellyfin-Server (kostenlos unter [jellyfin.org](https://jellyfin.org)) und ein Apple TV mit tvOS 18 oder neuer oder ein iPhone oder iPad mit iOS 18 oder neuer.
 - **Was kostet Jelly?** Die ersten 2 Wochen sind gratis, danach kostet das Jelly Jahresabo 9,99 € pro Jahr. Es verlängert sich automatisch, wenn du es nicht spätestens 24 Stunden vor Ablauf kündigst.
-- **Wie kündige ich?** Auf dem Apple TV: Einstellungen › Benutzer und Accounts › dein Name › Abonnements › Jelly. Auf dem iPhone: Einstellungen › dein Name › Abonnements.
+- **Wie kündige ich?** Auf dem Apple TV: Einstellungen › Benutzer und Accounts › dein Name › Abonnements › Jelly. Auf iPhone und iPad: Einstellungen › dein Name › Abonnements › Jelly.
 - **Neues Gerät?** In Jelly unter Einstellungen › Jahresabo › „Käufe wiederherstellen“. Ein Abo gilt für Jelly auf allen Apple TVs, iPhones und iPads mit derselben Apple-ID.
 - **Erstattung?** Zahlungen und Erstattungen laufen über Apple: [reportaproblem.apple.com](https://reportaproblem.apple.com).
-- **Ein Film ruckelt oder startet nicht?** Einstellungen › Verbindung zeigt, was die Leitung zu deinem Server schafft. Fehler kannst du unter [github.com/DGTL-Solutions/jelly/issues](https://github.com/DGTL-Solutions/jelly/issues) melden.
+- **Ein Film ruckelt oder startet nicht?** Auf dem Apple TV zeigt Einstellungen › Verbindung, was die Leitung zu deinem Server schafft; auf iPhone und iPad legst du unter Einstellungen › Langsame Verbindung fest, was Jelly tut, wenn sie nicht reicht. Fehler kannst du unter [github.com/DGTL-Solutions/jelly/issues](https://github.com/DGTL-Solutions/jelly/issues) melden.
 
 ## Kontakt
 

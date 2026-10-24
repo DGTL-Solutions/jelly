@@ -7,6 +7,7 @@ struct JellyMobileApp: App {
     @StateObject private var model = AppModel()
 
     init() {
+        JellyfinClient.deviceName = UIDevice.current.model
         // The player engine's own log is detailed; its failures and route changes go into Jelly's diagnostics log.
         EngineLog.handler = { line in
             let lower = line.lowercased()

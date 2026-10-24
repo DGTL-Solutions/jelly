@@ -1,10 +1,10 @@
 ---
-title: Jelly für Apple TV
+title: Jelly für Apple TV, iPhone und iPad
 ---
 
-# Jelly für Apple TV
+# Jelly für Apple TV, iPhone und iPad
 
-Nativer Jellyfin-Client für Apple TV: Originalqualität, Dolby Vision, HDR10+ und Atmos, ohne dass dein Server umrechnen muss.
+Nativer Jellyfin-Client für Apple TV, iPhone und iPad: Originalqualität ohne Umrechnen auf dem Server – auf dem Apple TV mit Dolby Vision, HDR10+ und Atmos, auf iPhone und iPad mit Bild-in-Bild und AirPlay.
 
 - [Hilfe und Kontakt](support/)
 - [Datenschutz](datenschutz/)

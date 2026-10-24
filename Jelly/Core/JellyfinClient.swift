@@ -9,10 +9,13 @@ struct JellyfinClient: Sendable {
     var cache = ResponseCache.Mode.off
 
     static let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+    /// How the server lists this device in its dashboard and sessions; the iPhone and iPad app sets "iPhone" or "iPad"
+    /// at launch.
+    nonisolated(unsafe) static var deviceName = "Apple TV"
     static let listFields = "Overview,PrimaryImageAspectRatio,Genres,ProviderIds"
 
     var authorization: String {
-        var header = #"MediaBrowser Client="Jelly", Device="Apple TV", DeviceId="\#(deviceID)", Version="\#(Self.version)""#
+        var header = #"MediaBrowser Client="Jelly", Device="\#(Self.deviceName)", DeviceId="\#(deviceID)", Version="\#(Self.version)""#
         if let token, !token.isEmpty { header += #", Token="\#(token)""# }
         return header
     }
