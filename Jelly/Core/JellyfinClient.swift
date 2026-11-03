@@ -55,6 +55,11 @@ struct JellyfinClient: Sendable {
                 Diagnostics.log(String(format: "http %@ %@ failed after %.1fs via %@: %@", method, path, Date().timeIntervalSince(started),
                                        Self.route(server), (error as? URLError).map { "URLError \($0.code.rawValue)" } ?? "\(error)"))
             }
+            // Cancellation stays a URLError (screens ignore it); everything else becomes a message that names the server.
+            if let urlError = error as? URLError, urlError.code != .cancelled {
+                let host = [server.host(), server.port.map(String.init)].compactMap { $0 }.joined(separator: ":")
+                throw JellyError.connection(code: urlError.code.rawValue, host: host, seconds: Int(Date().timeIntervalSince(started).rounded()))
+            }
             throw error
         }
         let elapsed = Date().timeIntervalSince(started)

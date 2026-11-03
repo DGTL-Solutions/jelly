@@ -21016,6 +21016,244 @@
           }
         }
       }
+    },
+    "Der Server %@ hat %lld Sekunden lang nicht geantwortet." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The server %@ didn't answer for %lld seconds."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le serveur %@ n'a pas répondu pendant %lld secondes."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El servidor %@ no ha respondido durante %lld segundos."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il server %@ non ha risposto per %lld secondi."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De server %@ heeft %lld seconden lang niet geantwoord."
+          }
+        }
+      }
+    },
+    "Der Server %@ nimmt keine Verbindung an." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The server %@ doesn't accept the connection."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le serveur %@ n'accepte pas la connexion."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El servidor %@ no acepta la conexión."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il server %@ non accetta la connessione."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De server %@ accepteert de verbinding niet."
+          }
+        }
+      }
+    },
+    "Die Adresse %@ wurde nicht gefunden." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The address %@ couldn't be found."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'adresse %@ est introuvable."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se ha encontrado la dirección %@."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'indirizzo %@ non è stato trovato."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het adres %@ is niet gevonden."
+          }
+        }
+      }
+    },
+    "Dieses Gerät hat gerade keine Netzwerkverbindung." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This device has no network connection right now."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cet appareil n'a pas de connexion réseau pour le moment."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este dispositivo no tiene conexión de red en este momento."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo dispositivo al momento non ha una connessione di rete."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dit apparaat heeft op dit moment geen netwerkverbinding."
+          }
+        }
+      }
+    },
+    "Die Verbindung zum Server %@ ist abgebrochen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The connection to the server %@ was lost."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La connexion au serveur %@ a été interrompue."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se ha perdido la conexión con el servidor %@."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La connessione al server %@ si è interrotta."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De verbinding met de server %@ is verbroken."
+          }
+        }
+      }
+    },
+    "Die sichere Verbindung (HTTPS) zu %@ ist fehlgeschlagen – das Zertifikat wurde nicht akzeptiert." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The secure connection (HTTPS) to %@ failed – the certificate wasn't accepted."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La connexion sécurisée (HTTPS) à %@ a échoué – le certificat n'a pas été accepté."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La conexión segura (HTTPS) con %@ ha fallado: no se ha aceptado el certificado."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La connessione sicura (HTTPS) a %@ non è riuscita – il certificato non è stato accettato."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De beveiligde verbinding (HTTPS) met %@ is mislukt – het certificaat is niet geaccepteerd."
+          }
+        }
+      }
+    },
+    "Keine Verbindung zum Server %@ (Fehler %@)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No connection to the server %@ (error %@)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune connexion au serveur %@ (erreur %@)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay conexión con el servidor %@ (error %@)."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessuna connessione al server %@ (errore %@)."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geen verbinding met de server %@ (fout %@)."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
