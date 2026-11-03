@@ -5830,6 +5830,386 @@
           }
         }
       }
+    },
+    "Besser" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Better"
+          }
+        }
+      }
+    },
+    "Gut" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Good"
+          }
+        }
+      }
+    },
+    "dein iPad" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "your iPad"
+          }
+        }
+      }
+    },
+    "dein iPhone" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "your iPhone"
+          }
+        }
+      }
+    },
+    "Frei auf deinem iPad: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free on your iPad: %@"
+          }
+        }
+      }
+    },
+    "Frei auf deinem iPhone: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free on your iPhone: %@"
+          }
+        }
+      }
+    },
+    "„Besser“ und „Gut“ rechnet dein Server beim Laden um. Die Größe ist eine Obergrenze, meist wird die Datei kleiner." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your server converts “Better” and “Good” while they download. The size is an upper limit; the file usually ends up smaller."
+          }
+        }
+      }
+    },
+    "Umgerechnete Kopien sind SDR. HDR und Dolby Vision bleiben nur im Original erhalten." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Converted copies are SDR. HDR and Dolby Vision are kept only in the original."
+          }
+        }
+      }
+    },
+    "Empfohlen für %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommended for %@"
+          }
+        }
+      }
+    },
+    "Nicht genug Platz frei" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not enough free space"
+          }
+        }
+      }
+    },
+    "Empfohlen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommended"
+          }
+        }
+      }
+    },
+    "Datei unverändert, Bild und Ton wie auf dem Server" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File unchanged, picture and sound as on the server"
+          }
+        }
+      }
+    },
+    "Ton in 5.1 – auf iPhone und iPad kaum vom Original zu unterscheiden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5.1 sound – hard to tell from the original on iPhone and iPad"
+          }
+        }
+      }
+    },
+    "Stereo – wenn der Platz knapp ist" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stereo – for when space is tight"
+          }
+        }
+      }
+    },
+    "Die Datei konnte nicht abgefragt werden." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The file could not be looked up."
+          }
+        }
+      }
+    },
+    "Dein Jellyfin-Profil darf keine Downloads speichern. Das lässt sich im Jellyfin-Dashboard unter Benutzer › Zugriff ändern." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your Jellyfin profile isn't allowed to save downloads. This can be changed in the Jellyfin dashboard under Users › Access."
+          }
+        }
+      }
+    },
+    "Auf diesem Gerät ist nicht genug Platz frei." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There isn't enough free space on this device."
+          }
+        }
+      }
+    },
+    "Der Download wurde unterbrochen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The download was interrupted."
+          }
+        }
+      }
+    },
+    "Der Server hat den Download abgelehnt (Fehler %lld)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The server refused the download (error %lld)."
+          }
+        }
+      }
+    },
+    "Download löschen?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete download?"
+          }
+        }
+      }
+    },
+    "Download abbrechen?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel download?"
+          }
+        }
+      }
+    },
+    "Heruntergeladen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Downloaded"
+          }
+        }
+      }
+    },
+    "Download fehlgeschlagen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download failed"
+          }
+        }
+      }
+    },
+    "Herunterladen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download"
+          }
+        }
+      }
+    },
+    "Noch keine Downloads" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No downloads yet"
+          }
+        }
+      }
+    },
+    "Tippe bei einem Film oder einer Folge auf %@, um sie für unterwegs zu speichern – ohne Verbindung zum Server abspielbar." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap %@ on a film or episode to save it for the road – it plays without a connection to your server."
+          }
+        }
+      }
+    },
+    "Belegt: %@ · Frei: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used: %1$@ · Free: %2$@"
+          }
+        }
+      }
+    },
+    "wird synchronisiert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "syncing"
+          }
+        }
+      }
+    },
+    "Fehlgeschlagen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed"
+          }
+        }
+      }
+    },
+    "Wird vorbereitet …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preparing …"
+          }
+        }
+      }
+    },
+    "%@ von %@%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ of %2$@%3$@"
+          }
+        }
+      }
+    },
+    "Staffel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Season"
+          }
+        }
+      }
+    },
+    "Staffel herunterladen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download season"
+          }
+        }
+      }
+    },
+    "Downloads ansehen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View downloads"
+          }
+        }
+      }
+    },
+    "Jelly bewerten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rate Jelly"
+          }
+        }
+      }
+    },
+    "Gefällt dir Jelly?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enjoying Jelly?"
+          }
+        }
+      }
+    },
+    "Eine Bewertung im App Store hilft anderen, Jelly zu finden. Code mit der Kamera des iPhone scannen – die Seite zum Bewerten öffnet sich direkt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A rating in the App Store helps others find Jelly. Scan the code with your iPhone's camera – the review page opens right away."
+          }
+        }
+      }
+    },
+    "Downloads" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Downloads"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

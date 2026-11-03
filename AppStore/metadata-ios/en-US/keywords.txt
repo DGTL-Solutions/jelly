@@ -1,1 +1,1 @@
-video,MKV,Picture in Picture,AirPlay,subtitles,movies,TV shows,NAS,Jellyseerr,HDR,4K
+video,MKV,offline,download,AirPlay,subtitles,movies,TV shows,NAS,Jellyseerr,HDR,4K

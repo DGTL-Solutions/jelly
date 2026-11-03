@@ -4,7 +4,9 @@ people create in the browser. Every step looks first and only creates or changes
 
 Usage: asc_appstore.py KEY_ID ISSUER_ID KEY_PATH setup             texts, screenshots, age rating, price, availability,
                                                                       subscription with free trial, App Review details
-       asc_appstore.py KEY_ID ISSUER_ID KEY_PATH attach BUILDNUMBER  puts an uploaded, processed build on version 1.0
+       asc_appstore.py KEY_ID ISSUER_ID KEY_PATH attach BUILDNUMBER  puts an uploaded, processed build on the editable version
+       asc_appstore.py KEY_ID ISSUER_ID KEY_PATH update VERSION     an update: creates the version (e.g. 1.1) unless it
+                                                                      exists, "What's New" from release_notes.txt
        asc_appstore.py KEY_ID ISSUER_ID KEY_PATH submit --yes       sends version and subscription to App Review
 App Review contact (seen by Apple only, never committed): REVIEW_FIRST_NAME, REVIEW_LAST_NAME, REVIEW_PHONE, REVIEW_EMAIL.
 PLATFORM=ios works on the iPhone and iPad version instead: its texts come from AppStore/metadata-ios/<locale> where a file
@@ -86,8 +88,15 @@ if not apps:
     sys.exit(f"Keine App mit der Bundle-ID {BUNDLE_ID} in App Store Connect. Erst im Browser anlegen: Apps › + › Neue App "
              f"(tvOS, Name „Jelly“, Primärsprache Deutsch, Bundle-ID {BUNDLE_ID}, SKU jelly-tvos).")
 app = apps[0]["id"]
+EDITABLE = ("PREPARE_FOR_SUBMISSION", "DEVELOPER_REJECTED", "REJECTED", "METADATA_REJECTED")
 versions = [v for v in call("GET", f"/apps/{app}/appStoreVersions?filter[platform]={ASC_PLATFORM}&limit=10")["data"]
-            if v["attributes"]["appStoreState"] in ("PREPARE_FOR_SUBMISSION", "DEVELOPER_REJECTED", "REJECTED", "METADATA_REJECTED")]
+            if v["attributes"]["appStoreState"] in EDITABLE]
+if not versions and COMMAND == "update":
+    created = call("POST", "/appStoreVersions", {"data": {"type": "appStoreVersions", "attributes": {
+        "platform": ASC_PLATFORM, "versionString": sys.argv[5], "copyright": "2026 DGTL Solutions GmbH"},
+        "relationships": {"app": ref("apps", app)}}})["data"]
+    print(f"Version {sys.argv[5]} ({PLATFORM_NAME}) angelegt.")
+    versions = [created]
 if not versions:
     sys.exit(f"Keine bearbeitbare {PLATFORM_NAME}-Version gefunden.")
 version = versions[0]["id"]
@@ -269,6 +278,21 @@ if COMMAND == "setup":
                   subscription, os.path.join(ROOT, "screenshots", "iap-review-offer.png"))
     print("Fertig. Fehlt nur noch der Build: Scripts/release-appstore.sh, dann „attach <Build-Nummer>“.")
 
+elif COMMAND == "update":
+    wanted = sys.argv[5]
+    if versions[0]["attributes"]["versionString"] != wanted:
+        call("PATCH", f"/appStoreVersions/{version}", {"data": {"type": "appStoreVersions", "id": version,
+             "attributes": {"versionString": wanted}}})
+    step(f"Version {wanted} ({PLATFORM_NAME}): Neu in dieser Version")
+    for localization in call("GET", f"/appStoreVersions/{version}/appStoreVersionLocalizations")["data"]:
+        locale = localization["attributes"]["locale"]
+        notes = meta(locale, "release_notes.txt", True) if os.path.exists(os.path.join(ROOT, "metadata", locale, "release_notes.txt")) else None
+        if notes:
+            call("PATCH", f"/appStoreVersionLocalizations/{localization['id']}", {"data": {"type": "appStoreVersionLocalizations",
+                 "id": localization["id"], "attributes": {"whatsNew": notes}}}, fatal=False)
+            print(f"  {locale}: {notes.splitlines()[0]} …")
+    print("Fertig. Dann Scripts/release-appstore.sh und „attach <Build-Nummer>“.")
+
 elif COMMAND == "attach":
     number = sys.argv[5]
     builds = call("GET", f"/builds?filter[app]={app}&filter[version]={number}&limit=5")["data"]
@@ -278,7 +302,7 @@ elif COMMAND == "attach":
     if state != "VALID":
         sys.exit(f"Build {number} ist noch in Verarbeitung ({state}).")
     call("PATCH", f"/appStoreVersions/{version}/relationships/build", ref("builds", builds[0]["id"]))
-    print(f"Build {number} hängt an Version 1.0 ({PLATFORM_NAME}).")
+    print(f"Build {number} hängt an Version {versions[0]['attributes']['versionString']} ({PLATFORM_NAME}).")
 
 elif COMMAND == "submit":
     if "--yes" not in sys.argv:

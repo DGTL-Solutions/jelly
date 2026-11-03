@@ -151,6 +151,37 @@ struct CoreChecks {
         precondition(Access.state(entitled: true, trialEnds: nil, everSubscribed: true, now: now) == .subscribed)
         precondition(Access.state(entitled: false, trialEnds: nil, everSubscribed: true, now: now) == .expired)
         precondition(!Access.expired.canPlay && !Access.notSubscribed.canPlay && Access.trial(daysLeft: 3).canPlay && Access.subscribed.canPlay && Access.checking.canPlay)
-        print("Core checks passed: address detection, URL building, token handling, decoding, engine selection, Dolby Vision routing, HDR badges, audio language, IMDb dataset, intro detection, Jellyseerr, download progress, subscription and trial.")
+        // Downloads: a converted copy only appears when it saves at least half; "Besser" is recommended when it fits.
+        let film = MediaSource(id: "d", container: "mkv", size: 40_000_000_000, bitrate: 60_000_000, mediaStreams: [
+            MediaStream(type: "Video", index: 0, codec: "hevc", width: 3840, height: 2160, bitRate: 58_000_000),
+            MediaStream(type: "Audio", index: 1, codec: "truehd", channels: 8)
+        ])
+        let filmOptions = DownloadPlanner.options(source: film, runtime: 7200, audio: film.audioStreams.first)
+        precondition(filmOptions.map(\.quality) == [.original, .better, .good], "\(filmOptions)")
+        precondition(filmOptions[1].bytes == Int64(Double(8_000_000 + 640_000) * 7200 / 8) && filmOptions[1].resolution == "1080p")
+        precondition(filmOptions[2].resolution == "720p" && filmOptions[2].bytes < filmOptions[1].bytes / 2)
+        precondition(DownloadPlanner.recommended(filmOptions, free: 64_000_000_000) == .better)
+        precondition(DownloadPlanner.recommended(filmOptions, free: 5_000_000_000) == .good)
+        precondition(DownloadPlanner.recommended(filmOptions, free: 1_500_000_000) == nil)
+        precondition(DownloadPlanner.options(source: film, runtime: 7200, audio: nil, canConvert: false).count == 1)
+        // A small 1080p file: "Besser" would hardly be smaller, so only "Original" and maybe "Gut".
+        let small = MediaSource(id: "e", container: "mp4", size: 2_700_000_000, bitrate: 9_000_000, mediaStreams: [
+            MediaStream(type: "Video", index: 0, codec: "h264", width: 1920, height: 1080, bitRate: 8_600_000),
+            MediaStream(type: "Audio", index: 1, codec: "ac3", bitRate: 384_000, channels: 6)
+        ])
+        let smallOptions = DownloadPlanner.options(source: small, runtime: 2400, audio: small.audioStreams.first)
+        precondition(smallOptions.map(\.quality) == [.original, .good], "\(smallOptions)")
+        precondition(DownloadPlanner.recommended(smallOptions, free: 64_000_000_000) == .original)
+        // A whole season: each episode adds its own size, or its next larger one where it has no smaller copy.
+        let season = DownloadPlanner.combined([filmOptions, smallOptions])
+        precondition(season.map(\.quality) == [.original, .better, .good])
+        precondition(season[1].bytes == filmOptions[1].bytes + smallOptions[0].bytes)
+        let converted = JellyfinClient(server: URL(string: "https://example.com")!, token: "t", deviceID: "dev")
+            .downloadURL(itemID: "9", source: film, quality: .better, audioIndex: 1).absoluteString
+        precondition(converted.contains("Videos/9/stream.mp4") && converted.contains("MaxHeight=1080") && converted.contains("AudioStreamIndex=1")
+            && converted.contains("SubtitleMethod=Drop") && !converted.contains("Static=true"))
+        precondition(JellyfinClient(server: URL(string: "https://example.com")!, deviceID: "d")
+            .downloadURL(itemID: "9", source: film, quality: .original, audioIndex: nil).path == "/Items/9/Download")
+        print("Core checks passed: address detection, URL building, token handling, decoding, engine selection, Dolby Vision routing, HDR badges, audio language, IMDb dataset, intro detection, Jellyseerr, download progress, subscription and trial, offline downloads.")
     }
 }

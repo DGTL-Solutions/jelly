@@ -83,6 +83,10 @@ struct SettingsView: View {
                         SettingsSection(String(localized: "Info", comment: "Settings section: about the app"),
                                         footer: String(localized: "Jelly ist eine unabhängige App und kein offizielles Produkt des Jellyfin-Projekts. \(AppInfo.copyright)")) {
                             SettingsInfo("Jelly", value: String(localized: "Version \(AppInfo.version)"))
+                            // tvOS has no in-app rating request; a code to rate on the phone, only for those who look for it.
+                            NavigationLink { RateAppView() } label: {
+                                SettingsRowLabel(String(localized: "Jelly bewerten"), icon: "star", chevron: true)
+                            }
                             NavigationLink { LicensesView() } label: {
                                 SettingsRowLabel(String(localized: "Open-Source-Lizenzen"), icon: "doc.text",
                                                  detail: String(localized: "Jelly, AetherEngine, FFmpeg und \(OpenSourceComponent.all.count - 3) weitere"),

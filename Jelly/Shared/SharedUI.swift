@@ -35,9 +35,14 @@ actor ImagePipeline {
         var request = URLRequest(url: url)
         if let authorization { request.setValue(authorization, forHTTPHeaderField: "Authorization") }
         let task = Task<UIImage?, Never> { [request] in
-            guard let (data, response) = try? await session.data(for: request),
-                  (response as? HTTPURLResponse)?.statusCode == 200,
-                  let image = UIImage(data: data) else { return nil }
+            var data: Data?
+            if let url = request.url, url.isFileURL {
+                // Artwork saved with a download.
+                data = try? Data(contentsOf: url)
+            } else if let (body, response) = try? await session.data(for: request), (response as? HTTPURLResponse)?.statusCode == 200 {
+                data = body
+            }
+            guard let data, let image = UIImage(data: data) else { return nil }
             return await image.byPreparingForDisplay() ?? image
         }
         running[url] = task

@@ -1,0 +1,5 @@
+Neu: Downloads für unterwegs
+• Filme und Folgen aufs iPhone oder iPad laden und ohne Verbindung zum Server schauen – auch ganze Staffeln auf einmal.
+• Drei Qualitäten zur Wahl: Original, Besser oder Gut – jeweils mit der Größe in GB, dem freien Speicher und einer Empfehlung für dein Gerät.
+• Untertitel, „Intro überspringen“ und „Nächste Folge“ funktionieren auch offline. Wo du offline aufgehört hast, merkt sich Jelly und meldet es deinem Server, sobald er wieder erreichbar ist.
+• Downloads laufen im Hintergrund weiter, auch wenn Jelly geschlossen ist.

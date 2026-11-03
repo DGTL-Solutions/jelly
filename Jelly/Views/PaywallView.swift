@@ -165,3 +165,22 @@ struct QRCode: View {
         return CIContext().createCGImage(output, from: output.extent)
     }
 }
+
+/// "Jelly bewerten": the App Store's review page as a code for the phone.
+struct RateAppView: View {
+    var body: some View {
+        HStack(alignment: .center, spacing: 60) {
+            QRCode(text: AppInfo.reviewURL).frame(width: 320, height: 320)
+            VStack(alignment: .leading, spacing: 20) {
+                Text("Gefällt dir Jelly?").font(.title2.weight(.bold))
+                Text("Eine Bewertung im App Store hilft anderen, Jelly zu finden. Code mit der Kamera des iPhone scannen – die Seite zum Bewerten öffnet sich direkt.")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+            }
+            .frame(maxWidth: 700, alignment: .leading)
+        }
+        .padding(80)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Theme.background.ignoresSafeArea())
+    }
+}

@@ -35,46 +35,30 @@ final class JellyTests: XCTestCase {
         XCTAssertEqual(sparse.metadataLine, "")
     }
 
-    func testEngineSelection() {
-        func source(_ container: String, video: String, tag: String? = nil, audio: [String] = ["aac"], embeddedSubs: Bool = false) -> MediaSource {
-            var streams = [MediaStream(type: "Video", index: 0, codec: video, codecTag: tag)]
-            streams += audio.enumerated().map { MediaStream(type: "Audio", index: $0.offset + 1, codec: $0.element) }
-            if embeddedSubs { streams.append(MediaStream(type: "Subtitle", index: 9, codec: "subrip", isExternal: false)) }
-            return MediaSource(id: "s", container: container, mediaStreams: streams)
-        }
-        XCTAssertEqual(PlaybackEngine.choose(for: source("mov,mp4,m4a,3gp,3g2,mj2", video: "hevc", tag: "hvc1", audio: ["eac3"])), .native)
-        XCTAssertEqual(PlaybackEngine.choose(for: source("mp4", video: "hevc", tag: "hev1")), .ffmpeg)
-        XCTAssertEqual(PlaybackEngine.choose(for: source("mkv", video: "hevc")), .ffmpeg)
-        XCTAssertEqual(PlaybackEngine.choose(for: source("mp4", video: "h264", audio: ["dts"])), .ffmpeg)
-        XCTAssertEqual(PlaybackEngine.choose(for: source("mp4", video: "h264", embeddedSubs: true)), .ffmpeg)
-        XCTAssertEqual(PlaybackEngine.choose(for: source("mp4", video: "h264"), preference: .ffmpeg), .ffmpeg)
-    }
-
-    func testQualityRouting() {
+    /// Every file plays from the original; the plan's reason names what the Apple TV gets out of it.
+    func testPlaybackPlans() {
         let appleTV = DeviceCapabilities(dolbyVision: true, dolbyVisionProfile7: false, av1Hardware: false)
-        func file(_ range: String, codec: String = "hevc", audio: String, profile: String? = nil) -> MediaSource {
-            MediaSource(id: "s", container: "mkv", mediaStreams: [
-                MediaStream(type: "Video", index: 0, codec: codec, videoRangeType: range),
-                MediaStream(type: "Audio", index: 1, codec: audio, profile: profile)
+        func file(_ range: String, codec: String = "hevc", audio: String, profile: String? = nil, dvProfile: Int? = nil) -> MediaSource {
+            MediaSource(id: "s", container: "mkv", bitrate: 40_000_000, mediaStreams: [
+                MediaStream(type: "Video", index: 0, codec: codec, bitRate: 36_000_000, videoRangeType: range, dvProfile: dvProfile),
+                MediaStream(type: "Audio", index: 1, codec: audio, profile: profile, bitRate: 1_000_000)
             ])
         }
-        func plan(_ source: MediaSource, device: DeviceCapabilities = appleTV, subtitle: MediaStream? = nil) -> PlaybackPlan {
-            PlaybackPlan.make(for: source, audio: source.audioStreams.first, subtitle: subtitle, device: device)
+        func plan(_ source: MediaSource, device: DeviceCapabilities = appleTV) -> PlaybackPlan {
+            PlaybackPlan.make(for: source, audio: source.audioStreams.first, device: device)
         }
-        XCTAssertEqual(plan(file("DOVI", audio: "eac3")).engine, .remux, "Profile 5 needs Apple's decoder")
-        XCTAssertEqual(plan(file("DOVIWithHDR10", audio: "truehd")).remuxAudio, "flac,eac3,ac3,aac", "DV with lossless audio")
-        XCTAssertEqual(plan(file("DOVIWithHDR10", audio: "eac3")).remuxAudio, "eac3,ac3,aac", "Audio copied when possible")
-        XCTAssertEqual(plan(file("DOVIWithEL", audio: "truehd")).engine, .ffmpeg, "Profile 7 needs device support")
-        XCTAssertTrue(plan(file("DOVIWithEL", audio: "truehd"), device: DeviceCapabilities(dolbyVision: true, dolbyVisionProfile7: true, av1Hardware: false)).allowsDolbyVisionProfile7)
-        XCTAssertEqual(plan(file("HDR10Plus", audio: "dts")).engine, .remux, "Dynamic HDR10+")
+        XCTAssertEqual(plan(file("DOVI", audio: "eac3")).engine, .direct)
+        XCTAssertEqual(plan(file("DOVI", audio: "eac3")).reason, "Dolby Vision")
+        XCTAssertEqual(plan(file("DOVIWithEL", audio: "truehd", dvProfile: 7)).reason, "Dolby Vision Profil 7 als 8.1")
+        XCTAssertEqual(plan(file("DOVI", audio: "eac3"), device: DeviceCapabilities(dolbyVision: false, dolbyVisionProfile7: false, av1Hardware: false)).reason,
+                       "Dolby Vision als HDR10")
         XCTAssertEqual(plan(file("SDR", codec: "h264", audio: "eac3", profile: "Dolby Digital Plus + Dolby Atmos")).reason, "Dolby Atmos")
-        XCTAssertEqual(plan(file("HDR10", audio: "eac3")).engine, .ffmpeg, "Nothing to gain")
-        XCTAssertEqual(plan(file("DOVIWithHDR10", codec: "av1", audio: "eac3")).engine, .ffmpeg)
-        XCTAssertEqual(plan(file("DOVI", audio: "eac3"), device: DeviceCapabilities(dolbyVision: false, dolbyVisionProfile7: false, av1Hardware: false)).engine, .ffmpeg)
-        let pgs = MediaStream(type: "Subtitle", index: 3, codec: "PGSSUB", isTextSubtitleStream: false)
-        XCTAssertEqual(plan(file("HDR10Plus", audio: "eac3"), subtitle: pgs).engine, .ffmpeg, "Bitmap subtitles need FFmpeg")
-        XCTAssertFalse(PlaybackEngine.remux.canShow(pgs))
-        XCTAssertTrue(PlaybackEngine.ffmpeg.canShow(pgs))
+        // A slow line: first the lossless compact stream, only then a conversion at about 70 % of the line.
+        let source = file("HDR10", audio: "truehd")
+        let base = plan(source)
+        XCTAssertEqual(base.fitting(source: source, audio: source.audioStreams.first, throughput: 60_000_000), base)
+        XCTAssertEqual(base.fitting(source: source, audio: source.audioStreams.first, throughput: 44_000_000).remuxAudio, "flac,eac3,ac3,aac")
+        XCTAssertEqual(base.fitting(source: source, audio: source.audioStreams.first, throughput: 20_000_000).maxBitrate, 14_000_000)
     }
 
     func testIntroAndCreditsChapters() {
@@ -114,5 +98,19 @@ final class JellyTests: XCTestCase {
         ])
         XCTAssertEqual(TechInfo.badges(source), ["4K", "Dolby Vision", "Dolby Atmos", "7.1", "UT"])
         XCTAssertEqual(JellyfinClient.fileExtension(container: "matroska,webm"), "mkv")
+    }
+
+    /// Converted downloads only appear when they save at least half; "Besser" is recommended while it fits.
+    func testDownloadOptions() {
+        let film = MediaSource(id: "d", container: "mkv", size: 40_000_000_000, bitrate: 60_000_000, mediaStreams: [
+            MediaStream(type: "Video", index: 0, codec: "hevc", width: 3840, height: 2160, bitRate: 58_000_000),
+            MediaStream(type: "Audio", index: 1, codec: "eac3", bitRate: 768_000, channels: 6)
+        ])
+        let options = DownloadPlanner.options(source: film, runtime: 7200, audio: film.audioStreams.first)
+        XCTAssertEqual(options.map(\.quality), [.original, .better, .good])
+        XCTAssertEqual(options[1].bytes, Int64(Double(8_000_000 + 768_000) * 7200 / 8), "Dolby Digital+ is kept as it is")
+        XCTAssertEqual(DownloadPlanner.recommended(options, free: 100_000_000_000), .better)
+        XCTAssertEqual(DownloadPlanner.recommended(options, free: 4_000_000_000), .good)
+        XCTAssertNil(DownloadPlanner.recommended(options, free: 1_000_000_000))
     }
 }

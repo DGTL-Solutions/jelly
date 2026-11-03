@@ -46,6 +46,15 @@ struct SettingsScreen: View {
                     Text("Vor großen Dateien misst Jelly kurz, was die Leitung zum Server schafft. Reicht sie nicht, lässt Jelly zuerst ungenutzte Tonspuren weg (verlustfrei) und lässt erst danach den Server herunterrechnen.")
                 }
                 ratings
+                Section {
+                    NavigationLink(value: SettingsRoute.downloads) {
+                        LabeledContent {
+                            Text(DownloadPlanner.size(DownloadCenter.shared.usedSpace))
+                        } label: {
+                            Label("Downloads", systemImage: "arrow.down.circle")
+                        }
+                    }
+                }
                 if purchases.isActive { subscription.id("subscription") }
                 Section("Diagnose") {
                     NavigationLink(value: SettingsRoute.log) {
@@ -77,6 +86,7 @@ struct SettingsScreen: View {
                     if let component = OpenSourceComponent.all.first(where: { $0.name == name }) { LicenseTextScreen(component: component) }
                 case .privacy: PrivacyNoticeScreen()
                 case .log: DiagnosticsLogScreen()
+                case .downloads: DownloadsScreen(embedded: true)
                 }
             }
             #if DEBUG
@@ -289,6 +299,9 @@ struct SettingsScreen: View {
     private var info: some View {
         Section {
             LabeledContent("Jelly", value: String(localized: "Version \(AppInfo.version)"))
+            if let review = URL(string: AppInfo.reviewURL) {
+                AccountLinkRow(title: String(localized: "Jelly bewerten"), icon: "star", url: review)
+            }
             NavigationLink(value: SettingsRoute.licenses) {
                 Label {
                     VStack(alignment: .leading, spacing: 2) {
@@ -322,6 +335,7 @@ enum SettingsRoute: Hashable {
     case license(String)
     case privacy
     case log
+    case downloads
 }
 
 #if DEBUG

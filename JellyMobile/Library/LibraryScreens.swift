@@ -120,7 +120,7 @@ private struct LibraryCapsuleButtonStyle: ButtonStyle {
 }
 
 /// Round icon button next to the play button (watched, favourite, version).
-private struct LibraryCircleButtonStyle: ButtonStyle {
+struct LibraryCircleButtonStyle: ButtonStyle {
     var active = false
 
     func makeBody(configuration: Configuration) -> some View {
@@ -132,7 +132,7 @@ private struct LibraryCircleButtonStyle: ButtonStyle {
     }
 }
 
-private struct LibraryCircleIcon: ViewModifier {
+struct LibraryCircleIcon: ViewModifier {
     var active = false
     @ScaledMetric(relativeTo: .body) private var diameter: CGFloat = 48
 
@@ -366,6 +366,7 @@ private struct LibraryEpisodeTile: View {
     var showsSeries = false
     var stillWidth: CGFloat = 150
     @EnvironmentObject private var model: AppModel
+    @ObservedObject private var downloads = DownloadCenter.shared
 
     var body: some View {
         Button { model.play(episode) } label: {
@@ -383,9 +384,20 @@ private struct LibraryEpisodeTile: View {
                             .font(.subheadline.weight(.semibold))
                             .lineLimit(2)
                             .multilineTextAlignment(.leading)
-                        if let detail = detailLine {
-                            Text(detail).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                        HStack(spacing: 6) {
+                            if let record = downloads.record(itemID: episode.id, profileKey: model.session?.key) {
+                                if record.state == .finished {
+                                    Image(systemName: "arrow.down.circle.fill").foregroundStyle(Theme.accent)
+                                        .accessibilityLabel(Text("Heruntergeladen"))
+                                } else if record.state != .failed {
+                                    DownloadRing(progress: record.progress).scaleEffect(0.7).frame(width: 14, height: 14)
+                                }
+                            }
+                            if let detail = detailLine {
+                                Text(detail).foregroundStyle(.secondary).lineLimit(1)
+                            }
                         }
+                        .font(.caption)
                     }
                     Spacer(minLength: 0)
                 }
@@ -1538,6 +1550,16 @@ struct ItemDetailScreen: View {
         }
         .buttonStyle(LibraryCircleButtonStyle(active: current.isFavorite))
         .accessibilityLabel(current.isFavorite ? "Aus Favoriten entfernen" : "Zu Favoriten")
+        if current.isPlayable, details != nil {
+            DownloadStatusButton(item: current, style: LibraryCircleButtonStyle())
+        } else if current.isSeries, !seasonDownloads.isEmpty {
+            Button {
+                let season = seasons.first { $0.id == selectedSeason }?.name ?? String(localized: "Staffel")
+                DownloadCenter.pick.open(seasonDownloads, title: "\(current.name) · \(season)")
+            } label: { Image(systemName: "arrow.down.circle") }
+            .buttonStyle(LibraryCircleButtonStyle())
+            .accessibilityLabel("Staffel herunterladen")
+        }
         if let sources = current.mediaSources, sources.count > 1 {
             Menu {
                 Picker("Version", selection: $sourceID) {
@@ -1556,6 +1578,11 @@ struct ItemDetailScreen: View {
             .buttonStyle(LibraryCircleButtonStyle())
             .accessibilityLabel("Zur Serie")
         }
+    }
+
+    /// Episodes of the shown season not saved yet, for "Staffel herunterladen".
+    private var seasonDownloads: [BaseItem] {
+        episodes.filter { $0.seasonId == selectedSeason && DownloadCenter.shared.record(itemID: $0.id, profileKey: model.session?.key) == nil }
     }
 
     private var seriesPlayTitle: String {

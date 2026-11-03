@@ -5,6 +5,7 @@ WHAT MAKES JELLY DIFFERENT
 • Subtitles as they were meant to be: ASS/SSA with embedded fonts, positions and effects, plus PGS, VobSub, SRT and external subtitles. You choose size, colour and background.
 • Made for TV shows: Jelly detects intros and credits by their sound – no server plugin needed – and starts the next episode as soon as the credits roll.
 • Smart on slow connections: Jelly measures the connection and first drops unused audio tracks – losslessly – before the server scales the picture down. At home, Jelly talks to your server directly.
+• For the road: save films, episodes and whole seasons to your iPhone or iPad and watch them offline – in Original, Better or Good, with the size and a recommendation for your device.
 • Jellyseerr built in: request movies and shows, search, and follow the download live.
 • One subscription for everything: Jelly on Apple TV, iPhone and iPad with the same Apple ID.
 

@@ -69,8 +69,8 @@ final class PlaybackUI: ObservableObject {
         var seconds: Int
     }
 
-    init(item: BaseItem, client: JellyfinClient, userID: String) {
-        player = PlayerController(item: item, client: client, userID: userID)
+    init(item: BaseItem, client: JellyfinClient, userID: String, offline: OfflineMedia? = nil) {
+        player = PlayerController(item: item, client: client, userID: userID, offline: offline)
     }
 
     var shownPosition: Double { seekTarget ?? player.position }
@@ -189,7 +189,7 @@ struct MobilePlaybackSession: View {
     init(request: PlaybackRequest, client: JellyfinClient, userID: String, replace: @escaping (PlaybackRequest) -> Void) {
         self.request = request
         self.replace = replace
-        _ui = StateObject(wrappedValue: PlaybackUI(item: request.item, client: client, userID: userID))
+        _ui = StateObject(wrappedValue: PlaybackUI(item: request.item, client: client, userID: userID, offline: request.offline))
     }
 
     var body: some View {
@@ -299,7 +299,8 @@ struct PlaybackStage: View {
             if case .failed(let message) = player.phase {
                 PlayerFailureView(message: message, retry: {
                     // Once more, with the software decoder for everything.
-                    replace(PlaybackRequest(item: player.item, mediaSourceID: request.mediaSourceID, forceSoftware: true))
+                    replace(PlaybackRequest(item: player.item, mediaSourceID: request.mediaSourceID, forceSoftware: true,
+                                            offline: request.offline))
                 }, close: { dismiss() })
                 .transition(.opacity)
             }
@@ -332,6 +333,8 @@ struct PlaybackStage: View {
             system.tearDown()
             ReviewPrompt.notePlayback(fraction: player.duration > 0 ? player.position / player.duration : 0,
                                       ended: player.phase == .ended)
+            DownloadCenter.shared.notePlayback(itemID: player.item.id, profileKey: model.session?.key, position: player.position,
+                                               ended: player.phase == .ended, offline: player.offline != nil)
             player.stop()
             model.contentChanged()
         }
@@ -458,7 +461,7 @@ struct PlaybackStage: View {
 
     private func playNext() {
         guard let next = player.nextEpisode else { return }
-        replace(PlaybackRequest(item: next))
+        replace(PlaybackRequest(item: next, offline: model.offlineCopy(next)))
     }
 
     @ViewBuilder private func creditsButton(_ action: CreditsAction) -> some View {

@@ -5,6 +5,7 @@ WAS JELLY BESONDERS MACHT
 • Untertitel, wie sie gedacht sind: ASS/SSA mit eingebetteten Schriften, Positionen und Effekten, dazu PGS, VobSub, SRT und externe Untertitel. Größe, Farbe und Hintergrund stellst du selbst ein.
 • Für Serien gemacht: Jelly erkennt Intros und Abspann selbst am Ton – ohne Server-Plugin – und startet die nächste Folge, sobald der Abspann beginnt.
 • Klug bei langsamer Leitung: Jelly misst die Verbindung und lässt zuerst ungenutzte Tonspuren weg – verlustfrei –, bevor der Server das Bild herunterrechnet. Zu Hause spricht Jelly deinen Server direkt an.
+• Für unterwegs: Filme, Folgen und ganze Staffeln aufs iPhone oder iPad laden und offline schauen – in Original, Besser oder Gut, mit Größe und Empfehlung fürs Gerät.
 • Jellyseerr eingebaut: Filme und Serien wünschen, suchen und den Download live verfolgen.
 • Ein Abo für alles: Jelly auf Apple TV, iPhone und iPad mit derselben Apple-ID.
 

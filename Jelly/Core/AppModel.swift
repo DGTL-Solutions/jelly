@@ -10,6 +10,8 @@ struct PlaybackRequest: Identifiable {
     var mediaSourceID: String?
     /// The retry after a failure: every stream through the software decoder.
     var forceSoftware = false
+    /// A copy saved on this iPhone or iPad, played instead of the server's file.
+    var offline: OfflineMedia?
 }
 
 @MainActor
@@ -38,6 +40,8 @@ final class AppModel: ObservableObject {
     let purchases = Purchases()
     /// The offer: trial, full version, restore.
     @Published var showsPaywall = false
+    /// iPhone and iPad: a finished download of the item, played instead of streaming it.
+    var offlineCopy: (BaseItem) -> OfflineMedia? = { _ in nil }
 
     let deviceID: String
     private var store: AccountStore
@@ -346,7 +350,8 @@ final class AppModel: ObservableObject {
             showsPaywall = true
             return
         }
-        playback = PlaybackRequest(item: item, fromBeginning: fromBeginning, mediaSourceID: mediaSourceID)
+        let offline = offlineCopy(item).flatMap { mediaSourceID == nil || mediaSourceID == $0.source.id ? $0 : nil }
+        playback = PlaybackRequest(item: item, fromBeginning: fromBeginning, mediaSourceID: mediaSourceID, offline: offline)
     }
 
     /// Right after the first sign-in, the App Store version presents its subscription offer once; later playback asks again.

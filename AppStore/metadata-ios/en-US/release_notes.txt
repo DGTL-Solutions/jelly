@@ -1,0 +1,5 @@
+New: downloads for the road
+• Save films and episodes to your iPhone or iPad and watch them without a connection to your server – whole seasons at once, too.
+• Three qualities to choose from: Original, Better or Good – each with its size in GB, your free space and a recommendation for your device.
+• Subtitles, "Skip Intro" and "Next Episode" work offline as well. Jelly remembers where you stopped and tells your server once it is reachable again.
+• Downloads continue in the background, even when Jelly is closed.

@@ -14,6 +14,8 @@ enum AppInfo {
     static let sourceURL: String? = "https://github.com/DGTL-Solutions/jelly"
     /// The subscription's terms: Apple's standard licence agreement for App Store apps.
     static let termsURL = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
+    /// The App Store page opened straight at "Write a Review".
+    static let reviewURL = "https://apps.apple.com/app/id6826379119?action=write-review"
     /// The privacy policy as published for the App Store listing.
     static let privacyURL = "https://dgtl-solutions.github.io/jelly/datenschutz/"
 

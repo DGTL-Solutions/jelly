@@ -11,7 +11,9 @@ struct PlayerOptionsPanel: View {
     @AppStorage("subtitleBackground") private var subtitleBackground = SubtitleBackground.shadow
     @AppStorage("subtitleColor") private var subtitleColor = SubtitleColor.white
 
-    private var tabs: [MobilePanelTab] { MobilePanelTab.allCases.filter { $0 != .chapters || !player.chapters.isEmpty } }
+    private var tabs: [MobilePanelTab] {
+        MobilePanelTab.allCases.filter { ($0 != .chapters || !player.chapters.isEmpty) && ($0 != .quality || player.offline == nil) }
+    }
 
     var body: some View {
         GeometryReader { proxy in
