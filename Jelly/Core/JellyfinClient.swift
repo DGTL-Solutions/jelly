@@ -44,8 +44,27 @@ struct JellyfinClient: Sendable {
             request.httpBody = try JSONSerialization.data(withJSONObject: body)
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let started = Date()
+        let data: Data, response: URLResponse
+        do {
+            (data, response) = try await URLSession.shared.data(for: request)
+        } catch {
+            // Which request failed, after how long and over which address – for "Zeitüberschreitung" and the like.
+            // Short timeouts are probes (finding the server, the home address) whose failures are expected.
+            if (error as? URLError)?.code != .cancelled, timeout >= 15 {
+                Diagnostics.log(String(format: "http %@ %@ failed after %.1fs via %@: %@", method, path, Date().timeIntervalSince(started),
+                                       Self.route(server), (error as? URLError).map { "URLError \($0.code.rawValue)" } ?? "\(error)"))
+            }
+            throw error
+        }
+        let elapsed = Date().timeIntervalSince(started)
+        if elapsed > 5 {
+            Diagnostics.log(String(format: "http %@ %@ slow %.1fs via %@", method, path, elapsed, Self.route(server)))
+        }
         guard let http = response as? HTTPURLResponse else { throw JellyError.server(0) }
+        if !(200..<300).contains(http.statusCode) {
+            Diagnostics.log("http \(method) \(path) status \(http.statusCode) via \(Self.route(server))")
+        }
         switch http.statusCode {
         case 200..<300:
             if method == "GET", cache == .store { ResponseCache.write(data, for: address) }
@@ -54,6 +73,15 @@ struct JellyfinClient: Sendable {
         case 403: throw JellyError.forbidden
         default: throw JellyError.server(http.statusCode)
         }
+    }
+
+    /// "home 192.168.…" or "internet <host>" without the token or path, for the log.
+    static func route(_ server: URL) -> String {
+        let host = server.host() ?? "?"
+        let parts = host.split(separator: ".").compactMap { Int($0) }
+        let home = host.hasSuffix(".local") || (parts.count == 4 && (parts[0] == 10 || parts[0] == 127 || (parts[0] == 192 && parts[1] == 168)
+            || (parts[0] == 172 && (16...31).contains(parts[1])) || (parts[0] == 100 && (64...127).contains(parts[1]))))
+        return "\(home ? "home" : "internet") \(host)"
     }
 
     func get<T: Decodable>(_ path: String, query: [String: String] = [:]) async throws -> T {
