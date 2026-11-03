@@ -30,7 +30,8 @@ LOCALES = sorted(d for d in os.listdir(os.path.join(ROOT, "metadata")) if not d.
 # The store shows the primary language wherever none of the others fits, so English rather than German.
 PRIMARY_LOCALE = "en-US"
 SUBSCRIPTION_TEXTS = {"de": ("Jelly Jahresabo", "Alle Funktionen von Jelly, ein Jahr lang"),
-                      "en": ("Jelly Annual", "All Jelly features for one year")}
+                      "en": ("Jelly Annual", "All Jelly features for one year"),
+                      "fr": ("Jelly Annuel", "Toutes les fonctions de Jelly pendant un an")}
 SUBSCRIPTION_ID = f"{BUNDLE_ID}.yearly"
 PRICE = "9.99"
 BASE_TERRITORY = "DEU"

@@ -21,6 +21,24 @@
               }
             }
           }
+        },
+        "fr" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld canal"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld canaux"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -28,6 +46,12 @@
       "comment" : "Duration: minutes, abbreviated",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld min"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld min"
@@ -42,6 +66,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld hr"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld h"
           }
         }
       }
@@ -60,6 +90,12 @@
             "state" : "translated",
             "value" : "%lld hr %lld min"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld h %lld min"
+          }
         }
       }
     },
@@ -69,6 +105,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Adjusted to your connection · up to %lld Mbit/s"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adapté à la connexion · jusqu'à %lld Mbit/s"
           }
         }
       }
@@ -80,6 +122,12 @@
             "state" : "translated",
             "value" : "Automatic (recommended)"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatique (recommandé)"
+          }
         }
       }
     },
@@ -90,6 +138,12 @@
             "state" : "translated",
             "value" : "Adjust automatically (recommended)"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajuster automatiquement (recommandé)"
+          }
         }
       }
     },
@@ -99,6 +153,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Incorrect username or password."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nom d'utilisateur ou mot de passe incorrect."
           }
         }
       }
@@ -111,6 +171,12 @@
             "state" : "translated",
             "value" : "Box"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encadré"
+          }
         }
       }
     },
@@ -121,6 +187,12 @@
             "state" : "translated",
             "value" : "Your account doesn't have permission to do this."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ton compte n'a pas l'autorisation de faire cela."
+          }
         }
       }
     },
@@ -130,6 +202,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "The server rejected the sign-in. Usually your account has reached its device limit—sign out another device or ask the admin to raise the limit."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le serveur a refusé la connexion. Le plus souvent, ton compte a atteint sa limite d'appareils – déconnecte un autre appareil ou demande à l'administrateur d'augmenter la limite."
           }
         }
       }
@@ -142,6 +220,12 @@
             "state" : "translated",
             "value" : "The server responded with error %lld."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le serveur a répondu avec l'erreur %lld."
+          }
         }
       }
     },
@@ -152,6 +236,12 @@
             "state" : "translated",
             "value" : "Your sign-in couldn't be stored securely."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossible d'enregistrer la connexion de manière sécurisée."
+          }
         }
       }
     },
@@ -161,6 +251,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "This address doesn't look right. Example: 192.168.1.20 or jellyfin.mydomain.com"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette adresse ne semble pas correcte. Exemple : 192.168.1.20 ou jellyfin.mondomaine.fr"
           }
         }
       }
@@ -173,6 +269,12 @@
             "state" : "translated",
             "value" : "Dolby Vision as HDR10"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dolby Vision en HDR10"
+          }
         }
       }
     },
@@ -183,6 +285,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dolby Vision Profile %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dolby Vision profil %lld"
           }
         }
       }
@@ -195,6 +303,12 @@
             "state" : "translated",
             "value" : "Dolby Vision Profile 7 as 8.1"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dolby Vision profil 7 en 8.1"
+          }
         }
       }
     },
@@ -205,6 +319,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "E%lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "É%lld"
           }
         }
       }
@@ -217,6 +337,12 @@
             "state" : "translated",
             "value" : "Episode"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Épisode"
+          }
         }
       }
     },
@@ -226,6 +352,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No playable file is available for this title."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun fichier lisible n'est disponible pour ce titre."
           }
         }
       }
@@ -238,6 +370,12 @@
             "state" : "translated",
             "value" : "Yellow"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jaune"
+          }
         }
       }
     },
@@ -248,6 +386,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Large"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grande"
           }
         }
       }
@@ -260,6 +404,12 @@
             "state" : "translated",
             "value" : "HDR10+ dynamic"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HDR10+ dynamique"
+          }
         }
       }
     },
@@ -270,6 +420,12 @@
             "state" : "translated",
             "value" : "Always original (may stutter)"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toujours l'original (peut saccader)"
+          }
         }
       }
     },
@@ -279,6 +435,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Always software decoder"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toujours le décodeur logiciel"
           }
         }
       }
@@ -291,6 +453,12 @@
             "state" : "translated",
             "value" : "Small"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Petite"
+          }
         }
       }
     },
@@ -301,6 +469,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ongoing"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En cours"
           }
         }
       }
@@ -313,6 +487,12 @@
             "state" : "translated",
             "value" : "Next Episode"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Épisode suivant"
+          }
         }
       }
     },
@@ -322,6 +502,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "New in Your Library"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouveautés dans ta bibliothèque"
           }
         }
       }
@@ -334,6 +520,12 @@
             "state" : "translated",
             "value" : "%@ left"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il reste %@"
+          }
         }
       }
     },
@@ -343,6 +535,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Original without unused audio tracks · lossless"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Original sans les pistes audio inutilisées · sans perte"
           }
         }
       }
@@ -355,6 +553,12 @@
             "state" : "translated",
             "value" : "Original file"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fichier original"
+          }
         }
       }
     },
@@ -365,6 +569,12 @@
             "state" : "translated",
             "value" : "Quick Connect is turned off on this server."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quick Connect est désactivé sur ce serveur."
+          }
         }
       }
     },
@@ -372,6 +582,12 @@
       "comment" : "Season number (S = Staffel)",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S%lld"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "S%lld"
@@ -393,6 +609,12 @@
             "state" : "translated",
             "value" : "S%lld · E%lld"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S%lld · É%lld"
+          }
         }
       }
     },
@@ -403,6 +625,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Shadow"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ombre"
           }
         }
       }
@@ -415,6 +643,12 @@
             "state" : "translated",
             "value" : "Show"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Série"
+          }
         }
       }
     },
@@ -425,6 +659,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Track %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piste %lld"
           }
         }
       }
@@ -437,6 +677,12 @@
             "state" : "translated",
             "value" : "Default"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standard"
+          }
         }
       }
     },
@@ -446,6 +692,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No Jellyfin server was found at this address."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun serveur Jellyfin n'a été trouvé à cette adresse."
           }
         }
       }
@@ -458,6 +710,12 @@
             "state" : "translated",
             "value" : "SUB"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ST"
+          }
         }
       }
     },
@@ -468,6 +726,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Repackaged by the server"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réempaqueté par le serveur"
           }
         }
       }
@@ -480,6 +744,12 @@
             "state" : "translated",
             "value" : "White"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blanc"
+          }
         }
       }
     },
@@ -490,6 +760,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Continue Watching"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reprendre"
           }
         }
       }

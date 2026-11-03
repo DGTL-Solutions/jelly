@@ -3,3 +3,4 @@ Neu: Downloads für unterwegs
 • Drei Qualitäten zur Wahl: Original, Besser oder Gut – jeweils mit der Größe in GB, dem freien Speicher und einer Empfehlung für dein Gerät.
 • Untertitel, „Intro überspringen“ und „Nächste Folge“ funktionieren auch offline. Wo du offline aufgehört hast, merkt sich Jelly und meldet es deinem Server, sobald er wieder erreichbar ist.
 • Downloads laufen im Hintergrund weiter, auch wenn Jelly geschlossen ist.
+• Jelly gibt es jetzt auch auf Französisch.

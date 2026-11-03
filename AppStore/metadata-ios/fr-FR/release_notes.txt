@@ -1,0 +1,6 @@
+Nouveau : les téléchargements pour emporter tes films partout
+• Enregistre des films et des épisodes sur ton iPhone ou iPad et regarde-les sans connexion à ton serveur – même des saisons entières d'un coup.
+• Trois qualités au choix : Originale, Meilleure ou Bonne – chacune avec sa taille en Go, l'espace libre et une recommandation pour ton appareil.
+• Les sous-titres, « Passer l'intro » et « Épisode suivant » fonctionnent aussi hors ligne. Jelly retient où tu t'es arrêté et le transmet à ton serveur dès qu'il est de nouveau joignable.
+• Les téléchargements continuent en arrière-plan, même quand Jelly est fermé.
+• Jelly est désormais disponible en français.

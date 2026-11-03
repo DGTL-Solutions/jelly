@@ -55,7 +55,7 @@ Rechtliches, kurz: Apple ist beim Verkauf im App Store in der EU Wiederverkäufe
 4. **Altersfreigabe:** Alle Fragen zu Inhalten mit „Keine“ beantworten (Jelly hat keine eigenen Inhalte); bei „Uneingeschränkter Webzugriff“ Nein. Apple kann für Mediaplayer, die beliebige Inhalte abspielen, trotzdem eine höhere Stufe verlangen.
 5. **Kategorie:** Unterhaltung. **Preis:** Gratis, freigeschaltet wird per Jahresabo (siehe 1a).
 6. **Texte** aus `metadata/de-DE/`, **Review-Hinweise** aus `review-notes.txt` (Demo-Server `demo.jellyfin.org/stable`, Konto „demo“ ohne Passwort – getestet am 23.10.2026: 11 frei lizenzierte Filme, kein Admin).
-7. **Screenshots:** 1920×1080 oder 3840×2160, 1–10 Stück, je Sprache in `screenshots/<Sprache>` (en-GB nimmt en-US). Mit einem App-Store-Build aufnehmen (`SWIFT_ACTIVE_COMPILATION_CONDITIONS="DEBUG APPSTORE"`), damit sie zeigen, was die Store-Version zeigt. Am besten im Simulator mit dem Demo-Server – dessen Filme (Caminandes, Dracula …) sind frei lizenziert, fremde Filmplakate könnten in der Prüfung abgelehnt werden.
+7. **Screenshots:** 1920×1080 oder 3840×2160, 1–10 Stück, je Sprache in `screenshots/<Sprache>` (de-DE, en-US, fr-FR; en-GB nimmt en-US), aufgenommen mit `Scripts/screenshots-tv.sh`. Mit einem App-Store-Build aufnehmen (`SWIFT_ACTIVE_COMPILATION_CONDITIONS="DEBUG APPSTORE"`), damit sie zeigen, was die Store-Version zeigt. Am besten im Simulator mit dem Demo-Server – dessen Filme (Caminandes, Dracula …) sind frei lizenziert, fremde Filmplakate könnten in der Prüfung abgelehnt werden.
 
 ## 3a. Alles Weitere per Skript
 

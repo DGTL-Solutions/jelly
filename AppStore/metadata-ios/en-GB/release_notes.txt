@@ -3,3 +3,4 @@ New: downloads for the road
 • Three qualities to choose from: Original, Better or Good – each with its size in GB, your free space and a recommendation for your device.
 • Subtitles, "Skip Intro" and "Next Episode" work offline as well. Jelly remembers where you stopped and tells your server once it is reachable again.
 • Downloads continue in the background, even when Jelly is closed.
+• Jelly is now also available in French.

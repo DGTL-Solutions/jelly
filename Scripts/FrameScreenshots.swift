@@ -92,7 +92,7 @@ func frame(_ input: URL, device: String, caption: [String], output: URL) {
 }
 
 for (device, files) in captions {
-    for locale in ["de-DE", "en-US"] {
+    for locale in ["de-DE", "en-US", "fr-FR"] {
         let language = String(locale.prefix(2))
         for (name, texts) in files.sorted(by: { $0.key < $1.key }) {
             guard let caption = texts[language] else { continue }
