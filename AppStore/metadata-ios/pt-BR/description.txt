@@ -1,0 +1,28 @@
+O Jelly é o player Jellyfin para quem quer ver os seus filmes como eles são: em qualidade original, sem que o servidor precise converter nada – no iPhone e iPad, com Imagem no Imagem (PiP) e AirPlay. Você só precisa do seu próprio servidor Jellyfin (grátis em jellyfin.org).
+
+O QUE TORNA O JELLY DIFERENTE
+• O original, não uma conversão: MKV, MP4, AVI e TS com H.264, HEVC, AV1, VC-1 ou MPEG-2. O que o aparelho não consegue decodificar sozinho, o Jelly decodifica – o seu servidor não precisa recodificar nada, então até um NAS pequeno dá conta.
+• Legendas como foram pensadas: ASS/SSA com fontes incorporadas, posições e efeitos, além de PGS, VobSub, SRT e legendas externas. Você escolhe o tamanho, a cor e o fundo.
+• Feito para séries: o Jelly detecta aberturas e créditos pelo som – sem plugin no servidor – e inicia o próximo episódio assim que os créditos começam.
+• Esperto em conexões lentas: o Jelly mede a conexão e primeiro omite faixas de áudio não usadas – sem perdas – antes de o servidor reduzir a imagem. Em casa, o Jelly fala diretamente com o seu servidor.
+• Para levar: salve filmes, episódios e temporadas inteiras no iPhone ou iPad e assista offline – em Original, Melhor ou Boa, com o tamanho e uma recomendação para o seu aparelho.
+• Jellyseerr integrado: solicite filmes e séries, busque e acompanhe o download ao vivo.
+• Uma assinatura para tudo: Jelly no Apple TV, iPhone e iPad com a mesma Conta Apple.
+
+NO IPHONE E IPAD
+Navegue pela sua biblioteca com capas grandes, toque duas vezes para pular 10 segundos, avance e volte com miniaturas e faça o gesto de pinça para preencher a tela. O Imagem no Imagem mantém o filme tocando enquanto você usa outros apps, o AirPlay o envia para a sua TV e a Tela Bloqueada mostra o que está tocando. No iPad, o Jelly usa a tela inteira, com barra lateral e layouts mais amplos.
+
+INÍCIO DE SESSÃO FÁCIL
+O Jelly encontra o seu servidor na rede doméstica. Inicie sessão com a sua senha ou com o Quick Connect – vários servidores e perfis, com “Quem está assistindo?” ao abrir.
+
+Além disso: avaliações nas páginas de detalhes, capítulos, miniaturas ao avançar e voltar, sincronia de áudio e legendas e informações detalhadas de reprodução.
+
+2 SEMANAS GRÁTIS
+Experimente o Jelly com todos os recursos grátis por 2 semanas. Depois disso, a Assinatura Anual do Jelly é renovada todo ano pelo preço exibido na App Store do seu país. Uma assinatura cobre o Jelly no iPhone, iPad e Apple TV com a sua Conta Apple. O pagamento é cobrado na sua Conta Apple. A assinatura é renovada automaticamente por mais um ano, a menos que você a cancele pelo menos 24 horas antes do fim; você pode cancelar a qualquer momento em Ajustes › seu nome › Assinaturas.
+
+Termos de Uso: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Política de Privacidade: https://dgtl-solutions.github.io/jelly/privacy/
+
+Sem anúncios, sem rastreamento, sem coleta de dados. O Jelly só se comunica com os seus próprios servidores.
+
+O Jelly é um app independente e não é um produto oficial do projeto Jellyfin.

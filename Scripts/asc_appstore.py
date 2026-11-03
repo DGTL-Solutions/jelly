@@ -34,7 +34,11 @@ SUBSCRIPTION_TEXTS = {"de": ("Jelly Jahresabo", "Alle Funktionen von Jelly, ein 
                       "fr": ("Jelly Annuel", "Toutes les fonctions de Jelly pendant un an"),
                       "es": ("Jelly Anual", "Todas las funciones de Jelly durante un año"),
                       "it": ("Jelly Annuale", "Tutte le funzioni di Jelly per un anno"),
-                      "nl": ("Jelly Jaarabonnement", "Alle functies van Jelly, een jaar lang")}
+                      "nl": ("Jelly Jaarabonnement", "Alle functies van Jelly, een jaar lang"),
+                      "pt": ("Jelly Anual", "Todos os recursos do Jelly por um ano"),
+                      "da": ("Jelly Årsabonnement", "Alle Jelly-funktioner i et år"),
+                      "sv": ("Jelly Årsprenumeration", "Alla Jelly-funktioner i ett år"),
+                      "pl": ("Jelly Roczna", "Wszystkie funkcje Jelly przez rok")}
 SUBSCRIPTION_ID = f"{BUNDLE_ID}.yearly"
 PRICE = "9.99"
 BASE_TERRITORY = "DEU"

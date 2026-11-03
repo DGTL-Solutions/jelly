@@ -23,7 +23,7 @@ python3 Scripts/seerr-mock.py > /dev/null 2>&1 &
 MOCK=$!
 trap 'kill $MOCK 2>/dev/null; xcrun simctl shutdown all 2>/dev/null' EXIT
 
-locale_of() { case $1 in de) echo de_DE;; fr) echo fr_FR;; es) echo es_ES;; it) echo it_IT;; nl) echo nl_NL;; *) echo en_US;; esac }
+locale_of() { case $1 in de) echo de_DE;; fr) echo fr_FR;; es) echo es_ES;; it) echo it_IT;; nl) echo nl_NL;; pt|pt-BR) echo pt_BR;; da) echo da_DK;; sv) echo sv_SE;; pl) echo pl_PL;; *) echo en_US;; esac }
 
 # Boots the simulator with the system language set, so the status bar's date matches the screenshots' language.
 boot() { # device lang
@@ -53,7 +53,7 @@ shoot() { # device file lang seconds env…
 
 for kind in ${=1:-iphone ipad}; do
   device=$([[ $kind == iphone ]] && echo $IPHONE || echo $IPAD)
-  for lang in ${=2:-de en fr es it nl}; do
+  for lang in ${=2:-de en fr es it nl pt-BR da sv pl}; do
     dir=AppStore/screenshots-raw/$kind/$(locale_of $lang | tr _ -)
     boot $device $lang
     # First launch signs in and fills the caches; not kept.

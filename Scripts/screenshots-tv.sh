@@ -16,7 +16,7 @@ xcodebuild -project Jelly.xcodeproj -scheme Jelly -configuration Debug -destinat
 [[ -d $APP ]] || exit 1
 trap 'xcrun simctl shutdown "$TV" 2>/dev/null' EXIT
 
-locale_of() { case $1 in de) echo de_DE;; fr) echo fr_FR;; es) echo es_ES;; it) echo it_IT;; nl) echo nl_NL;; *) echo en_US;; esac }
+locale_of() { case $1 in de) echo de_DE;; fr) echo fr_FR;; es) echo es_ES;; it) echo it_IT;; nl) echo nl_NL;; pt|pt-BR) echo pt_BR;; da) echo da_DK;; sv) echo sv_SE;; pl) echo pl_PL;; *) echo en_US;; esac }
 
 shoot() { # file lang seconds env…
   local out=$1 lang=$2 wait=$3; shift 3
@@ -29,7 +29,7 @@ shoot() { # file lang seconds env…
 
 xcrun simctl boot "$TV" 2>/dev/null; xcrun simctl bootstatus "$TV" -b >/dev/null
 xcrun simctl install "$TV" $APP
-for lang in ${=1:-de en fr es it nl}; do
+for lang in ${=1:-de en fr es it nl pt-BR da sv pl}; do
   dir=AppStore/screenshots-raw/tv/$(locale_of $lang | tr _ -)
   shoot $dir/1-start.png $lang 30
   shoot $dir/2-details.png $lang 25 SIMCTL_CHILD_JELLY_OPEN=$DRACULA

@@ -24,6 +24,22 @@
       "nl": [
         "Je Jellyfin-bibliotheek op Apple TV",
         "Kijk verder, volgende afleveringen en nieuws in één oogopslag"
+      ],
+      "pt": [
+        "Sua biblioteca Jellyfin no Apple TV",
+        "Continuar assistindo, próximos episódios e novidades num relance"
+      ],
+      "da": [
+        "Dit Jellyfin-bibliotek på Apple TV",
+        "Fortsæt med at se, næste afsnit og alt nyt på ét sted"
+      ],
+      "sv": [
+        "Ditt Jellyfin-bibliotek på Apple TV",
+        "Fortsätt titta, nästa avsnitt och allt nytt i en överblick"
+      ],
+      "pl": [
+        "Twoja biblioteka Jellyfin na Apple TV",
+        "Oglądaj dalej, następne odcinki i nowości w jednym miejscu"
       ]
     },
     "2-details": {
@@ -50,6 +66,22 @@
       "nl": [
         "Dolby Vision, HDR10+ en Atmos",
         "Framesnelheid en dynamisch bereik per film"
+      ],
+      "pt": [
+        "Dolby Vision, HDR10+ e Atmos",
+        "Taxa de quadros e faixa dinâmica certas para cada filme"
+      ],
+      "da": [
+        "Dolby Vision, HDR10+ og Atmos",
+        "Billedfrekvens og dynamisk område tilpasses hver film"
+      ],
+      "sv": [
+        "Dolby Vision, HDR10+ och Atmos",
+        "Bildfrekvens och dynamiskt omfång passar varje film"
+      ],
+      "pl": [
+        "Dolby Vision, HDR10+ i Atmos",
+        "Liczba klatek i zakres dynamiczny pod każdy film"
       ]
     },
     "3-player": {
@@ -76,6 +108,22 @@
       "nl": [
         "Een speler die vooruitdenkt",
         "Intro overslaan, volgende aflevering, hoofdstukken en spoelvoorbeelden"
+      ],
+      "pt": [
+        "Um player que pensa à frente",
+        "Pular abertura, próximo episódio, capítulos e miniaturas ao avançar"
+      ],
+      "da": [
+        "En afspiller, der tænker fremad",
+        "Spring intro over, næste afsnit, kapitler og miniaturer ved spoling"
+      ],
+      "sv": [
+        "En spelare som tänker framåt",
+        "Hoppa över intro, nästa avsnitt, kapitel och miniatyrer när du spolar"
+      ],
+      "pl": [
+        "Odtwarzacz, który myśli naprzód",
+        "Pomiń czołówkę, następny odcinek, rozdziały i miniatury"
       ]
     },
     "4-info": {
@@ -102,6 +150,22 @@
       "nl": [
         "Het origineel – geen transcode",
         "MKV, AV1, VC-1, TrueHD, DTS-HD: Jelly speelt het bestand zoals het is"
+      ],
+      "pt": [
+        "O original – sem conversão",
+        "MKV, AV1, VC-1, TrueHD, DTS-HD: o Jelly reproduz o arquivo como ele é"
+      ],
+      "da": [
+        "Originalen – ingen transkodning",
+        "MKV, AV1, VC-1, TrueHD, DTS-HD: Jelly afspiller filen, som den er"
+      ],
+      "sv": [
+        "Originalet – ingen omkodning",
+        "MKV, AV1, VC-1, TrueHD, DTS-HD: Jelly spelar upp filen som den är"
+      ],
+      "pl": [
+        "Oryginał – bez transkodowania",
+        "MKV, AV1, VC-1, TrueHD, DTS-HD: Jelly odtwarza plik takim, jaki jest"
       ]
     }
   },
@@ -130,6 +194,22 @@
       "nl": [
         "Je Jellyfin-bibliotheek.\nOveral.",
         "In originele kwaliteit op iPhone, iPad en Apple TV"
+      ],
+      "pt": [
+        "Sua biblioteca Jellyfin.\nEm todo lugar.",
+        "Em qualidade original no iPhone, iPad e Apple TV"
+      ],
+      "da": [
+        "Dit Jellyfin-bibliotek.\nOveralt.",
+        "I original kvalitet på iPhone, iPad og Apple TV"
+      ],
+      "sv": [
+        "Ditt Jellyfin-bibliotek.\nÖverallt.",
+        "I originalkvalitet på iPhone, iPad och Apple TV"
+      ],
+      "pl": [
+        "Twoja biblioteka Jellyfin.\nWszędzie.",
+        "W oryginalnej jakości na iPhonie, iPadzie i Apple TV"
       ]
     },
     "2-details": {
@@ -156,6 +236,22 @@
       "nl": [
         "Alles over je film",
         "Scores, cast, versies en vergelijkbare titels"
+      ],
+      "pt": [
+        "Tudo sobre o seu filme",
+        "Avaliações, elenco, versões e títulos parecidos"
+      ],
+      "da": [
+        "Alt om din film",
+        "Bedømmelser, cast, versioner og lignende titler"
+      ],
+      "sv": [
+        "Allt om din film",
+        "Betyg, rollista, versioner och liknande titlar"
+      ],
+      "pl": [
+        "Wszystko o twoim filmie",
+        "Oceny, obsada, wersje i podobne tytuły"
       ]
     },
     "3-player": {
@@ -182,6 +278,22 @@
       "nl": [
         "Het origineel – geen transcode",
         "Beeld-in-beeld, AirPlay en volledig opgemaakte ondertiteling"
+      ],
+      "pt": [
+        "O original – sem conversão",
+        "Imagem no Imagem, AirPlay e legendas com estilo completo"
+      ],
+      "da": [
+        "Originalen – ingen transkodning",
+        "Billede-i-billede, AirPlay og fuldt formaterede undertekster"
+      ],
+      "sv": [
+        "Originalet – ingen omkodning",
+        "Bild-i-bild, AirPlay och undertexter med full stil"
+      ],
+      "pl": [
+        "Oryginał – bez transkodowania",
+        "Obraz w obrazie, AirPlay i w pełni stylizowane napisy"
       ]
     },
     "4-discover": {
@@ -208,6 +320,22 @@
       "nl": [
         "Vraag aan wat ontbreekt",
         "Jellyseerr ingebouwd – met live downloadvoortgang"
+      ],
+      "pt": [
+        "Solicite o que falta",
+        "Jellyseerr integrado – com o download ao vivo"
+      ],
+      "da": [
+        "Anmod om det, der mangler",
+        "Jellyseerr indbygget – med download live"
+      ],
+      "sv": [
+        "Begär det som saknas",
+        "Jellyseerr inbyggt – med nedladdningen live"
+      ],
+      "pl": [
+        "Poproś o to, czego brakuje",
+        "Wbudowany Jellyseerr – z postępem pobierania na żywo"
       ]
     },
     "5-library": {
@@ -234,6 +362,22 @@
       "nl": [
         "Eén abonnement, al je apparaten",
         "Apple TV, iPhone en iPad – 2 weken gratis"
+      ],
+      "pt": [
+        "Uma assinatura, todos os aparelhos",
+        "Apple TV, iPhone e iPad – 2 semanas grátis"
+      ],
+      "da": [
+        "Ét abonnement til alt",
+        "Apple TV, iPhone og iPad – prøv gratis i 2 uger"
+      ],
+      "sv": [
+        "En prenumeration, alla enheter",
+        "Apple TV, iPhone och iPad – prova gratis i 2 veckor"
+      ],
+      "pl": [
+        "Jedna subskrypcja na wszystko",
+        "Apple TV, iPhone i iPad – 2 tygodnie za darmo"
       ]
     }
   },
@@ -262,6 +406,22 @@
       "nl": [
         "Je Jellyfin-bibliotheek.\nOveral.",
         "In originele kwaliteit op iPad, iPhone en Apple TV"
+      ],
+      "pt": [
+        "Sua biblioteca Jellyfin.\nEm todo lugar.",
+        "Em qualidade original no iPad, iPhone e Apple TV"
+      ],
+      "da": [
+        "Dit Jellyfin-bibliotek.\nOveralt.",
+        "I original kvalitet på iPad, iPhone og Apple TV"
+      ],
+      "sv": [
+        "Ditt Jellyfin-bibliotek.\nÖverallt.",
+        "I originalkvalitet på iPad, iPhone och Apple TV"
+      ],
+      "pl": [
+        "Twoja biblioteka Jellyfin.\nWszędzie.",
+        "W oryginalnej jakości na iPadzie, iPhonie i Apple TV"
       ]
     },
     "2-details": {
@@ -288,6 +448,22 @@
       "nl": [
         "Alles over je film",
         "Scores, cast, versies en vergelijkbare titels"
+      ],
+      "pt": [
+        "Tudo sobre o seu filme",
+        "Avaliações, elenco, versões e títulos parecidos"
+      ],
+      "da": [
+        "Alt om din film",
+        "Bedømmelser, cast, versioner og lignende titler"
+      ],
+      "sv": [
+        "Allt om din film",
+        "Betyg, rollista, versioner och liknande titlar"
+      ],
+      "pl": [
+        "Wszystko o twoim filmie",
+        "Oceny, obsada, wersje i podobne tytuły"
       ]
     },
     "3-series": {
@@ -314,6 +490,22 @@
       "nl": [
         "Gemaakt voor series",
         "Volgende aflevering en intro overslaan – zonder serverplug-in"
+      ],
+      "pt": [
+        "Feito para séries",
+        "Próximo episódio e pular abertura – sem plugin no servidor"
+      ],
+      "da": [
+        "Skabt til serier",
+        "Næste afsnit og spring intro over – uden server-plugin"
+      ],
+      "sv": [
+        "Gjord för serier",
+        "Nästa avsnitt och hoppa över intro – inget servertillägg behövs"
+      ],
+      "pl": [
+        "Stworzone dla seriali",
+        "Następny odcinek i pomijanie czołówek – bez wtyczki na serwerze"
       ]
     },
     "4-discover": {
@@ -340,6 +532,22 @@
       "nl": [
         "Vraag aan wat ontbreekt",
         "Jellyseerr ingebouwd – met live downloadvoortgang"
+      ],
+      "pt": [
+        "Solicite o que falta",
+        "Jellyseerr integrado – com o download ao vivo"
+      ],
+      "da": [
+        "Anmod om det, der mangler",
+        "Jellyseerr indbygget – med download live"
+      ],
+      "sv": [
+        "Begär det som saknas",
+        "Jellyseerr inbyggt – med nedladdningen live"
+      ],
+      "pl": [
+        "Poproś o to, czego brakuje",
+        "Wbudowany Jellyseerr – z postępem pobierania na żywo"
       ]
     },
     "5-library": {
@@ -366,6 +574,22 @@
       "nl": [
         "Eén abonnement, al je apparaten",
         "Apple TV, iPhone en iPad – 2 weken gratis"
+      ],
+      "pt": [
+        "Uma assinatura, todos os aparelhos",
+        "Apple TV, iPhone e iPad – 2 semanas grátis"
+      ],
+      "da": [
+        "Ét abonnement til alt",
+        "Apple TV, iPhone og iPad – prøv gratis i 2 uger"
+      ],
+      "sv": [
+        "En prenumeration, alla enheter",
+        "Apple TV, iPhone och iPad – prova gratis i 2 veckor"
+      ],
+      "pl": [
+        "Jedna subskrypcja na wszystko",
+        "Apple TV, iPhone i iPad – 2 tygodnie za darmo"
       ]
     }
   }

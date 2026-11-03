@@ -1,0 +1,27 @@
+Jelly to odtwarzacz Jellyfin dla wszystkich, którzy chcą oglądać swoje filmy takimi, jakie są: w oryginalnej jakości, bez transkodowania na serwerze – z Dolby Vision, Atmos i w pełni stylizowanymi napisami. Potrzebujesz tylko własnego serwera Jellyfin (bezpłatnie na jellyfin.org).
+
+CO WYRÓŻNIA JELLY
+• Oryginał zamiast transkodowania: MKV, MP4, AVI i TS z H.264, HEVC, AV1, VC-1 lub MPEG-2. Czego urządzenie nie potrafi zdekodować samo, dekoduje Jelly – twój serwer nie musi niczego ponownie kodować, więc wystarczy nawet mały NAS.
+• Napisy takie, jakie miały być: ASS/SSA z osadzonymi czcionkami, pozycjami i efektami, a także PGS, VobSub, SRT i napisy zewnętrzne. Rozmiar, kolor i tło wybierasz sam.
+• Stworzone dla seriali: Jelly rozpoznaje czołówki i napisy końcowe po dźwięku – bez wtyczki na serwerze – i uruchamia następny odcinek, gdy tylko pojawią się napisy końcowe.
+• Sprytne przy wolnym łączu: Jelly mierzy połączenie i najpierw – bezstratnie – pomija nieużywane ścieżki audio, zanim serwer obniży jakość obrazu. W domu Jelly łączy się z twoim serwerem bezpośrednio.
+• Wbudowany Jellyseerr: proś o filmy i seriale, wyszukuj i śledź pobieranie na żywo.
+• Jedna subskrypcja na wszystko: Jelly na Apple TV, iPhonie i iPadzie z tym samym kontem Apple.
+
+NA APPLE TV
+Dolby Vision (profile 5 i 8) i HDR10+ odtwarza odtwarzacz Apple z dynamicznymi metadanymi, Dolby Atmos w Dolby Digital Plus trafia do amplitunera jako bitstream, a TrueHD i DTS-HD są odtwarzane bezstratnie jako dźwięk wielokanałowy. Liczba klatek i zakres dynamiczny dopasowują się do każdego filmu. „Oglądaj dalej” i następne odcinki pojawiają się na pełnym ekranie w Top Shelf, a do tego wygaszacz ekranu z okładkami, jak kiedyś w iTunes.
+
+LOGOWANIE BEZ WPISYWANIA
+Jelly samo znajduje twój serwer w sieci domowej. Profile bez hasła otwierają się jednym kliknięciem, wszystkie inne – kodem z aplikacji Jellyfin na telefonie. Wiele serwerów i profili, z pytaniem „Kto ogląda?” przy uruchomieniu.
+
+Poza tym: oceny na stronach szczegółów, rozdziały, podgląd miniatur podczas przewijania, synchronizacja dźwięku i napisów oraz szczegółowe informacje o odtwarzaniu.
+
+WYPRÓBUJ ZA DARMO PRZEZ 2 TYGODNIE
+Wypróbuj Jelly ze wszystkimi funkcjami za darmo przez 2 tygodnie. Potem roczna subskrypcja Jelly odnawia się co roku w cenie podanej w App Store dla twojego kraju. Jedna subskrypcja obejmuje Jelly na Apple TV, iPhonie i iPadzie z twoim kontem Apple. Płatność zostanie pobrana z twojego konta Apple. Subskrypcja odnawia się automatycznie na kolejny rok, chyba że anulujesz ją co najmniej 24 godziny przed jej końcem; możesz ją anulować w dowolnym momencie w ustawieniach Apple TV w sekcji Użytkownicy i konta › Subskrypcje.
+
+Warunki użytkowania: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Polityka prywatności: https://dgtl-solutions.github.io/jelly/privacy/
+
+Bez reklam, bez śledzenia, bez zbierania danych. Jelly łączy się tylko z twoimi własnymi serwerami.
+
+Jelly jest niezależną aplikacją, a nie oficjalnym produktem projektu Jellyfin.
