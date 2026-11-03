@@ -45,19 +45,31 @@ def call(method, path, body=None, fatal=True):
     """One API request; `path` may also be a full URL (pagination links). Errors end the script unless `fatal` is
     False, then they are printed and None is returned."""
     url = path if path.startswith("http") else API + path
-    request = urllib.request.Request(url, method=method, data=json.dumps(body).encode() if body else None)
-    request.add_header("Authorization", f"Bearer {token()}")
-    request.add_header("Content-Type", "application/json")
-    try:
-        with urllib.request.urlopen(request, timeout=60) as response:
-            body = response.read()
-            return json.loads(body) if body else {}
-    except urllib.error.HTTPError as error:
-        text = f"App Store Connect {method} {url.split('?')[0].replace(API, '')}: {error.code} {error.read().decode()[:600]}"
-        if fatal:
-            sys.exit(text)
-        print("  ! " + text)
-        return None
+    data = json.dumps(body).encode() if body else None
+    # App Store Connect has bad minutes: 5xx answers are tried again with growing pauses, timeouts too unless the
+    # request creates something (a POST that timed out may have gone through).
+    failure = None
+    for attempt in range(5):
+        request = urllib.request.Request(url, method=method, data=data)
+        request.add_header("Authorization", f"Bearer {token()}")
+        request.add_header("Content-Type", "application/json")
+        try:
+            with urllib.request.urlopen(request, timeout=90) as response:
+                answer = response.read()
+                return json.loads(answer) if answer else {}
+        except urllib.error.HTTPError as error:
+            failure = error
+            if error.code < 500:
+                break
+        except (TimeoutError, urllib.error.URLError):
+            if method == "POST" or attempt == 4:
+                raise
+        time.sleep(5 * (attempt + 1))
+    text = f"App Store Connect {method} {url.split('?')[0].replace(API, '')}: {failure.code} {failure.read().decode()[:600]}"
+    if fatal:
+        sys.exit(text)
+    print("  ! " + text)
+    return None
 
 
 def find(path):

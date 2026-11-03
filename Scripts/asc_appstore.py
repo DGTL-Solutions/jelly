@@ -105,7 +105,10 @@ territories = [t["id"] for t in pages("/territories?limit=200")[0]]
 
 if COMMAND == "setup":
     step("App-Infos: Name, Untertitel, Datenschutz, Kategorie, Altersfreigabe")
-    info = call("GET", f"/apps/{app}/appInfos")["data"][0]["id"]
+    # Once a version is live, its app info is locked; an update gets a second, editable one.
+    infos = call("GET", f"/apps/{app}/appInfos")["data"]
+    info = next((i["id"] for i in infos if i["attributes"].get("state") not in ("READY_FOR_DISTRIBUTION", "READY_FOR_SALE")),
+                infos[0]["id"])
     existing = {l["attributes"]["locale"]: l["id"] for l in call("GET", f"/appInfos/{info}/appInfoLocalizations")["data"]}
     for locale in LOCALES:
         attributes = {"name": meta(locale, "name.txt"), "subtitle": meta(locale, "subtitle.txt"),
@@ -114,9 +117,9 @@ if COMMAND == "setup":
             call("PATCH", f"/appInfoLocalizations/{existing[locale]}", {"data": {"type": "appInfoLocalizations", "id": existing[locale],
                  "attributes": attributes}}, fatal=False)
         else:
-            call("POST", "/appInfoLocalizations", {"data": {"type": "appInfoLocalizations", "attributes": {"locale": locale, **attributes},
-                 "relationships": {"appInfo": ref("appInfos", info)}}}, fatal=False)
-            print(f"  Sprache angelegt: {locale}")
+            if call("POST", "/appInfoLocalizations", {"data": {"type": "appInfoLocalizations", "attributes": {"locale": locale, **attributes},
+                    "relationships": {"appInfo": ref("appInfos", info)}}}, fatal=False):
+                print(f"  Sprache angelegt: {locale}")
     call("PATCH", f"/appInfos/{info}", {"data": {"type": "appInfos", "id": info, "relationships": {
         "primaryCategory": ref("appCategories", "ENTERTAINMENT")}}}, fatal=False)
     # Jelly shows the viewer's own library and TMDB artwork (credited in the app's notices).
@@ -132,7 +135,7 @@ if COMMAND == "setup":
     call("PATCH", f"/ageRatingDeclarations/{rating}", {"data": {"type": "ageRatingDeclarations", "id": rating, "attributes": {**none, **no}}},
          fatal=False)
 
-    step(f"Version 1.0 ({PLATFORM_NAME}): Copyright, Beschreibung, Stichwörter, Werbetext, Support-Seite")
+    step(f"Version {versions[0]['attributes']['versionString']} ({PLATFORM_NAME}): Copyright, Beschreibung, Stichwörter, Werbetext, Support-Seite")
     call("PATCH", f"/appStoreVersions/{version}", {"data": {"type": "appStoreVersions", "id": version, "attributes": {
         "copyright": "2026 DGTL Solutions GmbH"}}}, fatal=False)
     existing = {l["attributes"]["locale"]: l["id"] for l in call("GET", f"/appStoreVersions/{version}/appStoreVersionLocalizations")["data"]}
