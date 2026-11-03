@@ -377,6 +377,8 @@ enum Format {
 
 enum JellyError: LocalizedError, Equatable {
     case invalidURL, serverNotFound, unauthorized, forbidden, loginRejected, server(Int), unsupported, keychain, quickConnectDisabled
+    /// The request never got an answer: `URLError.Code` raw value, the server's "host:port" and how long Jelly waited.
+    case connection(code: Int, host: String, seconds: Int)
 
     var errorDescription: String? {
         switch self {
@@ -391,6 +393,25 @@ enum JellyError: LocalizedError, Equatable {
         case .unsupported: return String(localized: "Für diesen Titel ist keine abspielbare Datei verfügbar.")
         case .keychain: return String(localized: "Die Anmeldung konnte nicht sicher gespeichert werden.")
         case .quickConnectDisabled: return String(localized: "Quick Connect ist auf diesem Server deaktiviert.")
+        case let .connection(code, host, seconds):
+            // What happened, with the address and the time waited – the facts, not a guess at the cause.
+            switch URLError.Code(rawValue: code) {
+            case .timedOut:
+                return String(localized: "Der Server \(host) hat \(seconds) Sekunden lang nicht geantwortet.")
+            case .cannotConnectToHost:
+                return String(localized: "Der Server \(host) nimmt keine Verbindung an.")
+            case .cannotFindHost, .dnsLookupFailed:
+                return String(localized: "Die Adresse \(host) wurde nicht gefunden.")
+            case .notConnectedToInternet, .dataNotAllowed, .internationalRoamingOff:
+                return String(localized: "Dieses Gerät hat gerade keine Netzwerkverbindung.")
+            case .networkConnectionLost:
+                return String(localized: "Die Verbindung zum Server \(host) ist abgebrochen.")
+            case .secureConnectionFailed, .serverCertificateUntrusted, .serverCertificateHasBadDate, .serverCertificateNotYetValid,
+                 .serverCertificateHasUnknownRoot, .clientCertificateRejected:
+                return String(localized: "Die sichere Verbindung (HTTPS) zu \(host) ist fehlgeschlagen – das Zertifikat wurde nicht akzeptiert.")
+            default:
+                return String(localized: "Keine Verbindung zum Server \(host) (Fehler \(String(code))).")
+            }
         }
     }
 }

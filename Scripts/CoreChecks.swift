@@ -182,6 +182,12 @@ struct CoreChecks {
             && converted.contains("SubtitleMethod=Drop") && !converted.contains("Static=true"))
         precondition(JellyfinClient(server: URL(string: "https://example.com")!, deviceID: "d")
             .downloadURL(itemID: "9", source: film, quality: .original, audioIndex: nil).path == "/Items/9/Download")
+        // Connection failures name the server and what happened instead of the system's bare "request timed out".
+        precondition(JellyError.connection(code: URLError.timedOut.rawValue, host: "192.168.1.10:8096", seconds: 20).errorDescription
+            == "Der Server 192.168.1.10:8096 hat 20 Sekunden lang nicht geantwortet.")
+        precondition(JellyError.connection(code: URLError.cannotFindHost.rawValue, host: "jf.example.com", seconds: 0).errorDescription?
+            .contains("jf.example.com") == true)
+        precondition(JellyError.connection(code: -9999, host: "h", seconds: 1).errorDescription == "Keine Verbindung zum Server h (Fehler -9999).")
         print("Core checks passed: address detection, URL building, token handling, decoding, engine selection, Dolby Vision routing, HDR badges, audio language, IMDb dataset, intro detection, Jellyseerr, download progress, subscription and trial, offline downloads.")
     }
 }
