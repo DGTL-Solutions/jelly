@@ -1,0 +1,6 @@
+Novità: i download da portare con te
+• Salva film ed episodi su iPhone o iPad e guardali senza connessione al tuo server, anche intere stagioni in una volta.
+• Tre qualità a scelta: Originale, Migliore o Buona, ciascuna con la dimensione in GB, il tuo spazio libero e un consiglio per il tuo dispositivo.
+• Sottotitoli, «Salta intro» ed «Episodio successivo» funzionano anche offline. Jelly ricorda dove ti sei fermato e lo comunica al tuo server appena è di nuovo raggiungibile.
+• I download continuano in background, anche quando Jelly è chiuso.
+• Jelly è ora disponibile anche in italiano.

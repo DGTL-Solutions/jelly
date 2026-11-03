@@ -68,13 +68,12 @@ struct MobileRootView: View {
     }
 }
 
-/// Asks for an App Store rating once someone has watched three films or episodes (almost) to the end – right after
-/// finishing one, the moment they enjoyed it –, at most once per app version and not within a week of installing; the
-/// system itself shows the request at most three times a year.
+/// Asks for an App Store rating right after the first film or episode that ran (almost) to the end – the moment someone
+/// has seen Jelly work with their own server –, at most once per app version; the system itself shows the request at
+/// most three times a year.
 enum ReviewPrompt {
     private static let watchedKey = "watchedToEnd"
     private static let askedVersionKey = "reviewAskedVersion"
-    private static let firstLaunchKey = "firstLaunch"
     /// The player that just closed ran to the end; reset by every playback.
     nonisolated(unsafe) private static var lastFinished = false
 
@@ -85,12 +84,9 @@ enum ReviewPrompt {
     }
 
     /// Whether to ask now; remembers the version it asked in.
-    static func shouldAsk(now: Date = Date()) -> Bool {
+    static func shouldAsk() -> Bool {
         let defaults = UserDefaults.standard
-        if defaults.object(forKey: firstLaunchKey) == nil { defaults.set(now, forKey: firstLaunchKey) }
-        let installed = defaults.object(forKey: firstLaunchKey) as? Date ?? now
-        guard lastFinished, defaults.integer(forKey: watchedKey) >= 3, now.timeIntervalSince(installed) >= 3 * 86_400,
-              defaults.string(forKey: askedVersionKey) != JellyfinClient.version else {
+        guard lastFinished, defaults.integer(forKey: watchedKey) >= 1, defaults.string(forKey: askedVersionKey) != JellyfinClient.version else {
             return false
         }
         defaults.set(JellyfinClient.version, forKey: askedVersionKey)

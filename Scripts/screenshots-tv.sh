@@ -1,8 +1,8 @@
 #!/bin/zsh
 # Raw App Store screenshots of the Apple TV app (AppStore/screenshots-raw/tv/<locale>, 1920×1080) with the public
 # Jellyfin demo server's free films; then Scripts/FrameScreenshots.swift adds the headlines (AppStore/captions.json).
-#   Scripts/screenshots-tv.sh             German, English and French
-#   Scripts/screenshots-tv.sh fr          only one language (de | en | fr)
+#   Scripts/screenshots-tv.sh             German, English, French, Spanish, Italian and Dutch
+#   Scripts/screenshots-tv.sh fr          only one language (de | en | fr | es | it | nl)
 # Builds the store variant first (Debug for the JELLY_* launch settings, APPSTORE for what the store version shows).
 set -u
 cd "$(dirname "$0")/.."
@@ -16,7 +16,7 @@ xcodebuild -project Jelly.xcodeproj -scheme Jelly -configuration Debug -destinat
 [[ -d $APP ]] || exit 1
 trap 'xcrun simctl shutdown "$TV" 2>/dev/null' EXIT
 
-locale_of() { case $1 in de) echo de_DE;; fr) echo fr_FR;; *) echo en_US;; esac }
+locale_of() { case $1 in de) echo de_DE;; fr) echo fr_FR;; es) echo es_ES;; it) echo it_IT;; nl) echo nl_NL;; *) echo en_US;; esac }
 
 shoot() { # file lang seconds env…
   local out=$1 lang=$2 wait=$3; shift 3
@@ -29,7 +29,7 @@ shoot() { # file lang seconds env…
 
 xcrun simctl boot "$TV" 2>/dev/null; xcrun simctl bootstatus "$TV" -b >/dev/null
 xcrun simctl install "$TV" $APP
-for lang in ${=1:-de en fr}; do
+for lang in ${=1:-de en fr es it nl}; do
   dir=AppStore/screenshots-raw/tv/$(locale_of $lang | tr _ -)
   shoot $dir/1-start.png $lang 30
   shoot $dir/2-details.png $lang 25 SIMCTL_CHILD_JELLY_OPEN=$DRACULA

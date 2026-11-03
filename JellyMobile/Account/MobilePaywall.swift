@@ -24,11 +24,16 @@ struct MobilePaywall: View {
                             .multilineTextAlignment(.center)
                             .fixedSize(horizontal: false, vertical: true)
                         // The whole offer has to be readable before subscribing: never truncated.
-                        Text(explanation)
-                            .font(.body)
-                            .foregroundStyle(.secondary)
+                        Text(offersPurchase ? purchases.offerSummary : explanation)
+                            .font(offersPurchase ? .headline : .body)
+                            .foregroundStyle(offersPurchase ? .primary : .secondary)
                             .multilineTextAlignment(.center)
                             .fixedSize(horizontal: false, vertical: true)
+                        if offersPurchase {
+                            PaywallBenefits()
+                                .padding(.top, 8)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                     }
                     actions.padding(.top, 32)
                     footer.padding(.top, 28)
@@ -94,7 +99,8 @@ struct MobilePaywall: View {
                 } else if let message = purchases.message {
                     Label(message, systemImage: "exclamationmark.circle").foregroundStyle(.orange)
                 } else {
-                    Text("Jelly Jahresabo · 1 Jahr · \(purchases.price) pro Jahr. Bezahlt wird über deine Apple-ID; das Abo gilt auf iPhone, iPad und Apple TV mit dieser Apple-ID. Kündigen: Einstellungen › dein Name › Abonnements.")
+                    (Text("Jelly Jahresabo · 1 Jahr · \(purchases.price) pro Jahr. Bezahlt wird über deine Apple-ID; das Abo gilt auf iPhone, iPad und Apple TV mit dieser Apple-ID. Kündigen: Einstellungen › dein Name › Abonnements.")
+                        + Text(offersPurchase ? " " + purchases.renewalTerms : ""))
                         .foregroundStyle(.secondary)
                 }
             }

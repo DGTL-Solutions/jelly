@@ -4,7 +4,7 @@
 # Scripts/FrameScreenshots.swift adds the headlines (AppStore/captions.json) and writes the store images.
 #   Scripts/screenshots-ios.sh            both devices
 #   Scripts/screenshots-ios.sh ipad       only one of them (iphone | ipad)
-#   Scripts/screenshots-ios.sh ipad fr    only one language (de | en | fr)
+#   Scripts/screenshots-ios.sh ipad fr    only one language (de | en | fr | es | it | nl)
 # Builds the store variant first (Debug for the JELLY_* launch settings, APPSTORE for what the store version shows).
 set -u
 cd "$(dirname "$0")/.."
@@ -23,7 +23,7 @@ python3 Scripts/seerr-mock.py > /dev/null 2>&1 &
 MOCK=$!
 trap 'kill $MOCK 2>/dev/null; xcrun simctl shutdown all 2>/dev/null' EXIT
 
-locale_of() { case $1 in de) echo de_DE;; fr) echo fr_FR;; *) echo en_US;; esac }
+locale_of() { case $1 in de) echo de_DE;; fr) echo fr_FR;; es) echo es_ES;; it) echo it_IT;; nl) echo nl_NL;; *) echo en_US;; esac }
 
 # Boots the simulator with the system language set, so the status bar's date matches the screenshots' language.
 boot() { # device lang
@@ -53,7 +53,7 @@ shoot() { # device file lang seconds env…
 
 for kind in ${=1:-iphone ipad}; do
   device=$([[ $kind == iphone ]] && echo $IPHONE || echo $IPAD)
-  for lang in ${=2:-de en fr}; do
+  for lang in ${=2:-de en fr es it nl}; do
     dir=AppStore/screenshots-raw/$kind/$(locale_of $lang | tr _ -)
     boot $device $lang
     # First launch signs in and fills the caches; not kept.

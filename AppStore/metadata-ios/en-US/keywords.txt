@@ -1,1 +1,1 @@
-video,MKV,offline,download,AirPlay,subtitles,movies,TV shows,NAS,Jellyseerr,HDR,4K
+video,client,server,streaming,offline,download,MKV,AirPlay,subtitles,NAS,Jellyseerr,HDR,4K

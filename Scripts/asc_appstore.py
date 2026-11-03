@@ -31,7 +31,10 @@ LOCALES = sorted(d for d in os.listdir(os.path.join(ROOT, "metadata")) if not d.
 PRIMARY_LOCALE = "en-US"
 SUBSCRIPTION_TEXTS = {"de": ("Jelly Jahresabo", "Alle Funktionen von Jelly, ein Jahr lang"),
                       "en": ("Jelly Annual", "All Jelly features for one year"),
-                      "fr": ("Jelly Annuel", "Toutes les fonctions de Jelly pendant un an")}
+                      "fr": ("Jelly Annuel", "Toutes les fonctions de Jelly pendant un an"),
+                      "es": ("Jelly Anual", "Todas las funciones de Jelly durante un año"),
+                      "it": ("Jelly Annuale", "Tutte le funzioni di Jelly per un anno"),
+                      "nl": ("Jelly Jaarabonnement", "Alle functies van Jelly, een jaar lang")}
 SUBSCRIPTION_ID = f"{BUNDLE_ID}.yearly"
 PRICE = "9.99"
 BASE_TERRITORY = "DEU"
@@ -59,7 +62,10 @@ def meta(locale, name, version_text=False):
 
 
 def screenshot_dir(locale, base="screenshots", device=""):
-    for candidate in [locale, "en-US" if locale.startswith("en") else "de-DE"]:
+    # The locale itself, else a folder of the same language (es-MX takes es-ES, it takes it-IT), else English.
+    folders = sorted(os.listdir(os.path.join(ROOT, base))) if os.path.isdir(os.path.join(ROOT, base)) else []
+    same_language = [f for f in folders if f.split("-")[0] == locale.split("-")[0]]
+    for candidate in [locale, *same_language, "en-US"]:
         path = os.path.join(ROOT, base, candidate, device)
         if os.path.isdir(path):
             return path

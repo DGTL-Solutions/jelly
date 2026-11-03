@@ -1,0 +1,27 @@
+Jelly is de Jellyfin-speler voor iedereen die zijn films wil zien zoals ze zijn: in originele kwaliteit, zonder dat je server hoeft te transcoderen – met Dolby Vision, Atmos en volledig opgemaakte ondertiteling. Je hebt alleen je eigen Jellyfin-server nodig (gratis op jellyfin.org).
+
+WAT JELLY ANDERS MAAKT
+• Het origineel, geen transcode: MKV, MP4, AVI en TS met H.264, HEVC, AV1, VC-1 of MPEG-2. Wat het apparaat zelf niet kan decoderen, decodeert Jelly – je server hoeft niets opnieuw te coderen, dus zelfs een kleine NAS is genoeg.
+• Ondertiteling zoals bedoeld: ASS/SSA met ingesloten lettertypen, posities en effecten, plus PGS, VobSub, SRT en externe ondertiteling. Jij kiest grootte, kleur en achtergrond.
+• Gemaakt voor series: Jelly herkent intro’s en aftiteling aan het geluid – zonder serverplug-in – en start de volgende aflevering zodra de aftiteling begint.
+• Slim bij trage verbindingen: Jelly meet de verbinding en laat eerst ongebruikte audiosporen weg – verliesvrij – voordat de server het beeld omlaag schaalt. Thuis praat Jelly direct met je server.
+• Jellyseerr ingebouwd: vraag films en series aan, zoek en volg de download live.
+• Eén abonnement voor alles: Jelly op Apple TV, iPhone en iPad met hetzelfde Apple Account.
+
+OP APPLE TV
+Dolby Vision (profiel 5 en 8) en HDR10+ worden afgespeeld via de speler van Apple met dynamische metadata, Dolby Atmos in Dolby Digital Plus bereikt je receiver als bitstream, en TrueHD en DTS-HD worden verliesvrij afgespeeld als meerkanaalsaudio. Framesnelheid en dynamisch bereik passen zich aan elke film aan. Kijk verder en volgende afleveringen verschijnen schermvullend in de Top Shelf, plus een schermbeveiliging met covers zoals iTunes die vroeger had.
+
+INLOGGEN ZONDER TYPEN
+Jelly vindt je server zelf in je thuisnetwerk. Profielen zonder wachtwoord open je met één klik, alle andere met een code uit de Jellyfin-app op je telefoon. Meerdere servers en profielen, met ‘Wie kijkt er?’ bij het opstarten.
+
+Verder: beoordelingen op detailpagina’s, hoofdstukken, miniatuurvoorvertoningen tijdens het spoelen, synchronisatie van audio en ondertiteling en uitgebreide afspeelinformatie.
+
+2 WEKEN GRATIS PROBEREN
+Probeer Jelly met alle functies 2 weken gratis. Daarna wordt het Jelly-jaarabonnement elk jaar verlengd tegen de prijs die in de App Store voor jouw land wordt getoond. Eén abonnement geldt voor Jelly op Apple TV, iPhone en iPad met je Apple Account. De betaling wordt in rekening gebracht via je Apple Account. Het abonnement wordt automatisch met een jaar verlengd, tenzij je het uiterlijk 24 uur voor het einde opzegt; je kunt op elk moment opzeggen in de Apple TV-instellingen onder Gebruikers en accounts › Abonnementen.
+
+Gebruiksvoorwaarden: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Privacybeleid: https://dgtl-solutions.github.io/jelly/privacy/
+
+Geen reclame, geen tracking, geen gegevensverzameling. Jelly praat alleen met je eigen servers.
+
+Jelly is een onafhankelijke app en geen officieel product van het Jellyfin-project.

@@ -1,1 +1,1 @@
-Mediaplayer,MKV,Dolby Vision,HDR10,Atmos,4K,Heimkino,Untertitel,Serien,Filme,NAS,Jellyseerr
+Player,Videoplayer,Client,Server,Streaming,MKV,Dolby Vision,HDR,Atmos,4K,Heimkino,NAS,Jellyseerr

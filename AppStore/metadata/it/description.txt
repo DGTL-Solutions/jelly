@@ -1,0 +1,27 @@
+Jelly è il player Jellyfin per chi vuole vedere i propri film così come sono: in qualità originale, senza che il server debba transcodificare, con Dolby Vision, Atmos e sottotitoli con tutti i loro stili. Ti basta il tuo server Jellyfin (gratuito su jellyfin.org).
+
+COSA RENDE JELLY DIVERSO
+• L'originale, non una transcodifica: MKV, MP4, AVI e TS con H.264, HEVC, AV1, VC-1 o MPEG-2. Quello che il dispositivo non sa decodificare da solo lo decodifica Jelly: il server non deve ricodificare nulla, quindi basta anche un piccolo NAS.
+• Sottotitoli come devono essere: ASS/SSA con font incorporati, posizioni ed effetti, oltre a PGS, VobSub, SRT e sottotitoli esterni. Scegli tu dimensione, colore e sfondo.
+• Pensato per le serie TV: Jelly riconosce intro e titoli di coda dall'audio, senza plugin sul server, e avvia l'episodio successivo appena partono i titoli di coda.
+• Intelligente con le connessioni lente: Jelly misura la connessione e prima elimina le tracce audio non usate, senza perdita, poi il server riduce la qualità dell'immagine. A casa, Jelly comunica direttamente con il tuo server.
+• Jellyseerr integrato: richiedi film e serie, cerca e segui il download in tempo reale.
+• Un abbonamento per tutto: Jelly su Apple TV, iPhone e iPad con lo stesso Account Apple.
+
+SU APPLE TV
+Dolby Vision (profili 5 e 8) e HDR10+ vengono riprodotti dal player di Apple con metadati dinamici, Dolby Atmos in Dolby Digital Plus arriva al tuo ricevitore come bitstream, e TrueHD e DTS-HD vengono riprodotti senza perdita come audio multicanale. Frequenza fotogrammi e gamma dinamica si adattano a ogni film. Continua a guardare ed episodi successivi compaiono a tutto schermo nella Top Shelf, oltre a un salvaschermo con le copertine come quello che aveva una volta iTunes.
+
+ACCESSO SENZA DIGITARE
+Jelly trova da solo il tuo server nella rete domestica. I profili senza password si aprono con un clic, tutti gli altri con un codice dall'app Jellyfin sul telefono. Più server e profili, con «Chi sta guardando?» all'avvio.
+
+E inoltre: valutazioni nelle pagine dei dettagli, capitoli, anteprime durante lo scorrimento, sincronizzazione di audio e sottotitoli e informazioni dettagliate sulla riproduzione.
+
+PROVALO GRATIS PER 2 SETTIMANE
+Prova Jelly con tutte le funzioni gratis per 2 settimane. Dopo, l'abbonamento annuale a Jelly si rinnova ogni anno al prezzo indicato nell'App Store per il tuo paese. Un solo abbonamento copre Jelly su Apple TV, iPhone e iPad con il tuo Account Apple. Il pagamento viene addebitato sul tuo Account Apple. L'abbonamento si rinnova automaticamente per un altro anno, a meno che tu non lo annulli almeno 24 ore prima della scadenza; puoi annullarlo in qualsiasi momento nelle Impostazioni di Apple TV in Utenti e account › Abbonamenti.
+
+Condizioni d'uso: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Informativa sulla privacy: https://dgtl-solutions.github.io/jelly/privacy/
+
+Niente pubblicità, niente tracciamento, nessuna raccolta di dati. Jelly comunica solo con i tuoi server.
+
+Jelly è un'app indipendente e non un prodotto ufficiale del progetto Jellyfin.

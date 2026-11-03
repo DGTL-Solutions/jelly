@@ -1,1 +1,1 @@
-lecteur vidéo,MKV,hors ligne,téléchargement,AirPlay,sous-titres,films,séries,NAS,Jellyseerr,4K
+vidéo,client,serveur,streaming,hors ligne,téléchargement,MKV,AirPlay,sous-titres,NAS,4K

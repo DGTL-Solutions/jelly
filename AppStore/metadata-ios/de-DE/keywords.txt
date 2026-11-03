@@ -1,1 +1,1 @@
-Mediaplayer,Videoplayer,MKV,Bild-in-Bild,AirPlay,Untertitel,Filme,Serien,NAS,Offline,Download,4K
+Player,Videoplayer,Client,Server,Streaming,MKV,Bild-in-Bild,AirPlay,NAS,Offline,Download,4K
