@@ -133,7 +133,7 @@ Vorbereitung der Veröffentlichung – Lizenzen (AetherEngine und FFmpeg unter L
 
 ## Sprachen
 
-Jelly ist auf Deutsch und Englisch und folgt der Sprache des Apple TV; jede andere Sprache bekommt Englisch. Deutsch ist die Ausgangssprache: Die Texte stehen deutsch im Code (`Text("…")`, `String(localized: "…")`), die englischen Übersetzungen in `Jelly/Localizable.xcstrings` und `JellyTopShelf/Localizable.xcstrings` (Mehrzahl als Plural-Varianten), die Info.plist-Texte in den `InfoPlist.xcstrings`. Neue oder geänderte Texte holt man so heraus und wieder hinein:
+Jelly ist auf Deutsch, Englisch und Französisch und folgt der Sprache des Geräts; jede andere Sprache bekommt Englisch. Deutsch ist die Ausgangssprache: Die Texte stehen deutsch im Code (`Text("…")`, `String(localized: "…")`), die englischen und französischen Übersetzungen in `Jelly/Localizable.xcstrings` und `JellyTopShelf/Localizable.xcstrings` (Mehrzahl als Plural-Varianten), die Info.plist-Texte in den `InfoPlist.xcstrings`. Neue oder geänderte Texte holt man so heraus und wieder hinein:
 
 ```sh
 xcodebuild -exportLocalizations -project Jelly.xcodeproj -scheme Jelly -localizationPath /tmp/jelly-loc -exportLanguage en \
