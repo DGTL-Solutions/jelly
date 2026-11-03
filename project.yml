@@ -50,9 +50,9 @@ targets:
         UIUserInterfaceStyle: Dark
         # HTTPS only through Apple's URLSession, SHA-256 only for cache names: no non-exempt encryption.
         ITSAppUsesNonExemptEncryption: false
-        # German, English, French, Spanish, Italian and Dutch; any other device language gets English.
+        # German, English, French, Spanish, Italian, Dutch, Portuguese, Danish, Swedish and Polish; any other device language gets English.
         CFBundleDevelopmentRegion: en
-        CFBundleLocalizations: [de, en, fr, es, it, nl]
+        CFBundleLocalizations: [de, en, fr, es, it, nl, pt-BR, da, sv, pl]
         CFBundleURLTypes:
           - CFBundleURLName: de.jelly.tv
             CFBundleURLSchemes: [jelly]
@@ -80,7 +80,7 @@ targets:
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: true
         CFBundleDevelopmentRegion: en
-        CFBundleLocalizations: [de, en, fr, es, it, nl]
+        CFBundleLocalizations: [de, en, fr, es, it, nl, pt-BR, da, sv, pl]
         NSExtension:
           NSExtensionPointIdentifier: com.apple.tv-top-shelf
           NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ContentProvider
@@ -123,7 +123,7 @@ targets:
         UIUserInterfaceStyle: Dark
         ITSAppUsesNonExemptEncryption: false
         CFBundleDevelopmentRegion: en
-        CFBundleLocalizations: [de, en, fr, es, it, nl]
+        CFBundleLocalizations: [de, en, fr, es, it, nl, pt-BR, da, sv, pl]
         # Sound keeps playing in the background and in Picture in Picture.
         UIBackgroundModes: [audio]
         CFBundleURLTypes:

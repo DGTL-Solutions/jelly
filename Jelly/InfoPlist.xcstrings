@@ -39,6 +39,30 @@
             "state" : "translated",
             "value" : "Jelly"
           }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly"
+          }
         }
       }
     },
@@ -77,6 +101,30 @@
           }
         },
         "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly"
+          }
+        },
+        "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jelly"
@@ -121,6 +169,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jelly maakt verbinding met je Jellyfin-server in je thuisnetwerk."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Jelly se conecta ao seu servidor Jellyfin na sua rede doméstica."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly opretter forbindelse til din Jellyfin-server på dit hjemmenetværk."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly ansluter till din Jellyfin-server i ditt hemnätverk."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly łączy się z twoim serwerem Jellyfin w twojej sieci domowej."
           }
         }
       }
