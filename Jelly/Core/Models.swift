@@ -69,6 +69,7 @@ struct UserDto: Decodable, Identifiable, Hashable {
         var enablePlaybackRemuxing: Bool?
         var remoteClientBitrateLimit: Int?
         var maxActiveSessions: Int?
+        var enableContentDownloading: Bool?
     }
 
     struct Configuration: Decodable, Hashable {

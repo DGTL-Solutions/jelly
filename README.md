@@ -62,6 +62,15 @@ Jede Datei läuft als Original: [AetherEngine](https://github.com/superuser404no
 - **Verbindungsanalyse** (Einstellungen › Verbindung): prüft Erreichbarkeit und Antwortzeit des Servers, HTTPS und Proxy (z. B. Cloudflare), ob der Weg übers Heimnetz oder Internet führt und ob das Apple TV per LAN oder WLAN hängt, misst 8 s lang den Durchsatz an der größten Datei, rechnet aus, welcher Anteil der Bibliothek im Original läuft, testet bei Bedarf, wie schnell der Server umrechnet (und ob HDR erhalten bleibt), und zeigt, was Apple TV und Fernseher können. Jede Messung (auch die automatischen vor großen Filmen) wird gespeichert, daraus entsteht eine Übersicht nach Tageszeit. Am Ende stehen konkrete Tipps.
 - Fortschritt, Pause, Tonspur, Untertitel und Wiedergabeart gehen an Jellyfin; „Weiterschauen" und „Nächste Folgen" erscheinen auch im Top Shelf des Apple-TV-Home-Bildschirms.
 
+## Downloads (iPhone und iPad)
+
+- **Herunterladen** auf der Detailseite (Pfeil neben Gesehen/Favorit), im Kontextmenü einer Folge oder für eine ganze Staffel auf der Serienseite. Das Fenster bietet **Original** (die Datei selbst), **Besser** (bis 1080p, höchstens 8 Mbit/s, Ton in 5.1 – Dolby Digital wird unverändert übernommen) und **Gut** (bis 720p, 3 Mbit/s, Stereo), jeweils mit Größe, freiem Speicher und einer Empfehlung fürs Gerät. Eine kleinere Stufe erscheint nur, wenn sie höchstens halb so groß ist wie die nächstbessere – sonst lohnt sie nicht. Empfohlen ist „Besser“, solange es passt (1 GB bleibt immer frei), sonst die nächstkleinere Stufe.
+- Original kommt über `Items/{id}/Download` und respektiert damit die Jellyfin-Berechtigung „Downloads erlauben“; „Besser“ und „Gut“ rechnet der Server beim Senden um (`Videos/{id}/stream.mp4`, H.264 oder HEVC – je nachdem, was er kodieren darf). Umgerechnete Kopien sind SDR.
+- Ein Hintergrund-`URLSession` lädt weiter, wenn Jelly geschlossen ist. Gespeichert wird in Application Support/Downloads (nicht in iCloud gesichert): Datei, Item- und Stream-Infos, Bild, Text-Untertitel als Dateien (beim Original nur externe und ASS samt Schriften) sowie Intro und Abspann.
+- **Offline** spielt der Player die Datei ohne Server: Untertitel, „Intro überspringen“ und „Nächste Folge“ (die nächste geladene Folge) funktionieren. Die Position merkt sich Jelly und meldet sie beim nächsten Kontakt an den Server. Ist der Server beim Start nicht erreichbar, führt „Downloads ansehen“ direkt zu den Downloads. Auch online spielt Jelly einen vorhandenen Download statt des Streams.
+- Auf dem iPhone öffnet ein Knopf auf der Startseite die Downloads (ein sechster Tab würde hinter „Mehr“ verschwinden), auf dem iPad sind sie ein Tab; außerdem unter Einstellungen › Downloads.
+- Debug-Startparameter: `JELLY_DOWNLOAD` (Item-IDs, kommagetrennt; öffnet die Auswahl), `JELLY_DOWNLOAD_QUALITY` (`original|better|good`, startet sofort), `JELLY_PLAY_OFFLINE` (Item-ID), `JELLY_CLOSE_AFTER` (Sekunden).
+
 ## Erkunden (Jellyseerr)
 
 Tab „Erkunden": Filme und Serien, die noch nicht auf dem Server sind – „Gerade angesagt", beliebte und bald erscheinende Filme und Serien, „Deine Wünsche" und ganz oben eine Suchleiste für alle Filme und Serien, auch die noch nicht auf dem Server sind (der Fokus startet dort). Karten zeigen den Stand in Jellyseerr (in der Bibliothek, gewünscht, wird geladen, teilweise da) und bei laufenden Downloads einen Balken mit Prozent und Restzeit. Die Reihe „Wird geladen“ sammelt freigegebene Wünsche, die noch unterwegs sind (bei Admins des ganzen Haushalts, sonst die eigenen): laufend, in der Warteschlange, pausiert, beim Importieren oder noch ohne gefundenen Download. Die Detailseite zeigt Fortschritt, Restzeit und ungefähre Uhrzeit, bei Serien auch die einzelnen Folgen. Solange etwas lädt, fragt Jelly alle 30 Sekunden nach – Jellyseerr holt den Stand jede Minute bei Radarr und Sonarr. Die Detailseite wünscht Filme mit einem Klick, bei Serien wählt man die fehlenden Staffeln; was schon da ist, öffnet „Ansehen" direkt in der Bibliothek.
@@ -90,7 +99,7 @@ Vorschaubilder beim Spulen kommen aus Jellyfins Trickplay-Funktion (Dashboard �
 ```sh
 # Kernlogik ohne tvOS-Runtime
 xcrun swiftc -parse-as-library Jelly/Core/Models.swift Jelly/Core/JellyfinClient.swift Jelly/Core/PlaybackSupport.swift \
-  Jelly/Core/ServerDiscovery.swift Jelly/Core/IMDbRatings.swift Jelly/Core/NetworkProbe.swift Jelly/Core/Diagnostics.swift Jelly/Core/IntroDetector.swift Jelly/Core/Seerr.swift Jelly/Core/Access.swift Scripts/CoreChecks.swift -o /tmp/jelly-core-checks && /tmp/jelly-core-checks
+  Jelly/Core/ServerDiscovery.swift Jelly/Core/IMDbRatings.swift Jelly/Core/NetworkProbe.swift Jelly/Core/Diagnostics.swift Jelly/Core/IntroDetector.swift Jelly/Core/Seerr.swift Jelly/Core/Access.swift Jelly/Core/Downloads.swift Scripts/CoreChecks.swift -o /tmp/jelly-core-checks && /tmp/jelly-core-checks
 
 # Gerätebuild ohne Signierung
 xcodebuild -project Jelly.xcodeproj -scheme Jelly -configuration Release -destination 'generic/platform=tvOS' CODE_SIGNING_ALLOWED=NO build
@@ -137,7 +146,7 @@ Im Simulator testet man eine Sprache mit `xcrun simctl launch <UDID> de.jelly.tv
 
 ## Grenzen
 
-- tvOS gibt TrueHD und DTS nie als Bitstream aus: Atmos aus TrueHD und DTS:X kommen als verlustfreies Mehrkanal-PCM ohne Objekte an. AetherEngine könnte die Objekte über optionale Paket-Traits als Apple Positional Audio ausgeben; XcodeGen kann diese Traits noch nicht setzen.
+- tvOS gibt TrueHD und DTS nie als Bitstream aus: Atmos aus TrueHD und DTS:X kommen als verlustfreies Mehrkanal-PCM ohne Objekte an. AetherEngine könnte die Objekte über die optionalen Paket-Traits `TrueHDObjectAudio` und `DTSXObjectAudio` als Apple Positional Audio ausgeben, das volle Profil 7 über `DualLayerDolbyVision`. Diese Teile bleiben bewusst aus: Sie können Patentlizenzen von Dolby bzw. Xperi (DTS) erfordern, die der Anbieter selbst tragen müsste (so der Hinweis der Engine).
 - Dolby Vision Profil 7 (UHD-Blu-ray) läuft als Profil 8.1, die Erweiterungsebene (FEL) entfällt dabei. Ohne Dolby-Vision-Decoder (Simulator, Apple TV HD) läuft die HDR10-Basis.
 - AV1 decodiert ohne AV1-Hardware in Software (dav1d); ob 4K-AV1 flüssig läuft, zeigt die Diagnose (`perf … dropped`).
 - Beim ersten Laden extrahiert der Server eingebettete Untertitel aus der ganzen Datei; das kann bei großen Dateien dauern (die App zeigt einen Hinweis).

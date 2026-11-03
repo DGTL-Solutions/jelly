@@ -91,6 +91,8 @@ final class PlayerController: ObservableObject {
 
     private let client: JellyfinClient
     private let userID: String
+    /// A downloaded copy on this device; then nothing but progress reports goes to the server.
+    let offline: OfflineMedia?
     private var preference = EnginePreference.automatic
     private var playSessionID: String?
     private var directSessionID: String?
@@ -132,10 +134,11 @@ final class PlayerController: ObservableObject {
     /// What the player received while playing, since the last stall or stream switch.
     private var lineSamples: [(date: Date, rate: Double)] = []
 
-    init(item: BaseItem, client: JellyfinClient, userID: String) {
+    init(item: BaseItem, client: JellyfinClient, userID: String, offline: OfflineMedia? = nil) {
         self.item = item
         self.client = client
         self.userID = userID
+        self.offline = offline
         aether = try? AetherEngine()
     }
 
@@ -200,17 +203,26 @@ final class PlayerController: ObservableObject {
         }
         bindEngine()
         do {
-            let info: JellyfinClient.PlaybackInfoResponse
-            if mediaSourceID == nil, let prepared = Self.prepared.removeValue(forKey: item.id), Date().timeIntervalSince(prepared.date) < 600 {
-                item = prepared.item
-                info = prepared.info
+            let source: MediaSource
+            var playSession: String?
+            if let offline {
+                source = offline.source
             } else {
-                async let fullItem = try? client.item(user: userID, id: item.id)
-                info = try await client.playbackInfo(user: userID, itemID: item.id, mediaSourceID: mediaSourceID)
-                if let full = await fullItem { item = full }
+                let info: JellyfinClient.PlaybackInfoResponse
+                if mediaSourceID == nil, let prepared = Self.prepared.removeValue(forKey: item.id), Date().timeIntervalSince(prepared.date) < 600 {
+                    item = prepared.item
+                    info = prepared.info
+                } else {
+                    async let fullItem = try? client.item(user: userID, id: item.id)
+                    info = try await client.playbackInfo(user: userID, itemID: item.id, mediaSourceID: mediaSourceID)
+                    if let full = await fullItem { item = full }
+                }
+                guard let found = info.mediaSources.first(where: { $0.id == mediaSourceID })
+                    ?? info.mediaSources.first(where: { $0.requiresOpening != true }) ?? info.mediaSources.first
+                else { throw JellyError.unsupported }
+                source = found
+                playSession = info.playSessionId
             }
-            guard let source = info.mediaSources.first(where: { $0.id == mediaSourceID }) ?? info.mediaSources.first(where: { $0.requiresOpening != true })
-                ?? info.mediaSources.first else { throw JellyError.unsupported }
             self.source = source
 
             // Series memory beats the device language, which beats Jellyfin's file default.
@@ -233,11 +245,11 @@ final class PlayerController: ObservableObject {
             if let value = env["JELLY_START"].flatMap(Double.init) { start = value }
             if let wait = env["JELLY_UPGRADE_WAIT"].flatMap(Double.init) { upgradeWait = wait }
             #endif
-            directSessionID = info.playSessionId
-            playSessionID = info.playSessionId
+            directSessionID = playSession
+            playSessionID = playSession
             var plan = PlaybackPlan.make(for: source, audio: audio)
             originalPlan = plan
-            plan = await adaptToConnection(plan, source: source, audio: audio)
+            if offline == nil { plan = await adaptToConnection(plan, source: source, audio: audio) }
             #if DEBUG
             if env["JELLY_PLAN"] == "compact" { plan = .compact(audio: audio) }
             // Starts as if Jelly had lowered the quality itself, to try stepping back up on a fast line.
@@ -252,7 +264,7 @@ final class PlayerController: ObservableObject {
             duration = Ticks.seconds(source.runTimeTicks ?? item.runTimeTicks)
             position = start
             chapters = item.chapters ?? []
-            trickplay = Self.bestTrickplay(item.trickplay?[source.id])
+            trickplay = offline == nil ? Self.bestTrickplay(item.trickplay?[source.id]) : nil
             subtitleIndex = subtitle?.index
             try await open(plan, at: start)
             Task { await loadExtras() }
@@ -275,7 +287,7 @@ final class PlayerController: ObservableObject {
         guard let source, let aether else { return }
         var plan = newPlan
         let previous = engine == .server ? playSessionID : nil
-        var url = client.streamURL(itemID: item.id, source: source, playSessionID: directSessionID)
+        var url = offline?.file ?? client.streamURL(itemID: item.id, source: source, playSessionID: directSessionID)
         var session = directSessionID
         if plan.engine == .server {
             do {
@@ -316,7 +328,8 @@ final class PlayerController: ObservableObject {
         options.progressiveSegmentDelivery = true
         options.forwardBufferSegments = 30
         // The engine picks the stream index Jellyfin names; a server stream carries only that one track.
-        let audioStream = plan.engine == .direct ? audioIndex.map(Int32.init) : nil
+        // A converted download carries only the one track it was saved with.
+        let audioStream = plan.engine == .direct && offline?.keepsStreamIndexes != false ? audioIndex.map(Int32.init) : nil
         _ = try await aether.load(url: url, startPosition: seconds > 1 ? seconds : nil, options: options, audioSourceStreamIndex: audioStream)
         if let previous { await client.stopEncoding(playSessionID: previous) }
         if let index = subtitleIndex { showSubtitle(index) }
@@ -495,7 +508,7 @@ final class PlayerController: ObservableObject {
     // MARK: Quality
 
     var qualityOptions: [TrackOption] {
-        guard let source else { return [] }
+        guard let source, offline == nil else { return [] }
         let audio = source.audioStreams.first { $0.index == audioIndex }
         let original = Double(source.bitrate ?? 0) / 1_000_000
         var options = [TrackOption(id: 0, title: String(localized: "Original", comment: "Quality: the original file"),
@@ -642,7 +655,7 @@ final class PlayerController: ObservableObject {
     }
 
     private var adaptsToConnection: Bool {
-        (SlowConnectionPolicy(rawValue: UserDefaults.standard.string(forKey: "slowConnection") ?? "") ?? .adapt) == .adapt
+        offline == nil && (SlowConnectionPolicy(rawValue: UserDefaults.standard.string(forKey: "slowConnection") ?? "") ?? .adapt) == .adapt
     }
 
     /// The line got slower during the film (e.g. busy evenings): pick the best stream that fits now – only with
@@ -792,7 +805,8 @@ final class PlayerController: ObservableObject {
         } else if stream.isExternal == true || engine == .server {
             let id = externalTracks[stream.index] ?? {
                 let track = aether.addExternalSubtitleTrack(ExternalSubtitleTrack(
-                    url: client.subtitleURL(itemID: item.id, sourceID: source.id, stream: stream), name: stream.label,
+                    url: offline?.subtitles[stream.index] ?? client.subtitleURL(itemID: item.id, sourceID: source.id, stream: stream),
+                    name: stream.label,
                     language: stream.languageCode, isForced: stream.isForced ?? false))
                 externalTracks[stream.index] = track.id
                 return track.id
@@ -819,6 +833,7 @@ final class PlayerController: ObservableObject {
     private func startASS(_ stream: MediaStream) async {
         guard let source else { return }
         func fetch(_ url: URL) async -> Data? {
+            if url.isFileURL { return try? Data(contentsOf: url) }
             var request = URLRequest(url: url, timeoutInterval: 120)
             request.setValue(client.authorization, forHTTPHeaderField: "Authorization")
             guard let (data, response) = try? await URLSession.shared.data(for: request),
@@ -827,12 +842,17 @@ final class PlayerController: ObservableObject {
         }
         let hint = slowLoadingHint()
         defer { hint.cancel() }
-        guard let script = await fetch(client.subtitleURL(itemID: item.id, sourceID: source.id, stream: stream)) else {
+        let scriptURL: URL? = if let offline { offline.subtitles[stream.index] }
+            else { client.subtitleURL(itemID: item.id, sourceID: source.id, stream: stream) }
+        guard let scriptURL, let script = await fetch(scriptURL) else {
             notice = String(localized: "Untertitel konnten nicht geladen werden")
             return
         }
         var fonts: [(name: String, data: Data)] = []
-        for attachment in (source.mediaAttachments ?? []).filter(\.isFont) {
+        for font in offline?.fonts ?? [] {
+            if let data = await fetch(font) { fonts.append((font.lastPathComponent, data)) }
+        }
+        for attachment in (source.mediaAttachments ?? []).filter(\.isFont) where offline == nil {
             if let data = await fetch(client.url("Videos/\(item.id)/\(source.id)/Attachments/\(attachment.index)")) {
                 fonts.append((attachment.fileName ?? "font\(attachment.index)", data))
             }
@@ -872,10 +892,15 @@ final class PlayerController: ObservableObject {
     // MARK: Intro, credits, next episode
 
     private func loadExtras() async {
-        if let seriesID = item.seriesId, item.isEpisode {
+        if let offline {
+            // Saved with the download: no server needed for "Intro überspringen" and "Nächste Folge".
+            nextEpisode = offline.nextEpisode
+            intro = offline.intro
+            creditsStart = offline.creditsStart
+        } else if let seriesID = item.seriesId, item.isEpisode {
             nextEpisode = try? await client.nextEpisode(user: userID, seriesID: seriesID, after: item.id)
         }
-        let segments = await client.mediaSegments(itemID: item.id)
+        let segments = offline == nil ? await client.mediaSegments(itemID: item.id) : []
         if let introSegment = segments.first(where: { $0.type == "Intro" }) {
             intro = Ticks.seconds(introSegment.startTicks)...Ticks.seconds(introSegment.endTicks)
         }
@@ -893,8 +918,8 @@ final class PlayerController: ObservableObject {
         }
         // Otherwise Jelly finds intro and credits itself by comparing the sound with neighbouring episodes – also more
         // exact than chapters.
-        let findsIntro = !segments.contains { $0.type == "Intro" }
-        let findsCredits = !segments.contains { $0.type == "Outro" }
+        let findsIntro = offline == nil && !segments.contains { $0.type == "Intro" }
+        let findsCredits = offline == nil && !segments.contains { $0.type == "Outro" }
         if item.isEpisode, findsIntro || findsCredits {
             introTask = Task { await findMarkers(intro: findsIntro, credits: findsCredits) }
         }
@@ -936,7 +961,7 @@ final class PlayerController: ObservableObject {
     /// Fetches what the next episode needs to start – and measures the line if the file is big and the last
     /// measurement is old, while this one still has buffer to spare – so it starts right away.
     func prepareNextEpisode() {
-        guard let next = nextEpisode, !nextPrepared else { return }
+        guard let next = nextEpisode, !nextPrepared, offline == nil else { return }
         nextPrepared = true
         let client = client, user = userID, spare = stats.bufferAhead ?? 0
         Task {

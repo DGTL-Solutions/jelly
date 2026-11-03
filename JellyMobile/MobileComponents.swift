@@ -174,6 +174,12 @@ struct MobileItemActions: View {
         if includesDetails {
             Button { openItem(item) } label: { Label("Details anzeigen", systemImage: "info.circle") }
         }
+        if item.isPlayable, DownloadCenter.shared.record(itemID: item.id, profileKey: model.session?.key) == nil,
+           model.user?.policy?.enableContentDownloading ?? true {
+            Button { DownloadCenter.pick.open([item], title: item.name) } label: {
+                Label("Herunterladen", systemImage: "arrow.down.circle")
+            }
+        }
         if item.isPlayable || item.isSeries {
             Button { Task { await model.setWatched(item, !item.isWatched) } } label: {
                 Label(item.isWatched ? "Als ungesehen markieren" : "Als gesehen markieren", systemImage: item.isWatched ? "eye.slash" : "checkmark.circle")
@@ -223,6 +229,11 @@ struct MobileLoadingView: View {
 struct MobileErrorView: View {
     let message: String
     var retry: (() -> Void)?
+    @EnvironmentObject private var model: AppModel
+    @ObservedObject private var downloads = DownloadCenter.shared
+
+    /// Without a connection, saved films and episodes still play.
+    private var hasDownloads: Bool { downloads.records(profileKey: model.session?.key).contains { $0.state == .finished } }
 
     var body: some View {
         ContentUnavailableView {
@@ -231,6 +242,10 @@ struct MobileErrorView: View {
             Text(message)
         } actions: {
             if let retry { Button("Erneut versuchen", action: retry).buttonStyle(.borderedProminent) }
+            if hasDownloads {
+                Button("Downloads ansehen") { NotificationCenter.default.post(name: .jellyShowDownloads, object: nil) }
+                    .buttonStyle(.bordered)
+            }
         }
     }
 }

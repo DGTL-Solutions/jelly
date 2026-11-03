@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		02071587F600733EDD6FACA2 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF11B3AA95BE8048BBE6CBBB /* OnboardingView.swift */; };
+		0581B937934D03B9CB2C9454 /* DownloadCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7C1708532E1DD73A6A3AFC /* DownloadCenter.swift */; };
 		05AB6818E8A5192E6BB93125 /* MobilePlayerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179C0B1A627C2B2751E858F8 /* MobilePlayerControls.swift */; };
 		05E4BA7B0C081B53951AF280 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3859131F0DFB9909D49A1D60 /* InfoPlist.xcstrings */; };
+		0F8E5CD0D917AA032F23846F /* Downloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B966622C44FE45B8F3B7A627 /* Downloads.swift */; };
 		0FE09B9D5D59B162D495240B /* SharedUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087D8D8292398E791F68EE4C /* SharedUI.swift */; };
 		187F4E554AA36F062D7A2BF6 /* MobilePlayerSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91853DAB004C78C0111A2871 /* MobilePlayerSystem.swift */; };
 		18A6F746087CDE6C55D19B6B /* License-AetherEngine.txt in Resources */ = {isa = PBXBuildFile; fileRef = 850A87E15B5242C5665B4932 /* License-AetherEngine.txt */; };
@@ -18,6 +20,7 @@
 		1D5328784131DDB61B42F732 /* SubtitleOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EAAD2239D4DA614D8718B6 /* SubtitleOverlay.swift */; };
 		2247524752F9AA502B709BE0 /* JellyfinClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A916E9281C3B1AFBC17BC1EF /* JellyfinClient.swift */; };
 		224FEA91EBB9C372EB3FBB4A /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC195C836E46823BC6BC4F28 /* PaywallView.swift */; };
+		279A7BC7E51840F599D9A58E /* Downloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B966622C44FE45B8F3B7A627 /* Downloads.swift */; };
 		2C84D2A17628387BA730D118 /* ServerDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD934A017F0F636E82D025C /* ServerDiscovery.swift */; };
 		2DA9A3DD3AB6AF10CEA16479 /* PlaybackSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6D327CE5691AA80F76E121 /* PlaybackSupport.swift */; };
 		2F40A3E4D0AAFD6EED912085 /* License-HarfBuzz.txt in Resources */ = {isa = PBXBuildFile; fileRef = F4EF9BA392D7270B068F109D /* License-HarfBuzz.txt */; };
@@ -41,6 +44,7 @@
 		538ADF8CF64C8732BF6C1F54 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 705897CD1AAF939955943FC6 /* Localizable.xcstrings */; };
 		572B37C99AEFE8025EABB4FE /* License-AetherEngine.txt in Resources */ = {isa = PBXBuildFile; fileRef = 850A87E15B5242C5665B4932 /* License-AetherEngine.txt */; };
 		577545BB77F8AEA8DBD89D56 /* License-zimg.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9CB94D6E266F2183B6556114 /* License-zimg.txt */; };
+		5A6869F47807737A77705768 /* DownloadScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD52BE1A1C13ED7DB53CF2B2 /* DownloadScreens.swift */; };
 		5C024D027B2FDFBE4FE1A04A /* AccountScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 367CDB6E705F7CAC972C3837 /* AccountScreens.swift */; };
 		5CE9E7269807C59FD50B43B3 /* Seerr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702891C8FE64D2FB792F7A72 /* Seerr.swift */; };
 		5CF00B6F594597DB279137FF /* libass in Frameworks */ = {isa = PBXBuildFile; productRef = 9F974EC0F5BD019431B41C99 /* libass */; };
@@ -160,7 +164,7 @@
 /* Begin PBXFileReference section */
 		00DE28B54B3028E50DC3ADBC /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		02BA6945B83B6AA63240D0B1 /* LibraryViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViews.swift; sourceTree = "<group>"; };
-		05962768906AE4D3CC3E3EE1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		05962768906AE4D3CC3E3EE1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		087D8D8292398E791F68EE4C /* SharedUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUI.swift; sourceTree = "<group>"; };
 		08F3A30EEB28D3F88CE40A9A /* License-dav1d.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "License-dav1d.txt"; sourceTree = "<group>"; };
 		0BFB9B1CF9F62518A909A69E /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
@@ -168,11 +172,12 @@
 		1AB99804C998295075348B78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1E6C40E354F80135D447511D /* Diagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagnostics.swift; sourceTree = "<group>"; };
 		2ACF811CD4EC85BBDF1A3323 /* License-libzvbi.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "License-libzvbi.txt"; sourceTree = "<group>"; };
-		331870C9FF562BC483C1626D /* JellyMobile.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; name = JellyMobile.app; path = Jelly.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		331870C9FF562BC483C1626D /* JellyMobile.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = JellyMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3479D4451BFB1B7D96190F4A /* ConnectionAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionAnalyzer.swift; sourceTree = "<group>"; };
 		367CDB6E705F7CAC972C3837 /* AccountScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountScreens.swift; sourceTree = "<group>"; };
 		37C89F7300311B0E0259B6A3 /* LibraryScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryScreens.swift; sourceTree = "<group>"; };
 		3859131F0DFB9909D49A1D60 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		3A7C1708532E1DD73A6A3AFC /* DownloadCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadCenter.swift; sourceTree = "<group>"; };
 		3B2C8B16BBF610F5334BD640 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		3C2A0071BF03804F41D92C13 /* IntroDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroDetector.swift; sourceTree = "<group>"; };
 		3C5C9582D71639711F6C0053 /* SecureStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStore.swift; sourceTree = "<group>"; };
@@ -207,6 +212,7 @@
 		A7B2AE1F8781002F361F3C32 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		A916E9281C3B1AFBC17BC1EF /* JellyfinClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyfinClient.swift; sourceTree = "<group>"; };
 		A9DF8C9CF3A4619021669B46 /* JellyTopShelf.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JellyTopShelf.entitlements; sourceTree = "<group>"; };
+		AD52BE1A1C13ED7DB53CF2B2 /* DownloadScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadScreens.swift; sourceTree = "<group>"; };
 		AD52FCC90771544CB72ED6BF /* MobilePlayerOverlays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobilePlayerOverlays.swift; sourceTree = "<group>"; };
 		B257626A6044D766406A7017 /* License-FreeType.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "License-FreeType.txt"; sourceTree = "<group>"; };
 		B3EDE9D16E820401BA9E6B7F /* MobileComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileComponents.swift; sourceTree = "<group>"; };
@@ -214,6 +220,7 @@
 		B5BA37AC42CFAF95B1F4BD8C /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		B8BE67641F9DC39EE838D66E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		B8F5D4F3D1DDA4BCDC689533 /* MobilePaywall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobilePaywall.swift; sourceTree = "<group>"; };
+		B966622C44FE45B8F3B7A627 /* Downloads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloads.swift; sourceTree = "<group>"; };
 		BC195C836E46823BC6BC4F28 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		BC3BA6DE0BE341AB8697E4A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BD2F394BAF1CD598424B68F8 /* PlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerController.swift; sourceTree = "<group>"; };
@@ -236,7 +243,7 @@
 		F4EF9BA392D7270B068F109D /* License-HarfBuzz.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "License-HarfBuzz.txt"; sourceTree = "<group>"; };
 		F7F28D3BCC628DFA5E490CBC /* MobilePlayerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobilePlayerScreen.swift; sourceTree = "<group>"; };
 		F864BBA926651A6EAD30A6A2 /* JellyMobileApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyMobileApp.swift; sourceTree = "<group>"; };
-		FAC47C69309861DA2C6C61E3 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		FAC47C69309861DA2C6C61E3 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		FD7FE3D4BBE044B0BF3893C9 /* IMDbRatings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMDbRatings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -281,6 +288,7 @@
 				00DE28B54B3028E50DC3ADBC /* AppModel.swift */,
 				C96C3A92A4D42FD38CE47AF6 /* Artwork.swift */,
 				1E6C40E354F80135D447511D /* Diagnostics.swift */,
+				B966622C44FE45B8F3B7A627 /* Downloads.swift */,
 				FD7FE3D4BBE044B0BF3893C9 /* IMDbRatings.swift */,
 				3C2A0071BF03804F41D92C13 /* IntroDetector.swift */,
 				65A1300A33DF01F71060478A /* IntroFinder.swift */,
@@ -305,6 +313,7 @@
 				B3EDE9D16E820401BA9E6B7F /* MobileComponents.swift */,
 				2A44CFFEDE1B1E593D5853C7 /* Account */,
 				CF7A080EAD6317979E9FA127 /* Discover */,
+				B34A1254ACFD33EE2878C31D /* Downloads */,
 				608206FC6DBE7CE12684346F /* Library */,
 				42152D0A6AE45D8E01253018 /* Player */,
 			);
@@ -411,6 +420,15 @@
 				55EAAD2239D4DA614D8718B6 /* SubtitleOverlay.swift */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		B34A1254ACFD33EE2878C31D /* Downloads */ = {
+			isa = PBXGroup;
+			children = (
+				3A7C1708532E1DD73A6A3AFC /* DownloadCenter.swift */,
+				AD52BE1A1C13ED7DB53CF2B2 /* DownloadScreens.swift */,
+			);
+			path = Downloads;
 			sourceTree = "<group>";
 		};
 		CF7A080EAD6317979E9FA127 /* Discover */ = {
@@ -567,6 +585,8 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = E8D38CFA49B723766D205681 /* Build configuration list for PBXProject "Jelly" */;
 			developmentRegion = de;
@@ -667,6 +687,9 @@
 				61B6F92678DEDA7FFC3BB3B5 /* Diagnostics.swift in Sources */,
 				71475607756C77091EC1965B /* DiscoverScreens.swift in Sources */,
 				F0E6FC63C5BEF0967CF1478A /* DisplayCapabilities.swift in Sources */,
+				0581B937934D03B9CB2C9454 /* DownloadCenter.swift in Sources */,
+				5A6869F47807737A77705768 /* DownloadScreens.swift in Sources */,
+				0F8E5CD0D917AA032F23846F /* Downloads.swift in Sources */,
 				3A3211C837D405757BE67D02 /* IMDbRatings.swift in Sources */,
 				B108149F50E691AF9E53F7B5 /* IntroDetector.swift in Sources */,
 				EEDA20E113A716DC8153CCA9 /* IntroFinder.swift in Sources */,
@@ -711,6 +734,7 @@
 				A17FE13A57B5E1FB7B44E72C /* Diagnostics.swift in Sources */,
 				4FCC8D347FA7C0DA206970F3 /* DiscoverView.swift in Sources */,
 				FABD6CC5D4E3B72F1B49AF94 /* DisplayCapabilities.swift in Sources */,
+				279A7BC7E51840F599D9A58E /* Downloads.swift in Sources */,
 				EFE02680D705F89C46AEE534 /* HomeView.swift in Sources */,
 				6A49C0821526BF489DFB02F1 /* IMDbRatings.swift in Sources */,
 				386D67ED5316C34B79E7D846 /* IntroDetector.swift in Sources */,
@@ -976,7 +1000,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				JELLY_BUNDLE_ID = de.jelly.tv;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1038,7 +1062,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				JELLY_BUNDLE_ID = de.jelly.tv;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
