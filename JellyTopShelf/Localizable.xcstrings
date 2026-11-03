@@ -39,6 +39,60 @@
               }
             }
           }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld canal"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld canales"
+                }
+              }
+            }
+          }
+        },
+        "it" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld canale"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld canali"
+                }
+              }
+            }
+          }
+        },
+        "nl" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld kanaal"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld kanalen"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -52,6 +106,24 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld min"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld min"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld min"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld min"
@@ -72,6 +144,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld h"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld h"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld h"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld u"
           }
         }
       }
@@ -96,6 +186,24 @@
             "state" : "translated",
             "value" : "%lld h %lld min"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld h %lld min"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld h %lld min"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld u %lld min"
+          }
         }
       }
     },
@@ -111,6 +219,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Adapté à la connexion · jusqu'à %lld Mbit/s"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustado a tu conexión · hasta %lld Mbit/s"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adattato alla connessione · fino a %lld Mbit/s"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aangepast aan de verbinding · maximaal %lld Mbit/s"
           }
         }
       }
@@ -128,6 +254,24 @@
             "state" : "translated",
             "value" : "Automatique (recommandé)"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automático (recomendado)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatico (consigliato)"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatisch (aanbevolen)"
+          }
         }
       }
     },
@@ -144,6 +288,24 @@
             "state" : "translated",
             "value" : "Ajuster automatiquement (recommandé)"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustar automáticamente (recomendado)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regola automaticamente (consigliato)"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pas automatisch aan (aanbevolen)"
+          }
         }
       }
     },
@@ -159,6 +321,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nom d'utilisateur ou mot de passe incorrect."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre de usuario o contraseña incorrectos."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome utente o password errati."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gebruikersnaam of wachtwoord is onjuist."
           }
         }
       }
@@ -177,6 +357,24 @@
             "state" : "translated",
             "value" : "Encadré"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recuadro"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riquadro"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kader"
+          }
         }
       }
     },
@@ -193,6 +391,24 @@
             "state" : "translated",
             "value" : "Ton compte n'a pas l'autorisation de faire cela."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu cuenta no tiene permiso para hacer esto."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tuo account non ha l'autorizzazione per farlo."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je account heeft hiervoor geen toestemming."
+          }
         }
       }
     },
@@ -208,6 +424,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Le serveur a refusé la connexion. Le plus souvent, ton compte a atteint sa limite d'appareils – déconnecte un autre appareil ou demande à l'administrateur d'augmenter la limite."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El servidor ha rechazado el inicio de sesión. Normalmente, tu cuenta ha alcanzado su límite de dispositivos: cierra la sesión en otro dispositivo o pide al administrador que aumente el límite."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il server ha rifiutato l'accesso. Di solito il tuo account ha raggiunto il limite di dispositivi: esci da un altro dispositivo o chiedi all'amministratore di aumentare il limite."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De server heeft het inloggen geweigerd. Meestal is de apparaatlimiet van je account bereikt – log uit op een ander apparaat of vraag de beheerder de limiet te verhogen."
           }
         }
       }
@@ -226,6 +460,24 @@
             "state" : "translated",
             "value" : "Le serveur a répondu avec l'erreur %lld."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El servidor ha respondido con el error %lld."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il server ha risposto con l'errore %lld."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De server antwoordde met fout %lld."
+          }
         }
       }
     },
@@ -242,6 +494,24 @@
             "state" : "translated",
             "value" : "Impossible d'enregistrer la connexion de manière sécurisée."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se ha podido guardar tu sesión de forma segura."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile salvare l'accesso in modo sicuro."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je inlog kan niet veilig worden bewaard."
+          }
         }
       }
     },
@@ -257,6 +527,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cette adresse ne semble pas correcte. Exemple : 192.168.1.20 ou jellyfin.mondomaine.fr"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta dirección no parece correcta. Ejemplo: 192.168.1.20 o jellyfin.mydomain.com"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo indirizzo non sembra corretto. Esempio: 192.168.1.20 o jellyfin.miodominio.it"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dit adres lijkt niet te kloppen. Voorbeeld: 192.168.1.20 of jellyfin.mijndomein.nl"
           }
         }
       }
@@ -275,6 +563,24 @@
             "state" : "translated",
             "value" : "Dolby Vision en HDR10"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dolby Vision como HDR10"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dolby Vision come HDR10"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dolby Vision als HDR10"
+          }
         }
       }
     },
@@ -291,6 +597,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dolby Vision profil %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dolby Vision perfil %lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dolby Vision profilo %lld"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dolby Vision-profiel %lld"
           }
         }
       }
@@ -309,6 +633,24 @@
             "state" : "translated",
             "value" : "Dolby Vision profil 7 en 8.1"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dolby Vision perfil 7 como 8.1"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dolby Vision profilo 7 come 8.1"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dolby Vision-profiel 7 als 8.1"
+          }
         }
       }
     },
@@ -325,6 +667,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "É%lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E%lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E%lld"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A%lld"
           }
         }
       }
@@ -343,6 +703,24 @@
             "state" : "translated",
             "value" : "Épisode"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Episodio"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Episodio"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aflevering"
+          }
         }
       }
     },
@@ -358,6 +736,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aucun fichier lisible n'est disponible pour ce titre."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay ningún archivo reproducible para este título."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun file riproducibile disponibile per questo titolo."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er is geen afspeelbaar bestand beschikbaar voor deze titel."
           }
         }
       }
@@ -376,6 +772,24 @@
             "state" : "translated",
             "value" : "Jaune"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amarillo"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giallo"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geel"
+          }
         }
       }
     },
@@ -392,6 +806,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Grande"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grande"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grande"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Groot"
           }
         }
       }
@@ -410,6 +842,24 @@
             "state" : "translated",
             "value" : "HDR10+ dynamique"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HDR10+ dinámico"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HDR10+ dinamico"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HDR10+ dynamisch"
+          }
         }
       }
     },
@@ -426,6 +876,24 @@
             "state" : "translated",
             "value" : "Toujours l'original (peut saccader)"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siempre original (puede ir a tirones)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sempre l'originale (può andare a scatti)"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Altijd origineel (kan haperen)"
+          }
         }
       }
     },
@@ -441,6 +909,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Toujours le décodeur logiciel"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siempre decodificador por software"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sempre decoder software"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Altijd softwaredecoder"
           }
         }
       }
@@ -459,6 +945,24 @@
             "state" : "translated",
             "value" : "Petite"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pequeño"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piccola"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klein"
+          }
         }
       }
     },
@@ -475,6 +979,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "En cours"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En emisión"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In corso"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lopend"
           }
         }
       }
@@ -493,6 +1015,24 @@
             "state" : "translated",
             "value" : "Épisode suivant"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siguiente episodio"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Episodio successivo"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volgende aflevering"
+          }
         }
       }
     },
@@ -508,6 +1048,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nouveautés dans ta bibliothèque"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Novedades en tu biblioteca"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Novità nella tua libreria"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nieuw in je bibliotheek"
           }
         }
       }
@@ -526,6 +1084,24 @@
             "state" : "translated",
             "value" : "Il reste %@"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quedan %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ancora %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nog %@"
+          }
         }
       }
     },
@@ -541,6 +1117,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Original sans les pistes audio inutilisées · sans perte"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Original sin pistas de audio no usadas · sin pérdida"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Originale senza tracce audio non usate · senza perdita"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Origineel zonder ongebruikte audiosporen · verliesvrij"
           }
         }
       }
@@ -559,6 +1153,24 @@
             "state" : "translated",
             "value" : "Fichier original"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archivo original"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File originale"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Origineel bestand"
+          }
         }
       }
     },
@@ -575,6 +1187,24 @@
             "state" : "translated",
             "value" : "Quick Connect est désactivé sur ce serveur."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quick Connect está desactivado en este servidor."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quick Connect è disattivato su questo server."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quick Connect is uitgeschakeld op deze server."
+          }
         }
       }
     },
@@ -588,6 +1218,24 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S%lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "T%lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S%lld"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "S%lld"
@@ -615,6 +1263,24 @@
             "state" : "translated",
             "value" : "S%lld · É%lld"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "T%lld · E%lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S%lld · E%lld"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S%lld · A%lld"
+          }
         }
       }
     },
@@ -631,6 +1297,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ombre"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sombra"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ombra"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schaduw"
           }
         }
       }
@@ -649,6 +1333,24 @@
             "state" : "translated",
             "value" : "Série"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serie"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serie"
+          }
         }
       }
     },
@@ -665,6 +1367,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Piste %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pista %lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traccia %lld"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spoor %lld"
           }
         }
       }
@@ -683,6 +1403,24 @@
             "state" : "translated",
             "value" : "Standard"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estándar"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standard"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standaard"
+          }
         }
       }
     },
@@ -698,6 +1436,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aucun serveur Jellyfin n'a été trouvé à cette adresse."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se ha encontrado ningún servidor Jellyfin en esta dirección."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun server Jellyfin trovato a questo indirizzo."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er is geen Jellyfin-server gevonden op dit adres."
           }
         }
       }
@@ -716,6 +1472,24 @@
             "state" : "translated",
             "value" : "ST"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SUB"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SUB"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OT"
+          }
         }
       }
     },
@@ -732,6 +1506,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Réempaqueté par le serveur"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reempaquetado por el servidor"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reimpacchettato dal server"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opnieuw verpakt door de server"
           }
         }
       }
@@ -750,6 +1542,24 @@
             "state" : "translated",
             "value" : "Blanc"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blanco"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bianco"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wit"
+          }
         }
       }
     },
@@ -766,6 +1576,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reprendre"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seguir viendo"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continua a guardare"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kijk verder"
           }
         }
       }

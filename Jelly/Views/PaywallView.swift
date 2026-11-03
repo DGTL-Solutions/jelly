@@ -17,12 +17,15 @@ struct PaywallView: View {
             AppMark(size: 150)
             Text(title).font(.system(size: 50, weight: .bold)).multilineTextAlignment(.center)
             // The whole offer has to be readable before subscribing: never truncated.
-            Text(explanation)
-                .font(.callout).foregroundStyle(.secondary).multilineTextAlignment(.center)
+            Text(offersPurchase ? purchases.offerSummary : explanation)
+                .font(offersPurchase ? .headline : .callout)
+                .foregroundStyle(offersPurchase ? .primary : .secondary)
+                .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: 1250)
+            if offersPurchase { PaywallBenefits(font: .callout, iconWidth: 44, spacing: 12) }
             VStack(spacing: 16) {
-                if !purchases.access.isActive && purchases.access != .unlocked {
+                if offersPurchase {
                     Button { Task { await purchases.subscribe() } } label: {
                         Label(subscribeTitle, systemImage: purchases.trialAvailable ? "gift" : "star").frame(width: 720)
                     }
@@ -44,7 +47,8 @@ struct PaywallView: View {
                 } else if let message = purchases.message {
                     Label(message, systemImage: "exclamationmark.circle").foregroundStyle(.orange)
                 } else {
-                    Text("Jelly Jahresabo · 1 Jahr · \(purchases.price) pro Jahr. Bezahlt wird über deine Apple-ID; das Abo gilt auf Apple TV, iPhone und iPad mit dieser Apple-ID. Kündigen: Apple-TV-Einstellungen › Benutzer und Accounts › Abonnements.")
+                    (Text("Jelly Jahresabo · 1 Jahr · \(purchases.price) pro Jahr. Bezahlt wird über deine Apple-ID; das Abo gilt auf Apple TV, iPhone und iPad mit dieser Apple-ID. Kündigen: Apple-TV-Einstellungen › Benutzer und Accounts › Abonnements.")
+                        + Text(offersPurchase ? " " + purchases.renewalTerms : ""))
                         .foregroundStyle(.secondary)
                 }
             }
@@ -74,6 +78,8 @@ struct PaywallView: View {
         }
         .sheet(item: $document) { LegalDocumentView(document: $0) }
     }
+
+    private var offersPurchase: Bool { !purchases.access.isActive && purchases.access != .unlocked }
 
     private var subscribeTitle: String {
         purchases.trialAvailable

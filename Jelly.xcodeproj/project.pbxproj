@@ -102,9 +102,11 @@
 		C3E73A5ECAE28952FF45E85F /* License-LGPL-2.1.txt in Resources */ = {isa = PBXBuildFile; fileRef = EC9148709D4EC1A327BDC313 /* License-LGPL-2.1.txt */; };
 		C4314CAC40B79E907BAFA7B2 /* LibraryScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C89F7300311B0E0259B6A3 /* LibraryScreens.swift */; };
 		C5F407AE10E684F358216965 /* libass in Frameworks */ = {isa = PBXBuildFile; productRef = 4D50842C32CD70FE93B53160 /* libass */; };
+		CBB74252BA3A43878F76D225 /* PaywallBenefits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325A3BC827EE00C19A282E32 /* PaywallBenefits.swift */; };
 		CEA309E739AC1B77068376F5 /* SecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5C9582D71639711F6C0053 /* SecureStore.swift */; };
 		CFA8F79FA4A52031D384F824 /* Seerr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702891C8FE64D2FB792F7A72 /* Seerr.swift */; };
 		D179F330404543E5AF64A8DA /* PlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2F394BAF1CD598424B68F8 /* PlayerController.swift */; };
+		D22F0ECB0DFEA1C0BF4ED13C /* PaywallBenefits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325A3BC827EE00C19A282E32 /* PaywallBenefits.swift */; };
 		D3A1C14C48B248D31CAD6DEC /* ContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B23CD8C8220A98BC90A53 /* ContentProvider.swift */; };
 		D44EDEF0C6F9F0875D376EFF /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = CE06C1508B3A45E5EB1749A8 /* Localizable.xcstrings */; };
 		D5D4D4BB2D189D69AF8F2190 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2C8B16BBF610F5334BD640 /* Models.swift */; };
@@ -172,6 +174,7 @@
 		1AB99804C998295075348B78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1E6C40E354F80135D447511D /* Diagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagnostics.swift; sourceTree = "<group>"; };
 		2ACF811CD4EC85BBDF1A3323 /* License-libzvbi.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "License-libzvbi.txt"; sourceTree = "<group>"; };
+		325A3BC827EE00C19A282E32 /* PaywallBenefits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallBenefits.swift; sourceTree = "<group>"; };
 		331870C9FF562BC483C1626D /* JellyMobile.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = JellyMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3479D4451BFB1B7D96190F4A /* ConnectionAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionAnalyzer.swift; sourceTree = "<group>"; };
 		367CDB6E705F7CAC972C3837 /* AccountScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountScreens.swift; sourceTree = "<group>"; };
@@ -416,6 +419,7 @@
 			children = (
 				A2B5D86B9130E73BFD6F7E1F /* AboutData.swift */,
 				CDFD43BCD6F319C772627B0B /* DisplayCapabilities.swift */,
+				325A3BC827EE00C19A282E32 /* PaywallBenefits.swift */,
 				087D8D8292398E791F68EE4C /* SharedUI.swift */,
 				55EAAD2239D4DA614D8718B6 /* SubtitleOverlay.swift */,
 			);
@@ -595,7 +599,10 @@
 				Base,
 				de,
 				en,
+				es,
 				fr,
+				it,
+				nl,
 			);
 			mainGroup = D0CF8B29FFB557297F21054D;
 			minimizedProjectReferenceProxies = 1;
@@ -707,6 +714,7 @@
 				D5D4D4BB2D189D69AF8F2190 /* Models.swift in Sources */,
 				60A94A7CE4141944BB3700E7 /* NetworkProbe.swift in Sources */,
 				85C11843F7129867C80597AA /* OnboardingFlow.swift in Sources */,
+				D22F0ECB0DFEA1C0BF4ED13C /* PaywallBenefits.swift in Sources */,
 				2DA9A3DD3AB6AF10CEA16479 /* PlaybackSupport.swift in Sources */,
 				D179F330404543E5AF64A8DA /* PlayerController.swift in Sources */,
 				66281E7926AABA09B376F6B2 /* Purchases.swift in Sources */,
@@ -747,6 +755,7 @@
 				B572DCFFE575BF951B23A602 /* Models.swift in Sources */,
 				8F921C84662D0521715ED1D4 /* NetworkProbe.swift in Sources */,
 				02071587F600733EDD6FACA2 /* OnboardingView.swift in Sources */,
+				CBB74252BA3A43878F76D225 /* PaywallBenefits.swift in Sources */,
 				224FEA91EBB9C372EB3FBB4A /* PaywallView.swift in Sources */,
 				32769B61CB956140D90ACC0D /* PlaybackSupport.swift in Sources */,
 				EF57EE056F432DC1E9419511 /* PlayerController.swift in Sources */,

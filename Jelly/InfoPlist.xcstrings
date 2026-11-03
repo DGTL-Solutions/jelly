@@ -21,6 +21,24 @@
             "state" : "translated",
             "value" : "Jelly"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly"
+          }
         }
       }
     },
@@ -41,6 +59,24 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jelly"
@@ -67,6 +103,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jelly se connecte à ton serveur Jellyfin sur ton réseau local."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly se conecta a tu servidor Jellyfin a través de tu red doméstica."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly si connette al tuo server Jellyfin nella tua rete domestica."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly maakt verbinding met je Jellyfin-server in je thuisnetwerk."
           }
         }
       }
