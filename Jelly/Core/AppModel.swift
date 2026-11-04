@@ -377,6 +377,14 @@ final class AppModel: ObservableObject {
         contentChanged()
     }
 
+    /// Jellyfin has no "hide from Continue Watching": it lists everything with a position. Resetting the position takes
+    /// the title off the row on every device and the Top Shelf; whether it counts as watched stays as it is.
+    func removeFromResume(_ item: BaseItem) async {
+        guard let client, let session else { return }
+        try? await client.saveUserData(user: session.userID, itemID: item.id, seconds: 0, played: item.isWatched)
+        contentChanged()
+    }
+
     func setFavorite(_ item: BaseItem, _ favorite: Bool) async {
         guard let client, let session else { return }
         try? await client.setFavorite(user: session.userID, id: item.id, favorite)
