@@ -180,6 +180,14 @@ struct MobileItemActions: View {
                 Label("Herunterladen", systemImage: "arrow.down.circle")
             }
         }
+        if item.isPlayable, item.progress > 0, !item.isWatched {
+            Button(role: .destructive) { Task { await model.removeFromResume(item) } } label: {
+                Label {
+                    Text("Aus „Weiterschauen“ entfernen")
+                    Text("Der Fortschritt wird zurückgesetzt")
+                } icon: { Image(systemName: "eye.slash") }
+            }
+        }
         if item.isPlayable || item.isSeries {
             Button { Task { await model.setWatched(item, !item.isWatched) } } label: {
                 Label(item.isWatched ? "Als ungesehen markieren" : "Als gesehen markieren", systemImage: item.isWatched ? "eye.slash" : "checkmark.circle")
