@@ -5,6 +5,8 @@ import AppKit
 let root = URL(fileURLWithPath: "Jelly/Assets.xcassets")
 let brand = root.appendingPathComponent("App Icon & Top Shelf Image.brandassets")
 let purple = NSColor(calibratedRed: 0.55, green: 0.25, blue: 0.85, alpha: 1)
+let brandStart = NSColor(calibratedRed: 0.42, green: 0.25, blue: 0.98, alpha: 1)   // violet to blue, as in Design/AppIcon-v2.icon
+let brandEnd = NSColor(calibratedRed: 0.08, green: 0.62, blue: 1.0, alpha: 1)
 let blue = NSColor(calibratedRed: 0.0, green: 0.58, blue: 0.84, alpha: 1)
 
 func png(_ width: Int, _ height: Int, _ draw: (CGRect) -> Void) -> Data {
@@ -17,38 +19,58 @@ func png(_ width: Int, _ height: Int, _ draw: (CGRect) -> Void) -> Data {
     return rep.representation(using: .png, properties: [:])!
 }
 
-/// Jelly's logo, flat and crisp like YouTube's: a rounded play button in the brand gradient with a white triangle.
-let brandStart = NSColor(calibratedRed: 0.67, green: 0.36, blue: 0.86, alpha: 1)   // Theme.brand in the app
-let brandEnd = NSColor(calibratedRed: 0.0, green: 0.64, blue: 0.86, alpha: 1)
+/// Jelly's logo: one connected glass jellyfish swimming to the right, the bell doubling as the play shape.
+/// The outline is the one in Design/AppIcon-v2.icon (the source of the iPhone and iPad icon).
+let jellyPoints: [CGPoint] = {
+    let svg = try! String(contentsOfFile: "Design/AppIcon-v2.icon/Assets/jelly.svg", encoding: .utf8)
+    let d = svg.components(separatedBy: " d=\"")[1].components(separatedBy: "\"")[0]
+    return d.split(whereSeparator: { "MLZ ".contains($0) }).map { token in
+        let n = token.split(separator: ",").map { Double($0)! }
+        return CGPoint(x: n[0], y: n[1])
+    }
+}()
+let jellyBox: CGRect = {
+    let xs = jellyPoints.map(\.x), ys = jellyPoints.map(\.y)
+    return CGRect(x: xs.min()!, y: ys.min()!, width: xs.max()! - xs.min()!, height: ys.max()! - ys.min()!)
+}()
 
-func logoButton(center: CGPoint, height: CGFloat) {
-    let width = height * 1.42
-    let rect = CGRect(x: center.x - width / 2, y: center.y - height / 2, width: width, height: height)
-    let path = NSBezierPath(roundedRect: rect, xRadius: height * 0.28, yRadius: height * 0.28)
-    NSGradient(starting: brandStart, ending: brandEnd)!.draw(in: path, angle: -32)
-}
-
-/// A right-pointing triangle with just slightly softened corners, optically centred on `center`.
-func logoTriangle(center: CGPoint, height: CGFloat, color: NSColor = .white) {
-    let round = height * 0.09
-    let h = height - round, w = h * 0.88
-    let x = center.x - w / 2 + w * 0.06
+func jellyPath(center: CGPoint, height: CGFloat) -> NSBezierPath {
+    let scale = height / jellyBox.height
     let path = NSBezierPath()
-    path.move(to: CGPoint(x: x, y: center.y + h / 2))
-    path.line(to: CGPoint(x: x + w, y: center.y))
-    path.line(to: CGPoint(x: x, y: center.y - h / 2))
+    for (i, p) in jellyPoints.enumerated() {
+        let point = CGPoint(x: center.x + (p.x - jellyBox.midX) * scale, y: center.y - (p.y - jellyBox.midY) * scale)
+        if i == 0 { path.move(to: point) } else { path.line(to: point) }
+    }
     path.close()
     path.lineJoinStyle = .round
-    path.lineWidth = round
-    color.setFill()
-    color.setStroke()
-    path.fill()
+    return path
+}
+
+/// The glass body: milky white, brighter at the top left, with a fine light edge.
+func jellyGlass(center: CGPoint, height: CGFloat) {
+    let path = jellyPath(center: center, height: height)
+    NSGradient(colors: [NSColor.white.withAlphaComponent(0.97), NSColor.white.withAlphaComponent(0.60)])!.draw(in: path, angle: -60)
+    NSColor.white.withAlphaComponent(0.9).setStroke()
+    path.lineWidth = max(1, height * 0.006)
     path.stroke()
 }
 
+/// The soft shadow that gives the glass its depth: an own layer on the Apple TV, where it moves apart on focus.
+func jellyShadow(center: CGPoint, height: CGFloat) {
+    NSGraphicsContext.saveGraphicsState()
+    let shadow = NSShadow()
+    shadow.shadowColor = NSColor(calibratedRed: 0.10, green: 0.05, blue: 0.42, alpha: 0.5)
+    shadow.shadowBlurRadius = height * 0.06
+    shadow.shadowOffset = NSSize(width: 0, height: -height * 0.035)
+    shadow.set()
+    NSColor(calibratedRed: 0.20, green: 0.25, blue: 0.85, alpha: 0.55).setFill()
+    jellyPath(center: center, height: height).fill()
+    NSGraphicsContext.restoreGraphicsState()
+}
+
 func logo(center: CGPoint, height: CGFloat) {
-    logoButton(center: center, height: height)
-    logoTriangle(center: center, height: height * 0.44)
+    jellyShadow(center: center, height: height)
+    jellyGlass(center: center, height: height)
 }
 
 func write(_ data: Data, _ path: URL) {
@@ -80,12 +102,12 @@ func imagestack(_ name: String, sizes: [(Int, Int, String)]) {
         let dir = stack.appendingPathComponent("\(layer).imagestacklayer")
         json(["info": info], dir.appendingPathComponent("Contents.json"))
         imageset(dir.appendingPathComponent("Content.imageset"), base: layer.lowercased(), sizes: sizes) { rect in
-            // White ground, the button above it and the triangle on top: three layers that tilt apart when focused.
+            // Gradient ground, the shadow above it and the glass jellyfish on top: three layers that tilt apart when focused.
             let center = CGPoint(x: rect.midX, y: rect.midY)
             switch layer {
-            case "Back": NSColor.white.setFill(); rect.fill()
-            case "Middle": logoButton(center: center, height: rect.height * 0.56)
-            default: logoTriangle(center: center, height: rect.height * 0.56 * 0.44)
+            case "Back": NSGradient(starting: brandStart, ending: brandEnd)!.draw(in: rect, angle: -32)
+            case "Middle": jellyShadow(center: center, height: rect.height * 0.62)
+            default: jellyGlass(center: center, height: rect.height * 0.62)
             }
         }
     }
@@ -133,18 +155,9 @@ imagestack("App Icon", sizes: [(400, 240, "1x"), (800, 480, "2x")])
 imagestack("App Icon - App Store", sizes: [(1280, 768, "1x")])
 imageset(brand.appendingPathComponent("Top Shelf Image.imageset"), base: "topshelf", sizes: [(1920, 720, "1x"), (3840, 1440, "2x")], draw: topShelf)
 imageset(brand.appendingPathComponent("Top Shelf Image Wide.imageset"), base: "topshelf-wide", sizes: [(2320, 720, "1x"), (4640, 1440, "2x")], draw: topShelf)
-// iPhone and iPad: one 1024 pt icon, flat like the Apple TV icon, plus the dark-mode variant.
+// iPhone and iPad: the Liquid Glass icon is JellyMobile/AppIcon.icon (a copy of Design/AppIcon-v2.icon, built by Xcode 26 or later),
+// so no AppIcon.appiconset any more: both with the same name would collide.
 let mobile = URL(fileURLWithPath: "JellyMobile/Assets.xcassets")
-let iconSet = mobile.appendingPathComponent("AppIcon.appiconset")
+try? FileManager.default.removeItem(at: mobile.appendingPathComponent("AppIcon.appiconset"))
 json(["info": info], mobile.appendingPathComponent("Contents.json"))
-for (file, ground) in [("icon.png", NSColor.white), ("icon-dark.png", NSColor(calibratedWhite: 0.07, alpha: 1))] {
-    write(png(1024, 1024) { rect in
-        ground.setFill()
-        rect.fill()
-        logo(center: CGPoint(x: rect.midX, y: rect.midY), height: rect.height * 0.42)
-    }, iconSet.appendingPathComponent(file))
-}
-json(["images": [["filename": "icon.png", "idiom": "universal", "platform": "ios", "size": "1024x1024"],
-                 ["appearances": [["appearance": "luminosity", "value": "dark"]], "filename": "icon-dark.png", "idiom": "universal",
-                  "platform": "ios", "size": "1024x1024"]], "info": info], iconSet.appendingPathComponent("Contents.json"))
 print("Artwork written to \(brand.path) and \(mobile.path)")

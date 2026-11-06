@@ -13,34 +13,32 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 START = time.time()
 GB = 1024 ** 3
 
-# The public demo server's own films and series (public domain or Creative Commons), so screenshots show nothing
-# we have no rights to. tmdb id, type, title, date, poster, media status (2 pending, 3 processing, 4 partial,
-# 5 available), downloads
+# Blender Foundation's open movies (CC-BY, Spring public domain): colourful, free to show in App Store screenshots and the
+# same titles as the screenshot library (see AppStore/README.md). tmdb id, type, title, date, poster, media status
+# (2 pending, 3 processing, 4 partial, 5 available), downloads
 TITLES = [
-    (10331, "movie", "Night of the Living Dead", "1968-10-04", "/rb2NWyb008u1EcKCOyXs2Nmj0ra.jpg", 3, "movie-running"),
-    (33050, "tv", "Pioneer One", "2010-06-16", "/p53wbsukyhJ8TieisoeU1zZr9iA.jpg", 4, "season-pack"),
-    (5698, "movie", "The Great Train Robbery", "1903-12-07", "/vEYr1sJR1dOFGXwXawpBN6hDRGF.jpg", 3, "queued"),
-    (225117, "movie", "King Lear", "1953-10-18", "/gSyCFr1mC6xdA78k8TSTVDtNhtv.jpg", 3, "paused"),
-    (18783, "movie", "Sahara", "1943-11-11", "/roVIPqVLMdvs7uOcqDuwO891t8s.jpg", 3, None),
-    (138, "movie", "Dracula", "1931-02-12", "/ueVSPt7vAba0XScHWTDWS5tNxYX.jpg", 5, None),
-    (23033, "movie", "Jungle Book", "1942-04-03", "/zYkffyYCFO1Li1f20MyaAYUaYC4.jpg", None, None),
-    (406956, "movie", "Caminandes: Llamigos", "2016-09-30", "/753kJbZ5iS7DUomTKX9qF5Cs5NY.jpg", 2, None),
-    (5926, "movie", "The Great St. Louis Bank Robbery", "1959-06-01", "/zodT2zxrTpCTWZp1jrz2xNZhSq7.jpg", None, None),
-    (253774, "movie", "Caminandes: Gran Dillama", "2013-11-22", "/7YtEiEzRBVCr8Sbgo1kVsr3OCMk.jpg", None, None),
+    (45745, "movie", "Sintel", "2010-09-27", "/l98Zns4oQe1BSvbF4hJ8oL6VSf0.jpg", 3, "movie-running"),
+    (133701, "movie", "Tears of Steel", "2012-09-26", "/8qy3jRmaHR7f8VZh3iXCqCWfFsH.jpg", 3, "queued"),
+    (9761, "movie", "Elephants Dream", "2006-03-24", "/9zROtU9TkpZQrOuEaMAp68FOWLK.jpg", 3, "paused"),
+    (358332, "movie", "Cosmos Laundromat", "2015-08-10", "/5ZXi0oitpEgAdoJglFTc5SZF9nt.jpg", 3, None),
+    (593048, "movie", "Spring", "2019-04-04", "/g5dSJtpoXYCSVx70srSAc3wqNFc.jpg", 3, None),
+    (10378, "movie", "Big Buck Bunny", "2008-04-10", "/i9jJzvoXET4D9pOkoEwncSdNNER.jpg", 5, None),
+    (253777, "movie", "Caminandes: Llama Drama", "2013-01-31", "/66VPke0YSiyfe97aobbcZ55ts56.jpg", 2, None),
+    (253774, "movie", "Caminandes: Gran Dillama", "2013-11-22", "/7YtEiEzRBVCr8Sbgo1kVsr3OCMk.jpg", 2, None),
+    (406956, "movie", "Caminandes: Llamigos", "2016-09-30", "/753kJbZ5iS7DUomTKX9qF5Cs5NY.jpg", None, None),
 ]
-BACKDROPS = {10331: "/duPDqFFRkwKcGfVibBvtVKA7VNh.jpg", 138: "/p4WwQJmJzVHywWWFoHRHCAdZ8wa.jpg", 23033: "/iSqKGCO5W2vIcwHfJXIrkTEtAFV.jpg"}
-VOTES = {10331: 7.5, 33050: 6.9, 5698: 6.9, 225117: 6.2, 18783: 7.1, 138: 7.3, 23033: 6.6, 406956: 7.6, 5926: 6.1, 253774: 6.8}
+BACKDROPS = {}
+VOTES = {45745: 7.5, 133701: 6.8, 9761: 6.0, 358332: 7.3, 593048: 7.6, 10378: 6.5, 253777: 7.2, 253774: 7.4, 406956: 7.6}
 OVERVIEWS = {
-    10331: "A group of strangers barricade themselves in a farmhouse as the recently dead rise and close in.",
-    33050: "An object falls from the sky over Canada, and two agents follow its trail to a stranger claiming to come from space.",
-    5698: "A gang of bandits holds up a steam train and flees on horseback, with a posse close behind.",
-    225117: "Orson Welles plays the ageing king who divides his realm between his daughters, with tragic consequences.",
-    18783: "A tank crew and a band of stragglers hold a desert well against a German battalion.",
-    138: "Count Dracula leaves Transylvania for London, where he sets his sights on Mina Seward.",
-    23033: "Raised by wolves, Mowgli returns to his village and must choose between the jungle and the people.",
-    406956: "Koro the llama and a penguin compete for the last berry on a windswept Patagonian plain.",
-    5926: "Career criminals and a local youth carefully plan and rehearse the robbery of a Missouri bank.",
+    45745: "A wandering warrior finds an unlikely friend in a young dragon and sets out to bring it home.",
+    133701: "A group of fighters in Amsterdam tries to save the world from a robot threat with one last experiment.",
+    9761: "Two strangers explore a vast machine world where nothing is as it seems.",
+    358332: "On a desolate island, a lonely sheep meets a salesman who offers him a lifetime of adventures.",
+    593048: "A shepherd girl and her dog face ancient spirits in order to continue the cycle of life.",
+    10378: "A gentle giant rabbit takes revenge on three bullying rodents after a day in the forest.",
+    253777: "Koro the llama wants to get across the road, with a penguin as his only obstacle.",
     253774: "Koro the llama tries every trick to reach the greener grass behind an electric fence.",
+    406956: "Koro the llama and a penguin compete for the last berry on a windswept Patagonian plain.",
 }
 
 
