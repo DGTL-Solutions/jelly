@@ -4,3 +4,5 @@ New: downloads for the road
 • Subtitles, "Skip Intro" and "Next Episode" work offline as well. Jelly remembers where you stopped and tells your server once it is reachable again.
 • Downloads continue in the background, even when Jelly is closed.
 • Jelly is now also available in French, Spanish, Italian and Dutch.
+• New app icon in a Liquid Glass look: a glass jellyfish instead of the play button – in the app itself, too.
+• Fixed: after rotating the iPhone, posters in the library were cut off at the edges.

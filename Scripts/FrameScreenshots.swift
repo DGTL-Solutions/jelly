@@ -21,7 +21,7 @@ func text(_ string: String, size: CGFloat, weight: NSFont.Weight, color: NSColor
     paragraph.lineHeightMultiple = 1.02
     return NSAttributedString(string: string, attributes: [
         .font: NSFont.systemFont(ofSize: size, weight: weight), .foregroundColor: color, .paragraphStyle: paragraph,
-        .kern: weight == .bold ? -size * 0.012 : 0,
+        .kern: (weight == .bold || weight == .heavy) ? -size * 0.012 : 0,
     ])
 }
 
@@ -40,18 +40,20 @@ func frame(_ input: URL, device: String, caption: [String], output: URL) {
     NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: canvas)
     let bounds = NSRect(x: 0, y: 0, width: width, height: height)
 
-    // Background: Jelly's night colours with a soft glow of the brand gradient behind the screenshot.
-    NSGradient(colors: [NSColor(calibratedRed: 0.11, green: 0.06, blue: 0.25, alpha: 1),
-                        NSColor(calibratedRed: 0.04, green: 0.07, blue: 0.17, alpha: 1)])!.draw(in: bounds, angle: -70)
-    let glow = NSRect(x: width * 0.05, y: height * 0.08, width: width * 0.9, height: height * 0.7)
-    NSGradient(colors: [brandStart.withAlphaComponent(0.42), brandEnd.withAlphaComponent(0.0)])!
-        .draw(in: NSBezierPath(ovalIn: glow), relativeCenterPosition: NSPoint(x: -0.2, y: 0.1))
+    // Background: the violet-to-blue gradient of the new app icon, a little deeper for contrast, with a bright glow
+    // behind the screenshot. Light and colourful so the first three images stand out between the dark app screens in the search.
+    NSGradient(colors: [NSColor(calibratedRed: 0.44, green: 0.26, blue: 0.96, alpha: 1),
+                        NSColor(calibratedRed: 0.26, green: 0.44, blue: 0.98, alpha: 1),
+                        NSColor(calibratedRed: 0.06, green: 0.60, blue: 1.0, alpha: 1)])!.draw(in: bounds, angle: -62)
+    let glow = NSRect(x: width * 0.02, y: height * 0.02, width: width * 0.96, height: height * 0.78)
+    NSGradient(colors: [NSColor.white.withAlphaComponent(0.20), NSColor.white.withAlphaComponent(0.0)])!
+        .draw(in: NSBezierPath(ovalIn: glow), relativeCenterPosition: NSPoint(x: 0.0, y: 0.25))
 
     // Headline and line below, centred at the top.
     let margin = width * (landscape ? 0.07 : 0.06)
     let textWidth = width - 2 * margin
-    let headline = text(caption[0], size: sizes.headline, weight: .bold, color: .white)
-    let line = text(caption[1], size: sizes.line, weight: .regular, color: NSColor.white.withAlphaComponent(0.78))
+    let headline = text(caption[0], size: sizes.headline, weight: .heavy, color: .white)
+    let line = text(caption[1], size: sizes.line, weight: .medium, color: NSColor.white.withAlphaComponent(0.94))
     let options: NSString.DrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]
     let headlineHeight = ceil(headline.boundingRect(with: NSSize(width: textWidth, height: 10_000), options: options).height)
     let lineHeight = ceil(line.boundingRect(with: NSSize(width: textWidth, height: 10_000), options: options).height)
@@ -64,26 +66,45 @@ func frame(_ input: URL, device: String, caption: [String], output: URL) {
     let areaTop = lineTop + lineHeight + height * (landscape ? 0.035 : 0.028)
     let bottom = height * (landscape ? 0.045 : 0.035)
     let available = NSSize(width: width * (landscape ? 0.86 : 0.84), height: height - areaTop - bottom)
-    let scale = min(available.width / width, available.height / height)
-    let shot = NSRect(x: (width - width * scale) / 2, y: bottom, width: width * scale, height: height * scale)
-    let radius = shot.width * (device == "iphone" ? (landscape ? 0.03 : 0.075) : (device == "ipad" ? 0.03 : 0.018))
-    let clip = NSBezierPath(roundedRect: shot, xRadius: radius, yRadius: radius)
+    // iPhone and iPad get a device frame (black bezel, Dynamic Island on the iPhone); the Apple TV image stays frameless.
+    let k: CGFloat = device == "tv" ? 0 : (device == "iphone" ? 0.036 : 0.03)
+    let scale = min(available.width / (width * (1 + 2 * k)), available.height / (height * (1 + 2 * k)))
+    let bezel = k * width * scale
+    let shot = NSRect(x: (width - width * scale) / 2, y: bottom + bezel, width: width * scale, height: height * scale)
+    let screenRadius = shot.width * (device == "iphone" ? (landscape ? 0.06 : 0.125) : (device == "ipad" ? 0.032 : 0.018))
+    let body = shot.insetBy(dx: -bezel, dy: -bezel)
+    let bodyRadius = screenRadius + bezel
+    let bodyPath = NSBezierPath(roundedRect: body, xRadius: bodyRadius, yRadius: bodyRadius)
     NSGraphicsContext.saveGraphicsState()
     let shadow = NSShadow()
-    shadow.shadowColor = NSColor.black.withAlphaComponent(0.55)
-    shadow.shadowBlurRadius = width * 0.025
-    shadow.shadowOffset = NSSize(width: 0, height: -width * 0.006)
+    shadow.shadowColor = NSColor(calibratedRed: 0.05, green: 0.03, blue: 0.25, alpha: 0.5)
+    shadow.shadowBlurRadius = width * 0.03
+    shadow.shadowOffset = NSSize(width: 0, height: -width * 0.01)
     shadow.set()
-    NSColor.black.setFill()
-    clip.fill()
+    (device == "tv" ? NSColor.black : NSColor(calibratedWhite: 0.07, alpha: 1)).setFill()
+    bodyPath.fill()
     NSGraphicsContext.restoreGraphicsState()
+    if device != "tv" {
+        // A fine light edge along the frame, brighter at the top, like titanium catching the light.
+        NSGradient(colors: [NSColor(calibratedWhite: 0.55, alpha: 1), NSColor(calibratedWhite: 0.16, alpha: 1), NSColor(calibratedWhite: 0.38, alpha: 1)])!
+            .draw(in: { let p = NSBezierPath(roundedRect: body, xRadius: bodyRadius, yRadius: bodyRadius); p.append(NSBezierPath(roundedRect: body.insetBy(dx: width * 0.0014, dy: width * 0.0014), xRadius: bodyRadius, yRadius: bodyRadius).reversed); return p }(), angle: -60)
+    }
+    let clip = NSBezierPath(roundedRect: shot, xRadius: screenRadius, yRadius: screenRadius)
     NSGraphicsContext.saveGraphicsState()
     clip.addClip()
     raw.draw(in: shot, from: .zero, operation: .sourceOver, fraction: 1)
     NSGraphicsContext.restoreGraphicsState()
-    NSColor.white.withAlphaComponent(0.12).setStroke()
-    clip.lineWidth = max(2, width * 0.0015)
-    clip.stroke()
+    if device == "iphone" && !landscape {
+        let islandWidth = shot.width * 0.285, islandHeight = shot.width * 0.082
+        let island = NSRect(x: shot.midX - islandWidth / 2, y: shot.maxY - shot.width * 0.026 - islandHeight, width: islandWidth, height: islandHeight)
+        NSColor.black.setFill()
+        NSBezierPath(roundedRect: island, xRadius: islandHeight / 2, yRadius: islandHeight / 2).fill()
+    }
+    if device == "tv" {
+        NSColor.white.withAlphaComponent(0.12).setStroke()
+        clip.lineWidth = max(2, width * 0.0015)
+        clip.stroke()
+    }
 
     NSGraphicsContext.restoreGraphicsState()
     try? FileManager.default.createDirectory(at: output.deletingLastPathComponent(), withIntermediateDirectories: true)

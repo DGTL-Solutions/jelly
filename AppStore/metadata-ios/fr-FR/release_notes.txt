@@ -4,3 +4,5 @@ Nouveau : les téléchargements pour emporter tes films partout
 • Les sous-titres, « Passer l'intro » et « Épisode suivant » fonctionnent aussi hors ligne. Jelly retient où tu t'es arrêté et le transmet à ton serveur dès qu'il est de nouveau joignable.
 • Les téléchargements continuent en arrière-plan, même quand Jelly est fermé.
 • Jelly est désormais disponible en français, ainsi qu'en espagnol, en italien et en néerlandais.
+• Nouvelle icône en Liquid Glass : une méduse de verre à la place du bouton lecture – aussi dans l'app.
+• Corrigé : après une rotation de l'iPhone, les affiches de la bibliothèque étaient coupées sur les bords.

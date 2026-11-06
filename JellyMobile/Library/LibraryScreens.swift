@@ -938,6 +938,7 @@ private struct LibraryPosterGrid<Header: View>: View {
     @State private var filter = LibraryFilter.all
     @State private var layout = LibraryLayout(alignsWithTitle: true)
     @State private var showsInlineTitle = false
+    @State private var measuredWidth: CGFloat = 0
 
     private var activeSort: LibrarySort { sort ?? initialSort }
     private var showsControls: Bool { personID == nil }
@@ -945,7 +946,7 @@ private struct LibraryPosterGrid<Header: View>: View {
 
     /// As many columns as fit at the minimum card width: 3 on a phone, 6 and more in landscape and on iPad.
     private var cardWidth: CGFloat {
-        let available = max(200, layout.size.width - 2 * layout.edge)
+        let available = gridWidth
         let minimum: CGFloat = layout.isLarge ? 136 : layout.isWide ? 124 : 104
         let count = max(3, Int((available + gridSpacing) / (minimum + gridSpacing)))
         return floor((available - gridSpacing * CGFloat(count - 1)) / CGFloat(count))
@@ -953,14 +954,21 @@ private struct LibraryPosterGrid<Header: View>: View {
 
     private var gridSpacing: CGFloat { layout.isWide ? 18 : 12 }
 
+    /// The width the grid really has: measured from a full-width spacer in the page, so it follows a turn of the screen at once
+    /// (the grid's own columns can't feed it, and the screen's size doesn't know about the safe areas beside a notch).
+    private var gridWidth: CGFloat { max(200, measuredWidth > 0 ? measuredWidth : layout.size.width - 2 * layout.edge) }
+
+    /// Flexible columns, so a stale count can never push the posters past the edge: the cards just share the room.
     private var columns: [GridItem] {
-        let count = max(1, Int((max(200, layout.size.width - 2 * layout.edge) + gridSpacing) / (cardWidth + gridSpacing)))
-        return Array(repeating: GridItem(.fixed(cardWidth), spacing: gridSpacing, alignment: .top), count: count)
+        let count = max(1, Int((gridWidth + gridSpacing) / (cardWidth + gridSpacing)))
+        return Array(repeating: GridItem(.flexible(minimum: 40), spacing: gridSpacing, alignment: .top), count: count)
     }
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
+                Color.clear.frame(maxWidth: .infinity).frame(height: 0)
+                    .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { if $0 > 0 { measuredWidth = $0 } }
                 header(layout)
                 titleRow
                 grid

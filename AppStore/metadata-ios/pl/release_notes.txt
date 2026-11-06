@@ -4,3 +4,5 @@ Nowość: pobieranie na drogę
 • Napisy, „Pomiń czołówkę” i „Następny odcinek” działają także offline. Jelly zapamiętuje, gdzie przerwano oglądanie, i informuje o tym serwer, gdy znów będzie dostępny.
 • Pobieranie trwa w tle, nawet gdy Jelly jest zamknięte.
 • Jelly jest teraz dostępne także po polsku.
+• Nowa ikona aplikacji w stylu Liquid Glass: szklana meduza zamiast przycisku odtwarzania – także w samej aplikacji.
+• Naprawiono: po obróceniu iPhone'a plakaty w bibliotece były ucięte przy krawędziach.

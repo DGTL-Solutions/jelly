@@ -1,12 +1,12 @@
 Jelly è il player Jellyfin per chi vuole vedere i propri film così come sono: in qualità originale, senza che il server debba transcodificare, su iPhone e iPad, con Picture in Picture e AirPlay. Ti basta il tuo server Jellyfin (gratuito su jellyfin.org).
 
 COSA RENDE JELLY DIVERSO
+• Jellyseerr integrato: richiedi film e serie, cerca e segui il download in tempo reale.
 • L'originale, non una transcodifica: MKV, MP4, AVI e TS con H.264, HEVC, AV1, VC-1 o MPEG-2. Quello che il dispositivo non sa decodificare da solo lo decodifica Jelly: il server non deve ricodificare nulla, quindi basta anche un piccolo NAS.
 • Sottotitoli come devono essere: ASS/SSA con font incorporati, posizioni ed effetti, oltre a PGS, VobSub, SRT e sottotitoli esterni. Scegli tu dimensione, colore e sfondo.
 • Pensato per le serie TV: Jelly riconosce intro e titoli di coda dall'audio, senza plugin sul server, e avvia l'episodio successivo appena partono i titoli di coda.
 • Intelligente con le connessioni lente: Jelly misura la connessione e prima elimina le tracce audio non usate, senza perdita, poi il server riduce la qualità dell'immagine. A casa, Jelly comunica direttamente con il tuo server.
 • Da portare con te: salva film, episodi e intere stagioni su iPhone o iPad e guardali offline, in qualità Originale, Migliore o Buona, con la dimensione e un consiglio per il tuo dispositivo.
-• Jellyseerr integrato: richiedi film e serie, cerca e segui il download in tempo reale.
 • Un abbonamento per tutto: Jelly su Apple TV, iPhone e iPad con lo stesso Account Apple.
 
 SU IPHONE E IPAD
@@ -26,3 +26,5 @@ Informativa sulla privacy: https://dgtl-solutions.github.io/jelly/privacy/
 Niente pubblicità, niente tracciamento, nessuna raccolta di dati. Jelly comunica solo con i tuoi server.
 
 Jelly è un'app indipendente e non un prodotto ufficiale del progetto Jellyfin.
+
+Film negli screenshot: © Blender Foundation / Blender Studio, CC-BY 4.0 (creativecommons.org/licenses/by/4.0).

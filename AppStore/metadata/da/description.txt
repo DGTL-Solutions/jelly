@@ -1,11 +1,11 @@
 Jelly er Jellyfin-afspilleren til alle, der vil se deres film, som de er: i original kvalitet, uden at din server skal transkode – med Dolby Vision, Atmos og fuldt formaterede undertekster. Alt, hvad du behøver, er din egen Jellyfin-server (gratis på jellyfin.org).
 
 DET GØR JELLY ANDERLEDES
+• Jellyseerr indbygget: Anmod om film og serier, søg, og følg downloaden live.
 • Originalen, ikke en transkodning: MKV, MP4, AVI og TS med H.264, HEVC, AV1, VC-1 eller MPEG-2. Det, som enheden ikke selv kan dekode, dekoder Jelly – din server skal ikke genkode noget, så selv en lille NAS er nok.
 • Undertekster, som de er tænkt: ASS/SSA med indlejrede skrifttyper, placeringer og effekter samt PGS, VobSub, SRT og eksterne undertekster. Du vælger selv størrelse, farve og baggrund.
 • Skabt til serier: Jelly genkender intro og rulletekster på lyden – uden server-plugin – og starter næste afsnit, så snart rulleteksterne begynder.
 • Smart ved langsomme forbindelser: Jelly måler forbindelsen og udelader først ubrugte lydspor – tabsfrit – før serveren skalerer billedet ned. Derhjemme taler Jelly direkte med din server.
-• Jellyseerr indbygget: Anmod om film og serier, søg, og følg downloaden live.
 • Ét abonnement til det hele: Jelly på Apple TV, iPhone og iPad med den samme Apple-konto.
 
 PÅ APPLE TV
@@ -25,3 +25,5 @@ Anonymitetspolitik: https://dgtl-solutions.github.io/jelly/privacy/
 Ingen reklamer, ingen sporing, ingen dataindsamling. Jelly taler kun med dine egne servere.
 
 Jelly er en uafhængig app og ikke et officielt produkt fra Jellyfin-projektet.
+
+Film i skærmbillederne: © Blender Foundation / Blender Studio, CC-BY 4.0 (creativecommons.org/licenses/by/4.0).

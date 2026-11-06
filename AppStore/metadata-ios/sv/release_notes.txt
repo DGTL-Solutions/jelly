@@ -4,3 +4,5 @@ Nytt: hämtningar för resan
 • Undertexter, ”Hoppa över intro” och ”Nästa avsnitt” fungerar även offline. Jelly kommer ihåg var du slutade och meddelar din server när den går att nå igen.
 • Hämtningar fortsätter i bakgrunden, även när Jelly är stängt.
 • Jelly finns nu även på svenska.
+• Ny appikon i Liquid Glass-look: en glasmanet i stället för uppspelningsknappen – även i själva appen.
+• Åtgärdat: Efter att iPhone vridits var affischerna i biblioteket avklippta i kanterna.

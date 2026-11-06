@@ -4,3 +4,5 @@ Novo: downloads para levar
 • Legendas, “Pular abertura” e “Próximo episódio” também funcionam offline. O Jelly lembra onde você parou e avisa o seu servidor assim que ele estiver acessível de novo.
 • Os downloads continuam em segundo plano, mesmo com o Jelly fechado.
 • O Jelly agora também está disponível em português.
+• Novo ícone no estilo Liquid Glass: uma água-viva de vidro no lugar do botão de reprodução – também dentro do app.
+• Corrigido: depois de girar o iPhone, os pôsteres da biblioteca ficavam cortados nas bordas.

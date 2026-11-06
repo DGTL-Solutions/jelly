@@ -53,6 +53,21 @@ struct MobileRootView: View {
             }
         }
         .onOpenURL { url in Task { await model.open(url) } }
+        #if DEBUG
+        // Simulator testing only: JELLY_ROTATE="22:landscape,30:portrait" turns the screen at those seconds after launch.
+        .task {
+            guard let plan = ProcessInfo.processInfo.environment["JELLY_ROTATE"] else { return }
+            var elapsed = 0.0
+            for step in plan.split(separator: ",") {
+                let parts = step.split(separator: ":")
+                guard parts.count == 2, let at = Double(parts[0]) else { continue }
+                try? await Task.sleep(for: .seconds(max(0, at - elapsed)))
+                elapsed = at
+                guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { continue }
+                scene.requestGeometryUpdate(.iOS(interfaceOrientations: parts[1] == "landscape" ? .landscape : .portrait))
+            }
+        }
+        #endif
         .task {
             model.offlineCopy = { [weak model] item in DownloadCenter.shared.offlineMedia(for: item, profileKey: model?.session?.key) }
         }

@@ -3,46 +3,88 @@
     "1-start": {
       "de": [
         "Deine Mediathek auf dem Apple TV",
-        "Weiterschauen, nächste Folgen und alles Neue – auf einen Blick"
+        "Weiterschauen, nächste Folgen und Wünschen mit Jellyseerr – alles auf einen Blick"
       ],
       "en": [
         "Your Jellyfin library on Apple TV",
-        "Continue watching, next episodes and everything new at a glance"
+        "Continue watching, next episodes and requests with Jellyseerr – all at a glance"
       ],
       "fr": [
         "Ta bibliothèque Jellyfin sur Apple TV",
-        "Reprendre, prochains épisodes et nouveautés en un coup d'œil"
+        "Reprendre, prochains épisodes et demandes Jellyseerr – tout en un coup d'œil"
       ],
       "es": [
         "Tu biblioteca Jellyfin en el Apple TV",
-        "Seguir viendo, siguientes episodios y novedades de un vistazo"
+        "Seguir viendo, siguientes episodios y pedidos con Jellyseerr, de un vistazo"
       ],
       "it": [
         "La tua libreria Jellyfin su Apple TV",
-        "Continua a guardare, episodi successivi e novità a colpo d'occhio"
+        "Continua a guardare, episodi successivi e richieste Jellyseerr, a colpo d'occhio"
       ],
       "nl": [
         "Je Jellyfin-bibliotheek op Apple TV",
-        "Kijk verder, volgende afleveringen en nieuws in één oogopslag"
+        "Kijk verder, volgende afleveringen en aanvragen met Jellyseerr – in één oogopslag"
       ],
       "pt": [
         "Sua biblioteca Jellyfin no Apple TV",
-        "Continuar assistindo, próximos episódios e novidades num relance"
+        "Continuar assistindo, próximos episódios e pedidos com Jellyseerr num relance"
       ],
       "da": [
         "Dit Jellyfin-bibliotek på Apple TV",
-        "Fortsæt med at se, næste afsnit og alt nyt på ét sted"
+        "Fortsæt, næste afsnit og ønsker med Jellyseerr – alt på ét sted"
       ],
       "sv": [
         "Ditt Jellyfin-bibliotek på Apple TV",
-        "Fortsätt titta, nästa avsnitt och allt nytt i en överblick"
+        "Fortsätt titta, nästa avsnitt och önskemål med Jellyseerr – allt på ett ställe"
       ],
       "pl": [
         "Twoja biblioteka Jellyfin na Apple TV",
-        "Oglądaj dalej, następne odcinki i nowości w jednym miejscu"
+        "Kontynuuj, kolejne odcinki i prośby przez Jellyseerr – wszystko w jednym miejscu"
       ]
     },
-    "2-details": {
+    "2-discover": {
+      "de": [
+        "Wünschen, was noch fehlt",
+        "Jellyseerr eingebaut – mit Live-Download-Fortschritt"
+      ],
+      "en": [
+        "Request what's missing",
+        "Jellyseerr built in – with live download progress"
+      ],
+      "fr": [
+        "Demande ce qui manque",
+        "Jellyseerr intégré – avec la progression en direct"
+      ],
+      "es": [
+        "Solicita lo que falta",
+        "Jellyseerr integrado, con la descarga en directo"
+      ],
+      "it": [
+        "Richiedi quello che manca",
+        "Jellyseerr integrato, con i download in diretta"
+      ],
+      "nl": [
+        "Vraag aan wat ontbreekt",
+        "Jellyseerr ingebouwd – met live downloadvoortgang"
+      ],
+      "pt": [
+        "Solicite o que falta",
+        "Jellyseerr integrado – com o download ao vivo"
+      ],
+      "da": [
+        "Anmod om det, der mangler",
+        "Jellyseerr indbygget – med download live"
+      ],
+      "sv": [
+        "Begär det som saknas",
+        "Jellyseerr inbyggt – med nedladdningen live"
+      ],
+      "pl": [
+        "Poproś o to, czego brakuje",
+        "Wbudowany Jellyseerr – z postępem pobierania na żywo"
+      ]
+    },
+    "3-details": {
       "de": [
         "Dolby Vision, HDR10+ und Atmos",
         "Bildfrequenz und Dynamikbereich passen sich jedem Film an"
@@ -84,7 +126,7 @@
         "Liczba klatek i zakres dynamiczny pod każdy film"
       ]
     },
-    "3-player": {
+    "4-player": {
       "de": [
         "Ein Player, der mitdenkt",
         "Intros überspringen, nächste Folge, Kapitel und Vorschau beim Spulen"
@@ -126,7 +168,7 @@
         "Pomiń czołówkę, następny odcinek, rozdziały i miniatury"
       ]
     },
-    "4-info": {
+    "5-info": {
       "de": [
         "Das Original – ohne Umrechnen",
         "MKV, AV1, VC-1, TrueHD, DTS-HD: Jelly spielt die Datei, wie sie ist"
@@ -212,91 +254,7 @@
         "W oryginalnej jakości na iPhonie, iPadzie i Apple TV"
       ]
     },
-    "2-details": {
-      "de": [
-        "Alles über deinen Film",
-        "Bewertungen, Besetzung, Versionen und ähnliche Titel"
-      ],
-      "en": [
-        "Everything about your film",
-        "Ratings, cast, versions and similar titles"
-      ],
-      "fr": [
-        "Tout sur ton film",
-        "Notes, distribution, versions et titres similaires"
-      ],
-      "es": [
-        "Todo sobre tu película",
-        "Valoraciones, reparto, versiones y títulos similares"
-      ],
-      "it": [
-        "Tutto sul tuo film",
-        "Valutazioni, cast, versioni e titoli simili"
-      ],
-      "nl": [
-        "Alles over je film",
-        "Scores, cast, versies en vergelijkbare titels"
-      ],
-      "pt": [
-        "Tudo sobre o seu filme",
-        "Avaliações, elenco, versões e títulos parecidos"
-      ],
-      "da": [
-        "Alt om din film",
-        "Bedømmelser, cast, versioner og lignende titler"
-      ],
-      "sv": [
-        "Allt om din film",
-        "Betyg, rollista, versioner och liknande titlar"
-      ],
-      "pl": [
-        "Wszystko o twoim filmie",
-        "Oceny, obsada, wersje i podobne tytuły"
-      ]
-    },
-    "3-player": {
-      "de": [
-        "Das Original – ohne Umrechnen",
-        "Bild-in-Bild, AirPlay und Untertitel mit allen Effekten"
-      ],
-      "en": [
-        "The original – no transcoding",
-        "Picture in Picture, AirPlay and fully styled subtitles"
-      ],
-      "fr": [
-        "L'original, sans transcodage",
-        "Image dans l'image, AirPlay et sous-titres stylisés"
-      ],
-      "es": [
-        "El original, sin conversión",
-        "Imagen dentro de imagen, AirPlay y subtítulos con estilo"
-      ],
-      "it": [
-        "L'originale, senza transcodifica",
-        "Picture in Picture, AirPlay e sottotitoli fedeli"
-      ],
-      "nl": [
-        "Het origineel – geen transcode",
-        "Beeld-in-beeld, AirPlay en volledig opgemaakte ondertiteling"
-      ],
-      "pt": [
-        "O original – sem conversão",
-        "Imagem no Imagem, AirPlay e legendas com estilo completo"
-      ],
-      "da": [
-        "Originalen – ingen transkodning",
-        "Billede-i-billede, AirPlay og fuldt formaterede undertekster"
-      ],
-      "sv": [
-        "Originalet – ingen omkodning",
-        "Bild-i-bild, AirPlay och undertexter med full stil"
-      ],
-      "pl": [
-        "Oryginał – bez transkodowania",
-        "Obraz w obrazie, AirPlay i w pełni stylizowane napisy"
-      ]
-    },
-    "4-discover": {
+    "2-discover": {
       "de": [
         "Wünschen, was noch fehlt",
         "Jellyseerr eingebaut – mit Live-Download-Fortschritt"
@@ -338,7 +296,49 @@
         "Wbudowany Jellyseerr – z postępem pobierania na żywo"
       ]
     },
-    "5-library": {
+    "3-details": {
+      "de": [
+        "Alles über deinen Film",
+        "Bewertungen, Besetzung, Versionen und ähnliche Titel"
+      ],
+      "en": [
+        "Everything about your film",
+        "Ratings, cast, versions and similar titles"
+      ],
+      "fr": [
+        "Tout sur ton film",
+        "Notes, distribution, versions et titres similaires"
+      ],
+      "es": [
+        "Todo sobre tu película",
+        "Valoraciones, reparto, versiones y títulos similares"
+      ],
+      "it": [
+        "Tutto sul tuo film",
+        "Valutazioni, cast, versioni e titoli simili"
+      ],
+      "nl": [
+        "Alles over je film",
+        "Scores, cast, versies en vergelijkbare titels"
+      ],
+      "pt": [
+        "Tudo sobre o seu filme",
+        "Avaliações, elenco, versões e títulos parecidos"
+      ],
+      "da": [
+        "Alt om din film",
+        "Bedømmelser, cast, versioner og lignende titler"
+      ],
+      "sv": [
+        "Allt om din film",
+        "Betyg, rollista, versioner och liknande titlar"
+      ],
+      "pl": [
+        "Wszystko o twoim filmie",
+        "Oceny, obsada, wersje i podobne tytuły"
+      ]
+    },
+    "4-library": {
       "de": [
         "Ein Abo für alle Geräte",
         "Apple TV, iPhone und iPad – 2 Wochen gratis testen"
@@ -424,91 +424,7 @@
         "W oryginalnej jakości na iPadzie, iPhonie i Apple TV"
       ]
     },
-    "2-details": {
-      "de": [
-        "Alles über deinen Film",
-        "Bewertungen, Besetzung, Versionen und ähnliche Titel"
-      ],
-      "en": [
-        "Everything about your film",
-        "Ratings, cast, versions and similar titles"
-      ],
-      "fr": [
-        "Tout sur ton film",
-        "Notes, distribution, versions et titres similaires"
-      ],
-      "es": [
-        "Todo sobre tu película",
-        "Valoraciones, reparto, versiones y títulos similares"
-      ],
-      "it": [
-        "Tutto sul tuo film",
-        "Valutazioni, cast, versioni e titoli simili"
-      ],
-      "nl": [
-        "Alles over je film",
-        "Scores, cast, versies en vergelijkbare titels"
-      ],
-      "pt": [
-        "Tudo sobre o seu filme",
-        "Avaliações, elenco, versões e títulos parecidos"
-      ],
-      "da": [
-        "Alt om din film",
-        "Bedømmelser, cast, versioner og lignende titler"
-      ],
-      "sv": [
-        "Allt om din film",
-        "Betyg, rollista, versioner och liknande titlar"
-      ],
-      "pl": [
-        "Wszystko o twoim filmie",
-        "Oceny, obsada, wersje i podobne tytuły"
-      ]
-    },
-    "3-series": {
-      "de": [
-        "Für Serien gemacht",
-        "Nächste Folge und Intros überspringen – ohne Server-Plugin"
-      ],
-      "en": [
-        "Made for TV shows",
-        "Next episode and intro skipping – no server plugin needed"
-      ],
-      "fr": [
-        "Pensé pour les séries",
-        "Épisode suivant et intro ignorée – sans plug-in serveur"
-      ],
-      "es": [
-        "Pensado para series",
-        "Siguiente episodio y saltar intros, sin plugins en el servidor"
-      ],
-      "it": [
-        "Pensato per le serie TV",
-        "Episodio successivo e salto dell'intro, senza plugin sul server"
-      ],
-      "nl": [
-        "Gemaakt voor series",
-        "Volgende aflevering en intro overslaan – zonder serverplug-in"
-      ],
-      "pt": [
-        "Feito para séries",
-        "Próximo episódio e pular abertura – sem plugin no servidor"
-      ],
-      "da": [
-        "Skabt til serier",
-        "Næste afsnit og spring intro over – uden server-plugin"
-      ],
-      "sv": [
-        "Gjord för serier",
-        "Nästa avsnitt och hoppa över intro – inget servertillägg behövs"
-      ],
-      "pl": [
-        "Stworzone dla seriali",
-        "Następny odcinek i pomijanie czołówek – bez wtyczki na serwerze"
-      ]
-    },
-    "4-discover": {
+    "2-discover": {
       "de": [
         "Wünschen, was noch fehlt",
         "Jellyseerr eingebaut – mit Live-Download-Fortschritt"
@@ -550,7 +466,49 @@
         "Wbudowany Jellyseerr – z postępem pobierania na żywo"
       ]
     },
-    "5-library": {
+    "3-details": {
+      "de": [
+        "Alles über deinen Film",
+        "Bewertungen, Besetzung, Versionen und ähnliche Titel"
+      ],
+      "en": [
+        "Everything about your film",
+        "Ratings, cast, versions and similar titles"
+      ],
+      "fr": [
+        "Tout sur ton film",
+        "Notes, distribution, versions et titres similaires"
+      ],
+      "es": [
+        "Todo sobre tu película",
+        "Valoraciones, reparto, versiones y títulos similares"
+      ],
+      "it": [
+        "Tutto sul tuo film",
+        "Valutazioni, cast, versioni e titoli simili"
+      ],
+      "nl": [
+        "Alles over je film",
+        "Scores, cast, versies en vergelijkbare titels"
+      ],
+      "pt": [
+        "Tudo sobre o seu filme",
+        "Avaliações, elenco, versões e títulos parecidos"
+      ],
+      "da": [
+        "Alt om din film",
+        "Bedømmelser, cast, versioner og lignende titler"
+      ],
+      "sv": [
+        "Allt om din film",
+        "Betyg, rollista, versioner och liknande titlar"
+      ],
+      "pl": [
+        "Wszystko o twoim filmie",
+        "Oceny, obsada, wersje i podobne tytuły"
+      ]
+    },
+    "4-library": {
       "de": [
         "Ein Abo für alle Geräte",
         "Apple TV, iPhone und iPad – 2 Wochen gratis testen"

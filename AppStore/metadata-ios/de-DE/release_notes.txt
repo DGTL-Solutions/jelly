@@ -4,3 +4,5 @@ Neu: Downloads für unterwegs
 • Untertitel, „Intro überspringen“ und „Nächste Folge“ funktionieren auch offline. Wo du offline aufgehört hast, merkt sich Jelly und meldet es deinem Server, sobald er wieder erreichbar ist.
 • Downloads laufen im Hintergrund weiter, auch wenn Jelly geschlossen ist.
 • Jelly gibt es jetzt auch auf Französisch, Spanisch, Italienisch und Niederländisch.
+• Neues App-Icon im Liquid-Glass-Look: eine gläserne Qualle statt des Play-Buttons – auch in der App selbst.
+• Behoben: Nach dem Drehen des iPhones waren die Cover in der Bibliothek am Rand abgeschnitten.

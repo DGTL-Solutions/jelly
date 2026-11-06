@@ -4,3 +4,5 @@ Novedad: descargas para llevar
 • Los subtítulos, “Saltar intro” y “Siguiente episodio” también funcionan sin conexión. Jelly recuerda dónde lo dejaste y se lo comunica a tu servidor en cuanto vuelve a estar accesible.
 • Las descargas continúan en segundo plano, incluso con Jelly cerrado.
 • Jelly ya está disponible en español.
+• Nuevo icono con aspecto Liquid Glass: una medusa de cristal en lugar del botón de reproducir, también dentro de la app.
+• Corregido: tras girar el iPhone, los pósteres de la biblioteca aparecían cortados en los bordes.

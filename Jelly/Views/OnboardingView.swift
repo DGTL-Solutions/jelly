@@ -84,21 +84,10 @@ struct OnboardingLayout<Content: View>: View {
     }
 }
 
-/// Jelly's logo as in the app icon: a flat play button in the brand gradient. `size` is its width.
+/// Jelly's logo as in the app icon (see JellyMark). `size` is the width of the tile.
 struct AppMark: View {
     var size: CGFloat = 120
-    var body: some View {
-        RoundedRectangle(cornerRadius: size * 0.2, style: .continuous)
-            .fill(Theme.brand)
-            .frame(width: size, height: size / 1.42)
-            .overlay {
-                Image(systemName: "play.fill")
-                    .font(.system(size: size * 0.24, weight: .bold))
-                    .foregroundStyle(.white)
-                    .offset(x: size * 0.012)
-            }
-            .shadow(color: Color(red: 0.4, green: 0.3, blue: 0.9).opacity(0.35), radius: 24, y: 8)
-    }
+    var body: some View { JellyMark(size: size) }
 }
 
 // MARK: - Server

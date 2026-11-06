@@ -135,23 +135,10 @@ struct AccountTileGrid<Content: View>: View {
 
 // MARK: - Shared pieces
 
-/// Jelly's logo as in the app icon: a flat play button in the brand gradient. `size` is its width.
+/// Jelly's logo as in the app icon (see JellyMark). `size` is the width of the tile.
 struct MobileAppMark: View {
     var size: CGFloat = 96
-
-    var body: some View {
-        RoundedRectangle(cornerRadius: size * 0.2, style: .continuous)
-            .fill(Theme.brand)
-            .frame(width: size, height: size / 1.42)
-            .overlay {
-                Image(systemName: "play.fill")
-                    .font(.system(size: size * 0.24, weight: .bold))
-                    .foregroundStyle(.white)
-                    .offset(x: size * 0.012)
-            }
-            .shadow(color: Color(red: 0.4, green: 0.3, blue: 0.9).opacity(0.4), radius: size * 0.16, y: size * 0.05)
-            .accessibilityHidden(true)
-    }
+    var body: some View { JellyMark(size: size) }
 }
 
 /// A profile picture from the server, or the initial on a colour that stays the same for each user.

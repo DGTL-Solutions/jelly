@@ -1,11 +1,11 @@
 Jelly to odtwarzacz Jellyfin dla wszystkich, którzy chcą oglądać swoje filmy takimi, jakie są: w oryginalnej jakości, bez transkodowania na serwerze – z Dolby Vision, Atmos i w pełni stylizowanymi napisami. Potrzebujesz tylko własnego serwera Jellyfin (bezpłatnie na jellyfin.org).
 
 CO WYRÓŻNIA JELLY
+• Wbudowany Jellyseerr: proś o filmy i seriale, wyszukuj i śledź pobieranie na żywo.
 • Oryginał zamiast transkodowania: MKV, MP4, AVI i TS z H.264, HEVC, AV1, VC-1 lub MPEG-2. Czego urządzenie nie potrafi zdekodować samo, dekoduje Jelly – twój serwer nie musi niczego ponownie kodować, więc wystarczy nawet mały NAS.
 • Napisy takie, jakie miały być: ASS/SSA z osadzonymi czcionkami, pozycjami i efektami, a także PGS, VobSub, SRT i napisy zewnętrzne. Rozmiar, kolor i tło wybierasz sam.
 • Stworzone dla seriali: Jelly rozpoznaje czołówki i napisy końcowe po dźwięku – bez wtyczki na serwerze – i uruchamia następny odcinek, gdy tylko pojawią się napisy końcowe.
 • Sprytne przy wolnym łączu: Jelly mierzy połączenie i najpierw – bezstratnie – pomija nieużywane ścieżki audio, zanim serwer obniży jakość obrazu. W domu Jelly łączy się z twoim serwerem bezpośrednio.
-• Wbudowany Jellyseerr: proś o filmy i seriale, wyszukuj i śledź pobieranie na żywo.
 • Jedna subskrypcja na wszystko: Jelly na Apple TV, iPhonie i iPadzie z tym samym kontem Apple.
 
 NA APPLE TV
@@ -25,3 +25,5 @@ Polityka prywatności: https://dgtl-solutions.github.io/jelly/privacy/
 Bez reklam, bez śledzenia, bez zbierania danych. Jelly łączy się tylko z twoimi własnymi serwerami.
 
 Jelly jest niezależną aplikacją, a nie oficjalnym produktem projektu Jellyfin.
+
+Filmy na zrzutach ekranu: © Blender Foundation / Blender Studio, CC-BY 4.0 (creativecommons.org/licenses/by/4.0).

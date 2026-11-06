@@ -1,3 +1,4 @@
+• Nowa ikona aplikacji w stylu Liquid Glass: szklana meduza zamiast przycisku odtwarzania – także w samej aplikacji.
 • Nowość w Ustawienia › Info: „Oceń Jelly” – kod otwiera stronę oceny od razu na twoim iPhonie.
 • Twoja subskrypcja obejmuje też Jelly na iPhone’a i iPada – teraz z pobieraniem na drogę.
 • Jelly jest teraz dostępne także po polsku.

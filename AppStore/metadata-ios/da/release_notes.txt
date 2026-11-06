@@ -4,3 +4,5 @@ Nyt: downloads til farten
 • Undertekster, “Spring intro over” og “Næste afsnit” virker også offline. Jelly husker, hvor du stoppede, og giver din server besked, så snart den kan nås igen.
 • Downloads fortsætter i baggrunden, selv når Jelly er lukket.
 • Jelly fås nu også på dansk.
+• Nyt app-ikon i Liquid Glass-look: en glasmanet i stedet for afspilningsknappen – også i selve appen.
+• Rettet: Efter drejning af iPhone var plakaterne i biblioteket skåret af i kanten.

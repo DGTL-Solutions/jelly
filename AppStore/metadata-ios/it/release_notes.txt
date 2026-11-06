@@ -4,3 +4,5 @@ Novità: i download da portare con te
 • Sottotitoli, «Salta intro» ed «Episodio successivo» funzionano anche offline. Jelly ricorda dove ti sei fermato e lo comunica al tuo server appena è di nuovo raggiungibile.
 • I download continuano in background, anche quando Jelly è chiuso.
 • Jelly è ora disponibile anche in italiano.
+• Nuova icona in stile Liquid Glass: una medusa di vetro al posto del pulsante play, anche nell'app.
+• Corretto: dopo la rotazione dell'iPhone, le locandine nella libreria risultavano tagliate ai bordi.

@@ -4,3 +4,5 @@ Nieuw: downloads voor onderweg
 • Ondertiteling, ‘Sla intro over’ en ‘Volgende aflevering’ werken ook offline. Jelly onthoudt waar je bent gebleven en geeft dat door aan je server zodra die weer bereikbaar is.
 • Downloads gaan door op de achtergrond, ook als Jelly gesloten is.
 • Jelly is nu ook beschikbaar in het Nederlands.
+• Nieuw app-icoon in Liquid Glass-look: een glazen kwal in plaats van de afspeelknop – ook in de app zelf.
+• Opgelost: na het draaien van de iPhone waren de posters in de bibliotheek aan de randen afgesneden.
