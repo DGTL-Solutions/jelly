@@ -123,6 +123,9 @@ if COMMAND == "setup":
     for locale in LOCALES:
         attributes = {"name": meta(locale, "name.txt"), "subtitle": meta(locale, "subtitle.txt"),
                       "privacyPolicyUrl": meta(locale, "privacy_url.txt")}
+        # The Apple TV has no browser: App Review requires the policy itself as text in every language.
+        if os.path.exists(os.path.join(ROOT, "metadata", locale, "privacy_text.txt")):
+            attributes["privacyPolicyText"] = meta(locale, "privacy_text.txt")
         if locale in existing:
             call("PATCH", f"/appInfoLocalizations/{existing[locale]}", {"data": {"type": "appInfoLocalizations", "id": existing[locale],
                  "attributes": attributes}}, fatal=False)
@@ -157,6 +160,8 @@ if COMMAND == "setup":
             call("PATCH", f"/appStoreVersionLocalizations/{existing[locale]}", {"data": {"type": "appStoreVersionLocalizations",
                  "id": existing[locale], "attributes": attributes}}, fatal=False)
         else:
+            if versions[0]["attributes"]["versionString"] != "1.0" and os.path.exists(os.path.join(ROOT, "metadata", locale, "release_notes.txt")):
+                attributes["whatsNew"] = meta(locale, "release_notes.txt", True)
             created = call("POST", "/appStoreVersionLocalizations", {"data": {"type": "appStoreVersionLocalizations",
                            "attributes": {"locale": locale, **attributes},
                            "relationships": {"appStoreVersion": ref("appStoreVersions", version)}}}, fatal=False)
@@ -326,10 +331,18 @@ elif COMMAND == "submit":
         for subscription in call("GET", f"/subscriptionGroups/{group['id']}/subscriptions?limit=50")["data"]:
             call("POST", "/subscriptionSubmissions", {"data": {"type": "subscriptionSubmissions",
                  "relationships": {"subscription": ref("subscriptions", subscription["id"])}}}, fatal=False)
-    submission = call("POST", "/reviewSubmissions", {"data": {"type": "reviewSubmissions", "attributes": {"platform": ASC_PLATFORM},
-                      "relationships": {"app": ref("apps", app)}}})["data"]["id"]
-    call("POST", "/reviewSubmissionItems", {"data": {"type": "reviewSubmissionItems", "relationships": {
-        "reviewSubmission": ref("reviewSubmissions", submission), "appStoreVersion": ref("appStoreVersions", version)}}})
+    # Apple allows one open submission per platform: a draft left by an earlier, failed attempt is reused.
+    drafts = [s for s in call("GET", f"/reviewSubmissions?filter[app]={app}&filter[platform]={ASC_PLATFORM}"
+                              f"&filter[state]=READY_FOR_REVIEW&limit=20")["data"] if not s["attributes"].get("submittedDate")]
+    if drafts:
+        submission = drafts[0]["id"]
+    else:
+        submission = call("POST", "/reviewSubmissions", {"data": {"type": "reviewSubmissions", "attributes": {"platform": ASC_PLATFORM},
+                          "relationships": {"app": ref("apps", app)}}})["data"]["id"]
+    items = call("GET", f"/reviewSubmissions/{submission}/items?include=appStoreVersion")["data"]
+    if not any(i.get("relationships", {}).get("appStoreVersion", {}).get("data", {}).get("id") == version for i in items):
+        call("POST", "/reviewSubmissionItems", {"data": {"type": "reviewSubmissionItems", "relationships": {
+            "reviewSubmission": ref("reviewSubmissions", submission), "appStoreVersion": ref("appStoreVersions", version)}}})
     call("PATCH", f"/reviewSubmissions/{submission}", {"data": {"type": "reviewSubmissions", "id": submission, "attributes": {"submitted": True}}})
     print("Eingereicht. Den Stand zeigt App Store Connect › App › Verlauf.")
 
