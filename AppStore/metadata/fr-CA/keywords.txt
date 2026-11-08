@@ -1,0 +1,1 @@
+vidéo,client,serveur,streaming,MKV,HDR,Atmos,4K,home cinéma,sous-titres,NAS,Jellyseerr,média

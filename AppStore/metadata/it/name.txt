@@ -1,1 +1,1 @@
-Jelly – Lettore multimediale
+Jelly – Player per Jellyfin

@@ -1,1 +1,1 @@
-wideo,offline,pobieranie,MKV,AirPlay,napisy,filmy,seriale,NAS,Jellyseerr,HDR,4K,streaming,serwer
+wideo,klient,serwer,offline,pobieranie,MKV,HDR,4K,AirPlay,napisy,NAS,Jellyseerr,telewizja,media

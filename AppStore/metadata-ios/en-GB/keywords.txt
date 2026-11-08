@@ -1,1 +1,1 @@
-home cinema,HEVC,AV1,films,series,server,streaming,self-hosted,library,offline,download,Dolby
+video,client,media,server,streaming,offline,download,mkv,hdr,4k,airplay,subtitles,nas,jellyseerr

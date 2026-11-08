@@ -1,0 +1,1 @@
+Ta bibliothèque Jellyfin en qualité d'origine, avec Jellyseerr intégré pour demander films et séries. Dolby Vision, Atmos, sous-titres complets. 2 semaines gratuites.

@@ -1,1 +1,1 @@
-video,client,server,streaming,MKV,Dolby Vision,HDR,Atmos,4K,home theater,subtitles,NAS,Jellyseerr
+video,client,media,server,streaming,mkv,hdr,atmos,4k,home theater,subtitles,nas,jellyseerr,remux

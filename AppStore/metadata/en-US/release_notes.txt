@@ -1,5 +1,2 @@
-• New app icon in a Liquid Glass look: a glass jellyfish instead of the play button – in the app itself, too.
-• New in Settings › About: "Rate Jelly" – a code opens the review page right on your iPhone.
-• Your subscription also covers Jelly for iPhone and iPad – now with downloads for the road.
-• Jelly is now also available in French, Spanish, Italian and Dutch.
-• Minor improvements and fixes.
+• New name on the App Store: “Jelly – Player for Jellyfin”.
+• Minor improvements.

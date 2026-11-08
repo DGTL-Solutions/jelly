@@ -1,1 +1,1 @@
-home cinema,HEVC,AV1,TrueHD,DTS,ASS,SRT,films,series,server,streaming,self-hosted,library
+video,client,media,server,streaming,mkv,hdr,atmos,4k,home cinema,subtitles,nas,jellyseerr,hevc

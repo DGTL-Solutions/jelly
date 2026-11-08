@@ -1,8 +1,2 @@
-Nowość: pobieranie na drogę
-• Zapisuj filmy i odcinki na iPhonie lub iPadzie i oglądaj je bez połączenia z serwerem – także całe sezony naraz.
-• Trzy jakości do wyboru: Oryginał, Lepsza lub Dobra – każda z rozmiarem w GB, ilością wolnego miejsca i zaleceniem dla twojego urządzenia.
-• Napisy, „Pomiń czołówkę” i „Następny odcinek” działają także offline. Jelly zapamiętuje, gdzie przerwano oglądanie, i informuje o tym serwer, gdy znów będzie dostępny.
-• Pobieranie trwa w tle, nawet gdy Jelly jest zamknięte.
-• Jelly jest teraz dostępne także po polsku.
-• Nowa ikona aplikacji w stylu Liquid Glass: szklana meduza zamiast przycisku odtwarzania – także w samej aplikacji.
-• Naprawiono: po obróceniu iPhone'a plakaty w bibliotece były ucięte przy krawędziach.
+• Nowa nazwa w App Store: „Jelly – Odtwarzacz do Jellyfin”.
+• Drobne usprawnienia.

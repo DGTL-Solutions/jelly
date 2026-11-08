@@ -1,0 +1,30 @@
+Jelly est le lecteur Jellyfin pour tous ceux qui veulent voir leurs films tels qu'ils sont : en qualité d'origine, sans que ton serveur ait à transcoder – sur iPhone et iPad, avec Image dans l'image et AirPlay. Il te faut simplement ton propre serveur Jellyfin (gratuit sur jellyfin.org).
+
+CE QUI REND JELLY UNIQUE
+• Jellyseerr intégré : demande des films et des séries, recherche et suis le téléchargement en direct.
+• L'original, pas un transcodage : MKV, MP4, AVI et TS en H.264, HEVC, AV1, VC-1 ou MPEG-2. Ce que l'appareil ne sait pas décoder lui-même, Jelly le décode – ton serveur n'a rien à réencoder, un petit NAS suffit.
+• Des sous-titres comme prévu : ASS/SSA avec polices intégrées, positions et effets, ainsi que PGS, VobSub, SRT et sous-titres externes. Tu choisis la taille, la couleur et le fond.
+• Pensé pour les séries : Jelly détecte les génériques de début et de fin grâce au son – sans plug-in sur le serveur – et lance l'épisode suivant dès le début du générique.
+• Malin sur les connexions lentes : Jelly mesure la connexion et retire d'abord les pistes audio inutilisées – sans perte – avant que le serveur ne réduise l'image. À la maison, Jelly parle directement à ton serveur.
+• Pour la route : enregistre des films, des épisodes et des saisons entières sur ton iPhone ou iPad et regarde-les hors ligne – en qualité Originale, Meilleure ou Bonne, avec la taille et une recommandation pour ton appareil.
+• Un abonnement pour tout : Jelly sur Apple TV, iPhone et iPad avec le même compte Apple.
+
+SUR IPHONE ET IPAD
+Parcours ta bibliothèque avec de grandes illustrations, touche deux fois pour avancer de 10 secondes, trouve le bon passage avec des aperçus en miniature et pince pour remplir l'écran. Image dans l'image continue la lecture pendant que tu utilises d'autres apps, AirPlay envoie le film sur ta télé et l'écran verrouillé affiche ce qui est en cours. Sur iPad, Jelly utilise tout l'écran avec une barre latérale et des mises en page larges.
+
+CONNEXION FACILE
+Jelly trouve ton serveur sur ton réseau domestique. Connecte-toi avec ton mot de passe ou avec Quick Connect – plusieurs serveurs et profils, avec « Qui regarde ? » au démarrage.
+
+Et aussi : notes sur les pages de détail, chapitres, aperçus en miniature pendant l'avance rapide, synchronisation du son et des sous-titres et informations de lecture détaillées.
+
+2 SEMAINES GRATUITES
+Essaie Jelly gratuitement pendant 2 semaines avec toutes les fonctionnalités. Ensuite, l'abonnement annuel Jelly se renouvelle chaque année au prix indiqué dans l'App Store pour ton pays. Un abonnement couvre Jelly sur iPhone, iPad et Apple TV avec ton compte Apple. Le paiement est débité de ton compte Apple. L'abonnement se renouvelle automatiquement pour un an, sauf si tu le résilies au moins 24 heures avant son échéance ; tu peux le résilier à tout moment dans Réglages › ton nom › Abonnements.
+
+Conditions d'utilisation : https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Politique de confidentialité : https://dgtl-solutions.github.io/jelly/privacy/
+
+Pas de publicité, pas de pistage, pas de collecte de données. Jelly ne communique qu'avec tes propres serveurs.
+
+Jelly est une app indépendante et non un produit officiel du projet Jellyfin.
+
+Films des captures d'écran : © Blender Foundation / Blender Studio, CC-BY 4.0 (creativecommons.org/licenses/by/4.0).

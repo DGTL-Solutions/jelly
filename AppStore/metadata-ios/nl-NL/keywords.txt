@@ -1,1 +1,1 @@
-video,MKV,offline,download,AirPlay,ondertiteling,films,series,NAS,Jellyseerr,HDR,4K
+mediaspeler,videospeler,ondertiteling,offline,downloaden,mediabibliotheek,streaming,tv,kijken

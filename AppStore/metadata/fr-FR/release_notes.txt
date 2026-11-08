@@ -1,5 +1,2 @@
-• Nouvelle icône en Liquid Glass : une méduse de verre à la place du bouton lecture – aussi dans l'app.
-• Nouveau : Jelly est disponible en français, ainsi qu'en espagnol, en italien et en néerlandais.
-• Nouveau dans Réglages › Infos : « Noter Jelly » – un code ouvre la page d'évaluation directement sur ton iPhone.
-• Ton abonnement couvre aussi Jelly pour iPhone et iPad – désormais avec les téléchargements pour emporter tes films partout.
-• Améliorations et corrections mineures.
+• Nouveau nom sur l’App Store : « Jelly – Lecteur pour Jellyfin ».
+• Petites améliorations.

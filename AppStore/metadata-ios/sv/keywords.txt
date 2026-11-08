@@ -1,1 +1,1 @@
-video,klient,server,streaming,offline,nedladdning,MKV,AirPlay,undertexter,NAS,Jellyseerr,HDR,4K
+mediaspelare,videospelare,undertexter,offline,nedladdning,mediebibliotek,klient,streaming,tv,4K

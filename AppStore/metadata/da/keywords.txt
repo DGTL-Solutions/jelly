@@ -1,1 +1,1 @@
-video,film,serier,streaming,MKV,Dolby Vision,HDR,Atmos,4K,hjemmebiograf,undertekster,NAS,Jellyseerr
+medieafspiller,videoafspiller,hjemmebiograf,undertekster,mediebibliotek,streaming,tv,fjernsyn

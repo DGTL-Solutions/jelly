@@ -145,6 +145,8 @@ struct PlaybackScreen: View {
         .onDisappear {
             hideTask?.cancel()
             seekTask?.cancel()
+            ReviewPrompt.notePlayback(fraction: player.duration > 0 ? player.position / player.duration : 0,
+                                      ended: player.phase == .ended)
             player.stop()
             model.contentChanged()
         }

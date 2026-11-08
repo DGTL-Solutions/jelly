@@ -1,1 +1,1 @@
-video,MKV,Dolby Vision,HDR10,Atmos,4K,home cinema,sottotitoli,film,serie TV,NAS,Jellyseerr
+lettore,video,client,server,streaming,MKV,HDR,Atmos,4K,home cinema,sottotitoli,NAS,Jellyseerr,TV

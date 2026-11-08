@@ -1,1 +1,1 @@
-vídeo,streaming,MKV,Dolby Vision,HDR,Atmos,4K,home theater,legendas,NAS,Jellyseerr,filmes,séries
+vídeo,cliente,servidor,streaming,MKV,HDR,Atmos,4K,home theater,legendas,NAS,Jellyseerr,mídia,tv

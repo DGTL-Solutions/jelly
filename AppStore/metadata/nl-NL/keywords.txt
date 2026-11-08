@@ -1,1 +1,1 @@
-video,MKV,Dolby Vision,HDR10,Atmos,4K,thuisbioscoop,ondertiteling,films,series,NAS,Jellyseerr
+mediaspeler,videospeler,thuisbioscoop,ondertiteling,ondertitels,mediabibliotheek,streaming,tv,kijken

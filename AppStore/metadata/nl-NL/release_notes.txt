@@ -1,5 +1,2 @@
-• Nieuw app-icoon in Liquid Glass-look: een glazen kwal in plaats van de afspeelknop – ook in de app zelf.
-• Nieuw: Jelly is nu ook beschikbaar in het Nederlands.
-• Nieuw in Instellingen › Info: ‘Beoordeel Jelly’ – een code opent de beoordelingspagina direct op je iPhone.
-• Je abonnement geldt ook voor Jelly op iPhone en iPad – nu met downloads voor onderweg.
-• Kleine verbeteringen en oplossingen.
+• Nieuwe naam in de App Store: ‘Jelly – Speler voor Jellyfin’.
+• Kleine verbeteringen.

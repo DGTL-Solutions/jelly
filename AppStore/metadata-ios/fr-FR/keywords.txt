@@ -1,1 +1,1 @@
-vidéo,client,serveur,streaming,hors ligne,téléchargement,MKV,AirPlay,sous-titres,NAS,4K
+vidéo,client,serveur,streaming,hors ligne,téléchargement,MKV,HDR,4K,AirPlay,sous-titres,NAS

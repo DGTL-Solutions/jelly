@@ -172,8 +172,11 @@ struct QRCode: View {
     }
 }
 
-/// "Jelly bewerten": the App Store's review page as a code for the phone.
+/// "Jelly bewerten": the App Store's review page as a code for the phone. Shown once on its own after a finished title,
+/// then with a button to close it.
 struct RateAppView: View {
+    var onClose: (() -> Void)?
+
     var body: some View {
         HStack(alignment: .center, spacing: 60) {
             QRCode(text: AppInfo.reviewURL).frame(width: 320, height: 320)
@@ -182,6 +185,9 @@ struct RateAppView: View {
                 Text("Eine Bewertung im App Store hilft anderen, Jelly zu finden. Code mit der Kamera des iPhone scannen – die Seite zum Bewerten öffnet sich direkt.")
                     .font(.callout)
                     .foregroundStyle(.secondary)
+                if let onClose {
+                    Button("Schließen", action: onClose).padding(.top, 20)
+                }
             }
             .frame(maxWidth: 700, alignment: .leading)
         }

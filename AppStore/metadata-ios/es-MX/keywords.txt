@@ -1,1 +1,1 @@
-vídeo,MKV,offline,sin conexión,descargar,AirPlay,subtítulos,películas,series,NAS,Jellyseerr,HDR,4K
+reproductor,video,sin conexión,descargar,MKV,HDR,4K,AirPlay,subtítulos,NAS,Jellyseerr,servidor

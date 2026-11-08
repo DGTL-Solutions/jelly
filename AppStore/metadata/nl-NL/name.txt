@@ -1,1 +1,1 @@
-Jelly – Mediaspeler
+Jelly – Speler voor Jellyfin

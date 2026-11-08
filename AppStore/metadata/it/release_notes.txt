@@ -1,5 +1,2 @@
-• Nuova icona in stile Liquid Glass: una medusa di vetro al posto del pulsante play, anche nell'app.
-• Novità in Impostazioni › Info: «Valuta Jelly» – un codice apre la pagina delle recensioni direttamente sul tuo iPhone.
-• Il tuo abbonamento vale anche per Jelly su iPhone e iPad, ora con i download da portare con te.
-• Jelly è ora disponibile anche in italiano.
-• Piccoli miglioramenti e correzioni.
+• Nuovo nome sull’App Store: «Jelly – Player per Jellyfin».
+• Piccoli miglioramenti.

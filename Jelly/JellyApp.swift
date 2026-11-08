@@ -27,6 +27,7 @@ struct JellyApp: App {
 
 struct RootView: View {
     @EnvironmentObject private var model: AppModel
+    @State private var asksForRating = false
 
     var body: some View {
         ZStack {
@@ -56,6 +57,18 @@ struct RootView: View {
             IdleMonitor.shared.start()
         }
         .onChange(of: model.playback?.id) { _, id in if id != nil { IdleMonitor.shared.dismiss() } }
+        // Back from the player right after a film or episode ran to its end: once, the page for rating Jelly. The Apple
+        // TV has no system request for it, and most people find Jelly through the App Store's search, where ratings count.
+        .onChange(of: model.playback == nil) { _, closed in
+            guard closed else { return }
+            // The player reports how far it got when its screen is gone, which is after this change – so check later.
+            Task {
+                try? await Task.sleep(for: .seconds(1.5))
+                guard model.playback == nil, !model.showsPaywall, ReviewPrompt.shouldAsk() else { return }
+                asksForRating = true
+            }
+        }
+        .fullScreenCover(isPresented: $asksForRating) { RateAppView(onClose: { asksForRating = false }) }
     }
 }
 

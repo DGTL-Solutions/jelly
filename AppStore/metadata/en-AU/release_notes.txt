@@ -1,0 +1,2 @@
+• New name on the App Store: “Jelly – Player for Jellyfin”.
+• Minor improvements.

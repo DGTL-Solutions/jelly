@@ -1,5 +1,2 @@
-• Nyt app-ikon i Liquid Glass-look: en glasmanet i stedet for afspilningsknappen – også i selve appen.
-• Nyt i Indstillinger › Om: “Bedøm Jelly” – en kode åbner siden med anmeldelser direkte på din iPhone.
-• Dit abonnement dækker også Jelly til iPhone og iPad – nu med downloads til farten.
-• Jelly fås nu også på dansk.
-• Mindre forbedringer og rettelser.
+• Nyt navn i App Store: “Jelly – Afspiller til Jellyfin”.
+• Mindre forbedringer.

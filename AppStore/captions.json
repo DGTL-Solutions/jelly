@@ -214,7 +214,7 @@
   "iphone": {
     "1-start": {
       "de": [
-        "Deine Mediathek.\nÜberall.",
+        "Deine Jellyfin-Mediathek.\nÜberall.",
         "In Originalqualität auf iPhone, iPad und Apple TV"
       ],
       "en": [
@@ -384,7 +384,7 @@
   "ipad": {
     "1-start": {
       "de": [
-        "Deine Mediathek.\nÜberall.",
+        "Deine Jellyfin-Mediathek.\nÜberall.",
         "In Originalqualität auf iPad, iPhone und Apple TV"
       ],
       "en": [

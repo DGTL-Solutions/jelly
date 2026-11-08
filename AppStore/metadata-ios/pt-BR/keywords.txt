@@ -1,1 +1,1 @@
-vídeo,cliente,streaming,offline,baixar,MKV,AirPlay,legendas,NAS,Jellyseerr,HDR,4K,filmes,séries
+vídeo,cliente,servidor,offline,baixar,MKV,HDR,4K,AirPlay,legendas,NAS,Jellyseerr,mídia,tv
