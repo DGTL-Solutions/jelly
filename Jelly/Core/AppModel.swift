@@ -412,6 +412,13 @@ final class AppModel: ObservableObject {
         Task {
             do {
                 let (url, info) = try await ServerLocator.resolve(address)
+                // An API key instead of a password: JELLY_TOKEN plus the user's id in JELLY_USER.
+                if let token = env["JELLY_TOKEN"] {
+                    let json = ["AccessToken": token, "ServerId": info.id, "User": ["Id": username, "Name": username]] as [String: Any]
+                    let result = try JSONDecoder.jellyfin.decode(AuthenticationResult.self, from: JSONSerialization.data(withJSONObject: json))
+                    signIn(server: url, info: info, result: result)
+                    return
+                }
                 let password = env["JELLY_PASSWORD"] ?? ""
                 let result = try await anonymousClient(url).authenticate(username: username, password: password)
                 signIn(server: url, info: info, result: result, password: password)

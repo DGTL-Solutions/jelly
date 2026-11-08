@@ -1,5 +1,7 @@
 import XCTest
 @testable import Jelly
+import struct AetherEngine.SubtitleImage
+import CoreGraphics
 
 final class JellyTests: XCTestCase {
     func testAddressCandidatesForLocalAndRemoteHosts() throws {
@@ -112,5 +114,23 @@ final class JellyTests: XCTestCase {
         XCTAssertEqual(DownloadPlanner.recommended(options, free: 100_000_000_000), .better)
         XCTAssertEqual(DownloadPlanner.recommended(options, free: 4_000_000_000), .good)
         XCTAssertNil(DownloadPlanner.recommended(options, free: 1_000_000_000))
+    }
+
+    /// Fallout S01E03, PGS at 7:25: the engine reports the picture's place as a share of its 1920×1080 canvas.
+    func testPictureSubtitlePlacement() throws {
+        let context = try XCTUnwrap(CGContext(data: nil, width: 274, height: 64, bitsPerComponent: 8, bytesPerRow: 0,
+                                              space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue))
+        let image = SubtitleImage(cgImage: try XCTUnwrap(context.makeImage()),
+                                  position: CGRect(x: 0.428125, y: 0.9203703703703704, width: 0.14270833333333333, height: 0.05925925925925926),
+                                  canvasSize: CGSize(width: 1920, height: 1080))
+        let tv = SubtitleOverlay.place(image, in: CGSize(width: 1920, height: 1080))
+        XCTAssertEqual(tv.minX, 822, accuracy: 0.5)
+        XCTAssertEqual(tv.minY, 994, accuracy: 0.5)
+        XCTAssertEqual(tv.width, 274, accuracy: 0.5)
+        XCTAssertEqual(tv.height, 64, accuracy: 0.5)
+        // A 4:3 screen letterboxes the 16:9 canvas: half the size, centred vertically.
+        let boxed = SubtitleOverlay.place(image, in: CGSize(width: 960, height: 720))
+        XCTAssertEqual(boxed.width, 137, accuracy: 0.5)
+        XCTAssertEqual(boxed.minY, 90 + 497, accuracy: 0.5)
     }
 }

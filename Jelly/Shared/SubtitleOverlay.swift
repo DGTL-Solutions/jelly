@@ -57,13 +57,15 @@ struct SubtitleOverlay: View {
         }
     }
 
-    /// The picture's canvas (the video frame it was authored for) fitted into the screen like the video itself.
+    /// The picture's canvas (the video frame it was authored for) fitted into the screen like the video itself. The
+    /// engine gives the picture's place as a share of that canvas (0...1), not in pixels.
     static func place(_ image: SubtitleImage, in screen: CGSize) -> CGRect {
         let canvas = image.canvasSize.width > 0 && image.canvasSize.height > 0 ? image.canvasSize : screen
         let scale = min(screen.width / canvas.width, screen.height / canvas.height)
-        let origin = CGPoint(x: (screen.width - canvas.width * scale) / 2, y: (screen.height - canvas.height * scale) / 2)
-        return CGRect(x: origin.x + image.position.minX * scale, y: origin.y + image.position.minY * scale,
-                      width: image.position.width * scale, height: image.position.height * scale)
+        let fitted = CGSize(width: canvas.width * scale, height: canvas.height * scale)
+        let origin = CGPoint(x: (screen.width - fitted.width) / 2, y: (screen.height - fitted.height) / 2)
+        return CGRect(x: origin.x + image.position.minX * fitted.width, y: origin.y + image.position.minY * fitted.height,
+                      width: image.position.width * fitted.width, height: image.position.height * fitted.height)
     }
 
     @ViewBuilder private func styled(_ text: Text) -> some View {
