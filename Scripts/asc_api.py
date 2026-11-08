@@ -65,7 +65,7 @@ def call(method, path, body=None, fatal=True):
             if method == "POST" or attempt == 4:
                 raise
         time.sleep(5 * (attempt + 1))
-    text = f"App Store Connect {method} {url.split('?')[0].replace(API, '')}: {failure.code} {failure.read().decode()[:600]}"
+    text = f"App Store Connect {method} {url.split('?')[0].replace(API, '')}: {failure.code} {failure.read().decode()[:4000]}"
     if fatal:
         sys.exit(text)
     print("  ! " + text)
