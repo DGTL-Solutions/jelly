@@ -1,2 +1,1 @@
-• Novo nome na App Store: “Jelly – Player para Jellyfin”.
-• Pequenas melhorias.
+• Corrigido: as legendas em imagem de Blu-ray e DVD (PGS, VobSub, DVB) agora aparecem.

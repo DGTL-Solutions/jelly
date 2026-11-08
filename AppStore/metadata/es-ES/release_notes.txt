@@ -1,2 +1,1 @@
-• Nuevo nombre en el App Store: «Jelly – Cliente para Jellyfin».
-• Pequeñas mejoras.
+• Corregido: ahora se muestran los subtítulos de imagen de Blu-ray y DVD (PGS, VobSub, DVB).

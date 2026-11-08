@@ -1,2 +1,1 @@
-• Nouveau nom sur l’App Store : « Jelly – Lecteur pour Jellyfin ».
-• Petites améliorations.
+• Corrigé : les sous-titres image des Blu-ray et DVD (PGS, VobSub, DVB) s’affichent désormais.

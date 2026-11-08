@@ -1,2 +1,1 @@
-• Nuovo nome sull’App Store: «Jelly – Player per Jellyfin».
-• Piccoli miglioramenti.
+• Risolto: ora vengono mostrati i sottotitoli grafici di Blu-ray e DVD (PGS, VobSub, DVB).

@@ -1,2 +1,1 @@
-• Nowa nazwa w App Store: „Jelly – Odtwarzacz do Jellyfin”.
-• Drobne usprawnienia.
+• Naprawiono: napisy graficzne z płyt Blu-ray i DVD (PGS, VobSub, DVB) są teraz wyświetlane.

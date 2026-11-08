@@ -1,2 +1,1 @@
-• Nieuwe naam in de App Store: ‘Jelly – Speler voor Jellyfin’.
-• Kleine verbeteringen.
+• Opgelost: beeldondertitels van blu-rays en dvd’s (PGS, VobSub, DVB) worden nu getoond.
