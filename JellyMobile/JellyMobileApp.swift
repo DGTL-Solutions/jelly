@@ -74,38 +74,14 @@ struct MobileRootView: View {
         // Back from the player right after a film or episode ran to its end is a good moment to ask for a rating –
         // never in the middle of one, and never after playback failed or was given up early.
         .onChange(of: model.playback == nil) { _, closed in
-            guard closed, !model.showsPaywall, ReviewPrompt.shouldAsk() else { return }
+            guard closed else { return }
+            // The player reports how far it got when its screen is gone, which is after this change – so check later.
             Task {
                 try? await Task.sleep(for: .seconds(1.5))
+                guard model.playback == nil, !model.showsPaywall, ReviewPrompt.shouldAsk() else { return }
                 requestReview()
             }
         }
-    }
-}
-
-/// Asks for an App Store rating right after the first film or episode that ran (almost) to the end – the moment someone
-/// has seen Jelly work with their own server –, at most once per app version; the system itself shows the request at
-/// most three times a year.
-enum ReviewPrompt {
-    private static let watchedKey = "watchedToEnd"
-    private static let askedVersionKey = "reviewAskedVersion"
-    /// The player that just closed ran to the end; reset by every playback.
-    nonisolated(unsafe) private static var lastFinished = false
-
-    static func notePlayback(fraction: Double, ended: Bool) {
-        lastFinished = ended || fraction >= 0.85
-        guard lastFinished else { return }
-        UserDefaults.standard.set(UserDefaults.standard.integer(forKey: watchedKey) + 1, forKey: watchedKey)
-    }
-
-    /// Whether to ask now; remembers the version it asked in.
-    static func shouldAsk() -> Bool {
-        let defaults = UserDefaults.standard
-        guard lastFinished, defaults.integer(forKey: watchedKey) >= 1, defaults.string(forKey: askedVersionKey) != JellyfinClient.version else {
-            return false
-        }
-        defaults.set(JellyfinClient.version, forKey: askedVersionKey)
-        return true
     }
 }
 
