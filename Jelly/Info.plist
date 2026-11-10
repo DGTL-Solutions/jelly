@@ -49,6 +49,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSHomeKitUsageDescription</key>
+	<string>Jelly kann beim Abspielen eine Szene aus deinem Zuhause starten, zum Beispiel das Licht dimmen.</string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Dark</string>
 </dict>
