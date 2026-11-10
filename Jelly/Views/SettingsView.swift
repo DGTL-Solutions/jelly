@@ -17,6 +17,7 @@ struct SettingsView: View {
     @AppStorage("showRottenTomatoes") private var showRottenTomatoes = true
     @AppStorage("screensaverMinutes") private var screensaverMinutes = 5
     @State private var display = DisplayCapabilities.current()
+    @State private var settingUpKids = false
 
     // One page-wide scroll view: tvOS hides the tab bar while it scrolls, and every row exists up front,
     // so the focus never loses its way. Choices open Jelly's own pages instead of the system picker lists.
@@ -28,6 +29,7 @@ struct SettingsView: View {
                     VStack(alignment: .leading, spacing: 64) {
                         servers
                         profiles
+                        kids
                         jellyseerr
                         SettingsSection(String(localized: "Verbindung"), footer: String(localized: "Misst den Weg zu deinem Server und zeigt, was in Originalqualität läuft, was angepasst wird, woran es hakt und zu welcher Tageszeit die Leitung am schnellsten ist.")) {
                             NavigationLink { ConnectionAnalysisView() } label: {
@@ -165,6 +167,19 @@ struct SettingsView: View {
 }
 
 extension SettingsView {
+    var kids: some View {
+        SettingsSection(String(localized: "Kinderprofil"), footer: model.isKids
+                        ? String(localized: "Dieses Profil zeigt nur Titel bis \(model.kidsRating ?? ""). Einstellungen, andere Profile und Erkunden öffnen nur mit dem PIN.")
+                        : String(localized: "Begrenzt dieses Profil auf eine Altersfreigabe. Einstellungen, andere Profile und Erkunden sind dann nur mit einem PIN der Eltern zugänglich.")) {
+            if model.isKids {
+                Button { model.disableKids() } label: { SettingsRowLabel(String(localized: "Kinderprofil beenden"), icon: "lock.open") }
+            } else {
+                Button { settingUpKids = true } label: { SettingsRowLabel(String(localized: "Kinderprofil einrichten"), icon: "figure.and.child.holdinghands", chevron: true) }
+            }
+        }
+        .fullScreenCover(isPresented: $settingUpKids) { KidsSetupView { settingUpKids = false } }
+    }
+
     /// The App Store version's subscription.
     var purchase: some View {
         SettingsSection(String(localized: "Jahresabo"), footer: purchases.message ?? String(localized: "\(purchases.price) pro Jahr, verlängert sich automatisch – gilt auf Apple TV, iPhone und iPad mit deiner Apple-ID. Kündigen: Apple-TV-Einstellungen › Benutzer und Accounts › Abonnements.")) {

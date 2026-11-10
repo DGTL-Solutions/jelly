@@ -53,6 +53,7 @@ struct MobileRootView: View {
             }
         }
         .onOpenURL { url in Task { await model.open(url) } }
+        .parentGate()
         .sheet(item: $model.pendingSignIn) { link in SignInApprovalSheet(link: link) }
         #if DEBUG
         // Simulator testing only: JELLY_ROTATE="22:landscape,30:portrait" turns the screen at those seconds after launch.
@@ -129,19 +130,21 @@ struct MainTabs: View {
                     LibraryScreen(title: String(localized: "Serien"), types: ["Series"]).toolbar { settingsToolbarItem }
                 }
             }
-            Tab("Erkunden", systemImage: "sparkles", value: MobileTab.discover) { DiscoverScreen() }
+            if !model.isKids {
+                Tab("Erkunden", systemImage: "sparkles", value: MobileTab.discover) { DiscoverScreen() }
+            }
             if downloadsInTabs {
                 Tab("Downloads", systemImage: "arrow.down.circle", value: MobileTab.downloads) { DownloadsScreen() }
             }
             if settingsInTabs {
-                Tab("Einstellungen", systemImage: "gearshape", value: MobileTab.settings) { SettingsScreen() }
+                Tab("Einstellungen", systemImage: "gearshape", value: MobileTab.settings) { ParentLocked { SettingsScreen() } }
             }
             Tab(value: MobileTab.search, role: .search) {
                 MobileBrowseStack { SearchScreen() }
             }
         }
         .tabViewStyle(.sidebarAdaptable)
-        .sheet(isPresented: $showsSettings) { SettingsScreen() }
+        .sheet(isPresented: $showsSettings) { ParentLocked { SettingsScreen() } }
         .sheet(isPresented: $showsDownloads) { DownloadsScreen() }
         .sheet(item: $pick.current) { DownloadQualitySheet(pick: $0) }
         // Links from outside (jelly://item/…) land on the home tab's stack.

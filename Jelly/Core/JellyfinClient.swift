@@ -7,6 +7,8 @@ struct JellyfinClient: Sendable {
     let deviceID: String
     /// Whether GET answers are read from or written to the disk cache (only the start screen uses it).
     var cache = ResponseCache.Mode.off
+    /// Kids profile: only items up to this age rating (Jellyfin's rating name, e.g. "FSK-12").
+    var maxRating: String?
 
     static let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
     /// How the server lists this device in its dashboard and sessions; the iPhone and iPad app sets "iPhone" or "iPad"
@@ -160,6 +162,11 @@ struct JellyfinClient: Sendable {
         try await signIn("Users/AuthenticateWithQuickConnect", body: ["Secret": secret])
     }
 
+    /// The age ratings the server knows, for choosing a kids profile's limit.
+    func parentalRatings() async throws -> [ParentalRating] {
+        try await get("Localization/ParentalRatings")
+    }
+
     func currentUser() async throws -> UserDto {
         try await get("Users/Me")
     }
@@ -170,9 +177,13 @@ struct JellyfinClient: Sendable {
 
     // MARK: Library
 
+    func listQueryForTesting(_ user: String) -> [String: String] { listQuery(user) }
+
     private func listQuery(_ user: String, _ extra: [String: String] = [:]) -> [String: String] {
-        ["userId": user, "Fields": Self.listFields, "EnableUserData": "true", "ImageTypeLimit": "1",
-         "EnableImageTypes": "Primary,Backdrop,Thumb,Logo"].merging(extra) { $1 }
+        var query = ["userId": user, "Fields": Self.listFields, "EnableUserData": "true", "ImageTypeLimit": "1",
+                     "EnableImageTypes": "Primary,Backdrop,Thumb,Logo"].merging(extra) { $1 }
+        if let maxRating { query["MaxOfficialRating"] = maxRating }
+        return query
     }
 
     func views(user: String) async throws -> [BaseItem] {

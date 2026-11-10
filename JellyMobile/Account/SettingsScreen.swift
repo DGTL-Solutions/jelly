@@ -17,6 +17,7 @@ struct SettingsScreen: View {
     @AppStorage("showIMDb") private var showIMDb = true
     @AppStorage("showRottenTomatoes") private var showRottenTomatoes = true
     @State private var connectingSeerr = false
+    @State private var settingUpKids = false
     @State private var managingSubscription = false
     @State private var confirmingSignOut = false
     @State private var path: [SettingsRoute] = []
@@ -33,6 +34,7 @@ struct SettingsScreen: View {
                 servers
                 profiles
                 jellyseerr
+                kids
                 playback.id("playback")
                 subtitles.id("subtitles")
                 Section {
@@ -182,6 +184,22 @@ struct SettingsScreen: View {
         } header: {
             Text(current.map { String(localized: "Profile auf \($0.name)") } ?? String(localized: "Profile auf diesem Server"))
         }
+    }
+
+    private var kids: some View {
+        Section {
+            if model.isKids {
+                Button { model.disableKids() } label: { Label("Kinderprofil beenden", systemImage: "lock.open") }
+            } else {
+                Button { settingUpKids = true } label: { Label("Kinderprofil einrichten", systemImage: "figure.and.child.holdinghands") }
+            }
+        } header: {
+            Text("Kinderprofil")
+        } footer: {
+            Text(model.isKids ? "Dieses Profil zeigt nur Titel bis \(model.kidsRating ?? ""). Einstellungen, andere Profile und Erkunden öffnen nur mit dem PIN."
+                              : "Begrenzt dieses Profil auf eine Altersfreigabe. Einstellungen, andere Profile und Erkunden sind dann nur mit einem PIN der Eltern zugänglich.")
+        }
+        .fullScreenCover(isPresented: $settingUpKids) { KidsSetupView { settingUpKids = false } }
     }
 
     private var signOutTitle: String {
