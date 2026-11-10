@@ -196,6 +196,71 @@
           }
         }
       }
+    },
+    "NSHomeKitUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly kann beim Abspielen eine Szene aus deinem Zuhause starten, zum Beispiel das Licht dimmen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly can run a scene from your home during playback, for example to dim the lights."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly peut lancer une scène de ton domicile pendant la lecture, par exemple pour tamiser la lumière."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly puede activar una escena de tu casa durante la reproducción, por ejemplo para atenuar la luz."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly può avviare una scena della tua casa durante la riproduzione, ad esempio per abbassare le luci."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly kan tijdens het afspelen een scène uit je woning starten, bijvoorbeeld om het licht te dimmen."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Jelly pode iniciar uma cena da sua casa durante a reprodução, por exemplo para diminuir a luz."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly kan starte en scene fra dit hjem under afspilning, for eksempel dæmpe lyset."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly kan starta en scen från ditt hem under uppspelning, till exempel dämpa ljuset."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelly może uruchomić scenę z twojego domu podczas odtwarzania, na przykład przyciemnić światło."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

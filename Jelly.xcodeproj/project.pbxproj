@@ -62,6 +62,7 @@
 		564EE3AEFB21DACD3940B3A3 /* SyncPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58F41023820851B2D0CE2A4 /* SyncPlay.swift */; };
 		572B37C99AEFE8025EABB4FE /* License-AetherEngine.txt in Resources */ = {isa = PBXBuildFile; fileRef = 850A87E15B5242C5665B4932 /* License-AetherEngine.txt */; };
 		577545BB77F8AEA8DBD89D56 /* License-zimg.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9CB94D6E266F2183B6556114 /* License-zimg.txt */; };
+		58B433757E57EB33B925A171 /* AppShortcuts.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 29CBB2459264B53AB8D0EBCC /* AppShortcuts.xcstrings */; };
 		5A6869F47807737A77705768 /* DownloadScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD52BE1A1C13ED7DB53CF2B2 /* DownloadScreens.swift */; };
 		5C024D027B2FDFBE4FE1A04A /* AccountScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 367CDB6E705F7CAC972C3837 /* AccountScreens.swift */; };
 		5CE9E7269807C59FD50B43B3 /* Seerr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702891C8FE64D2FB792F7A72 /* Seerr.swift */; };
@@ -253,6 +254,7 @@
 		1AB99804C998295075348B78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1E6C40E354F80135D447511D /* Diagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagnostics.swift; sourceTree = "<group>"; };
 		2418A759CAF66457FF063080 /* DownloadActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadActivityController.swift; sourceTree = "<group>"; };
+		29CBB2459264B53AB8D0EBCC /* AppShortcuts.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = AppShortcuts.xcstrings; sourceTree = "<group>"; };
 		2ACF811CD4EC85BBDF1A3323 /* License-libzvbi.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "License-libzvbi.txt"; sourceTree = "<group>"; };
 		30CBA177DF97012C27237B49 /* JellyWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyWidgets.swift; sourceTree = "<group>"; };
 		325A3BC827EE00C19A282E32 /* PaywallBenefits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallBenefits.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 		21A5F554D8D182601EB5E38A /* Intents */ = {
 			isa = PBXGroup;
 			children = (
+				29CBB2459264B53AB8D0EBCC /* AppShortcuts.xcstrings */,
 				75F6F10573FF65936C75184F /* ItemActivity.swift */,
 				DF38A4EA3ED4B173F247C6E6 /* JellyIntents.swift */,
 			);
@@ -866,6 +869,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				95E4ED17CAAEFC3A49203FB1 /* AppIcon.icon in Resources */,
+				58B433757E57EB33B925A171 /* AppShortcuts.xcstrings in Resources */,
 				61EA57FAB687ADE05FD0C8EA /* Assets.xcassets in Resources */,
 				05E4BA7B0C081B53951AF280 /* InfoPlist.xcstrings in Resources */,
 				18A6F746087CDE6C55D19B6B /* License-AetherEngine.txt in Resources */,

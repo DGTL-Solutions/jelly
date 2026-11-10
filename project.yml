@@ -16,7 +16,7 @@ packages:
 settings:
   base:
     SWIFT_VERSION: '5.0'
-    MARKETING_VERSION: '1.3'
+    MARKETING_VERSION: '2.0'
     JELLY_BUNDLE_ID: de.jelly.tv
     CURRENT_PROJECT_VERSION: '1'
     # LibDovi (Dolby Vision in AetherEngine) ships no Intel simulator slice; this Mac is Apple silicon.
