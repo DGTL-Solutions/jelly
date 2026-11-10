@@ -402,6 +402,18 @@ final class PlayerController: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] route in self?.route = route }
             .store(in: &subscriptions)
+        // A film opened paused (watching together) never reports "playing": its first picture ends the loading screen,
+        // and a ready transport tells the group this device could start.
+        aether.$hasFirstFrameReadyForDisplay.combineLatest(aether.$isSessionReady)
+            .removeDuplicates { $0 == $1 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] picture, ready in
+                guard let self, !self.stopped, self.aether?.playbackPhase == .paused else { return }
+                guard ready || picture else { return }
+                if self.phase == .preparing { self.phase = .playing }
+                self.coordinator?.playerIsReady(self)
+            }
+            .store(in: &subscriptions)
         Publishers.CombineLatest3(aether.$videoFormat, aether.$sourceDVProfile, aether.$dolbyVisionConversion)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] format, profile, conversion in

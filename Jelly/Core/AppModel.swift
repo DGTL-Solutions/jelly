@@ -56,6 +56,9 @@ final class AppModel: ObservableObject {
     /// The live line to the server: remote control and SyncPlay.
     private(set) lazy var link = SessionLink(model: self)
     private(set) lazy var syncPlay = SyncPlay(model: self)
+    #if DEBUG
+    private var debugJoining = false
+    #endif
 
     init() {
         let defaults = UserDefaults.standard
@@ -402,7 +405,23 @@ final class AppModel: ObservableObject {
     /// Opens the line to the server for the active profile (remote control, SyncPlay).
     func connectLink() {
         link.onSyncPlay = { [weak self] type, data in self?.syncPlay.handle(type, data) }
+        if PlaybackHub.shared.coordinators.isEmpty {
+            PlaybackHub.shared.coordinators = [{ [weak self] in self?.syncPlay.group != nil ? self?.syncPlay : nil }]
+        }
         link.connect()
+        #if DEBUG
+        // Simulator testing only: JELLY_SYNCPLAY joins the first SyncPlay group that appears on the server.
+        if ProcessInfo.processInfo.environment["JELLY_SYNCPLAY"] != nil, !debugJoining {
+            debugJoining = true
+            Task {
+                for _ in 0..<60 where syncPlay.group == nil {
+                    await syncPlay.refresh()
+                    if let group = syncPlay.available.first { await syncPlay.join(group) }
+                    try? await Task.sleep(for: .seconds(1))
+                }
+            }
+        }
+        #endif
     }
 
     /// Right after the first sign-in, the App Store version presents its subscription offer once; later playback asks again.

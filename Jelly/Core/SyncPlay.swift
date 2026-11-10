@@ -30,6 +30,7 @@ final class SyncPlay: ObservableObject, PlaybackCoordinator {
     /// The server waits for this player's "ready" (after a new title, a jump or a stall).
     private var owesReady = false
     private var groupIsPlaying = false
+    private var joinedAt: Date?
     private var scheduled: Task<Void, Never>?
     private var pingTask: Task<Void, Never>?
 
@@ -163,6 +164,7 @@ final class SyncPlay: ObservableObject, PlaybackCoordinator {
                   let joined = try? JSONDecoder.jellyfin.decode(Group.self, from: json) else { return }
             group = joined
             error = nil
+            joinedAt = Date()
             Task { await synchroniseClock() }
             startPinging()
         case "UserJoined":
@@ -191,7 +193,9 @@ final class SyncPlay: ObservableObject, PlaybackCoordinator {
         playlistItemID = list[index]["PlaylistItemId"] as? String
         groupItemID = itemID
         var seconds = Ticks.seconds((queue["StartPositionTicks"] as? NSNumber)?.int64Value)
-        groupIsPlaying = queue["IsPlaying"] as? Bool ?? false
+        // A title someone just picked starts as soon as everyone has it loaded; joining keeps the group as it is.
+        groupIsPlaying = joinedAt.map { Date().timeIntervalSince($0) < 3 } == true ? queue["IsPlaying"] as? Bool ?? false : true
+        joinedAt = nil
         // Joining a running film: it has moved on since the server wrote this down.
         if groupIsPlaying, let updated = (queue["LastUpdate"] as? String).flatMap(JellyDate.parse) {
             seconds += max(0, serverNow.timeIntervalSince(updated))
