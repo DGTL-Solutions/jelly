@@ -508,6 +508,12 @@ final class AppModel: ObservableObject {
     func runDebugActions() async {
         let env = ProcessInfo.processInfo.environment
         guard let client, let session else { return }
+        // JELLY_KIDS=<rating name>:<pin> turns the profile into a kids profile, JELLY_KIDS=off ends it.
+        if let kids = env["JELLY_KIDS"] {
+            let parts = kids.split(separator: ":").map(String.init)
+            if parts.count == 2, let ratings = try? await client.parentalRatings() { enableKids(rating: parts[0], pin: parts[1], ratings: ratings) }
+            if kids == "off" { disableKids() }
+        }
         if let id = env["JELLY_OPEN"] { pendingOpen = try? await client.item(user: session.userID, id: id) }
         if let id = env["JELLY_PLAY"], let item = try? await client.item(user: session.userID, id: id) { play(item) }
     }
