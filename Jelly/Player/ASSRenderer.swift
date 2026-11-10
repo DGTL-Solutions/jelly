@@ -141,7 +141,11 @@ final class ASSOverlayModel: ObservableObject {
         self.renderer = renderer
         isActive = true
         Diagnostics.log("ass events=\(renderer.eventCount) next=\(renderer.nextEvent(after: clock()).map { String(Int($0)) } ?? "-")s frame=\(Int(fitted.width * scale))x\(Int(fitted.height * scale))")
+        #if os(macOS)
+        guard let link = NSScreen.main?.displayLink(target: DisplayLinkTarget { [weak self] in self?.tick() }, selector: #selector(DisplayLinkTarget.fire)) else { return }
+        #else
         let link = CADisplayLink(target: DisplayLinkTarget { [weak self] in self?.tick() }, selector: #selector(DisplayLinkTarget.fire))
+        #endif
         link.preferredFrameRateRange = CAFrameRateRange(minimum: 15, maximum: 30, preferred: 30)
         link.add(to: .main, forMode: .common)
         displayLink = link

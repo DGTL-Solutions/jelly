@@ -1,5 +1,7 @@
 import Foundation
+#if canImport(UIKit)
 import UIKit
+#endif
 
 /// A film or episode saved on this device, with everything needed to show and play it without the server.
 struct DownloadRecord: Codable, Identifiable, Equatable {

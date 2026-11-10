@@ -23,7 +23,11 @@ final class DownloadPickState: ObservableObject {
 }
 
 private var deviceName: String {
+    #if os(macOS)
+    String(localized: "dein Mac")
+    #else
     UIDevice.current.userInterfaceIdiom == .pad ? String(localized: "dein iPad") : String(localized: "dein iPhone")
+    #endif
 }
 
 // MARK: - Quality sheet
@@ -57,8 +61,12 @@ struct DownloadQualitySheet: View {
                     } footer: {
                         VStack(alignment: .leading, spacing: 6) {
                             if let free {
+                                #if os(macOS)
+                                Text("Frei auf deinem Mac: \(DownloadPlanner.size(free))")
+                                #else
                                 Text(UIDevice.current.userInterfaceIdiom == .pad ? "Frei auf deinem iPad: \(DownloadPlanner.size(free))"
                                      : "Frei auf deinem iPhone: \(DownloadPlanner.size(free))")
+                                #endif
                             }
                             if options.contains(where: { $0.quality != .original }) {
                                 Text("„Besser“ und „Gut“ rechnet dein Server beim Laden um. Die Größe ist eine Obergrenze, meist wird die Datei kleiner.")

@@ -211,7 +211,8 @@ struct PlaybackStage: View {
     @ObservedObject var system: PlayerSystemBridge
 
     @EnvironmentObject private var model: AppModel
-    @Environment(\.dismiss) private var dismiss
+    /// Closes the player by clearing what it was presented for – the same on iPhone, iPad and Mac.
+    private func dismiss() { model.playback = nil }
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.accessibilityVoiceOverEnabled) private var voiceOver
     @AppStorage("autoplayNext") private var autoplayNext = true
@@ -390,7 +391,7 @@ struct PlaybackStage: View {
                 ui.thumbnail = image
             } else if let engine = player.aether, engine.supportsCacheBackedStills,
                       let still = await engine.scrubThumbnail(atSeconds: target, maxWidth: 320), !Task.isCancelled {
-                ui.thumbnail = UIImage(cgImage: still)
+                ui.thumbnail = UIImage(pixels: still)
             }
         }
     }

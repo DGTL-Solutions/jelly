@@ -3,6 +3,7 @@ import StoreKit
 import UserNotifications
 import AetherEngine
 
+#if os(iOS)
 /// Jelly on iPhone and iPad: the same server, profiles, subscription and player engine as on Apple TV, with a touch UI.
 @main
 struct JellyMobileApp: App {
@@ -29,6 +30,8 @@ struct JellyMobileApp: App {
         }
     }
 }
+
+#endif
 
 struct MobileRootView: View {
     @EnvironmentObject private var model: AppModel
@@ -72,8 +75,10 @@ struct MobileRootView: View {
                 guard parts.count == 2, let at = Double(parts[0]) else { continue }
                 try? await Task.sleep(for: .seconds(max(0, at - elapsed)))
                 elapsed = at
+                #if os(iOS)
                 guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { continue }
                 scene.requestGeometryUpdate(.iOS(interfaceOrientations: parts[1] == "landscape" ? .landscape : .portrait))
+                #endif
             }
         }
         #endif
@@ -292,6 +297,7 @@ extension Notification.Name {
     static let jellyShowDownloads = Notification.Name("jellyShowDownloads")
 }
 
+#if os(iOS)
 /// Hands background download events to `DownloadCenter` when the system wakes Jelly for them.
 final class JellyAppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
@@ -317,3 +323,4 @@ final class JellyAppDelegate: NSObject, UIApplicationDelegate, UNUserNotificatio
         Task { @MainActor in DownloadCenter.shared.backgroundCompletion = completionHandler }
     }
 }
+#endif

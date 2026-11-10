@@ -149,6 +149,56 @@ targets:
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
+  # The Mac: the iPhone and iPad app's screens in a Mac window, with menus and keyboard. A native target, because the
+  # player engine's FFmpeg has no Mac Catalyst build. JellyMac/ adapts what differs (AppKit instead of UIKit).
+  JellyMac:
+    type: application
+    platform: macOS
+    deploymentTarget: '15.0'
+    sources:
+      - path: JellyMobile
+        excludes:
+          - Info.plist
+          - "*.entitlements"
+          - Player/MobilePlayerSystem.swift
+          - Downloads/DownloadActivity.swift
+          - Downloads/DownloadActivityController.swift
+      - JellyMac
+      - Jelly/Core
+      - Jelly/Shared
+      - Jelly/Player/PlayerController.swift
+      - Jelly/Player/ASSRenderer.swift
+      - Jelly/Resources
+      - Jelly/Localizable.xcstrings
+      - Jelly/InfoPlist.xcstrings
+      - Jelly/PrivacyInfo.xcprivacy
+    dependencies:
+      - package: AetherEngine
+      - package: libass
+    settings:
+      base:
+        PRODUCT_NAME: Jelly
+        PRODUCT_BUNDLE_IDENTIFIER: $(JELLY_BUNDLE_ID)
+        CODE_SIGN_ENTITLEMENTS: JellyMac/JellyMac.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Jelly
+        INFOPLIST_KEY_NSLocalNetworkUsageDescription: Jelly verbindet sich mit deinem Jellyfin-Server im Heimnetz.
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.entertainment
+        ENABLE_HARDENED_RUNTIME: YES
+        EXCLUDED_ARCHS: x86_64
+    info:
+      path: JellyMac/Info.plist
+      properties:
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+        ITSAppUsesNonExemptEncryption: false
+        CFBundleDevelopmentRegion: en
+        CFBundleLocalizations: [de, en, fr, es, it, nl, pt-BR, da, sv, pl]
+        NSUserActivityTypes: [de.jelly.item]
+        CFBundleURLTypes:
+          - CFBundleURLName: de.jelly.tv
+            CFBundleURLSchemes: [jelly]
   # Home-screen widget "Weiterschauen" and the download Live Activity. Reads the active profile from the app's keychain group.
   JellyWidgets:
     type: app-extension
@@ -204,6 +254,10 @@ schemes:
         JellyUITests: [test]
     test:
       targets: [JellyUITests]
+  JellyMac:
+    build:
+      targets:
+        JellyMac: all
   Jelly:
     build:
       targets:
