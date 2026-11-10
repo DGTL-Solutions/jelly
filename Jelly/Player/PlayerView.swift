@@ -550,9 +550,9 @@ struct PlaybackScreen: View {
                     .focused($focus, equals: .chapter(index))
                 }
             }
-            .padding(.vertical, 20)
+            .padding(.horizontal, 24)
+            .padding(.vertical, 30)
         }
-        .scrollClipDisabled()
     }
 
     private var syncTab: some View {

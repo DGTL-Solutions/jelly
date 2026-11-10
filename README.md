@@ -94,6 +94,21 @@ Tab „Erkunden": Filme und Serien, die noch nicht auf dem Server sind – „Ge
 
 Vorschaubilder beim Spulen kommen aus Jellyfins Trickplay-Funktion (Dashboard › Bibliotheken › Trickplay-Bilder extrahieren).
 
+## Gemeinsam schauen, Fernbedienung, Profile (seit 2.0)
+
+- **Anmelden per iPhone:** Der Quick-Connect-Bildschirm des Apple TV zeigt einen QR-Code (`jelly://signin?server=…&code=…`). Jelly auf dem iPhone öffnet ihn und bestätigt den Code mit dem dort angemeldeten Profil (`QuickConnect/Authorize`).
+- **Fernbedienung:** Solange Jelly offen ist, hält es eine Leitung zum Server (`Jelly/Core/SessionLink.swift`, WebSocket mit dem Token im Header) und meldet sich als steuerbarer Player. Auf dem iPhone bietet die Detailseite „Auf Apple TV abspielen“ und danach eine Fernbedienung.
+- **SyncPlay** (`Jelly/Core/SyncPlay.swift`, in den Einstellungen unter Extras einzuschalten): Gruppen auf dem Server; der Server gibt Start, Pause und Sprünge vor, jeder Player meldet, wann er bereit ist.
+- **SharePlay** (`Jelly/Core/SharePlay.swift`): In einem FaceTime-Anruf fragt „Abspielen“, ob für alle gestartet wird. Braucht die Fähigkeit „Group Activities“ an der Bundle-ID (Entwickler-Account); das Release-Skript signiert sie nur mit, wenn das Profil sie gewährt.
+- **Kinderprofil** (`Jelly/Core/KidsPIN.swift`, `KidsMode.swift`): Altersgrenze aus der Bewertungsliste des Servers, PIN im Schlüsselbund. Einstellungen, Profilwechsel und Erkunden brauchen den PIN.
+- **Apple-TV-Benutzer:** Jelly läuft als der aktive Apple-TV-Benutzer (`runs-as-current-user`). Einstellungen und das aktive Profil sind dadurch pro Person getrennt, die Anmeldungen liegen im gemeinsamen Schlüsselbund (`SecureStore`).
+- **Optional:** Titelmusik, HomeKit-Szenen (Apple TV), nächste Folgen automatisch laden und Mitteilung bei erfüllten Wünschen (iPhone/iPad).
+- **Widget, Siri, Handoff:** Ziel `JellyWidgets` (Widget „Weiterschauen“, Download-Live-Aktivität), `JellyMobile/Intents` (App Intents, Handoff, Spotlight).
+
+## Mac
+
+Ziel `JellyMac`: die Bildschirme der iPhone- und iPad-App in einem Mac-Fenster. Ein natives macOS-Ziel, weil FFmpeg in der Player-Engine keine Mac-Catalyst-Variante hat; `JellyMac/MacCompat.swift` stellt bereit, was die geteilten Bildschirme aus UIKit erwarten. `Scripts/release-mac.sh` baut, signiert und lädt das Paket für den Mac App Store hoch (zusätzlich nötig: ein Zertifikat „Mac Installer Distribution“, siehe `Scripts/asc_certificate.py`).
+
 ## Prüfen
 
 ```sh
@@ -122,6 +137,8 @@ clang -fobjc-arc -framework Foundation Scripts/simhid.m -o /tmp/simhid
 ```
 
 XCTests (`JellyTests`) über Product › Test in Xcode. Für Simulator-Builds mit Schlüsselbund ad hoc signieren (`CODE_SIGN_IDENTITY=-`), sonst bleibt die Anmeldung nur bis zum Neustart erhalten.
+
+Abläufe in der iPhone-App lassen sich im Simulator per Skript durchspielen: `Scripts/ui-ios.sh "<Startparameter>" "<Schritte>"` (Ziel `JellyUITests`, Schritte wie `tap:Filme;shot:filme` stehen in `JellyUITests/ScriptedUITest.swift`). `Scripts/sync-strings.sh` gleicht den Textkatalog nach dem Bauen mit dem Code ab.
 
 Nur in Debug-Builds steuern Startparameter (`SIMCTL_CHILD_…` bei `simctl launch`) die App für Tests: `JELLY_SERVER`/`JELLY_USER`/`JELLY_PASSWORD` (Auto-Login), `JELLY_TAB`, `JELLY_OPEN`/`JELLY_PLAY` (Item-ID), `JELLY_PANEL` (optional Reiter), `JELLY_CONTROLS`, `JELLY_SCRUB` (Sekunden), `JELLY_SUBTITLE` (Index oder `ass`), `JELLY_FROM_END`, `JELLY_START` (Startposition in Sekunden), `JELLY_PLAN` (`compact`: Server-Stream mit nur der gewählten Tonspur), `JELLY_LIMIT` (Mbit/s, startet wie von Jelly heruntergeregelt), `JELLY_UPGRADE_WAIT` (Sekunden bis zum Hochschalten statt 300), `JELLY_SCROLL_EPISODES`, `JELLY_SCREENSAVER`, `JELLY_ANALYSIS` (`1` startet die Verbindungsanalyse, `end` scrollt danach ans Ende), `JELLY_SIGN_OUT`, `JELLY_SECOND_SERVER` (Kopie des Kontos als zweiter Server „Testserver“), `JELLY_SEERR_PASSWORD` (meldet die Jellyseerr-Seite automatisch an), `JELLY_SEERR_SERVER` (öffnet „Erkunden“ direkt mit dieser Jellyseerr-Adresse, z. B. dem Test-Jellyseerr `Scripts/seerr-mock.py` auf `http://127.0.0.1:15055` mit Wünschen und laufenden Downloads), `JELLY_SEERR_AUTO` (erlaubt die automatische Jellyseerr-Anmeldung nach dem Login; ohne ihn lassen Debug-Builds sie aus, damit Testläufe keine Sitzung auf fremden Servern belegen). Im Simulator meldet der Player keinen Fortschritt an den Server, damit Tests die „Weiterschauen“-Positionen des Kontos nicht überschreiben; `JELLY_REPORT=1` schaltet das wieder ein.
 

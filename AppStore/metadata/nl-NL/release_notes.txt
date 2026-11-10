@@ -1,1 +1,11 @@
-• Opgelost: beeldondertitels van blu-rays en dvd’s (PGS, VobSub, DVB) worden nu getoond.
+Jelly 2.0 – de grootste update tot nu toe.
+
+• Inloggen met je iPhone: scan de QR-code, bevestig, klaar.
+• Samen kijken: SharePlay via FaceTime en SyncPlay met iedereen op je server.
+• Van iPhone naar Apple TV: kies op je iPhone, speel af op de Apple TV en bedien het vanaf daar.
+• Kinderprofiel met leeftijdsclassificatie en pincode.
+• Meerdere filters tegelijk: genre, decennium, beoordeling.
+• Iedere persoon op de Apple TV komt in zijn eigen profiel.
+• De volgende aflevering start zonder wachten.
+• ‘Je verzoek is er’: een melding als een Jellyseerr-verzoek beschikbaar is.
+• Optioneel: titelmuziek en HomeKit-scènes die het licht dimmen tijdens het afspelen.

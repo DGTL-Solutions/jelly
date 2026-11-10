@@ -1,1 +1,11 @@
-• Naprawiono: napisy graficzne z płyt Blu-ray i DVD (PGS, VobSub, DVB) są teraz wyświetlane.
+Jelly 2.0 – największa dotychczas aktualizacja.
+
+• Logowanie iPhone’em: zeskanuj kod QR, potwierdź i gotowe.
+• Oglądaj razem: SharePlay przez FaceTime i SyncPlay ze wszystkimi na twoim serwerze.
+• Z iPhone’a na Apple TV: wybierz na iPhonie, odtwarzaj na Apple TV i steruj stamtąd.
+• Profil dziecięcy z kategorią wiekową i kodem PIN.
+• Kilka filtrów naraz: gatunek, dekada, ocena.
+• Każda osoba na Apple TV trafia do własnego profilu.
+• Następny odcinek zaczyna się bez czekania.
+• „Twoje zamówienie już jest”: informacja, gdy zamówienie z Jellyseerr jest dostępne.
+• Opcjonalnie: muzyka tytułowa i sceny HomeKit przyciemniające światło podczas odtwarzania.

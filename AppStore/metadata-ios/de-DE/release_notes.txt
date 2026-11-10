@@ -1,1 +1,12 @@
-• Behoben: Bild-Untertitel von Blu-rays und DVDs (PGS, VobSub, DVB) werden jetzt angezeigt.
+Jelly 2.0 – das bisher größte Update.
+
+• Apple TV per iPhone anmelden: QR-Code scannen, bestätigen, fertig.
+• Gemeinsam schauen: SharePlay über FaceTime und SyncPlay mit allen auf deinem Server.
+• Vom iPhone aufs Apple TV: am iPhone auswählen, am Apple TV abspielen und fernsteuern.
+• Kinderprofil mit Altersfreigabe und PIN.
+• Mehrere Filter gleichzeitig: Genre, Jahrzehnt, Bewertung.
+• Neu: Widget „Weiterschauen“, Siri und Kurzbefehle („Weiterschauen in Jelly“), Handoff zwischen deinen Geräten.
+• Jelly gibt es jetzt auch für den Mac.
+• Die nächste Folge startet ohne Wartezeit.
+• „Dein Wunsch ist da“: Hinweis, wenn ein Jellyseerr-Wunsch angekommen ist.
+• Optional: Titelmusik, die nächsten Folgen automatisch laden und Mitteilungen, wenn ein Wunsch da ist.
