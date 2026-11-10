@@ -192,6 +192,14 @@ struct MainTabs: View {
         .onReceive(NotificationCenter.default.publisher(for: .jellyShowDownloads)) { _ in
             if downloadsInTabs { tab = .downloads } else { showsDownloads = true }
         }
+        #if DEBUG
+        // Testing only: a running app is told which tab to show or to close the player (see JellyMacApp's command file).
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("jellyDebugCommand"))) { note in
+            guard let command = note.object as? String else { return }
+            if command == "stop" { model.playback = nil }
+            if command.hasPrefix("tab:"), let wanted = MobileTab(rawValue: String(command.dropFirst(4))) { tab = wanted }
+        }
+        #endif
     }
 
     private func syncDownloads() async {

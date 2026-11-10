@@ -95,6 +95,7 @@ extension View {
                     .onDisappear { onDismiss?() }
             }
         }
+        .toolbar(isPresented.wrappedValue ? .hidden : .automatic, for: .windowToolbar)
     }
 
     func fullScreenCover<Item: Identifiable, Content: View>(item: Binding<Item?>, onDismiss: (() -> Void)? = nil,
@@ -105,6 +106,8 @@ extension View {
                     .onDisappear { onDismiss?() }
             }
         }
+        // The window's toolbar belongs to the page underneath (sort, filter, sidebar): out of the way while covered.
+        .toolbar(item.wrappedValue == nil ? .automatic : .hidden, for: .windowToolbar)
     }
 }
 
