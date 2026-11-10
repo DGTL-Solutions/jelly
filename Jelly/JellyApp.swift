@@ -50,6 +50,7 @@ struct RootView: View {
         }
         .onOpenURL { url in Task { await model.open(url) } }
         .parentGate()
+        .togetherNotices()
         .onAppear {
             IdleMonitor.shared.isAllowed = { [weak model] in
                 guard let model else { return false }

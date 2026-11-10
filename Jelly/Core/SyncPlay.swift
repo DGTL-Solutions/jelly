@@ -19,7 +19,10 @@ final class SyncPlay: ObservableObject, PlaybackCoordinator {
     @Published private(set) var available: [Group] = []
     @Published private(set) var loading = false
     /// "Anna ist dabei" and the like, shown briefly.
-    @Published var notice: String?
+    @Published var notice: String? {
+        // Over the film, where the group is watching.
+        didSet { if let notice { PlaybackHub.shared.player?.notice = notice } }
+    }
     @Published var error: String?
 
     private weak var model: AppModel?
@@ -129,6 +132,12 @@ final class SyncPlay: ObservableObject, PlaybackCoordinator {
     }
 
     func playerIsReady(_ player: PlayerController) {
+        // "Nächste Folge" on this device: the group follows.
+        if group != nil, let groupItemID, player.item.id != groupItemID {
+            self.groupItemID = player.item.id
+            start(player.item, at: player.exactPosition)
+            return
+        }
         guard group != nil, owesReady, player.item.id == groupItemID else { return }
         owesReady = false
         report("Ready", position: player.exactPosition)

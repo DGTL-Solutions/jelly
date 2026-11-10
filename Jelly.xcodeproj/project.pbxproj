@@ -12,6 +12,7 @@
 		0581B937934D03B9CB2C9454 /* DownloadCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7C1708532E1DD73A6A3AFC /* DownloadCenter.swift */; };
 		05AB6818E8A5192E6BB93125 /* MobilePlayerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179C0B1A627C2B2751E858F8 /* MobilePlayerControls.swift */; };
 		05E4BA7B0C081B53951AF280 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3859131F0DFB9909D49A1D60 /* InfoPlist.xcstrings */; };
+		06EAB9A4101C82A9F068C2B1 /* SharePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2400D725F32BB10CB34B4E4 /* SharePlay.swift */; };
 		0742CB71A908E9A0B6A7F745 /* ThemeMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C97D9035CA0F1A10AB35BB /* ThemeMusic.swift */; };
 		0F8E5CD0D917AA032F23846F /* Downloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B966622C44FE45B8F3B7A627 /* Downloads.swift */; };
 		0FE09B9D5D59B162D495240B /* SharedUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087D8D8292398E791F68EE4C /* SharedUI.swift */; };
@@ -84,6 +85,7 @@
 		85C11843F7129867C80597AA /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED9178C2D1CC383208FFDD /* OnboardingFlow.swift */; };
 		87AD7A4ED7BF9518DD260EEF /* IntroFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A1300A33DF01F71060478A /* IntroFinder.swift */; };
 		8824A47B0A42A26A194933DF /* License-dav1d.txt in Resources */ = {isa = PBXBuildFile; fileRef = 08F3A30EEB28D3F88CE40A9A /* License-dav1d.txt */; };
+		8A6CAAB5A688AC5F95837AD5 /* ScriptedUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808099BD62857D95990D0BF6 /* ScriptedUITest.swift */; };
 		8BC222BE36B07AE581BEE361 /* License-FreeType.txt in Resources */ = {isa = PBXBuildFile; fileRef = B257626A6044D766406A7017 /* License-FreeType.txt */; };
 		8BE6E959996BC0F18E90CE7F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 05962768906AE4D3CC3E3EE1 /* PrivacyInfo.xcprivacy */; };
 		8D097650A2A316F8A82670A3 /* License-LibDovi.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8EA84B06FE50484566BB8B21 /* License-LibDovi.txt */; };
@@ -107,6 +109,7 @@
 		A7425879EF4D03C34358C84F /* License-FreeType.txt in Resources */ = {isa = PBXBuildFile; fileRef = B257626A6044D766406A7017 /* License-FreeType.txt */; };
 		A9315EE783DDC6749F49D5F2 /* License-HarfBuzz.txt in Resources */ = {isa = PBXBuildFile; fileRef = F4EF9BA392D7270B068F109D /* License-HarfBuzz.txt */; };
 		ABF034386C286542F6C16F22 /* MobilePaywall.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F5D4F3D1DDA4BCDC689533 /* MobilePaywall.swift */; };
+		B0F8DCC488365545DA93411A /* SharePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2400D725F32BB10CB34B4E4 /* SharePlay.swift */; };
 		B108149F50E691AF9E53F7B5 /* IntroDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2A0071BF03804F41D92C13 /* IntroDetector.swift */; };
 		B148873654558DF8EE58154C /* SharedUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087D8D8292398E791F68EE4C /* SharedUI.swift */; };
 		B178FA8B968908F6CD7378B6 /* SessionLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC6414081ABEC913628C43C /* SessionLink.swift */; };
@@ -161,6 +164,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		0E1942A80E9ABD9DBFF566BF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A93F9ED91C59EF8EE96E224A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 02461FB07408A450B24D7F7D;
+			remoteInfo = JellyMobile;
+		};
 		420B9FC6972E91DF013984A6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A93F9ED91C59EF8EE96E224A /* Project object */;
@@ -226,6 +236,7 @@
 		705897CD1AAF939955943FC6 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		79F62C3153634E351E39540D /* TogetherScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TogetherScreens.swift; sourceTree = "<group>"; };
 		7AD934A017F0F636E82D025C /* ServerDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerDiscovery.swift; sourceTree = "<group>"; };
+		808099BD62857D95990D0BF6 /* ScriptedUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptedUITest.swift; sourceTree = "<group>"; };
 		836B696C1B6EF483543B64A6 /* JellyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyTests.swift; sourceTree = "<group>"; };
 		840B469169D59810437A5347 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		850A87E15B5242C5665B4932 /* License-AetherEngine.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "License-AetherEngine.txt"; sourceTree = "<group>"; };
@@ -241,6 +252,7 @@
 		9CB94D6E266F2183B6556114 /* License-zimg.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "License-zimg.txt"; sourceTree = "<group>"; };
 		9DED9178C2D1CC383208FFDD /* OnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
 		9F9866C5CF591B662CE0AD84 /* AboutScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutScreens.swift; sourceTree = "<group>"; };
+		A2400D725F32BB10CB34B4E4 /* SharePlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlay.swift; sourceTree = "<group>"; };
 		A2B5D86B9130E73BFD6F7E1F /* AboutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutData.swift; sourceTree = "<group>"; };
 		A58F41023820851B2D0CE2A4 /* SyncPlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPlay.swift; sourceTree = "<group>"; };
 		A5BF37FBE3A3195B3ECB50A8 /* ASSRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASSRenderer.swift; sourceTree = "<group>"; };
@@ -266,6 +278,7 @@
 		BD2F394BAF1CD598424B68F8 /* PlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerController.swift; sourceTree = "<group>"; };
 		BDD22F22EC827FD3B69B7C84 /* Screensaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screensaver.swift; sourceTree = "<group>"; };
 		BDD5FCBAB3591A4866AFB18F /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		BDEE33BBC321B266543718D1 /* JellyUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = JellyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE27BC41C829D622D1B6E762 /* Purchases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchases.swift; sourceTree = "<group>"; };
 		C2398EB379E6931FEF40D3F5 /* JellyTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = JellyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2A931B23B949254F2BB0766 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -336,6 +349,14 @@
 			path = Account;
 			sourceTree = "<group>";
 		};
+		35DCC93D6BF913C03FBCB2FB /* JellyUITests */ = {
+			isa = PBXGroup;
+			children = (
+				808099BD62857D95990D0BF6 /* ScriptedUITest.swift */,
+			);
+			path = JellyUITests;
+			sourceTree = "<group>";
+		};
 		36CE58ADF9032FAAE23C007A /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -359,6 +380,7 @@
 				702891C8FE64D2FB792F7A72 /* Seerr.swift */,
 				7AD934A017F0F636E82D025C /* ServerDiscovery.swift */,
 				ABC6414081ABEC913628C43C /* SessionLink.swift */,
+				A2400D725F32BB10CB34B4E4 /* SharePlay.swift */,
 				A58F41023820851B2D0CE2A4 /* SyncPlay.swift */,
 			);
 			path = Core;
@@ -516,6 +538,7 @@
 				37484BEB97ED57E9D15ACF5E /* JellyMobile */,
 				F75CE5FA73ACF3ABF990D30A /* JellyTests */,
 				401BA33AE9E8B4A38AE48007 /* JellyTopShelf */,
+				35DCC93D6BF913C03FBCB2FB /* JellyUITests */,
 				FEBC975F705ED2A17ABA78F7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -560,6 +583,7 @@
 				331870C9FF562BC483C1626D /* JellyMobile.app */,
 				C2398EB379E6931FEF40D3F5 /* JellyTests.xctest */,
 				8F5000E80A7FBC41ED0B8EEE /* JellyTopShelf.appex */,
+				BDEE33BBC321B266543718D1 /* JellyUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -605,6 +629,24 @@
 			productName = JellyMobile;
 			productReference = 331870C9FF562BC483C1626D /* JellyMobile.app */;
 			productType = "com.apple.product-type.application";
+		};
+		542DA07DFC2EF6EDB99DCCC2 /* JellyUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E922719F9A46C6049A6F1233 /* Build configuration list for PBXNativeTarget "JellyUITests" */;
+			buildPhases = (
+				1C818DF5D0D37FF6CDAEA39A /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E0E1C1779DE184ED88D8AC87 /* PBXTargetDependency */,
+			);
+			name = JellyUITests;
+			packageProductDependencies = (
+			);
+			productName = JellyUITests;
+			productReference = BDEE33BBC321B266543718D1 /* JellyUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		67E5AD57E14080415EC64A87 /* Jelly */ = {
 			isa = PBXNativeTarget;
@@ -656,6 +698,9 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					542DA07DFC2EF6EDB99DCCC2 = {
+						TestTargetID = 02461FB07408A450B24D7F7D;
+					};
 				};
 			};
 			buildConfigurationList = E8D38CFA49B723766D205681 /* Build configuration list for PBXProject "Jelly" */;
@@ -689,6 +734,7 @@
 				019C08E9A3A1217E6B69FE96 /* JellyTopShelf */,
 				02461FB07408A450B24D7F7D /* JellyMobile */,
 				F0D0FD9E7DF62D250324CAA9 /* JellyTests */,
+				542DA07DFC2EF6EDB99DCCC2 /* JellyUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -752,6 +798,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1C818DF5D0D37FF6CDAEA39A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A6CAAB5A688AC5F95837AD5 /* ScriptedUITest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7C9479C9901F1A4F11AF6D2E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -802,6 +856,7 @@
 				2C84D2A17628387BA730D118 /* ServerDiscovery.swift in Sources */,
 				A4C6BED59730E7E7CF0DFAF1 /* SessionLink.swift in Sources */,
 				FCDD021B203C5D4B8B8BB69F /* SettingsScreen.swift in Sources */,
+				B0F8DCC488365545DA93411A /* SharePlay.swift in Sources */,
 				0FE09B9D5D59B162D495240B /* SharedUI.swift in Sources */,
 				7BABC13F7C7CDBEA8D7E90BC /* SignInApprovalSheet.swift in Sources */,
 				80F96F2E8D38481E948BC638 /* SubtitleOverlay.swift in Sources */,
@@ -861,6 +916,7 @@
 				9B10D20243269832A714DE48 /* ServerDiscovery.swift in Sources */,
 				B178FA8B968908F6CD7378B6 /* SessionLink.swift in Sources */,
 				BDFC8798F3CCBDEB2EE35E63 /* SettingsView.swift in Sources */,
+				06EAB9A4101C82A9F068C2B1 /* SharePlay.swift in Sources */,
 				B148873654558DF8EE58154C /* SharedUI.swift in Sources */,
 				1D5328784131DDB61B42F732 /* SubtitleOverlay.swift in Sources */,
 				CEC81E515C76B274802C7446 /* SyncPlay.swift in Sources */,
@@ -899,6 +955,11 @@
 			isa = PBXTargetDependency;
 			target = 67E5AD57E14080415EC64A87 /* Jelly */;
 			targetProxy = 420B9FC6972E91DF013984A6 /* PBXContainerItemProxy */;
+		};
+		E0E1C1779DE184ED88D8AC87 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 02461FB07408A450B24D7F7D /* JellyMobile */;
+			targetProxy = 0E1942A80E9ABD9DBFF566BF /* PBXContainerItemProxy */;
 		};
 		F7C092AEA4344ABFD50C7980 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1182,6 +1243,42 @@
 			};
 			name = Release;
 		};
+		D65B8718805552E4C5425EA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(JELLY_BUNDLE_ID).uitests";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = JellyMobile;
+			};
+			name = Debug;
+		};
+		E7CB9E5BE971AC124197EB18 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(JELLY_BUNDLE_ID).uitests";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = JellyMobile;
+			};
+			name = Release;
+		};
 		F9EF1D5ECC2D0CFEB684ECDB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1245,6 +1342,15 @@
 			buildConfigurations = (
 				C7B10E0C41172F0D532A06E7 /* Debug */,
 				D06F0E6C6AA77EDDBBAC6DB7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E922719F9A46C6049A6F1233 /* Build configuration list for PBXNativeTarget "JellyUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D65B8718805552E4C5425EA8 /* Debug */,
+				E7CB9E5BE971AC124197EB18 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
