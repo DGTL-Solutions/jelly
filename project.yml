@@ -139,11 +139,26 @@ targets:
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
+  # Scripted taps and screenshots for the iPhone/iPad app in the simulator (see JellyUITests/ScriptedUITest.swift).
+  JellyUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: '18.0'
+    sources: [JellyUITests]
+    dependencies:
+      - target: JellyMobile
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: $(JELLY_BUNDLE_ID).uitests
 schemes:
   JellyMobile:
     build:
       targets:
         JellyMobile: all
+        JellyUITests: [test]
+    test:
+      targets: [JellyUITests]
   Jelly:
     build:
       targets:

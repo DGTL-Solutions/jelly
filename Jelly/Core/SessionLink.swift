@@ -129,7 +129,7 @@ extension JellyfinClient {
 
     /// Other devices of this account (or, for administrators, of anyone) that can be told what to play.
     func controllableSessions(user: String) async throws -> [RemoteSession] {
-        let all: [RemoteSession] = try await get("Sessions", query: ["ControllableByUserId": user, "ActiveWithinSeconds": "600"])
+        let all: [RemoteSession] = try await get("Sessions", query: ["ControllableByUserId": user])
         return all.filter { $0.supportsRemoteControl == true && $0.deviceId != deviceID }
     }
 

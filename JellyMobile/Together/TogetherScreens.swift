@@ -13,7 +13,8 @@ struct PlayElsewhereMenu: View {
     private var showsSyncPlay: Bool { syncPlayEnabled && SyncPlay.isAllowed(model.user) }
 
     var body: some View {
-        Group {
+        // A stack, not a group: it exists (and loads) even while it shows nothing.
+        ZStack {
             if !sessions.isEmpty || showsSyncPlay {
                 Menu {
                     ForEach(sessions) { session in
@@ -139,7 +140,8 @@ struct TogetherStatusButton: View {
     @State private var showsGroups = false
 
     var body: some View {
-        Group {
+        // A stack, not a group: it exists (and loads) even while it shows nothing.
+        ZStack {
             if syncPlay.group != nil {
                 button("person.2.fill", label: "Gemeinsam schauen") { showsGroups = true }
             } else if let playing {

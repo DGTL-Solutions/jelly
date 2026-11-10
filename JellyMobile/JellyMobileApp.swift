@@ -54,6 +54,7 @@ struct MobileRootView: View {
         }
         .onOpenURL { url in Task { await model.open(url) } }
         .parentGate()
+        .togetherNotices()
         .sheet(item: $model.pendingSignIn) { link in SignInApprovalSheet(link: link) }
         #if DEBUG
         // Simulator testing only: JELLY_ROTATE="22:landscape,30:portrait" turns the screen at those seconds after launch.

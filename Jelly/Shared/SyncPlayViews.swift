@@ -58,3 +58,21 @@ struct SyncPlayGroupsView: View {
         }
     }
 }
+
+/// Tells the viewer when a SharePlay title can't be opened on this device.
+private struct TogetherNotices: ViewModifier {
+    @EnvironmentObject private var model: AppModel
+    @State private var message: String?
+
+    func body(content: Content) -> some View {
+        content
+            .onReceive(model.sharePlay.$notice) { if let text = $0 { message = text } }
+            .alert("SharePlay", isPresented: Binding(get: { message != nil }, set: { if !$0 { message = nil; model.sharePlay.notice = nil } })) {
+                Button("OK", role: .cancel) {}
+            } message: { Text(message ?? "") }
+    }
+}
+
+extension View {
+    func togetherNotices() -> some View { modifier(TogetherNotices()) }
+}

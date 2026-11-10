@@ -56,6 +56,7 @@ final class AppModel: ObservableObject {
     /// The live line to the server: remote control and SyncPlay.
     private(set) lazy var link = SessionLink(model: self)
     private(set) lazy var syncPlay = SyncPlay(model: self)
+    private(set) lazy var sharePlay = SharePlay(model: self)
     #if DEBUG
     private var debugJoining = false
     #endif
@@ -377,9 +378,18 @@ final class AppModel: ObservableObject {
             showsPaywall = true
             return
         }
+        let start = fromBeginning || item.progress > 0.97 ? 0 : item.resumeSeconds
+        // In a FaceTime call the system asks whether to start for everyone (SharePlay).
+        if sharePlay.isEligible, mediaSourceID == nil, offlineCopy(item) == nil {
+            Task {
+                if await sharePlay.offer(item, seconds: start) { return }
+                playback = PlaybackRequest(item: item, fromBeginning: fromBeginning)
+            }
+            return
+        }
         // In a SyncPlay group the title starts for everyone; the server then tells each member – this device too – to open it.
         if syncPlay.group != nil, mediaSourceID == nil {
-            syncPlay.start(item, at: fromBeginning || item.progress > 0.97 ? 0 : item.resumeSeconds)
+            syncPlay.start(item, at: start)
             return
         }
         let offline = offlineCopy(item).flatMap { mediaSourceID == nil || mediaSourceID == $0.source.id ? $0 : nil }
@@ -406,7 +416,9 @@ final class AppModel: ObservableObject {
     func connectLink() {
         link.onSyncPlay = { [weak self] type, data in self?.syncPlay.handle(type, data) }
         if PlaybackHub.shared.coordinators.isEmpty {
-            PlaybackHub.shared.coordinators = [{ [weak self] in self?.syncPlay.group != nil ? self?.syncPlay : nil }]
+            PlaybackHub.shared.coordinators = [{ [weak self] in self?.sharePlay.isActive == true ? self?.sharePlay : nil },
+                                               { [weak self] in self?.syncPlay.group != nil ? self?.syncPlay : nil }]
+            sharePlay.listen()
         }
         link.connect()
         #if DEBUG
