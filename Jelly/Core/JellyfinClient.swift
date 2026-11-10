@@ -151,6 +151,11 @@ struct JellyfinClient: Sendable {
         try await get("QuickConnect/Connect", query: ["secret": secret])
     }
 
+    /// Approves another device's Quick Connect code with this signed-in account.
+    func quickConnectAuthorize(code: String) async throws {
+        _ = try await send("QuickConnect/Authorize", method: "POST", query: ["code": code])
+    }
+
     func authenticate(quickConnectSecret secret: String) async throws -> AuthenticationResult {
         try await signIn("Users/AuthenticateWithQuickConnect", body: ["Secret": secret])
     }

@@ -376,7 +376,7 @@ enum Format {
 }
 
 enum JellyError: LocalizedError, Equatable {
-    case invalidURL, serverNotFound, unauthorized, forbidden, loginRejected, server(Int), unsupported, keychain, quickConnectDisabled
+    case invalidURL, serverNotFound, unauthorized, forbidden, loginRejected, server(Int), unsupported, keychain, quickConnectDisabled, wrongServer
     /// The request never got an answer: `URLError.Code` raw value, the server's "host:port" and how long Jelly waited.
     case connection(code: Int, host: String, seconds: Int)
 
@@ -392,6 +392,7 @@ enum JellyError: LocalizedError, Equatable {
         case .server(let code): return String(localized: "Der Server hat mit Fehler \(code) geantwortet.", comment: "HTTP status code")
         case .unsupported: return String(localized: "Für diesen Titel ist keine abspielbare Datei verfügbar.")
         case .keychain: return String(localized: "Die Anmeldung konnte nicht sicher gespeichert werden.")
+        case .wrongServer: return String(localized: "Dieser Code gehört zu einem anderen Server als dein aktuelles Profil.")
         case .quickConnectDisabled: return String(localized: "Quick Connect ist auf diesem Server deaktiviert.")
         case let .connection(code, host, seconds):
             // What happened, with the address and the time waited – the facts, not a guess at the cause.
