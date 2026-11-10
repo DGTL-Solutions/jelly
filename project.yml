@@ -126,7 +126,9 @@ targets:
         CFBundleDevelopmentRegion: en
         CFBundleLocalizations: [de, en, fr, es, it, nl, pt-BR, da, sv, pl]
         # Sound keeps playing in the background and in Picture in Picture.
-        UIBackgroundModes: [audio]
+        UIBackgroundModes: [audio, fetch]
+        # "Dein Wunsch ist da": asking Jellyseerr now and then while Jelly is closed.
+        BGTaskSchedulerPermittedIdentifiers: [de.jelly.wishes]
         CFBundleURLTypes:
           - CFBundleURLName: de.jelly.tv
             CFBundleURLSchemes: [jelly]

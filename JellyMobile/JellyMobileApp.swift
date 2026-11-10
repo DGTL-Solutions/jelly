@@ -1,5 +1,6 @@
 import SwiftUI
 import StoreKit
+import UserNotifications
 import AetherEngine
 
 /// Jelly on iPhone and iPad: the same server, profiles, subscription and player engine as on Apple TV, with a touch UI.
@@ -174,6 +175,10 @@ struct MainTabs: View {
             }
         }
         // Without a connection at launch the start page can't load; downloads still play.
+        // After an episode: send its position, and keep the next ones ready if the viewer asked for that.
+        .onChange(of: model.playback == nil) { _, closed in
+            if closed { Task { try? await Task.sleep(for: .seconds(2)); await syncDownloads() } }
+        }
         .onReceive(NotificationCenter.default.publisher(for: .jellyShowDownloads)) { _ in
             if downloadsInTabs { tab = .downloads } else { showsDownloads = true }
         }
@@ -182,6 +187,7 @@ struct MainTabs: View {
     private func syncDownloads() async {
         guard let client = model.client, let session = model.session else { return }
         await DownloadCenter.shared.sync(client: client, session: session)
+        await DownloadCenter.shared.keepNextEpisodes(client: client, session: session, audioLanguage: model.user?.configuration?.audioLanguagePreference)
     }
 
     #if DEBUG
@@ -282,7 +288,21 @@ extension Notification.Name {
 }
 
 /// Hands background download events to `DownloadCenter` when the system wakes Jelly for them.
-final class JellyAppDelegate: NSObject, UIApplicationDelegate {
+final class JellyAppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        WishNotifications.register()
+        UNUserNotificationCenter.current().delegate = self
+        return true
+    }
+
+    func applicationDidEnterBackground(_ application: UIApplication) { WishNotifications.schedule() }
+
+    /// A tap on "Dein Wunsch ist da" opens the title.
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        guard let text = response.notification.request.content.userInfo["url"] as? String, let url = URL(string: text) else { return }
+        await UIApplication.shared.open(url)
+    }
+
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String,
                      completionHandler: @escaping () -> Void) {
         guard identifier == DownloadCenter.sessionIdentifier else { return completionHandler() }

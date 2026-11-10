@@ -331,6 +331,40 @@ final class DownloadCenter: NSObject, ObservableObject {
         }
     }
 
+    static let autoNextKey = "autoDownloadNext"
+
+    /// Optional: for every series with downloads, the next two unwatched episodes are kept on the device and watched
+    /// ones make room – so there is always something to watch on the train.
+    func keepNextEpisodes(client: JellyfinClient, session: Session, audioLanguage: String?) async {
+        guard UserDefaults.standard.bool(forKey: Self.autoNextKey), !keepingNext else { return }
+        keepingNext = true
+        defer { keepingNext = false }
+        let series = Dictionary(grouping: records(profileKey: session.key).filter { $0.seriesID != nil }, by: { $0.seriesID ?? "" })
+        for (seriesID, saved) in series {
+            // Only series the viewer is in the middle of: the server names the next unwatched episode.
+            guard let next = try? await client.nextUp(user: session.userID, seriesID: seriesID, limit: 1).first,
+                  let episodes = try? await client.episodes(user: session.userID, seriesID: seriesID),
+                  let index = episodes.firstIndex(where: { $0.id == next.id }) else { continue }
+            let wanted = Array(episodes[index...].prefix(2))
+            let quality = saved.max { $0.added < $1.added }?.quality ?? .original
+            for episode in wanted where record(itemID: episode.id, profileKey: session.key) == nil {
+                do {
+                    try await start(episode, quality: quality, client: client, session: session, audioLanguage: audioLanguage)
+                    Diagnostics.log("auto download \"\(episode.name)\"")
+                } catch {
+                    Diagnostics.log("auto download failed: \(error)")
+                    return
+                }
+            }
+            let before = Set(episodes[..<index].map(\.id))
+            for record in saved where record.state == .finished && record.played && !record.needsSync && before.contains(record.itemID) {
+                remove(record)
+            }
+        }
+    }
+
+    private var keepingNext = false
+
     private func update(_ record: DownloadRecord) {
         guard let index = records.firstIndex(where: { $0.id == record.id }) else { return }
         records[index] = record

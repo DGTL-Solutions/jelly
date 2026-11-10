@@ -70,6 +70,14 @@ private struct TogetherNotices: ViewModifier {
             .alert("SharePlay", isPresented: Binding(get: { message != nil }, set: { if !$0 { message = nil; model.sharePlay.notice = nil } })) {
                 Button("OK", role: .cancel) {}
             } message: { Text(message ?? "") }
+            .alert("Dein Wunsch ist da", isPresented: Binding(get: { model.arrivedWish != nil }, set: { if !$0 { model.arrivedWish = nil } }),
+                   presenting: model.arrivedWish) { wish in
+                if wish.jellyfinID != nil { Button("Ansehen") { Task { await model.open(wish) } } }
+                Button("Später", role: .cancel) {}
+            } message: { wish in
+                Text("„\(wish.title)“ ist jetzt in deiner Mediathek.")
+            }
+            .task(id: model.refreshID) { await model.checkWishes() }
     }
 }
 

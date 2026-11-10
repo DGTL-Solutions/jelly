@@ -10,6 +10,8 @@ struct SettingsScreen: View {
     @AppStorage("skipIntros") private var skipIntros = false
     @AppStorage(ThemeMusic.settingKey) private var themeMusic = false
     @AppStorage(SyncPlay.settingKey) private var syncPlay = false
+    @AppStorage(DownloadCenter.autoNextKey) private var autoDownloadNext = false
+    @AppStorage(WishNotifications.settingKey) private var wishNotifications = false
     @AppStorage("askProfileOnLaunch") private var askProfileOnLaunch = true
     @AppStorage("subtitleSize") private var subtitleSize = SubtitleSize.standard
     @AppStorage("subtitleBackground") private var subtitleBackground = SubtitleBackground.shadow
@@ -193,10 +195,18 @@ struct SettingsScreen: View {
         Section {
             Toggle("Titelmusik", isOn: $themeMusic)
             Toggle("Gemeinsam schauen (SyncPlay)", isOn: $syncPlay)
+            if model.user?.policy?.enableContentDownloading ?? true {
+                Toggle("Nächste Folgen automatisch laden", isOn: $autoDownloadNext)
+            }
+            if model.seerr != nil {
+                Toggle("Mitteilung, wenn ein Wunsch da ist", isOn: Binding(get: { wishNotifications }, set: { on in
+                    if on { Task { wishNotifications = await WishNotifications.enable() } } else { wishNotifications = false }
+                }))
+            }
         } header: {
             Text("Extras")
         } footer: {
-            Text("Titelmusik: Hat dein Server zu einer Serie oder einem Film eine Titelmelodie, läuft sie leise auf der Detailseite. Gemeinsam schauen: Mit SyncPlay sehen alle in einer Gruppe auf deinem Server dieselbe Sekunde – der Knopf dafür erscheint oben rechts auf der Detailseite.")
+            Text("Titelmusik: Hat dein Server zu einer Serie oder einem Film eine Titelmelodie, läuft sie leise auf der Detailseite. Gemeinsam schauen: Mit SyncPlay sehen alle in einer Gruppe auf deinem Server dieselbe Sekunde – der Knopf dafür erscheint oben rechts auf der Detailseite. Nächste Folgen: Bei Serien mit Downloads liegen immer die nächsten zwei ungesehenen Folgen auf dem Gerät, gesehene machen Platz.")
         }
     }
 

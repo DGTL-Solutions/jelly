@@ -34,6 +34,9 @@ final class AppModel: ObservableObject {
     @Published var playback: PlaybackRequest?
     /// What a kids profile only allows after the PIN: set while the PIN page is up.
     @Published var parentAction: (() -> Void)?
+    /// A Jellyseerr wish that has just become available, announced once.
+    @Published var arrivedWish: ArrivedWish?
+    var lastWishCheck = Date.distantPast
     /// A sign-in code scanned from an Apple TV's QR code, waiting for this phone's approval.
     @Published var pendingSignIn: SignInLink?
     /// Detail page to open on the start tab (Top Shelf links, debug launch arguments).
