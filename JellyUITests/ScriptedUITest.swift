@@ -4,7 +4,7 @@ import XCTest
 ///   TEST_RUNNER_JELLY_ENV="JELLY_SERVER=…;JELLY_USER=…"  launch environment of the app
 ///   TEST_RUNNER_JELLY_STEPS="waitfor:Start;tap:Filme;shot:filme;wait:2"
 ///   TEST_RUNNER_JELLY_OUT=/tmp/jelly-ui   where screenshots (`shot:`) and element dumps (`dump:`) go
-/// Steps: tap:<label> · tapxy:<x>,<y> (0…1) · longpress:<label> · type:<text> · swipe:up|down|left|right · wait:<s> ·
+/// Steps: tap:<label> · tapexact:<label> · tapxy:<x>,<y> (0…1) · longpress:<label> · type:<text> · swipe:up|down|left|right · scrollto:<label> · wait:<s> ·
 /// waitfor:<label> · shot:<name> · dump:<name> · home · activate · relaunch
 final class ScriptedUITest: XCTestCase {
     func testScript() throws {
@@ -18,8 +18,8 @@ final class ScriptedUITest: XCTestCase {
         }
         app.launch()
         var log = ""
-        func find(_ label: String) -> XCUIElement? {
-            let predicate = NSPredicate(format: "label CONTAINS[c] %@ OR identifier == %@", label, label)
+        func find(_ label: String, exact: Bool = false) -> XCUIElement? {
+            let predicate = exact ? NSPredicate(format: "label == %@", label) : NSPredicate(format: "label CONTAINS[c] %@ OR identifier == %@", label, label)
             let matches = app.descendants(matching: .any).matching(predicate).allElementsBoundByIndex
             return matches.first { $0.exists && $0.isHittable } ?? matches.first { $0.exists }
         }
@@ -27,11 +27,11 @@ final class ScriptedUITest: XCTestCase {
             let parts = step.split(separator: ":", maxSplits: 1).map(String.init)
             let argument = parts.count > 1 ? parts[1] : ""
             switch parts[0] {
-            case "tap", "longpress":
+            case "tap", "longpress", "tapexact":
                 var element: XCUIElement?
-                for _ in 0..<20 where element == nil { element = find(argument); if element == nil { sleep(1) } }
+                for _ in 0..<12 where element == nil { element = find(argument, exact: parts[0] == "tapexact"); if element == nil { sleep(1) } }
                 guard let element else { log += "MISSING \(step)\n"; continue }
-                if parts[0] == "tap" { element.tap() } else { element.press(forDuration: 1.2) }
+                if parts[0] == "longpress" { element.press(forDuration: 1.2) } else { element.tap() }
                 log += "ok \(step)\n"
             case "tapxy":
                 let xy = argument.split(separator: ",").compactMap { Double($0) }
@@ -39,6 +39,14 @@ final class ScriptedUITest: XCTestCase {
             case "type": app.typeText(argument)
             case "swipe":
                 switch argument { case "up": app.swipeUp(); case "down": app.swipeDown(); case "left": app.swipeLeft(); default: app.swipeRight() }
+            case "scrollto":
+                // Drags the page up until the element exists (lazy lists only build what is near the screen).
+                var found = find(argument)?.isHittable == true
+                for _ in 0..<12 where !found {
+                    app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.72)).press(forDuration: 0.05, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.35)))
+                    found = find(argument)?.isHittable == true
+                }
+                log += (found ? "ok " : "MISSING ") + step + "\n"
             case "wait": Thread.sleep(forTimeInterval: Double(argument) ?? 1)
             case "waitfor":
                 var found = false

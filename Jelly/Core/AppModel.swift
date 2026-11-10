@@ -36,6 +36,8 @@ final class AppModel: ObservableObject {
     @Published var playback: PlaybackRequest?
     /// What a kids profile only allows after the PIN: set while the PIN page is up.
     @Published var parentAction: (() -> Void)?
+    /// A parent entered the PIN a moment ago (to open the settings).
+    var parentUnlockedUntil = Date.distantPast
     /// A Jellyseerr wish that has just become available, announced once.
     @Published var arrivedWish: ArrivedWish?
     var lastWishCheck = Date.distantPast

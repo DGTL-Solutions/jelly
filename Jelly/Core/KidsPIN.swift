@@ -40,6 +40,23 @@ enum KidsPIN {
         SecureStore.load(fallbackDeviceID: "").accounts.contains { $0.key != session.key && rating(for: $0) != nil }
     }
 
+    /// The server's age ratings by name ("FSK-12" → 12), saved with the kids profile. Some lists (e.g. "Neu") ignore
+    /// the limit on the server; with this table Jelly drops what is rated above it itself.
+    nonisolated(unsafe) private static var table: [String: Int] = {
+        SecureStore.data(for: "kids-table").flatMap { try? JSONDecoder().decode([String: Int].self, from: $0) } ?? [:]
+    }()
+
+    static func saveTable(_ ratings: [ParentalRating]) {
+        table = Dictionary(ratings.compactMap { rating in rating.value.map { (rating.name, $0) } }, uniquingKeysWith: { first, _ in first })
+        SecureStore.setData(try? JSONEncoder().encode(table), for: "kids-table")
+    }
+
+    /// Whether a title with this rating may show under the limit `max`. Unrated titles are the server's call.
+    static func allows(_ rating: String?, max: String) -> Bool {
+        guard let rating, !rating.isEmpty, let limit = table[max], let value = table[rating] else { return true }
+        return value <= limit
+    }
+
     private static func hash(_ pin: String) -> SHA256.Digest {
         SHA256.hash(data: Data(("jelly-kids:" + pin).utf8))
     }
