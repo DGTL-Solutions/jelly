@@ -219,6 +219,9 @@ struct JellyfinClient: Sendable {
         var sortBy = "SortName"
         var sortOrder = "Ascending"
         var filters: [String] = []
+        var genres: [String] = []
+        var years: [Int] = []
+        var minRating: Int?
         var start = 0
         var limit = 60
         var personID: String?
@@ -234,9 +237,22 @@ struct JellyfinClient: Sendable {
         if let parent = q.parentID { query["ParentId"] = parent }
         if let search = q.search, !search.isEmpty { query["SearchTerm"] = search }
         if !q.filters.isEmpty { query["Filters"] = q.filters.joined(separator: ",") }
+        if !q.genres.isEmpty { query["Genres"] = q.genres.joined(separator: "|") }
+        if !q.years.isEmpty { query["Years"] = q.years.map(String.init).joined(separator: ",") }
+        if let rating = q.minRating { query["MinCommunityRating"] = "\(rating)" }
         if let person = q.personID { query["PersonIds"] = person }
         if let fields = q.fields { query["Fields"] = fields }
         return try await get("Items", query: query)
+    }
+
+    /// The genres that occur in a library, for its filter menu.
+    func genres(user: String, parentID: String?, types: [String]) async throws -> [String] {
+        var query = ["userId": user, "IncludeItemTypes": types.joined(separator: ","), "SortBy": "SortName", "EnableImages": "false",
+                     "EnableTotalRecordCount": "false"]
+        if let parentID { query["ParentId"] = parentID }
+        if let maxRating { query["MaxOfficialRating"] = maxRating }
+        let page: ItemsResponse = try await get("Genres", query: query)
+        return page.items.map(\.name)
     }
 
     func item(user: String, id: String) async throws -> BaseItem {
