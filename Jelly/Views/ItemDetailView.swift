@@ -55,6 +55,7 @@ struct ItemDetailView: View {
         .defaultFocus($focus, .play)
         .sheet(isPresented: $showsOverview) { OverviewSheet(item: current) }
         .task(id: model.refreshID) { await load() }
+        .themeMusic(for: item)
         .task(id: selectedSeason) { await loadEpisodes() }
     }
 

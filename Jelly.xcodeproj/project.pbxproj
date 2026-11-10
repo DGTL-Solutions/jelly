@@ -12,6 +12,7 @@
 		0581B937934D03B9CB2C9454 /* DownloadCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7C1708532E1DD73A6A3AFC /* DownloadCenter.swift */; };
 		05AB6818E8A5192E6BB93125 /* MobilePlayerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179C0B1A627C2B2751E858F8 /* MobilePlayerControls.swift */; };
 		05E4BA7B0C081B53951AF280 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3859131F0DFB9909D49A1D60 /* InfoPlist.xcstrings */; };
+		0742CB71A908E9A0B6A7F745 /* ThemeMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C97D9035CA0F1A10AB35BB /* ThemeMusic.swift */; };
 		0F8E5CD0D917AA032F23846F /* Downloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B966622C44FE45B8F3B7A627 /* Downloads.swift */; };
 		0FE09B9D5D59B162D495240B /* SharedUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087D8D8292398E791F68EE4C /* SharedUI.swift */; };
 		187F4E554AA36F062D7A2BF6 /* MobilePlayerSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91853DAB004C78C0111A2871 /* MobilePlayerSystem.swift */; };
@@ -84,11 +85,13 @@
 		8BC222BE36B07AE581BEE361 /* License-FreeType.txt in Resources */ = {isa = PBXBuildFile; fileRef = B257626A6044D766406A7017 /* License-FreeType.txt */; };
 		8BE6E959996BC0F18E90CE7F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 05962768906AE4D3CC3E3EE1 /* PrivacyInfo.xcprivacy */; };
 		8D097650A2A316F8A82670A3 /* License-LibDovi.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8EA84B06FE50484566BB8B21 /* License-LibDovi.txt */; };
+		8DBD553663735073BD6CBD23 /* ThemeMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C97D9035CA0F1A10AB35BB /* ThemeMusic.swift */; };
 		8EA49288FC8FB3B754D607B5 /* Artwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96C3A92A4D42FD38CE47AF6 /* Artwork.swift */; };
 		8F6893ADE6A6E870518A9AAD /* MobilePlayerPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A654CCF14B7DBEE0BA4A3BC9 /* MobilePlayerPanel.swift */; };
 		8F7B196F3A7828399C5E37D7 /* License-zimg.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9CB94D6E266F2183B6556114 /* License-zimg.txt */; };
 		8F921C84662D0521715ED1D4 /* NetworkProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ADF9351ED5418707746916 /* NetworkProbe.swift */; };
 		95E4ED17CAAEFC3A49203FB1 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = F28C05BD0813EF50C173F34A /* AppIcon.icon */; };
+		991C1D7E229CB25DAE0394B8 /* LibraryFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E839A621F30997FC01D616A /* LibraryFilters.swift */; };
 		9B10D20243269832A714DE48 /* ServerDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD934A017F0F636E82D025C /* ServerDiscovery.swift */; };
 		9CBEDBA5BEB5EC1571689586 /* JellyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B2A3B16FB43480FE26CF5A /* JellyApp.swift */; };
 		9DB3A125A11FB74DDECE1DE6 /* AetherEngine in Frameworks */ = {isa = PBXBuildFile; productRef = A97502917407B4FD19153A63 /* AetherEngine */; };
@@ -106,6 +109,7 @@
 		B5696371FB4F774499825FB7 /* KidsPIN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C591F8E9FE0B93A64E044E5 /* KidsPIN.swift */; };
 		B572DCFFE575BF951B23A602 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2C8B16BBF610F5334BD640 /* Models.swift */; };
 		BAC3F4BB154AFDBB74B98AF9 /* SecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5C9582D71639711F6C0053 /* SecureStore.swift */; };
+		BBB2C3EE92629A41037C2692 /* LibraryFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E839A621F30997FC01D616A /* LibraryFilters.swift */; };
 		BC91CA6CAF5808E0B8241495 /* AboutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B5D86B9130E73BFD6F7E1F /* AboutData.swift */; };
 		BCCA8F4D4718EF5D38197AC4 /* License-LGPL-2.1.txt in Resources */ = {isa = PBXBuildFile; fileRef = EC9148709D4EC1A327BDC313 /* License-LGPL-2.1.txt */; };
 		BDFC8798F3CCBDEB2EE35E63 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BE67641F9DC39EE838D66E /* SettingsView.swift */; };
@@ -203,6 +207,7 @@
 		3F6D327CE5691AA80F76E121 /* PlaybackSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackSupport.swift; sourceTree = "<group>"; };
 		5493A12CF046A02426D462CB /* Jelly.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Jelly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55EAAD2239D4DA614D8718B6 /* SubtitleOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleOverlay.swift; sourceTree = "<group>"; };
+		5E839A621F30997FC01D616A /* LibraryFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryFilters.swift; sourceTree = "<group>"; };
 		65A1300A33DF01F71060478A /* IntroFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroFinder.swift; sourceTree = "<group>"; };
 		664B23CD8C8220A98BC90A53 /* ContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentProvider.swift; sourceTree = "<group>"; };
 		67C40772B599AEECCFAE7A9F /* ConnectionAnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionAnalysisView.swift; sourceTree = "<group>"; };
@@ -259,6 +264,7 @@
 		D4F33147D3709A8CEDF255CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D595DDE3BD824D805CB393E6 /* Jelly.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Jelly.entitlements; sourceTree = "<group>"; };
 		D9767E10A04430B656A018F4 /* ReviewPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPrompt.swift; sourceTree = "<group>"; };
+		E8C97D9035CA0F1A10AB35BB /* ThemeMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeMusic.swift; sourceTree = "<group>"; };
 		EC9148709D4EC1A327BDC313 /* License-LGPL-2.1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "License-LGPL-2.1.txt"; sourceTree = "<group>"; };
 		ED5A5EB408FA410DC424FFFC /* RemoteInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteInput.swift; sourceTree = "<group>"; };
 		EF11B3AA95BE8048BBE6CBBB /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -448,11 +454,13 @@
 				CDFD43BCD6F319C772627B0B /* DisplayCapabilities.swift */,
 				D33E6B1B4D5C70D6AE97DADA /* JellyMark.swift */,
 				F871A27A164B5C18B1F9CB29 /* KidsViews.swift */,
+				5E839A621F30997FC01D616A /* LibraryFilters.swift */,
 				325A3BC827EE00C19A282E32 /* PaywallBenefits.swift */,
 				AB3511A492D903760A131777 /* QRCode.swift */,
 				D9767E10A04430B656A018F4 /* ReviewPrompt.swift */,
 				087D8D8292398E791F68EE4C /* SharedUI.swift */,
 				55EAAD2239D4DA614D8718B6 /* SubtitleOverlay.swift */,
+				E8C97D9035CA0F1A10AB35BB /* ThemeMusic.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -743,6 +751,7 @@
 				E135B46951729E346900CFD7 /* KidsMode.swift in Sources */,
 				B5696371FB4F774499825FB7 /* KidsPIN.swift in Sources */,
 				62241F6B1468A6C1E3B670F9 /* KidsViews.swift in Sources */,
+				BBB2C3EE92629A41037C2692 /* LibraryFilters.swift in Sources */,
 				C4314CAC40B79E907BAFA7B2 /* LibraryScreens.swift in Sources */,
 				A57F68046306BC574375A909 /* MobileComponents.swift in Sources */,
 				ABF034386C286542F6C16F22 /* MobilePaywall.swift in Sources */,
@@ -767,6 +776,7 @@
 				0FE09B9D5D59B162D495240B /* SharedUI.swift in Sources */,
 				7BABC13F7C7CDBEA8D7E90BC /* SignInApprovalSheet.swift in Sources */,
 				80F96F2E8D38481E948BC638 /* SubtitleOverlay.swift in Sources */,
+				0742CB71A908E9A0B6A7F745 /* ThemeMusic.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -798,6 +808,7 @@
 				6F6EDCE55EFC26464D305F91 /* KidsMode.swift in Sources */,
 				D76992B0508C4F526D3CB7D9 /* KidsPIN.swift in Sources */,
 				2EC3B8DB9262E862EFCD605F /* KidsViews.swift in Sources */,
+				991C1D7E229CB25DAE0394B8 /* LibraryFilters.swift in Sources */,
 				194266DE028B05FCE402682C /* LibraryViews.swift in Sources */,
 				B572DCFFE575BF951B23A602 /* Models.swift in Sources */,
 				8F921C84662D0521715ED1D4 /* NetworkProbe.swift in Sources */,
@@ -818,6 +829,7 @@
 				BDFC8798F3CCBDEB2EE35E63 /* SettingsView.swift in Sources */,
 				B148873654558DF8EE58154C /* SharedUI.swift in Sources */,
 				1D5328784131DDB61B42F732 /* SubtitleOverlay.swift in Sources */,
+				8DBD553663735073BD6CBD23 /* ThemeMusic.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

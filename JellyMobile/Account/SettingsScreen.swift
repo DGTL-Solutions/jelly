@@ -8,6 +8,7 @@ struct SettingsScreen: View {
     @EnvironmentObject private var purchases: Purchases
     @AppStorage("autoplayNext") private var autoplayNext = true
     @AppStorage("skipIntros") private var skipIntros = false
+    @AppStorage(ThemeMusic.settingKey) private var themeMusic = false
     @AppStorage("askProfileOnLaunch") private var askProfileOnLaunch = true
     @AppStorage("subtitleSize") private var subtitleSize = SubtitleSize.standard
     @AppStorage("subtitleBackground") private var subtitleBackground = SubtitleBackground.shadow
@@ -230,6 +231,7 @@ struct SettingsScreen: View {
         Section {
             Toggle("Nächste Folge automatisch abspielen", isOn: $autoplayNext)
             Toggle("Intros automatisch überspringen", isOn: $skipIntros)
+            Toggle("Titelmusik auf der Detailseite", isOn: $themeMusic)
             Picker("Decoder", selection: $engine) {
                 ForEach(EnginePreference.allCases) { Text($0.title).tag($0) }
             }

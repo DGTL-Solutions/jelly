@@ -134,6 +134,16 @@ struct ItemActions: View {
         if includesDetails {
             Button { openItem(item) } label: { Label("Details anzeigen", systemImage: "info.circle") }
         }
+        // "Weiterschauen" and "Als Nächstes": jump to the series to pick another season or episode.
+        if item.isEpisode, let seriesID = item.seriesId {
+            Button {
+                Task {
+                    guard let client = model.client, let session = model.session,
+                          let series = try? await client.item(user: session.userID, id: seriesID) else { return }
+                    openItem(series)
+                }
+            } label: { Label("Staffel wählen", systemImage: "list.number") }
+        }
         if item.isPlayable || item.isSeries {
             Button { Task { await model.setWatched(item, !item.isWatched) } } label: {
                 Label(item.isWatched ? "Als ungesehen markieren" : "Als gesehen markieren", systemImage: item.isWatched ? "eye.slash" : "checkmark.circle")

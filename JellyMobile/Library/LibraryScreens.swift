@@ -855,32 +855,6 @@ private enum LibrarySort: String, CaseIterable, Identifiable {
     }
 }
 
-private enum LibraryFilter: String, CaseIterable, Identifiable {
-    case all, unwatched, favorites
-    var id: String { rawValue }
-    var title: String {
-        switch self {
-        case .all: return String(localized: "Alle", comment: "Library filter: all titles")
-        case .unwatched: return String(localized: "Ungesehen", comment: "Library filter: unwatched titles")
-        case .favorites: return String(localized: "Favoriten", comment: "Library filter: favourites")
-        }
-    }
-    var symbol: String {
-        switch self {
-        case .all: return "square.grid.2x2"
-        case .unwatched: return "eye.slash"
-        case .favorites: return "heart"
-        }
-    }
-    var filters: [String] {
-        switch self {
-        case .all: return []
-        case .unwatched: return ["IsUnplayed"]
-        case .favorites: return ["IsFavorite"]
-        }
-    }
-}
-
 struct LibraryScreen: View {
     let title: String
     let types: [String]
@@ -935,7 +909,8 @@ private struct LibraryPosterGrid<Header: View>: View {
     @State private var generation = 0
     @State private var error: String?
     @State private var sort: LibrarySort?
-    @State private var filter = LibraryFilter.all
+    @State private var filter = LibraryFilters()
+    @State private var genres: [String] = []
     @State private var layout = LibraryLayout(alignsWithTitle: true)
     @State private var showsInlineTitle = false
     @State private var measuredWidth: CGFloat = 0
@@ -1003,7 +978,11 @@ private struct LibraryPosterGrid<Header: View>: View {
         .refreshable { await load(reset: true) }
         .sensoryFeedback(.selection, trigger: filter)
         .sensoryFeedback(.selection, trigger: sort)
-        .task(id: "\(activeSort.rawValue)-\(filter.rawValue)-\(model.refreshID)") { await load(reset: true) }
+        .task(id: "\(activeSort.rawValue)-\(filter.key)-\(model.refreshID)") { await load(reset: true) }
+        .task(id: model.session?.key) {
+            guard showsControls, let client = model.client, let session = model.session else { return }
+            genres = (try? await client.genres(user: session.userID, parentID: parentID, types: types)) ?? []
+        }
     }
 
     @ViewBuilder private var titleRow: some View {
@@ -1026,12 +1005,12 @@ private struct LibraryPosterGrid<Header: View>: View {
                 .frame(maxWidth: .infinity, minHeight: layout.size.height * 0.6)
         } else if items.isEmpty && loadedOnce && !loading {
             ContentUnavailableView {
-                Label(filter == .all ? "Keine Titel" : "Keine Treffer", systemImage: "film.stack")
+                Label(filter.isEmpty ? "Keine Titel" : "Keine Treffer", systemImage: "film.stack")
             } description: {
-                Text(filter == .all ? "Diese Bibliothek ist leer." : "Für diesen Filter gibt es keine Titel.")
+                Text(filter.isEmpty ? "Diese Bibliothek ist leer." : "Für diesen Filter gibt es keine Titel.")
             } actions: {
-                if filter != .all {
-                    Button("Zurücksetzen") { filter = .all }.buttonStyle(.bordered)
+                if !filter.isEmpty {
+                    Button("Zurücksetzen") { filter = LibraryFilters() }.buttonStyle(.bordered)
                 }
             }
             .frame(maxWidth: .infinity, minHeight: layout.size.height * 0.6)
@@ -1059,16 +1038,7 @@ private struct LibraryPosterGrid<Header: View>: View {
         }
     }
 
-    private var filterMenu: some View {
-        Menu {
-            Picker("Filter", selection: $filter) {
-                ForEach(LibraryFilter.allCases) { Label($0.title, systemImage: $0.symbol).tag($0) }
-            }
-            .pickerStyle(.inline)
-        } label: {
-            Label("Filter", systemImage: filter == .all ? "line.3.horizontal.decrease" : "line.3.horizontal.decrease.circle.fill")
-        }
-    }
+    private var filterMenu: some View { LibraryFilterMenu(filters: $filter, genres: genres) }
 
     private func loadMoreIfNeeded(after item: BaseItem) {
         guard !loading, items.count < total else { return }
@@ -1083,7 +1053,8 @@ private struct LibraryPosterGrid<Header: View>: View {
         let run = generation
         loading = true
         var query = JellyfinClient.ItemQuery(types: types, parentID: parentID, sortBy: activeSort.fields.0, sortOrder: activeSort.fields.1,
-                                            filters: filter.filters, start: reset ? 0 : items.count, limit: 60)
+                                            start: reset ? 0 : items.count, limit: 60)
+        filter.apply(to: &query)
         query.personID = personID
         do {
             let page = try await client.items(user: session.userID, query)
@@ -1379,6 +1350,7 @@ struct ItemDetailScreen: View {
         .sensoryFeedback(.impact(weight: .light), trigger: favoriteTick)
         .sensoryFeedback(.selection, trigger: seasonTick)
         .task(id: model.refreshID) { await load() }
+        .themeMusic(for: item)
         .task(id: selectedSeason) { await loadEpisodes() }
     }
 

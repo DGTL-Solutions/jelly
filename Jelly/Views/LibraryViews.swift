@@ -21,17 +21,6 @@ enum LibrarySort: String, CaseIterable, Identifiable {
     }
 }
 
-enum LibraryFilter: String, CaseIterable, Identifiable {
-    case all, unwatched, favorites
-    var id: String { rawValue }
-    var title: String {
-        ["all": String(localized: "Alle", comment: "Library filter: all titles"),
-         "unwatched": String(localized: "Ungesehen", comment: "Library filter: unwatched titles"),
-         "favorites": String(localized: "Favoriten", comment: "Library filter: favourites")][rawValue]!
-    }
-    var filters: [String] { ["all": [], "unwatched": ["IsUnplayed"], "favorites": ["IsFavorite"]][rawValue]! }
-}
-
 struct LibraryGridView: View {
     let title: String
     let types: [String]
@@ -45,7 +34,8 @@ struct LibraryGridView: View {
     @State private var loading = false
     @State private var error: String?
     @State private var sort = LibrarySort.name
-    @State private var filter = LibraryFilter.all
+    @State private var filter = LibraryFilters()
+    @State private var genres: [String] = []
 
     private let columns = Array(repeating: GridItem(.fixed(250), spacing: 50, alignment: .top), count: 6)
 
@@ -86,9 +76,7 @@ struct LibraryGridView: View {
                         Menu {
                             Picker("Sortieren", selection: $sort) { ForEach(LibrarySort.allCases) { Text($0.title).tag($0) } }
                         } label: { Label(sort.title, systemImage: "arrow.up.arrow.down") }
-                        Menu {
-                            Picker("Filter", selection: $filter) { ForEach(LibraryFilter.allCases) { Text($0.title).tag($0) } }
-                        } label: { Label(filter.title, systemImage: "line.3.horizontal.decrease") }
+                        LibraryFilterMenu(filters: $filter, genres: genres)
                     }
                 }
                 .focusSection()
@@ -96,8 +84,8 @@ struct LibraryGridView: View {
                 if let error, items.isEmpty {
                     ErrorView(message: error) { Task { await load(reset: true) } }
                 } else if items.isEmpty && !loading {
-                    ContentUnavailableView(filter == .all ? "Keine Titel" : "Keine Treffer", systemImage: "film.stack",
-                                           description: Text(filter == .all ? "Diese Bibliothek ist leer." : "Für diesen Filter gibt es keine Titel."))
+                    ContentUnavailableView(filter.isEmpty ? "Keine Titel" : "Keine Treffer", systemImage: "film.stack",
+                                           description: Text(filter.isEmpty ? "Diese Bibliothek ist leer." : "Für diesen Filter gibt es keine Titel."))
                         .frame(maxWidth: .infinity)
                 } else {
                     LazyVGrid(columns: columns, alignment: .leading, spacing: 56) {
@@ -115,7 +103,11 @@ struct LibraryGridView: View {
         .scrollClipDisabled()
         .ignoresSafeArea(edges: .horizontal)
         .background(Theme.background.ignoresSafeArea())
-        .task(id: "\(sort.rawValue)-\(filter.rawValue)-\(model.refreshID)") { await load(reset: true) }
+        .task(id: "\(sort.rawValue)-\(filter.key)-\(model.refreshID)") { await load(reset: true) }
+        .task(id: model.session?.key) {
+            guard personID == nil, let client = model.client, let session = model.session else { return }
+            genres = (try? await client.genres(user: session.userID, parentID: parentID, types: types)) ?? []
+        }
     }
 
     private func load(reset: Bool) async {
@@ -124,7 +116,8 @@ struct LibraryGridView: View {
         loading = true
         defer { loading = false }
         var query = JellyfinClient.ItemQuery(types: types, parentID: parentID, sortBy: sort.fields.0, sortOrder: sort.fields.1,
-                                            filters: filter.filters, start: reset ? 0 : items.count, limit: 60)
+                                            start: reset ? 0 : items.count, limit: 60)
+        filter.apply(to: &query)
         query.personID = personID
         do {
             let page = try await client.items(user: session.userID, query)
