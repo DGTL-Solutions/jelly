@@ -4,6 +4,7 @@ struct MainView: View {
     @EnvironmentObject private var model: AppModel
     @ObservedObject private var idle = IdleMonitor.shared
     @State private var debugAnalysis = false
+    @Environment(\.scenePhase) private var scenePhase
     @State private var tab = Int(ProcessInfo.processInfo.environment["JELLY_TAB"] ?? "") ?? 0
 
     var body: some View {
@@ -18,10 +19,13 @@ struct MainView: View {
             Tab("Einstellungen", systemImage: "gearshape", value: 4) { ParentLocked { SettingsView() } }
         }
         .onChange(of: model.pendingOpen) { _, item in if item != nil { tab = 0 } }
+        // Back from the home screen the line to the server (remote control, SyncPlay) may have dropped.
+        .onChange(of: scenePhase) { _, phase in if phase == .active { model.connectLink() } }
         .fullScreenCover(isPresented: $idle.screensaverActive) { CoverWallView().environmentObject(model) }
         .fullScreenCover(isPresented: $debugAnalysis) { ConnectionAnalysisView(autoStart: true).environmentObject(model) }
         .task(id: model.session?.key) {
             await model.preferHomeNetwork()
+            model.connectLink()
             await model.refreshAccount()
             #if DEBUG
             await model.runDebugActions()

@@ -1344,6 +1344,9 @@ struct ItemDetailScreen: View {
                     .font(.headline).lineLimit(1)
                     .opacity(showsTitle ? 1 : 0)
             }
+            if current.isPlayable || current.isSeries {
+                ToolbarItem(placement: .topBarTrailing) { PlayElsewhereMenu(item: current) }
+            }
         }
         .refreshable { await load() }
         .sensoryFeedback(.success, trigger: watchedTick)

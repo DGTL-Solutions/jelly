@@ -111,6 +111,7 @@ struct MainTabs: View {
                 MobileBrowseStack(opensPendingItem: true) {
                     HomeScreen().overlay(alignment: .topTrailing) {
                         HStack(spacing: 10) {
+                            TogetherStatusButton(syncPlay: model.syncPlay)
                             if !downloadsInTabs, !downloads.records(profileKey: model.session?.key).isEmpty {
                                 DownloadsButton(isPresented: $showsDownloads)
                             }
@@ -151,6 +152,7 @@ struct MainTabs: View {
         .onChange(of: model.pendingOpen) { _, item in if item != nil { tab = .home } }
         .task {
             await model.preferHomeNetwork()
+            model.connectLink()
             await model.refreshAccount()
             await syncDownloads()
             #if DEBUG
@@ -165,6 +167,7 @@ struct MainTabs: View {
             if phase == .active {
                 Task {
                     await model.preferHomeNetwork()
+                    model.connectLink()
                     await syncDownloads()
                 }
             }

@@ -9,6 +9,7 @@ struct SettingsScreen: View {
     @AppStorage("autoplayNext") private var autoplayNext = true
     @AppStorage("skipIntros") private var skipIntros = false
     @AppStorage(ThemeMusic.settingKey) private var themeMusic = false
+    @AppStorage(SyncPlay.settingKey) private var syncPlay = false
     @AppStorage("askProfileOnLaunch") private var askProfileOnLaunch = true
     @AppStorage("subtitleSize") private var subtitleSize = SubtitleSize.standard
     @AppStorage("subtitleBackground") private var subtitleBackground = SubtitleBackground.shadow
@@ -49,6 +50,7 @@ struct SettingsScreen: View {
                     Text("Vor großen Dateien misst Jelly kurz, was die Leitung zum Server schafft. Reicht sie nicht, lässt Jelly zuerst ungenutzte Tonspuren weg (verlustfrei) und lässt erst danach den Server herunterrechnen.")
                 }
                 ratings
+                extras
                 Section {
                     NavigationLink(value: SettingsRoute.downloads) {
                         LabeledContent {
@@ -187,6 +189,17 @@ struct SettingsScreen: View {
         }
     }
 
+    private var extras: some View {
+        Section {
+            Toggle("Titelmusik", isOn: $themeMusic)
+            Toggle("Gemeinsam schauen (SyncPlay)", isOn: $syncPlay)
+        } header: {
+            Text("Extras")
+        } footer: {
+            Text("Titelmusik: Hat dein Server zu einer Serie oder einem Film eine Titelmelodie, läuft sie leise auf der Detailseite. Gemeinsam schauen: Mit SyncPlay sehen alle in einer Gruppe auf deinem Server dieselbe Sekunde – der Knopf dafür erscheint oben rechts auf der Detailseite.")
+        }
+    }
+
     private var kids: some View {
         Section {
             if model.isKids {
@@ -231,7 +244,6 @@ struct SettingsScreen: View {
         Section {
             Toggle("Nächste Folge automatisch abspielen", isOn: $autoplayNext)
             Toggle("Intros automatisch überspringen", isOn: $skipIntros)
-            Toggle("Titelmusik auf der Detailseite", isOn: $themeMusic)
             Picker("Decoder", selection: $engine) {
                 ForEach(EnginePreference.allCases) { Text($0.title).tag($0) }
             }

@@ -123,6 +123,8 @@ final class PlayerController: ObservableObject {
     private var reconnectAttempts = 0
     private var reconnecting = false
     private var stopped = false
+    /// Watching together (SyncPlay, SharePlay): asked before play, pause and jumps.
+    private weak var coordinator: PlaybackCoordinator?
     /// The viewer picked a quality in the panel; Jelly then never changes it on its own.
     private var qualityChosenByViewer = false
     private var adaptedDuringPlayback = false
@@ -194,9 +196,13 @@ final class PlayerController: ObservableObject {
 
     // MARK: Start
 
-    func start(fromBeginning: Bool, mediaSourceID: String?, preference: EnginePreference, audioLanguage: String?) async {
+    /// `at` and `paused` come from watching together: everyone opens the film at the same second and waits for the others.
+    func start(fromBeginning: Bool, mediaSourceID: String?, preference: EnginePreference, audioLanguage: String?,
+               at groupStart: Double? = nil, paused: Bool = false) async {
         phase = .preparing
         self.preference = preference
+        PlaybackHub.shared.player = self
+        coordinator = offline == nil ? PlaybackHub.shared.coordinator : nil
         guard aether != nil else {
             phase = .failed(String(localized: "Der Player konnte nicht gestartet werden."))
             return
@@ -245,6 +251,7 @@ final class PlayerController: ObservableObject {
             if let value = env["JELLY_START"].flatMap(Double.init) { start = value }
             if let wait = env["JELLY_UPGRADE_WAIT"].flatMap(Double.init) { upgradeWait = wait }
             #endif
+            if let groupStart { start = groupStart }
             directSessionID = playSession
             playSessionID = playSession
             var plan = PlaybackPlan.make(for: source, audio: audio)
@@ -266,7 +273,7 @@ final class PlayerController: ObservableObject {
             chapters = item.chapters ?? []
             trickplay = offline == nil ? Self.bestTrickplay(item.trickplay?[source.id]) : nil
             subtitleIndex = subtitle?.index
-            try await open(plan, at: start)
+            try await open(plan, at: start, paused: paused)
             Task { await loadExtras() }
         } catch is CancellationError {
             return
@@ -435,6 +442,7 @@ final class PlayerController: ObservableObject {
             }
             if phase == .preparing { phase = .playing }
             if first { logReady() }
+            coordinator?.playerIsReady(self)
             if !didReportStart {
                 didReportStart = true
                 Task { await report(.start) }
@@ -449,6 +457,7 @@ final class PlayerController: ObservableObject {
             isPlaying = false
             isBuffering = false
             stalling = false
+            if phase == .playing { coordinator?.playerIsReady(self) }
             if wasPlaying { Task { await report(.progress) } }
         case .seeking:
             isBuffering = true
@@ -460,6 +469,7 @@ final class PlayerController: ObservableObject {
             if !stalling, phase == .playing, streamStarted, Date().timeIntervalSince(lastSeek) > 4 {
                 stalling = true
                 recordStall()
+                coordinator?.playerIsBuffering(self)
             }
         case .ended:
             isPlaying = false
@@ -555,17 +565,39 @@ final class PlayerController: ObservableObject {
     func togglePlayPause() {
         guard let aether else { return }
         if isPlaying {
+            if coordinator?.viewerWantsPause(self) == true { return }
             aether.pause()
             if pendingUpgrade != nil { upgradeWhilePaused() }
         } else {
+            if coordinator?.viewerWantsPlay(self) == true { return }
             aether.play()
         }
     }
 
     func pause() { aether?.pause() }
 
+    // The group's commands: these act on the engine directly.
+
+    func groupPlay() { aether?.play() }
+
+    func groupPause(at seconds: Double? = nil) {
+        aether?.pause()
+        if let seconds, abs(seconds - currentTime) > 1 { Task { await groupSeek(to: seconds) } }
+    }
+
+    func groupSeek(to seconds: Double) async {
+        let target = max(0, duration > 0 ? min(seconds, duration - 2) : seconds)
+        position = target
+        lastSeek = Date()
+        await aether?.seek(to: target)
+    }
+
+    /// The engine's clock at this instant, for comparing with the group.
+    var exactPosition: Double { currentTime }
+
     func seek(to seconds: Double) {
         let target = max(0, duration > 0 ? min(seconds, duration - 2) : seconds)
+        if coordinator?.viewerWantsSeek(self, to: target) == true { return }
         position = target
         lastSeek = Date()
         // A jump buffers anyway, so a better stream that is waiting costs nothing extra here.
@@ -578,6 +610,8 @@ final class PlayerController: ObservableObject {
 
     func stop() {
         stopped = true
+        coordinator?.playerClosed(self)
+        if PlaybackHub.shared.player === self { PlaybackHub.shared.player = nil }
         reportTask?.cancel()
         statsTask?.cancel()
         introTask?.cancel()

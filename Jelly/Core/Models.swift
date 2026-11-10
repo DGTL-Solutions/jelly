@@ -70,6 +70,7 @@ struct UserDto: Decodable, Identifiable, Hashable {
         var remoteClientBitrateLimit: Int?
         var maxActiveSessions: Int?
         var enableContentDownloading: Bool?
+        var syncPlayAccess: String?
     }
 
     struct Configuration: Decodable, Hashable {

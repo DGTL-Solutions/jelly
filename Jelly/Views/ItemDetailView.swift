@@ -13,6 +13,9 @@ struct ItemDetailView: View {
     @State private var sourceID: String?
     @State private var error: String?
     @State private var showsOverview = false
+    @State private var showsGroups = false
+    @State private var inGroup = false
+    @AppStorage(SyncPlay.settingKey) private var syncPlayEnabled = false
     @State private var scrolled = false
     @FocusState private var focus: Focus?
 
@@ -54,6 +57,8 @@ struct ItemDetailView: View {
         .toolbar(.hidden, for: .tabBar)
         .defaultFocus($focus, .play)
         .sheet(isPresented: $showsOverview) { OverviewSheet(item: current) }
+        .fullScreenCover(isPresented: $showsGroups) { SyncPlayGroupsView(onClose: { showsGroups = false }, syncPlay: model.syncPlay) }
+        .onReceive(model.syncPlay.$group) { inGroup = $0 != nil }
         .task(id: model.refreshID) { await load() }
         .themeMusic(for: item)
         .task(id: selectedSeason) { await loadEpisodes() }
@@ -133,6 +138,13 @@ struct ItemDetailView: View {
                 Button { openItem(BaseItem(id: seriesID, name: seriesName, type: "Series")) } label: {
                     Label("Zur Serie", systemImage: "tv")
                 }
+            }
+            if syncPlayEnabled, SyncPlay.isAllowed(model.user) {
+                Button { showsGroups = true } label: {
+                    Image(systemName: inGroup ? "person.2.fill" : "person.2")
+                }
+                .buttonBorderShape(.circle)
+                .accessibilityLabel("Gemeinsam schauen")
             }
         }
         if !current.isSeries, let remaining = current.remainingText {
