@@ -64,6 +64,27 @@ final class JellyMacDelegate: NSObject, NSApplicationDelegate, UNUserNotificatio
                     // The window as the window server draws it (materials, video and all); a process may always
                     // picture its own windows. The call left the SDK, not the system.
                     typealias Capture = @convention(c) (CGRect, UInt32, UInt32, UInt32) -> Unmanaged<CGImage>?
+                    // Commands for the running app, one per line in command.txt next to the picture: "tab:movies",
+                    // "stop", or a jelly:// link. Each file is taken once.
+                    let commands = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("command.txt")
+                    if let text = try? String(contentsOf: commands, encoding: .utf8) {
+                        try? FileManager.default.removeItem(at: commands)
+                        for line in text.split(separator: "\n").map(String.init) {
+                            if line.hasPrefix("jelly://"), let url = URL(string: line) { NSWorkspace.shared.open(url) }
+                            else { NotificationCenter.default.post(name: Notification.Name("jellyDebugCommand"), object: line) }
+                        }
+                    }
+                    // JELLY_WINDOW=1440x900 gives the window that size, for App Store screenshots.
+                    if let size = ProcessInfo.processInfo.environment["JELLY_WINDOW"]?.split(separator: "x").compactMap({ Double($0) }), size.count == 2,
+                       let window = NSApp.windows.first(where: { $0.isVisible && $0.frame.width > 300 }), window.frame.size != CGSize(width: size[0], height: size[1]) {
+                        let top = window.screen?.visibleFrame.maxY ?? window.frame.maxY
+                        window.setFrame(CGRect(x: window.screen?.visibleFrame.minX ?? 0, y: top - size[1], width: size[0], height: size[1]), display: true)
+                    }
+                    // In Stage Manager a window in the background is a small tilted thumbnail: screenshots need Jelly in front.
+                    if ProcessInfo.processInfo.environment["JELLY_WINDOW"] != nil, !NSApp.isActive {
+                        NSApp.windows.first { $0.isVisible && $0.frame.width > 300 }?.orderFrontRegardless()
+                        NSRunningApplication.current.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+                    }
                     guard let window = NSApp.windows.first(where: { $0.isVisible && $0.frame.width > 300 }),
                           let symbol = dlsym(UnsafeMutableRawPointer(bitPattern: -2), "CGWindowListCreateImage"),
                           let image = unsafeBitCast(symbol, to: Capture.self)(.null, 1 << 3, UInt32(window.windowNumber), 1 << 0)?.takeRetainedValue()
