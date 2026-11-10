@@ -146,7 +146,14 @@ struct PlaybackScreen: View {
                                audioLanguage: model.user?.configuration?.audioLanguagePreference,
                                at: request.startSeconds, paused: request.startsPaused)
         }
+        // Home-cinema scenes (optional): lights follow play, pause and the end.
+        .onChange(of: player.isPlaying) { _, playing in
+            guard player.phase == .playing else { return }
+            HomeScenes.shared.run(playing ? .play : .pause)
+        }
         .onDisappear {
+            HomeScenes.shared.run(.end)
+            HomeScenes.shared.reset()
             hideTask?.cancel()
             seekTask?.cancel()
             ReviewPrompt.notePlayback(fraction: player.duration > 0 ? player.position / player.duration : 0,

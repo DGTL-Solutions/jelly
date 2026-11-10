@@ -8,5 +8,14 @@
 	<array>
 		<string>$(AppIdentifierPrefix)$(JELLY_BUNDLE_ID)</string>
 	</array>
+	<!-- Jelly runs as the Apple TV user who is active: each person keeps their own profile and settings, the sign-ins
+	     are shared (SecureStore). -->
+	<key>com.apple.developer.user-management</key>
+	<array>
+		<string>runs-as-current-user</string>
+	</array>
+	<!-- Optional home-cinema scenes. -->
+	<key>com.apple.developer.homekit</key>
+	<true/>
 </dict>
 </plist>

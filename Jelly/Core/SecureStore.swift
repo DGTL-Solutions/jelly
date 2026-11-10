@@ -19,9 +19,31 @@ extension Session {
 }
 
 enum SecureStore {
-    private static func query(_ account: String) -> [String: Any] {
-        [kSecClass as String: kSecClassGenericPassword, kSecAttrService as String: "de.jelly.tv", kSecAttrAccount as String: account]
+    /// On Apple TV Jelly runs as the person who is active (Control Center › users): settings and the profile in use are
+    /// kept per person by tvOS. The sign-ins themselves live in the keychain all users share, so nobody signs in twice.
+    /// `shared: false` is each person's own keychain – and where everything was before Jelly 2.0.
+    private static func query(_ account: String, shared: Bool = true) -> [String: Any] {
+        var query: [String: Any] = [kSecClass as String: kSecClassGenericPassword, kSecAttrService as String: "de.jelly.tv",
+                                    kSecAttrAccount as String: account]
+        #if os(tvOS)
+        if shared && sharedKeychainWorks { query[kSecUseUserIndependentKeychain as String] = true }
+        #endif
+        return query
     }
+
+    #if os(tvOS)
+    /// Without the "runs as current user" entitlement (builds from source, the simulator) the shared keychain refuses
+    /// to work; then there is only the one keychain, as before.
+    private static let sharedKeychainWorks: Bool = {
+        var probe: [String: Any] = [kSecClass as String: kSecClassGenericPassword, kSecAttrService as String: "de.jelly.tv",
+                                    kSecAttrAccount as String: "probe", kSecUseUserIndependentKeychain as String: true,
+                                    kSecReturnData as String: true, kSecMatchLimit as String: kSecMatchLimitOne]
+        var result: CFTypeRef?
+        let status = SecItemCopyMatching(probe as CFDictionary, &result)
+        probe.removeAll()
+        return status == errSecSuccess || status == errSecItemNotFound
+    }()
+    #endif
 
     static func save(_ store: AccountStore) throws {
         let data = try JSONEncoder().encode(store)
@@ -32,34 +54,72 @@ enum SecureStore {
             attributes[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
             guard SecItemAdd(attributes as CFDictionary, nil) == errSecSuccess else { throw JellyError.keychain }
         } else if status != errSecSuccess { throw JellyError.keychain }
+        #if os(tvOS)
+        // Which profile is in use is each Apple TV user's own.
+        write(store.activeKey.map { Data($0.utf8) }, for: "active", shared: false)
+        #endif
     }
 
     /// Loads the account list, migrating the single session stored by earlier versions.
     static func load(fallbackDeviceID: String) -> AccountStore {
-        if let data = read("accounts"), let store = try? JSONDecoder().decode(AccountStore.self, from: data) { return store }
+        if let data = read("accounts"), var store = try? JSONDecoder().decode(AccountStore.self, from: data) {
+            #if os(tvOS)
+            if let own = read("active", shared: false).flatMap({ String(data: $0, encoding: .utf8) }) {
+                store.activeKey = own
+            } else if sharedKeychainWorks, read("accounts", shared: false) == nil {
+                // An Apple TV user who opens Jelly for the first time: no profile yet, "Wer schaut gerade?" decides.
+                store.activeKey = store.accounts.count == 1 ? store.accounts.first?.key : nil
+            }
+            #endif
+            return store
+        }
+        #if os(tvOS)
+        // Sign-ins from before 2.0 sit in this user's own keychain: they move to the shared one.
+        if let data = read("accounts", shared: false), let store = try? JSONDecoder().decode(AccountStore.self, from: data) {
+            try? save(store)
+            return store
+        }
+        #endif
         var store = AccountStore(deviceID: fallbackDeviceID)
-        if let data = read("session"), let session = try? JSONDecoder().decode(Session.self, from: data) {
+        if let data = read("session", shared: false), let session = try? JSONDecoder().decode(Session.self, from: data) {
             store.accounts = [session]
             store.activeKey = session.key
-            if (try? save(store)) != nil { SecItemDelete(query("session") as CFDictionary) }
+            if (try? save(store)) != nil { SecItemDelete(query("session", shared: false) as CFDictionary) }
         }
         return store
     }
 
     /// Further secrets next to the account list, e.g. the Jellyseerr session of a profile. `nil` deletes.
     static func setData(_ data: Data?, for account: String) {
-        SecItemDelete(query(account) as CFDictionary)
-        guard let data else { return }
-        var attributes = query(account)
+        write(data, for: account, shared: true)
+    }
+
+    private static func write(_ data: Data?, for account: String, shared: Bool) {
+        SecItemDelete(query(account, shared: shared) as CFDictionary)
+        guard let data else {
+            #if os(tvOS)
+            if shared { SecItemDelete(query(account, shared: false) as CFDictionary) }
+            #endif
+            return
+        }
+        var attributes = query(account, shared: shared)
         attributes[kSecValueData as String] = data
         attributes[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
         SecItemAdd(attributes as CFDictionary, nil)
     }
 
-    static func data(for account: String) -> Data? { read(account) }
+    /// Reads the shared keychain first, then (Apple TV) what an earlier version left in the user's own.
+    static func data(for account: String) -> Data? {
+        if let data = read(account) { return data }
+        #if os(tvOS)
+        return read(account, shared: false)
+        #else
+        return nil
+        #endif
+    }
 
-    private static func read(_ account: String) -> Data? {
-        var attributes = query(account)
+    private static func read(_ account: String, shared: Bool = true) -> Data? {
+        var attributes = query(account, shared: shared)
         attributes[kSecReturnData as String] = true
         attributes[kSecMatchLimit as String] = kSecMatchLimitOne
         var result: CFTypeRef?

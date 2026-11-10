@@ -48,6 +48,8 @@ targets:
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: true
         UIUserInterfaceStyle: Dark
+        # Optional home-cinema scenes (settings); asked for only when the viewer switches them on.
+        NSHomeKitUsageDescription: Jelly kann beim Abspielen eine Szene aus deinem Zuhause starten, zum Beispiel das Licht dimmen.
         # HTTPS only through Apple's URLSession, SHA-256 only for cache names: no non-exempt encryption.
         ITSAppUsesNonExemptEncryption: false
         # German, English, French, Spanish, Italian, Dutch, Portuguese, Danish, Swedish and Polish; any other device language gets English.

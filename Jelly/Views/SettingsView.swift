@@ -54,6 +54,7 @@ struct SettingsView: View {
                             SettingsToggle(String(localized: "Titelmusik"), isOn: $themeMusic)
                             SettingsToggle(String(localized: "Gemeinsam schauen (SyncPlay)"), isOn: $syncPlay)
                         }
+                        HomeScenesSettings()
                         SettingsSection(String(localized: "Bewertungen bei Filmen und Serien"), footer: IMDbRatings.isAvailable
                                         ? String(localized: "IMDb-Werte kommen aus IMDbs öffentlichem Bewertungs-Datensatz und werden wöchentlich aktualisiert. Rotten Tomatoes stammt aus den Metadaten deines Jellyfin-Servers und fehlt bei Titeln, für die der Server keinen Kritikerwert hat.")
                                         : String(localized: "Beide Werte stammen aus den Metadaten deines Jellyfin-Servers und fehlen bei Titeln, für die der Server keine Bewertung hat.")) {
