@@ -165,3 +165,11 @@ struct TomatoIcon: View {
         .frame(width: 32, height: 32)
     }
 }
+
+#if canImport(UIKit)
+extension UIImage {
+    /// The image's pixels; the Mac has its own way to the same thing (JellyMac/MacCompat.swift).
+    var pixels: CGImage? { cgImage }
+    convenience init(pixels: CGImage) { self.init(cgImage: pixels) }
+}
+#endif

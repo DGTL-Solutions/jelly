@@ -10,14 +10,20 @@
 		02071587F600733EDD6FACA2 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF11B3AA95BE8048BBE6CBBB /* OnboardingView.swift */; };
 		033DA9620398E0D50E0C4E86 /* WishWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD8F729EB21217AF97527CC /* WishWatcher.swift */; };
 		0384ABAC20E30B18735FF1A7 /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3511A492D903760A131777 /* QRCode.swift */; };
+		04CFA742775ABF75644B1B95 /* License-dav1d.txt in Resources */ = {isa = PBXBuildFile; fileRef = 08F3A30EEB28D3F88CE40A9A /* License-dav1d.txt */; };
 		0581B937934D03B9CB2C9454 /* DownloadCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7C1708532E1DD73A6A3AFC /* DownloadCenter.swift */; };
+		05854BD945C39AC29315A368 /* PlaybackSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6D327CE5691AA80F76E121 /* PlaybackSupport.swift */; };
 		05AB6818E8A5192E6BB93125 /* MobilePlayerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179C0B1A627C2B2751E858F8 /* MobilePlayerControls.swift */; };
 		05E4BA7B0C081B53951AF280 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3859131F0DFB9909D49A1D60 /* InfoPlist.xcstrings */; };
 		06EAB9A4101C82A9F068C2B1 /* SharePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2400D725F32BB10CB34B4E4 /* SharePlay.swift */; };
 		0742CB71A908E9A0B6A7F745 /* ThemeMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C97D9035CA0F1A10AB35BB /* ThemeMusic.swift */; };
 		09FF9478E26C050C3AAC6FE6 /* DownloadActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936ADA353ECF4E79958F88C7 /* DownloadActivity.swift */; };
+		0A09A2BBB2020BC006871A1E /* SyncPlayViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FBF8317ACF40E13B05216 /* SyncPlayViews.swift */; };
 		0F8E5CD0D917AA032F23846F /* Downloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B966622C44FE45B8F3B7A627 /* Downloads.swift */; };
 		0FE09B9D5D59B162D495240B /* SharedUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087D8D8292398E791F68EE4C /* SharedUI.swift */; };
+		123F2F74B0108B164B24B4D8 /* Access.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE8765E255F4649A298FAA /* Access.swift */; };
+		134686246EAC81F8324858C9 /* SyncPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58F41023820851B2D0CE2A4 /* SyncPlay.swift */; };
+		1469D2B79F9A2DAA8D0BCF9F /* ReviewPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9767E10A04430B656A018F4 /* ReviewPrompt.swift */; };
 		187F4E554AA36F062D7A2BF6 /* MobilePlayerSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91853DAB004C78C0111A2871 /* MobilePlayerSystem.swift */; };
 		18A6F746087CDE6C55D19B6B /* License-AetherEngine.txt in Resources */ = {isa = PBXBuildFile; fileRef = 850A87E15B5242C5665B4932 /* License-AetherEngine.txt */; };
 		18D93C3E3CE4B64CF725F7CD /* License-LibDovi.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8EA84B06FE50484566BB8B21 /* License-LibDovi.txt */; };
@@ -25,12 +31,19 @@
 		198AF16BBC5A5332112D1CAA /* KidsPIN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C591F8E9FE0B93A64E044E5 /* KidsPIN.swift */; };
 		1CF1600D216C240EF4A71D2B /* SecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5C9582D71639711F6C0053 /* SecureStore.swift */; };
 		1D5328784131DDB61B42F732 /* SubtitleOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EAAD2239D4DA614D8718B6 /* SubtitleOverlay.swift */; };
+		1DBE042176FD5137CAC81B96 /* JellyMobileApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F864BBA926651A6EAD30A6A2 /* JellyMobileApp.swift */; };
+		211BE66721C84601F1D2E856 /* WishNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642CD6473EA3A2FD1DA343D0 /* WishNotifications.swift */; };
 		21978E73F6CDE9BBD0F3D95A /* WishWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD8F729EB21217AF97527CC /* WishWatcher.swift */; };
 		2247524752F9AA502B709BE0 /* JellyfinClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A916E9281C3B1AFBC17BC1EF /* JellyfinClient.swift */; };
 		224FEA91EBB9C372EB3FBB4A /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC195C836E46823BC6BC4F28 /* PaywallView.swift */; };
 		279A7BC7E51840F599D9A58E /* Downloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B966622C44FE45B8F3B7A627 /* Downloads.swift */; };
+		2A7B21CE7F0EF49C0F633F32 /* Artwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96C3A92A4D42FD38CE47AF6 /* Artwork.swift */; };
+		2A87DADC068EC6B87258CEA6 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED9178C2D1CC383208FFDD /* OnboardingFlow.swift */; };
+		2C06E675BFB5AA8C2B958BE1 /* IMDbRatings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7FE3D4BBE044B0BF3893C9 /* IMDbRatings.swift */; };
 		2C84D2A17628387BA730D118 /* ServerDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD934A017F0F636E82D025C /* ServerDiscovery.swift */; };
 		2CB4771BF6186C3DF6CFD343 /* StoredProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A029A7CA3C6219643DF71F4A /* StoredProfile.swift */; };
+		2D135BFCA1F50200ED8DE029 /* MobilePlayerPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A654CCF14B7DBEE0BA4A3BC9 /* MobilePlayerPanel.swift */; };
+		2D1642EE0360B76B29302731 /* License-LibDovi.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8EA84B06FE50484566BB8B21 /* License-LibDovi.txt */; };
 		2DA9A3DD3AB6AF10CEA16479 /* PlaybackSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6D327CE5691AA80F76E121 /* PlaybackSupport.swift */; };
 		2E04B4593AB742D3FB623AD2 /* ReviewPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9767E10A04430B656A018F4 /* ReviewPrompt.swift */; };
 		2EC3B8DB9262E862EFCD605F /* KidsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F871A27A164B5C18B1F9CB29 /* KidsViews.swift */; };
@@ -39,6 +52,8 @@
 		31B74525A530160CFD1D737F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B55BAA7E8B4560B5AADB2D9D /* Assets.xcassets */; };
 		32769B61CB956140D90ACC0D /* PlaybackSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6D327CE5691AA80F76E121 /* PlaybackSupport.swift */; };
 		33BE994E2FAC300CCF8B88E4 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3859131F0DFB9909D49A1D60 /* InfoPlist.xcstrings */; };
+		34A25C1F1C15E7273CF0B482 /* KidsMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23D5AC2E7E65751CCE98169 /* KidsMode.swift */; };
+		3608B462A0095B46A69A4659 /* License-libunibreak.txt in Resources */ = {isa = PBXBuildFile; fileRef = 94F87B2395557693FA1B83AD /* License-libunibreak.txt */; };
 		362EAC9B52EF4264D158FF86 /* License-dav1d.txt in Resources */ = {isa = PBXBuildFile; fileRef = 08F3A30EEB28D3F88CE40A9A /* License-dav1d.txt */; };
 		3805CF43046823D073DE5653 /* AboutScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9866C5CF591B662CE0AD84 /* AboutScreens.swift */; };
 		385CE562DE810E1078EB8A59 /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BA37AC42CFAF95B1F4BD8C /* ItemDetailView.swift */; };
@@ -46,8 +61,10 @@
 		3976452B024D2DD397799689 /* License-libunibreak.txt in Resources */ = {isa = PBXBuildFile; fileRef = 94F87B2395557693FA1B83AD /* License-libunibreak.txt */; };
 		3A3211C837D405757BE67D02 /* IMDbRatings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7FE3D4BBE044B0BF3893C9 /* IMDbRatings.swift */; };
 		3C66751B90CAE6010C5FA3AF /* JellyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B696C1B6EF483543B64A6 /* JellyTests.swift */; };
+		3CF62C0880FDEEB6BA8D58E0 /* PlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2F394BAF1CD598424B68F8 /* PlayerController.swift */; };
 		3E369E24A26A7B787E346796 /* PlaybackCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F489574CDDE3C5009504FE6B /* PlaybackCoordinator.swift */; };
 		41121833FD736293A7133D7B /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DE28B54B3028E50DC3ADBC /* AppModel.swift */; };
+		41C87FAB2227F4CB2A392573 /* PaywallBenefits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325A3BC827EE00C19A282E32 /* PaywallBenefits.swift */; };
 		41F73E595C6ED79D4F570BD7 /* Artwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96C3A92A4D42FD38CE47AF6 /* Artwork.swift */; };
 		44DBFFCB92DE70308541A155 /* License-libzvbi.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2ACF811CD4EC85BBDF1A3323 /* License-libzvbi.txt */; };
 		45EFA9EE8C3589F64B1F1E13 /* JellyfinClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A916E9281C3B1AFBC17BC1EF /* JellyfinClient.swift */; };
@@ -55,65 +72,100 @@
 		4943D85BF28B7A2B94201B32 /* Diagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6C40E354F80135D447511D /* Diagnostics.swift */; };
 		49914CB16FBF2F49EDD613DD /* Access.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE8765E255F4649A298FAA /* Access.swift */; };
 		4FCC8D347FA7C0DA206970F3 /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1086D14046D580B99A5A0F7 /* DiscoverView.swift */; };
+		50AE071983972B08281C818C /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912B94C6F14F4D606619BF2F /* SettingsScreen.swift */; };
 		51080BED271E3C19DFD011BD /* JellyIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF38A4EA3ED4B173F247C6E6 /* JellyIntents.swift */; };
+		513F01CBDAD0570B084EE067 /* Purchases.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE27BC41C829D622D1B6E762 /* Purchases.swift */; };
 		5203F5646B7736190BBE7DD0 /* JellyMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33E6B1B4D5C70D6AE97DADA /* JellyMark.swift */; };
 		53081240E64CEB2D68CC494E /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 705897CD1AAF939955943FC6 /* Localizable.xcstrings */; };
+		536BB0F9396E697165C726E0 /* KidsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F871A27A164B5C18B1F9CB29 /* KidsViews.swift */; };
 		538ADF8CF64C8732BF6C1F54 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 705897CD1AAF939955943FC6 /* Localizable.xcstrings */; };
+		542FCF9891FB31D8D8AF86DD /* License-HarfBuzz.txt in Resources */ = {isa = PBXBuildFile; fileRef = F4EF9BA392D7270B068F109D /* License-HarfBuzz.txt */; };
 		564EE3AEFB21DACD3940B3A3 /* SyncPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58F41023820851B2D0CE2A4 /* SyncPlay.swift */; };
 		572B37C99AEFE8025EABB4FE /* License-AetherEngine.txt in Resources */ = {isa = PBXBuildFile; fileRef = 850A87E15B5242C5665B4932 /* License-AetherEngine.txt */; };
 		577545BB77F8AEA8DBD89D56 /* License-zimg.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9CB94D6E266F2183B6556114 /* License-zimg.txt */; };
 		58B433757E57EB33B925A171 /* AppShortcuts.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 29CBB2459264B53AB8D0EBCC /* AppShortcuts.xcstrings */; };
+		58EAABF8B65D13B4F29431E6 /* SubtitleOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EAAD2239D4DA614D8718B6 /* SubtitleOverlay.swift */; };
 		5A6869F47807737A77705768 /* DownloadScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD52BE1A1C13ED7DB53CF2B2 /* DownloadScreens.swift */; };
+		5AA2E865448BDEA371EC3BD9 /* SessionLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC6414081ABEC913628C43C /* SessionLink.swift */; };
 		5C024D027B2FDFBE4FE1A04A /* AccountScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 367CDB6E705F7CAC972C3837 /* AccountScreens.swift */; };
+		5C9DA3325B0674254E8EFA24 /* DisplayCapabilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFD43BCD6F319C772627B0B /* DisplayCapabilities.swift */; };
 		5CE9E7269807C59FD50B43B3 /* Seerr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702891C8FE64D2FB792F7A72 /* Seerr.swift */; };
 		5CF00B6F594597DB279137FF /* libass in Frameworks */ = {isa = PBXBuildFile; productRef = 9F974EC0F5BD019431B41C99 /* libass */; };
 		5DCD01EF631D4A3ECB952B29 /* JellyMobileApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F864BBA926651A6EAD30A6A2 /* JellyMobileApp.swift */; };
+		5FE685B410E8ADED33B6334E /* SignInApprovalSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345ACDA21F5FC62182DCE084 /* SignInApprovalSheet.swift */; };
 		60A94A7CE4141944BB3700E7 /* NetworkProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ADF9351ED5418707746916 /* NetworkProbe.swift */; };
 		61B6F92678DEDA7FFC3BB3B5 /* Diagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6C40E354F80135D447511D /* Diagnostics.swift */; };
 		61EA57FAB687ADE05FD0C8EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2A931B23B949254F2BB0766 /* Assets.xcassets */; };
 		62241F6B1468A6C1E3B670F9 /* KidsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F871A27A164B5C18B1F9CB29 /* KidsViews.swift */; };
 		638840300CE129DDE22E73D0 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFB9B1CF9F62518A909A69E /* Components.swift */; };
 		64083E1D19CF3938539DC008 /* Access.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE8765E255F4649A298FAA /* Access.swift */; };
+		652379C13DD4CF583C27D7FF /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3859131F0DFB9909D49A1D60 /* InfoPlist.xcstrings */; };
 		662337EFC77D3751D6FEF6ED /* Purchases.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE27BC41C829D622D1B6E762 /* Purchases.swift */; };
 		66281E7926AABA09B376F6B2 /* Purchases.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE27BC41C829D622D1B6E762 /* Purchases.swift */; };
+		66868504E769F0ADD15E207B /* WishWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD8F729EB21217AF97527CC /* WishWatcher.swift */; };
 		68BFE3E3C6C4308F3434A992 /* RemoteInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5A5EB408FA410DC424FFFC /* RemoteInput.swift */; };
+		6945BDCBF4B4357B76759E57 /* License-AetherEngine.txt in Resources */ = {isa = PBXBuildFile; fileRef = 850A87E15B5242C5665B4932 /* License-AetherEngine.txt */; };
 		6A49C0821526BF489DFB02F1 /* IMDbRatings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7FE3D4BBE044B0BF3893C9 /* IMDbRatings.swift */; };
+		6ACF2B28367F3131A2ED85E0 /* TogetherScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F62C3153634E351E39540D /* TogetherScreens.swift */; };
+		6B13A4976678E0C11B2C1F4E /* Diagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6C40E354F80135D447511D /* Diagnostics.swift */; };
 		6BB5C876C1A7F8A472C595FF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 05962768906AE4D3CC3E3EE1 /* PrivacyInfo.xcprivacy */; };
 		6D6718667686B9CFB7ADF127 /* ReviewPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9767E10A04430B656A018F4 /* ReviewPrompt.swift */; };
 		6D71FDDB13515F29D7E85573 /* MobilePlayerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F28D3BCC628DFA5E490CBC /* MobilePlayerScreen.swift */; };
 		6E68CD00D452B1BF442C1996 /* WishNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642CD6473EA3A2FD1DA343D0 /* WishNotifications.swift */; };
 		6F6EDCE55EFC26464D305F91 /* KidsMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23D5AC2E7E65751CCE98169 /* KidsMode.swift */; };
 		71475607756C77091EC1965B /* DiscoverScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DD1AA968E4C1524533B343 /* DiscoverScreens.swift */; };
+		725E960EEBFFBC11E0AE00FC /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3511A492D903760A131777 /* QRCode.swift */; };
 		73993BF98CDB9EFA06BF79AB /* ConnectionAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3479D4451BFB1B7D96190F4A /* ConnectionAnalyzer.swift */; };
+		73D0BC0D9D0D45E6E68D612F /* libass in Frameworks */ = {isa = PBXBuildFile; productRef = EBF7D87386296FDB8C198985 /* libass */; };
+		73D91EE9F842319DB5155641 /* Downloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B966622C44FE45B8F3B7A627 /* Downloads.swift */; };
 		74CCB18E86A29F8F8A453D92 /* JellyfinClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A916E9281C3B1AFBC17BC1EF /* JellyfinClient.swift */; };
+		794F6DF72C906A89315150B1 /* PlaybackCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F489574CDDE3C5009504FE6B /* PlaybackCoordinator.swift */; };
+		7A13A6B3A7B087FC29DCAB18 /* LibraryFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E839A621F30997FC01D616A /* LibraryFilters.swift */; };
 		7B60A7A957B94E9B8B9BC1A8 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 705897CD1AAF939955943FC6 /* Localizable.xcstrings */; };
+		7B6E3C2316ED3839F97993D9 /* License-LGPL-2.1.txt in Resources */ = {isa = PBXBuildFile; fileRef = EC9148709D4EC1A327BDC313 /* License-LGPL-2.1.txt */; };
 		7BABC13F7C7CDBEA8D7E90BC /* SignInApprovalSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345ACDA21F5FC62182DCE084 /* SignInApprovalSheet.swift */; };
+		7CC4ADE960F5FF26E6654549 /* AetherEngine in Frameworks */ = {isa = PBXBuildFile; productRef = 0B6AA75932485AC41DFA75DF /* AetherEngine */; };
 		7DC74F429B6986114CD06B19 /* ConnectionAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C40772B599AEECCFAE7A9F /* ConnectionAnalysisView.swift */; };
+		7F6714ECD662E1BAC7D5353D /* MobilePlayerOverlays.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD52FCC90771544CB72ED6BF /* MobilePlayerOverlays.swift */; };
 		7F67DD65D1A1FB84674A4FA4 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BDD5FCBAB3591A4866AFB18F /* InfoPlist.xcstrings */; };
 		805634208F38489D400B3CEC /* ASSRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF37FBE3A3195B3ECB50A8 /* ASSRenderer.swift */; };
 		8098E6ABC38C65F7B375684F /* Diagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6C40E354F80135D447511D /* Diagnostics.swift */; };
 		80F96F2E8D38481E948BC638 /* SubtitleOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EAAD2239D4DA614D8718B6 /* SubtitleOverlay.swift */; };
+		811E91A956B1CE8FFFB6F081 /* License-libzvbi.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2ACF811CD4EC85BBDF1A3323 /* License-libzvbi.txt */; };
+		81DA757A58083FA3686E3B64 /* SharePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2400D725F32BB10CB34B4E4 /* SharePlay.swift */; };
+		81E6F8E35382B98609AA9F54 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DE28B54B3028E50DC3ADBC /* AppModel.swift */; };
+		849C2D7C715DF1B3306EAF09 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 05962768906AE4D3CC3E3EE1 /* PrivacyInfo.xcprivacy */; };
 		85C11843F7129867C80597AA /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED9178C2D1CC383208FFDD /* OnboardingFlow.swift */; };
 		87AD7A4ED7BF9518DD260EEF /* IntroFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A1300A33DF01F71060478A /* IntroFinder.swift */; };
 		8824A47B0A42A26A194933DF /* License-dav1d.txt in Resources */ = {isa = PBXBuildFile; fileRef = 08F3A30EEB28D3F88CE40A9A /* License-dav1d.txt */; };
+		88694491E278CCA568802B95 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = F28C05BD0813EF50C173F34A /* AppIcon.icon */; };
 		8A6CAAB5A688AC5F95837AD5 /* ScriptedUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808099BD62857D95990D0BF6 /* ScriptedUITest.swift */; };
+		8AF8918F54A61588597F2D0A /* AppShortcuts.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 29CBB2459264B53AB8D0EBCC /* AppShortcuts.xcstrings */; };
 		8BC222BE36B07AE581BEE361 /* License-FreeType.txt in Resources */ = {isa = PBXBuildFile; fileRef = B257626A6044D766406A7017 /* License-FreeType.txt */; };
 		8BE6E959996BC0F18E90CE7F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 05962768906AE4D3CC3E3EE1 /* PrivacyInfo.xcprivacy */; };
 		8D097650A2A316F8A82670A3 /* License-LibDovi.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8EA84B06FE50484566BB8B21 /* License-LibDovi.txt */; };
 		8DBD553663735073BD6CBD23 /* ThemeMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C97D9035CA0F1A10AB35BB /* ThemeMusic.swift */; };
+		8E07A7EF41E004D1138B4543 /* ServerDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD934A017F0F636E82D025C /* ServerDiscovery.swift */; };
 		8EA49288FC8FB3B754D607B5 /* Artwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96C3A92A4D42FD38CE47AF6 /* Artwork.swift */; };
 		8F6893ADE6A6E870518A9AAD /* MobilePlayerPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A654CCF14B7DBEE0BA4A3BC9 /* MobilePlayerPanel.swift */; };
 		8F7B196F3A7828399C5E37D7 /* License-zimg.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9CB94D6E266F2183B6556114 /* License-zimg.txt */; };
 		8F921C84662D0521715ED1D4 /* NetworkProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ADF9351ED5418707746916 /* NetworkProbe.swift */; };
 		8F95ABD4015356B71C6B62B6 /* KidsPIN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C591F8E9FE0B93A64E044E5 /* KidsPIN.swift */; };
+		907536CDD091354100539A0C /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2C8B16BBF610F5334BD640 /* Models.swift */; };
+		93130D4FC30DC77E5BC6F8C8 /* JellyfinClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A916E9281C3B1AFBC17BC1EF /* JellyfinClient.swift */; };
 		93AB6D3F4038F16CCE526EFD /* PlaybackSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6D327CE5691AA80F76E121 /* PlaybackSupport.swift */; };
+		9415E01FDAEA567C4FE2C3B4 /* AccountScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 367CDB6E705F7CAC972C3837 /* AccountScreens.swift */; };
 		95E4ED17CAAEFC3A49203FB1 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = F28C05BD0813EF50C173F34A /* AppIcon.icon */; };
+		97A5C78A3F6FBF9FDDDD7EB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2A931B23B949254F2BB0766 /* Assets.xcassets */; };
 		991C1D7E229CB25DAE0394B8 /* LibraryFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E839A621F30997FC01D616A /* LibraryFilters.swift */; };
+		9AC77FFC3D2A877BB512C5F5 /* DiscoverScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DD1AA968E4C1524533B343 /* DiscoverScreens.swift */; };
 		9B10D20243269832A714DE48 /* ServerDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD934A017F0F636E82D025C /* ServerDiscovery.swift */; };
 		9CBEDBA5BEB5EC1571689586 /* JellyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B2A3B16FB43480FE26CF5A /* JellyApp.swift */; };
 		9DB3A125A11FB74DDECE1DE6 /* AetherEngine in Frameworks */ = {isa = PBXBuildFile; productRef = A97502917407B4FD19153A63 /* AetherEngine */; };
+		9DD923C5562E68405CBFDC8B /* SecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5C9582D71639711F6C0053 /* SecureStore.swift */; };
 		9F03A05F428B6EC543E34900 /* PlaybackCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F489574CDDE3C5009504FE6B /* PlaybackCoordinator.swift */; };
 		A17FE13A57B5E1FB7B44E72C /* Diagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6C40E354F80135D447511D /* Diagnostics.swift */; };
+		A1CF95E99BBA8AABE94E440E /* IntroDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2A0071BF03804F41D92C13 /* IntroDetector.swift */; };
 		A207844C9F1397E43D8EBBD4 /* License-MPL-2.0.txt in Resources */ = {isa = PBXBuildFile; fileRef = 954403DF8516BD3EA725AEDC /* License-MPL-2.0.txt */; };
 		A4C6BED59730E7E7CF0DFAF1 /* SessionLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC6414081ABEC913628C43C /* SessionLink.swift */; };
 		A57F68046306BC574375A909 /* MobileComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EDE9D16E820401BA9E6B7F /* MobileComponents.swift */; };
@@ -121,8 +173,12 @@
 		A6CCC1372B9AD2E8D8767D5C /* License-libass.txt in Resources */ = {isa = PBXBuildFile; fileRef = D2BF711CAC6D11FD362E4B80 /* License-libass.txt */; };
 		A7425879EF4D03C34358C84F /* License-FreeType.txt in Resources */ = {isa = PBXBuildFile; fileRef = B257626A6044D766406A7017 /* License-FreeType.txt */; };
 		A9315EE783DDC6749F49D5F2 /* License-HarfBuzz.txt in Resources */ = {isa = PBXBuildFile; fileRef = F4EF9BA392D7270B068F109D /* License-HarfBuzz.txt */; };
+		A986BCDB9D2548104582BF78 /* AboutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B5D86B9130E73BFD6F7E1F /* AboutData.swift */; };
 		ABF034386C286542F6C16F22 /* MobilePaywall.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F5D4F3D1DDA4BCDC689533 /* MobilePaywall.swift */; };
+		AC0636ABD09AFDCD0E63DC60 /* ASSRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF37FBE3A3195B3ECB50A8 /* ASSRenderer.swift */; };
 		AD38E8BD36241A82D83AC775 /* JellyWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CBA177DF97012C27237B49 /* JellyWidgets.swift */; };
+		AD5039A7D89C60F7811BD0A5 /* ItemActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F6F10573FF65936C75184F /* ItemActivity.swift */; };
+		B0810984D344E1940ECC6F56 /* IntroFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A1300A33DF01F71060478A /* IntroFinder.swift */; };
 		B0F8DCC488365545DA93411A /* SharePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2400D725F32BB10CB34B4E4 /* SharePlay.swift */; };
 		B108149F50E691AF9E53F7B5 /* IntroDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2A0071BF03804F41D92C13 /* IntroDetector.swift */; };
 		B148873654558DF8EE58154C /* SharedUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087D8D8292398E791F68EE4C /* SharedUI.swift */; };
@@ -130,20 +186,28 @@
 		B246A85F7AA3D45632393A7B /* License-libunibreak.txt in Resources */ = {isa = PBXBuildFile; fileRef = 94F87B2395557693FA1B83AD /* License-libunibreak.txt */; };
 		B5696371FB4F774499825FB7 /* KidsPIN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C591F8E9FE0B93A64E044E5 /* KidsPIN.swift */; };
 		B572DCFFE575BF951B23A602 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2C8B16BBF610F5334BD640 /* Models.swift */; };
+		B92BDAE284173B8068148EF4 /* MobilePlayerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F28D3BCC628DFA5E490CBC /* MobilePlayerScreen.swift */; };
 		BAC3F4BB154AFDBB74B98AF9 /* SecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5C9582D71639711F6C0053 /* SecureStore.swift */; };
 		BBB2C3EE92629A41037C2692 /* LibraryFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E839A621F30997FC01D616A /* LibraryFilters.swift */; };
+		BBC9204124D5280B026A7126 /* License-zimg.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9CB94D6E266F2183B6556114 /* License-zimg.txt */; };
 		BC91CA6CAF5808E0B8241495 /* AboutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B5D86B9130E73BFD6F7E1F /* AboutData.swift */; };
 		BCCA8F4D4718EF5D38197AC4 /* License-LGPL-2.1.txt in Resources */ = {isa = PBXBuildFile; fileRef = EC9148709D4EC1A327BDC313 /* License-LGPL-2.1.txt */; };
 		BDFC8798F3CCBDEB2EE35E63 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BE67641F9DC39EE838D66E /* SettingsView.swift */; };
+		BE5FAF1EFC96FDA8B631F551 /* DownloadCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7C1708532E1DD73A6A3AFC /* DownloadCenter.swift */; };
 		BEEC7D23D69278826D8EF6C6 /* AetherEngine in Frameworks */ = {isa = PBXBuildFile; productRef = 7378E8522E6C061BCA4F83A1 /* AetherEngine */; };
 		BF2AAF26F4B5AF810E00AB20 /* JellyfinClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A916E9281C3B1AFBC17BC1EF /* JellyfinClient.swift */; };
 		C077BE9D8B3D41837DF5C65A /* StoredProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A029A7CA3C6219643DF71F4A /* StoredProfile.swift */; };
 		C3E73A5ECAE28952FF45E85F /* License-LGPL-2.1.txt in Resources */ = {isa = PBXBuildFile; fileRef = EC9148709D4EC1A327BDC313 /* License-LGPL-2.1.txt */; };
 		C4314CAC40B79E907BAFA7B2 /* LibraryScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C89F7300311B0E0259B6A3 /* LibraryScreens.swift */; };
+		C5317E05B9840267C8FB8A04 /* NetworkProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ADF9351ED5418707746916 /* NetworkProbe.swift */; };
 		C5F407AE10E684F358216965 /* libass in Frameworks */ = {isa = PBXBuildFile; productRef = 4D50842C32CD70FE93B53160 /* libass */; };
+		C65056B808A0353F0EF18CAF /* License-FreeType.txt in Resources */ = {isa = PBXBuildFile; fileRef = B257626A6044D766406A7017 /* License-FreeType.txt */; };
 		C6D53F673A8D14590E546465 /* SyncPlayViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FBF8317ACF40E13B05216 /* SyncPlayViews.swift */; };
+		C79AFCFCA4DE8D670799A664 /* StoredProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A029A7CA3C6219643DF71F4A /* StoredProfile.swift */; };
 		CB7C14573D116CB611180C9C /* StoredProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A029A7CA3C6219643DF71F4A /* StoredProfile.swift */; };
 		CBB74252BA3A43878F76D225 /* PaywallBenefits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325A3BC827EE00C19A282E32 /* PaywallBenefits.swift */; };
+		CCED47586BEBC2AD5FD2E367 /* License-MPL-2.0.txt in Resources */ = {isa = PBXBuildFile; fileRef = 954403DF8516BD3EA725AEDC /* License-MPL-2.0.txt */; };
+		CD59C21EE333ADEDC5F95308 /* JellyMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1215F6E9596D12F1809CA5 /* JellyMacApp.swift */; };
 		CEA309E739AC1B77068376F5 /* SecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5C9582D71639711F6C0053 /* SecureStore.swift */; };
 		CEC81E515C76B274802C7446 /* SyncPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58F41023820851B2D0CE2A4 /* SyncPlay.swift */; };
 		CFA8F79FA4A52031D384F824 /* Seerr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702891C8FE64D2FB792F7A72 /* Seerr.swift */; };
@@ -155,14 +219,20 @@
 		D5D4D4BB2D189D69AF8F2190 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2C8B16BBF610F5334BD640 /* Models.swift */; };
 		D76992B0508C4F526D3CB7D9 /* KidsPIN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C591F8E9FE0B93A64E044E5 /* KidsPIN.swift */; };
 		D7D123072DF9CB6C217F5AF8 /* Artwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96C3A92A4D42FD38CE47AF6 /* Artwork.swift */; };
+		DB54395FE50C405654A114FE /* JellyMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33E6B1B4D5C70D6AE97DADA /* JellyMark.swift */; };
 		DE18EA4C7871C2FEFDF72FCF /* MobilePlayerOverlays.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD52FCC90771544CB72ED6BF /* MobilePlayerOverlays.swift */; };
 		E135B46951729E346900CFD7 /* KidsMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23D5AC2E7E65751CCE98169 /* KidsMode.swift */; };
 		E315B2668F5C9EDA46E51B0F /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2C8B16BBF610F5334BD640 /* Models.swift */; };
+		E3C64ABFE1C36D9D4810A9B7 /* ThemeMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C97D9035CA0F1A10AB35BB /* ThemeMusic.swift */; };
 		E517566E3F4D072EB2D5F7DE /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3511A492D903760A131777 /* QRCode.swift */; };
+		E6AE3AD7EC93EF14D8EC20FA /* LibraryScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C89F7300311B0E0259B6A3 /* LibraryScreens.swift */; };
+		E6BE6A84A574F664D0BF73E0 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 705897CD1AAF939955943FC6 /* Localizable.xcstrings */; };
 		E86C7E59BE93BEABF08454BD /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840B469169D59810437A5347 /* PlayerView.swift */; };
 		E90AE878AB05EDA24D81F85D /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2C8B16BBF610F5334BD640 /* Models.swift */; };
 		E918E15B1DFB2862CA3A3ADC /* License-libass.txt in Resources */ = {isa = PBXBuildFile; fileRef = D2BF711CAC6D11FD362E4B80 /* License-libass.txt */; };
+		E98894DF88D47D3BA764145B /* SharedUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087D8D8292398E791F68EE4C /* SharedUI.swift */; };
 		EADF23817E8F18B81945114D /* ASSRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF37FBE3A3195B3ECB50A8 /* ASSRenderer.swift */; };
+		EAE7B1F929C3E45FF75E1728 /* MobilePlayerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179C0B1A627C2B2751E858F8 /* MobilePlayerControls.swift */; };
 		EC7674E9552383AC77E3DBF6 /* AboutViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6B7F4D23F5261E03E71727 /* AboutViews.swift */; };
 		EEB4EDD74864DB86C6297428 /* JellyTopShelf.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8F5000E80A7FBC41ED0B8EEE /* JellyTopShelf.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EEDA20E113A716DC8153CCA9 /* IntroFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A1300A33DF01F71060478A /* IntroFinder.swift */; };
@@ -173,17 +243,26 @@
 		F00F3DFC47D7E42DB76DAE88 /* PlaybackSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6D327CE5691AA80F76E121 /* PlaybackSupport.swift */; };
 		F038E3F9F79A9C5A7C1B16E7 /* License-libzvbi.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2ACF811CD4EC85BBDF1A3323 /* License-libzvbi.txt */; };
 		F0E6FC63C5BEF0967CF1478A /* DisplayCapabilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFD43BCD6F319C772627B0B /* DisplayCapabilities.swift */; };
+		F4050B79A13D7DC958E5D3D1 /* License-libass.txt in Resources */ = {isa = PBXBuildFile; fileRef = D2BF711CAC6D11FD362E4B80 /* License-libass.txt */; };
 		F40C2AA37C16153C2FED247B /* DownloadActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2418A759CAF66457FF063080 /* DownloadActivityController.swift */; };
+		F43CDECE5CE731BD93501339 /* MobileComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EDE9D16E820401BA9E6B7F /* MobileComponents.swift */; };
 		F52F536A46D4A9ED4634541C /* AboutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B5D86B9130E73BFD6F7E1F /* AboutData.swift */; };
 		F5F419DC6EFA62CD4BC3F51C /* ItemActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F6F10573FF65936C75184F /* ItemActivity.swift */; };
 		F66AB41488C26000BC22BDAD /* SyncPlayViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FBF8317ACF40E13B05216 /* SyncPlayViews.swift */; };
 		F737D91F56C98D93C8F19B23 /* TogetherScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F62C3153634E351E39540D /* TogetherScreens.swift */; };
+		F868928375F3BCA25982D0B2 /* MacCompat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425F808A453B51C24FD063EB /* MacCompat.swift */; };
 		F88E96559942C0A4FA696D92 /* Screensaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD22F22EC827FD3B69B7C84 /* Screensaver.swift */; };
 		F8C0212DCB0D3F7D9441CA6B /* JellyMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33E6B1B4D5C70D6AE97DADA /* JellyMark.swift */; };
+		F92663AD764508171F570609 /* KidsPIN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C591F8E9FE0B93A64E044E5 /* KidsPIN.swift */; };
+		F93ABE93DC974CA42D872D5C /* Seerr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702891C8FE64D2FB792F7A72 /* Seerr.swift */; };
+		FA2428BA0BA87C8A205714CB /* JellyIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF38A4EA3ED4B173F247C6E6 /* JellyIntents.swift */; };
 		FA96702AA299B7C7075F60AF /* License-MPL-2.0.txt in Resources */ = {isa = PBXBuildFile; fileRef = 954403DF8516BD3EA725AEDC /* License-MPL-2.0.txt */; };
 		FABD6CC5D4E3B72F1B49AF94 /* DisplayCapabilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFD43BCD6F319C772627B0B /* DisplayCapabilities.swift */; };
+		FAC0154DEF2F33DD7C4DD75D /* DownloadScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD52BE1A1C13ED7DB53CF2B2 /* DownloadScreens.swift */; };
 		FCDD021B203C5D4B8B8BB69F /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912B94C6F14F4D606619BF2F /* SettingsScreen.swift */; };
+		FCE16D99FA5FCD23CBC4358B /* AboutScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9866C5CF591B662CE0AD84 /* AboutScreens.swift */; };
 		FD4A77878F464F43DC42A3AA /* SecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5C9582D71639711F6C0053 /* SecureStore.swift */; };
+		FD5FCC3A4AC0078D99BD52BD /* MobilePaywall.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F5D4F3D1DDA4BCDC689533 /* MobilePaywall.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -244,6 +323,7 @@
 
 /* Begin PBXFileReference section */
 		00DE28B54B3028E50DC3ADBC /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		0115E4F51AF36C6BBC9D599C /* JellyMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JellyMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02BA6945B83B6AA63240D0B1 /* LibraryViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViews.swift; sourceTree = "<group>"; };
 		05962768906AE4D3CC3E3EE1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		087D8D8292398E791F68EE4C /* SharedUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUI.swift; sourceTree = "<group>"; };
@@ -254,6 +334,7 @@
 		1AB99804C998295075348B78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1E6C40E354F80135D447511D /* Diagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagnostics.swift; sourceTree = "<group>"; };
 		2418A759CAF66457FF063080 /* DownloadActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadActivityController.swift; sourceTree = "<group>"; };
+		25D2B8F98B43A5EEAEDC1E20 /* JellyMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JellyMac.entitlements; sourceTree = "<group>"; };
 		29CBB2459264B53AB8D0EBCC /* AppShortcuts.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = AppShortcuts.xcstrings; sourceTree = "<group>"; };
 		2ACF811CD4EC85BBDF1A3323 /* License-libzvbi.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "License-libzvbi.txt"; sourceTree = "<group>"; };
 		30CBA177DF97012C27237B49 /* JellyWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyWidgets.swift; sourceTree = "<group>"; };
@@ -269,6 +350,7 @@
 		3C2A0071BF03804F41D92C13 /* IntroDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroDetector.swift; sourceTree = "<group>"; };
 		3C5C9582D71639711F6C0053 /* SecureStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStore.swift; sourceTree = "<group>"; };
 		3F6D327CE5691AA80F76E121 /* PlaybackSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackSupport.swift; sourceTree = "<group>"; };
+		425F808A453B51C24FD063EB /* MacCompat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacCompat.swift; sourceTree = "<group>"; };
 		5493A12CF046A02426D462CB /* Jelly.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Jelly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55EAAD2239D4DA614D8718B6 /* SubtitleOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleOverlay.swift; sourceTree = "<group>"; };
 		595FBF8317ACF40E13B05216 /* SyncPlayViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPlayViews.swift; sourceTree = "<group>"; };
@@ -343,6 +425,7 @@
 		D4F33147D3709A8CEDF255CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D595DDE3BD824D805CB393E6 /* Jelly.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Jelly.entitlements; sourceTree = "<group>"; };
 		D9767E10A04430B656A018F4 /* ReviewPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPrompt.swift; sourceTree = "<group>"; };
+		DA1215F6E9596D12F1809CA5 /* JellyMacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyMacApp.swift; sourceTree = "<group>"; };
 		DDD8F729EB21217AF97527CC /* WishWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishWatcher.swift; sourceTree = "<group>"; };
 		DF38A4EA3ED4B173F247C6E6 /* JellyIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyIntents.swift; sourceTree = "<group>"; };
 		E8C97D9035CA0F1A10AB35BB /* ThemeMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeMusic.swift; sourceTree = "<group>"; };
@@ -357,6 +440,7 @@
 		F7F28D3BCC628DFA5E490CBC /* MobilePlayerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobilePlayerScreen.swift; sourceTree = "<group>"; };
 		F864BBA926651A6EAD30A6A2 /* JellyMobileApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyMobileApp.swift; sourceTree = "<group>"; };
 		F871A27A164B5C18B1F9CB29 /* KidsViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KidsViews.swift; sourceTree = "<group>"; };
+		F8EC877F9B0A1F9E73580A60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FAC47C69309861DA2C6C61E3 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		FD7FE3D4BBE044B0BF3893C9 /* IMDbRatings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMDbRatings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -377,6 +461,15 @@
 			files = (
 				9DB3A125A11FB74DDECE1DE6 /* AetherEngine in Frameworks */,
 				5CF00B6F594597DB279137FF /* libass in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE5EC0753C1DE5004B99ED64 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CC4ADE960F5FF26E6654549 /* AetherEngine in Frameworks */,
+				73D0BC0D9D0D45E6E68D612F /* libass in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -593,6 +686,17 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
+		A53BD1082791C6C779FB1E32 /* JellyMac */ = {
+			isa = PBXGroup;
+			children = (
+				F8EC877F9B0A1F9E73580A60 /* Info.plist */,
+				25D2B8F98B43A5EEAEDC1E20 /* JellyMac.entitlements */,
+				DA1215F6E9596D12F1809CA5 /* JellyMacApp.swift */,
+				425F808A453B51C24FD063EB /* MacCompat.swift */,
+			);
+			path = JellyMac;
+			sourceTree = "<group>";
+		};
 		ABC52A623B977F2D8BC89ABF /* JellyWidgets */ = {
 			isa = PBXGroup;
 			children = (
@@ -626,6 +730,7 @@
 			isa = PBXGroup;
 			children = (
 				89B58C6C3AD20893552CE6CC /* Jelly */,
+				A53BD1082791C6C779FB1E32 /* JellyMac */,
 				37484BEB97ED57E9D15ACF5E /* JellyMobile */,
 				F75CE5FA73ACF3ABF990D30A /* JellyTests */,
 				401BA33AE9E8B4A38AE48007 /* JellyTopShelf */,
@@ -672,6 +777,7 @@
 			isa = PBXGroup;
 			children = (
 				5493A12CF046A02426D462CB /* Jelly.app */,
+				0115E4F51AF36C6BBC9D599C /* JellyMac.app */,
 				331870C9FF562BC483C1626D /* JellyMobile.app */,
 				C2398EB379E6931FEF40D3F5 /* JellyTests.xctest */,
 				8F5000E80A7FBC41ED0B8EEE /* JellyTopShelf.appex */,
@@ -784,6 +890,27 @@
 			productReference = AB0A53B421FDCA984F80D123 /* JellyWidgets.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		A245F17AA80B820D9105388E /* JellyMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C71A91FA02F2BAE64F57377A /* Build configuration list for PBXNativeTarget "JellyMac" */;
+			buildPhases = (
+				C894E0BB7C9CCDB74F5E8CD7 /* Sources */,
+				34D7766F24C3EF1AAC7C0F20 /* Resources */,
+				AE5EC0753C1DE5004B99ED64 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JellyMac;
+			packageProductDependencies = (
+				0B6AA75932485AC41DFA75DF /* AetherEngine */,
+				EBF7D87386296FDB8C198985 /* libass */,
+			);
+			productName = JellyMac;
+			productReference = 0115E4F51AF36C6BBC9D599C /* JellyMac.app */;
+			productType = "com.apple.product-type.application";
+		};
 		F0D0FD9E7DF62D250324CAA9 /* JellyTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 157E0EBA3E00F6BDF174AC32 /* Build configuration list for PBXNativeTarget "JellyTests" */;
@@ -847,6 +974,7 @@
 				019C08E9A3A1217E6B69FE96 /* JellyTopShelf */,
 				02461FB07408A450B24D7F7D /* JellyMobile */,
 				F0D0FD9E7DF62D250324CAA9 /* JellyTests */,
+				A245F17AA80B820D9105388E /* JellyMac */,
 				74747038AE6F7D0BC52BD2B2 /* JellyWidgets */,
 				542DA07DFC2EF6EDB99DCCC2 /* JellyUITests */,
 			);
@@ -861,6 +989,30 @@
 				7F67DD65D1A1FB84674A4FA4 /* InfoPlist.xcstrings in Resources */,
 				D44EDEF0C6F9F0875D376EFF /* Localizable.xcstrings in Resources */,
 				EFA9C0FC7527615595E5E69D /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		34D7766F24C3EF1AAC7C0F20 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88694491E278CCA568802B95 /* AppIcon.icon in Resources */,
+				8AF8918F54A61588597F2D0A /* AppShortcuts.xcstrings in Resources */,
+				97A5C78A3F6FBF9FDDDD7EB7 /* Assets.xcassets in Resources */,
+				652379C13DD4CF583C27D7FF /* InfoPlist.xcstrings in Resources */,
+				6945BDCBF4B4357B76759E57 /* License-AetherEngine.txt in Resources */,
+				C65056B808A0353F0EF18CAF /* License-FreeType.txt in Resources */,
+				542FCF9891FB31D8D8AF86DD /* License-HarfBuzz.txt in Resources */,
+				7B6E3C2316ED3839F97993D9 /* License-LGPL-2.1.txt in Resources */,
+				2D1642EE0360B76B29302731 /* License-LibDovi.txt in Resources */,
+				CCED47586BEBC2AD5FD2E367 /* License-MPL-2.0.txt in Resources */,
+				04CFA742775ABF75644B1B95 /* License-dav1d.txt in Resources */,
+				F4050B79A13D7DC958E5D3D1 /* License-libass.txt in Resources */,
+				3608B462A0095B46A69A4659 /* License-libunibreak.txt in Resources */,
+				811E91A956B1CE8FFFB6F081 /* License-libzvbi.txt in Resources */,
+				BBC9204124D5280B026A7126 /* License-zimg.txt in Resources */,
+				E6BE6A84A574F664D0BF73E0 /* Localizable.xcstrings in Resources */,
+				849C2D7C715DF1B3306EAF09 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1098,6 +1250,73 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C894E0BB7C9CCDB74F5E8CD7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC0636ABD09AFDCD0E63DC60 /* ASSRenderer.swift in Sources */,
+				A986BCDB9D2548104582BF78 /* AboutData.swift in Sources */,
+				FCE16D99FA5FCD23CBC4358B /* AboutScreens.swift in Sources */,
+				123F2F74B0108B164B24B4D8 /* Access.swift in Sources */,
+				9415E01FDAEA567C4FE2C3B4 /* AccountScreens.swift in Sources */,
+				81E6F8E35382B98609AA9F54 /* AppModel.swift in Sources */,
+				2A7B21CE7F0EF49C0F633F32 /* Artwork.swift in Sources */,
+				6B13A4976678E0C11B2C1F4E /* Diagnostics.swift in Sources */,
+				9AC77FFC3D2A877BB512C5F5 /* DiscoverScreens.swift in Sources */,
+				5C9DA3325B0674254E8EFA24 /* DisplayCapabilities.swift in Sources */,
+				BE5FAF1EFC96FDA8B631F551 /* DownloadCenter.swift in Sources */,
+				FAC0154DEF2F33DD7C4DD75D /* DownloadScreens.swift in Sources */,
+				73D91EE9F842319DB5155641 /* Downloads.swift in Sources */,
+				2C06E675BFB5AA8C2B958BE1 /* IMDbRatings.swift in Sources */,
+				A1CF95E99BBA8AABE94E440E /* IntroDetector.swift in Sources */,
+				B0810984D344E1940ECC6F56 /* IntroFinder.swift in Sources */,
+				AD5039A7D89C60F7811BD0A5 /* ItemActivity.swift in Sources */,
+				FA2428BA0BA87C8A205714CB /* JellyIntents.swift in Sources */,
+				CD59C21EE333ADEDC5F95308 /* JellyMacApp.swift in Sources */,
+				DB54395FE50C405654A114FE /* JellyMark.swift in Sources */,
+				1DBE042176FD5137CAC81B96 /* JellyMobileApp.swift in Sources */,
+				93130D4FC30DC77E5BC6F8C8 /* JellyfinClient.swift in Sources */,
+				34A25C1F1C15E7273CF0B482 /* KidsMode.swift in Sources */,
+				F92663AD764508171F570609 /* KidsPIN.swift in Sources */,
+				536BB0F9396E697165C726E0 /* KidsViews.swift in Sources */,
+				7A13A6B3A7B087FC29DCAB18 /* LibraryFilters.swift in Sources */,
+				E6AE3AD7EC93EF14D8EC20FA /* LibraryScreens.swift in Sources */,
+				F868928375F3BCA25982D0B2 /* MacCompat.swift in Sources */,
+				F43CDECE5CE731BD93501339 /* MobileComponents.swift in Sources */,
+				FD5FCC3A4AC0078D99BD52BD /* MobilePaywall.swift in Sources */,
+				EAE7B1F929C3E45FF75E1728 /* MobilePlayerControls.swift in Sources */,
+				7F6714ECD662E1BAC7D5353D /* MobilePlayerOverlays.swift in Sources */,
+				2D135BFCA1F50200ED8DE029 /* MobilePlayerPanel.swift in Sources */,
+				B92BDAE284173B8068148EF4 /* MobilePlayerScreen.swift in Sources */,
+				907536CDD091354100539A0C /* Models.swift in Sources */,
+				C5317E05B9840267C8FB8A04 /* NetworkProbe.swift in Sources */,
+				2A87DADC068EC6B87258CEA6 /* OnboardingFlow.swift in Sources */,
+				41C87FAB2227F4CB2A392573 /* PaywallBenefits.swift in Sources */,
+				794F6DF72C906A89315150B1 /* PlaybackCoordinator.swift in Sources */,
+				05854BD945C39AC29315A368 /* PlaybackSupport.swift in Sources */,
+				3CF62C0880FDEEB6BA8D58E0 /* PlayerController.swift in Sources */,
+				513F01CBDAD0570B084EE067 /* Purchases.swift in Sources */,
+				725E960EEBFFBC11E0AE00FC /* QRCode.swift in Sources */,
+				1469D2B79F9A2DAA8D0BCF9F /* ReviewPrompt.swift in Sources */,
+				9DD923C5562E68405CBFDC8B /* SecureStore.swift in Sources */,
+				F93ABE93DC974CA42D872D5C /* Seerr.swift in Sources */,
+				8E07A7EF41E004D1138B4543 /* ServerDiscovery.swift in Sources */,
+				5AA2E865448BDEA371EC3BD9 /* SessionLink.swift in Sources */,
+				50AE071983972B08281C818C /* SettingsScreen.swift in Sources */,
+				81DA757A58083FA3686E3B64 /* SharePlay.swift in Sources */,
+				E98894DF88D47D3BA764145B /* SharedUI.swift in Sources */,
+				5FE685B410E8ADED33B6334E /* SignInApprovalSheet.swift in Sources */,
+				C79AFCFCA4DE8D670799A664 /* StoredProfile.swift in Sources */,
+				58EAABF8B65D13B4F29431E6 /* SubtitleOverlay.swift in Sources */,
+				134686246EAC81F8324858C9 /* SyncPlay.swift in Sources */,
+				0A09A2BBB2020BC006871A1E /* SyncPlayViews.swift in Sources */,
+				E3C64ABFE1C36D9D4810A9B7 /* ThemeMusic.swift in Sources */,
+				6ACF2B28367F3131A2ED85E0 /* TogetherScreens.swift in Sources */,
+				211BE66721C84601F1D2E856 /* WishNotifications.swift in Sources */,
+				66868504E769F0ADD15E207B /* WishWatcher.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1245,6 +1464,30 @@
 			};
 			name = Release;
 		};
+		59A60524776C56CEE5ED4FE5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = JellyMac/JellyMac.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				EXCLUDED_ARCHS = x86_64;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = JellyMac/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Jelly;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Jelly verbindet sich mit deinem Jellyfin-Server im Heimnetz.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(JELLY_BUNDLE_ID)";
+				PRODUCT_NAME = Jelly;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 		5C538851C5318D8C9D551A09 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1289,6 +1532,30 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(JELLY_BUNDLE_ID)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Debug;
+		};
+		987E7BC03F3EFFDD51F1F5F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = JellyMac/JellyMac.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				EXCLUDED_ARCHS = x86_64;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = JellyMac/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Jelly;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Jelly verbindet sich mit deinem Jellyfin-Server im Heimnetz.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(JELLY_BUNDLE_ID)";
+				PRODUCT_NAME = Jelly;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -1364,7 +1631,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				JELLY_BUNDLE_ID = de.jelly.tv;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 2.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1426,7 +1693,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				JELLY_BUNDLE_ID = de.jelly.tv;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 2.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1541,6 +1808,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
+		C71A91FA02F2BAE64F57377A /* Build configuration list for PBXNativeTarget "JellyMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				987E7BC03F3EFFDD51F1F5F1 /* Debug */,
+				59A60524776C56CEE5ED4FE5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		E8D38CFA49B723766D205681 /* Build configuration list for PBXProject "Jelly" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1581,6 +1857,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0B6AA75932485AC41DFA75DF /* AetherEngine */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F8F0DC0FC6501A4EBACA945B /* XCRemoteSwiftPackageReference "AetherEngine" */;
+			productName = AetherEngine;
+		};
 		4D50842C32CD70FE93B53160 /* libass */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 733D605CC425B35E363BF020 /* XCRemoteSwiftPackageReference "libass-build" */;
@@ -1600,6 +1881,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F8F0DC0FC6501A4EBACA945B /* XCRemoteSwiftPackageReference "AetherEngine" */;
 			productName = AetherEngine;
+		};
+		EBF7D87386296FDB8C198985 /* libass */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 733D605CC425B35E363BF020 /* XCRemoteSwiftPackageReference "libass-build" */;
+			productName = libass;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

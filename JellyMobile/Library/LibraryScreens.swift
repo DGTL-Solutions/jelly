@@ -992,7 +992,7 @@ private struct LibraryPosterGrid<Header: View>: View {
                 if let countText { Text(countText).font(.subheadline).foregroundStyle(.secondary) }
             }
             .padding(.top, 6)
-        } else if #available(iOS 26.0, *) {
+        } else if #available(iOS 26.0, macOS 26.0, *) {
             // The count sits under the large title.
         } else if let countText {
             Text(countText).font(.subheadline).foregroundStyle(.secondary)
@@ -1081,7 +1081,7 @@ private struct LibraryTopEdgeEffect: ViewModifier {
     let hidden: Bool
 
     func body(content: Content) -> some View {
-        if #available(iOS 26.0, *) {
+        if #available(iOS 26.0, macOS 26.0, *) {
             content.scrollEdgeEffectHidden(hidden, for: .top)
         } else {
             content
@@ -1094,7 +1094,7 @@ private struct LibraryCountSubtitle: ViewModifier {
     let text: String?
 
     func body(content: Content) -> some View {
-        if #available(iOS 26.0, *) {
+        if #available(iOS 26.0, macOS 26.0, *) {
             content.navigationSubtitle(text ?? "")
         } else {
             content

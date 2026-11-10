@@ -31,7 +31,7 @@ struct DiscoverScreen: View {
             .navigationTitle("Erkunden")
             .navigationDestination(for: SeerrRoute.self) { route in
                 SeerrDetailScreen(title: route.title)
-                    .navigationTransition(.zoom(sourceID: route.source, in: zoom))
+                    .zoomTransition(sourceID: route.source, in: zoom)
             }
         }
         .sheet(isPresented: $connecting) { SeerrConnectSheet() }
@@ -661,8 +661,10 @@ private struct SeerrPosterCard: View {
                         }
                     }
                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                    #if os(iOS)
                     .contentShape(.hoverEffect, RoundedRectangle(cornerRadius: 10, style: .continuous))
                     .hoverEffect(.lift)
+                    #endif
                     .matchedTransitionSource(id: source, in: zoom)
 
                 Text(title.displayTitle)
@@ -1215,3 +1217,12 @@ private struct SeerrSeasonSheet: View {
         .onAppear { selected = Set(seasons.map(\.seasonNumber).filter { status($0) == .none }) }
     }
 }
+
+#if os(iOS)
+extension View {
+    /// The poster grows into its page (the Mac opens the page plainly).
+    func zoomTransition(sourceID: some Hashable, in namespace: Namespace.ID) -> some View {
+        navigationTransition(.zoom(sourceID: sourceID, in: namespace))
+    }
+}
+#endif

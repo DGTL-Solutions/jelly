@@ -43,7 +43,7 @@ struct LibraryFilterMenu: View {
                 } label: {
                     Label(filters.genres.isEmpty ? String(localized: "Genre") : filters.genres.sorted().joined(separator: ", "), systemImage: "theatermasks")
                 }
-                #if !os(tvOS)
+                #if os(iOS)
                 .menuActionDismissBehavior(.disabled)
                 #endif
             }

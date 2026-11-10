@@ -6,7 +6,8 @@ import StoreKit
 /// follows it, automatic renewal and how to cancel, plus links to the terms of use and the privacy policy.
 struct MobilePaywall: View {
     @EnvironmentObject private var purchases: Purchases
-    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var model: AppModel
+    private func dismiss() { model.showsPaywall = false }
     @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var managingSubscription = false
 

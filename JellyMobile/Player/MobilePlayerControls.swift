@@ -296,7 +296,7 @@ struct PlayerPressStyle: ButtonStyle {
 extension View {
     /// Liquid Glass where available, a thin material before iOS 26.
     @ViewBuilder func playerGlass<S: Shape>(_ shape: S, interactive: Bool = true) -> some View {
-        if #available(iOS 26.0, *) {
+        if #available(iOS 26.0, macOS 26.0, *) {
             glassEffect(interactive ? .regular.interactive() : .regular, in: shape)
         } else {
             background(.ultraThinMaterial, in: shape)

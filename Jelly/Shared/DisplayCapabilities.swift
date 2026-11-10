@@ -8,6 +8,10 @@ struct DisplayCapabilities {
 
     @MainActor
     static func current() -> DisplayCapabilities {
+        #if os(macOS)
+        // The Mac drives its display itself; there is no "Match Content" and no list of HDR modes to ask for.
+        return DisplayCapabilities(matchingEnabled: false, hdrFormats: [])
+        #else
         let window = UIApplication.shared.connectedScenes.compactMap { ($0 as? UIWindowScene)?.keyWindow }.first
         let modes = AVPlayer.availableHDRModes
         var formats: [String] = []
@@ -22,5 +26,6 @@ struct DisplayCapabilities {
         _ = window
         #endif
         return DisplayCapabilities(matchingEnabled: matching, hdrFormats: formats)
+        #endif
     }
 }

@@ -1,4 +1,6 @@
+#if !os(macOS)
 import BackgroundTasks
+#endif
 import UserNotifications
 
 /// Optional on iPhone and iPad: a notification when a Jellyseerr wish has arrived, also while Jelly is closed.
@@ -18,19 +20,23 @@ enum WishNotifications {
     }
 
     static func register() {
+        #if !os(macOS)
         BGTaskScheduler.shared.register(forTaskWithIdentifier: taskID, using: nil) { task in
             schedule()
             let work = Task { await check(); task.setTaskCompleted(success: true) }
             task.expirationHandler = { work.cancel() }
         }
+        #endif
     }
 
-    /// Asks the system for the next wake-up, about once an hour at best.
+    /// Asks the system for the next wake-up, about once an hour at best. (A Mac only looks while Jelly is open.)
     static func schedule() {
+        #if !os(macOS)
         guard isEnabled else { return }
         let request = BGAppRefreshTaskRequest(identifier: taskID)
         request.earliestBeginDate = Date(timeIntervalSinceNow: 45 * 60)
         try? BGTaskScheduler.shared.submit(request)
+        #endif
     }
 
     /// Without the app's model: the active profile and its Jellyseerr sign-in come from the keychain.

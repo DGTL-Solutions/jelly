@@ -191,7 +191,12 @@ final class PlayerController: ObservableObject {
     /// Codecs that can't travel into Apple's player as they are (TrueHD, DTS …) become lossless PCM for a receiver,
     /// Dolby Digital+ for two speakers.
     private var bridgeMode: AudioBridgeMode {
+        #if os(macOS)
+        // A Mac's own speakers and headphones: two channels.
+        .surroundCompat
+        #else
         AVAudioSession.sharedInstance().maximumOutputNumberOfChannels > 2 ? .lossless : .surroundCompat
+        #endif
     }
 
     // MARK: Start
@@ -510,7 +515,15 @@ final class PlayerController: ObservableObject {
         guard let aether else { return }
         Diagnostics.log("ready route=\(aether.videoRoute.rawValue) video=\(outputVideo ?? "?") decoder=\(aether.activeVideoDecoder ?? "?") "
             + "audio=\(aether.activeAudioDecoder ?? "?") delivery=\(aether.audioDelivery.rawValue) "
-            + "outChannels=\(AVAudioSession.sharedInstance().outputNumberOfChannels)")
+            + "outChannels=\(Self.outputChannels)")
+    }
+
+    private static var outputChannels: Int {
+        #if os(macOS)
+        2
+        #else
+        AVAudioSession.sharedInstance().outputNumberOfChannels
+        #endif
     }
 
     private func tick(_ current: Double) {
@@ -784,13 +797,13 @@ final class PlayerController: ObservableObject {
         if let cached = thumbnails[index] { return cached }
         let perTile = info.tileWidth * info.tileHeight
         let url = client.url("Videos/\(item.id)/Trickplay/\(info.width)/\(index / perTile).jpg", query: ["mediaSourceId": source.id])
-        guard let tile = await ImagePipeline.shared.image(url, authorization: client.authorization)?.cgImage else { return nil }
+        guard let tile = await ImagePipeline.shared.image(url, authorization: client.authorization)?.pixels else { return nil }
         let cell = index % perTile
         let scale = CGFloat(tile.width) / CGFloat(info.width * info.tileWidth)
         let frame = CGRect(x: CGFloat(cell % info.tileWidth * info.width) * scale, y: CGFloat(cell / info.tileWidth * info.height) * scale,
                            width: CGFloat(info.width) * scale, height: CGFloat(info.height) * scale)
         guard let cropped = tile.cropping(to: frame) else { return nil }
-        let image = UIImage(cgImage: cropped)
+        let image = UIImage(pixels: cropped)
         thumbnails[index] = image
         return image
     }
