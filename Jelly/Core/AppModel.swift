@@ -12,6 +12,10 @@ struct PlaybackRequest: Identifiable {
     var forceSoftware = false
     /// A copy saved on this iPhone or iPad, played instead of the server's file.
     var offline: OfflineMedia?
+    /// Remote control and watching together: start at this second.
+    var startSeconds: Double?
+    /// Watching together: load, then wait for the group.
+    var startsPaused = false
 }
 
 @MainActor
@@ -49,6 +53,9 @@ final class AppModel: ObservableObject {
 
     let deviceID: String
     private var store: AccountStore
+    /// The live line to the server: remote control and SyncPlay.
+    private(set) lazy var link = SessionLink(model: self)
+    private(set) lazy var syncPlay = SyncPlay(model: self)
 
     init() {
         let defaults = UserDefaults.standard
@@ -203,6 +210,7 @@ final class AppModel: ObservableObject {
     }
 
     private func performSwitch(to account: Session) {
+        syncPlay.reset()
         homeAddress = nil
         lastProfiles[account.serverKey] = account.key
         store.activeKey = account.key
@@ -251,6 +259,8 @@ final class AppModel: ObservableObject {
     /// Signs the active profile out on the server and removes it from this Apple TV.
     func signOut() async {
         guard let session else { return }
+        syncPlay.reset()
+        link.disconnect()
         KidsPIN.setRating(nil, for: session)
         let client = client
         store.accounts.removeAll { $0.key == session.key }
@@ -364,8 +374,35 @@ final class AppModel: ObservableObject {
             showsPaywall = true
             return
         }
+        // In a SyncPlay group the title starts for everyone; the server then tells each member – this device too – to open it.
+        if syncPlay.group != nil, mediaSourceID == nil {
+            syncPlay.start(item, at: fromBeginning || item.progress > 0.97 ? 0 : item.resumeSeconds)
+            return
+        }
         let offline = offlineCopy(item).flatMap { mediaSourceID == nil || mediaSourceID == $0.source.id ? $0 : nil }
         playback = PlaybackRequest(item: item, fromBeginning: fromBeginning, mediaSourceID: mediaSourceID, offline: offline)
+    }
+
+    /// The iPhone (or Jellyfin's own remote control) told this device to play something.
+    func playRemotely(itemID: String, seconds: Double?) async {
+        guard purchases.access.canPlay, let client, let session,
+              let item = try? await client.item(user: session.userID, id: itemID) else { return }
+        choosingProfile = false
+        if item.isSeries { await playSeries(item); return }
+        playback = PlaybackRequest(item: item, fromBeginning: seconds == 0, startSeconds: seconds)
+    }
+
+    /// The SyncPlay group picked a title: open it at the group's second and wait for the others.
+    func playForGroup(itemID: String, seconds: Double) async {
+        guard purchases.access.canPlay else { showsPaywall = true; return }
+        guard let client, let session, let item = try? await client.item(user: session.userID, id: itemID) else { return }
+        playback = PlaybackRequest(item: item, startSeconds: seconds, startsPaused: true)
+    }
+
+    /// Opens the line to the server for the active profile (remote control, SyncPlay).
+    func connectLink() {
+        link.onSyncPlay = { [weak self] type, data in self?.syncPlay.handle(type, data) }
+        link.connect()
     }
 
     /// Right after the first sign-in, the App Store version presents its subscription offer once; later playback asks again.

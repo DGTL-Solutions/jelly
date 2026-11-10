@@ -7,6 +7,7 @@ struct SettingsView: View {
     @AppStorage("autoplayNext") private var autoplayNext = true
     @AppStorage("skipIntros") private var skipIntros = false
     @AppStorage(ThemeMusic.settingKey) private var themeMusic = false
+    @AppStorage(SyncPlay.settingKey) private var syncPlay = false
     @AppStorage("askProfileOnLaunch") private var askProfileOnLaunch = true
     @AppStorage("subtitleSize") private var subtitleSize = SubtitleSize.standard
     @AppStorage("subtitleBackground") private var subtitleBackground = SubtitleBackground.shadow
@@ -40,7 +41,6 @@ struct SettingsView: View {
                         SettingsSection(String(localized: "Wiedergabe"), footer: String(localized: "Jelly spielt immer das Original – Video wird nie neu kodiert. Was das Apple TV selbst decodiert, läuft über Apples Player mit echtem Dolby Vision (Profil 7 als 8.1), HDR10+ und Dolby Atmos; die Datei wird dafür auf dem Apple TV umverpackt, nicht auf dem Server. Alles andere – AV1, VC-1, MPEG-2 und mehr – decodiert Jelly selbst. Intros erkennt Jelly selbst, indem es den Ton benachbarter Folgen vergleicht – auch ohne Server-Plugin.")) {
                             SettingsToggle(String(localized: "Nächste Folge automatisch abspielen"), isOn: $autoplayNext)
                             SettingsToggle(String(localized: "Intros automatisch überspringen"), isOn: $skipIntros)
-                            SettingsToggle(String(localized: "Titelmusik auf der Detailseite"), isOn: $themeMusic)
                             SettingsChoice(String(localized: "Untertitelgröße"), selection: $subtitleSize,
                                            options: SubtitleSize.allCases) { $0.title }
                             SettingsChoice(String(localized: "Untertitel-Hintergrund"), selection: $subtitleBackground,
@@ -49,6 +49,10 @@ struct SettingsView: View {
                                            options: SubtitleColor.allCases) { $0.title }
                             SettingsChoice(String(localized: "Decoder", comment: "Settings row: video decoder choice"), selection: $engine,
                                            options: EnginePreference.allCases) { $0.title }
+                        }
+                        SettingsSection(String(localized: "Extras"), footer: String(localized: "Titelmusik: Hat dein Server zu einer Serie oder einem Film eine Titelmelodie, läuft sie leise auf der Detailseite. Gemeinsam schauen: Mit SyncPlay sehen alle in einer Gruppe auf deinem Server dieselbe Sekunde – der Knopf dafür erscheint auf der Detailseite.")) {
+                            SettingsToggle(String(localized: "Titelmusik"), isOn: $themeMusic)
+                            SettingsToggle(String(localized: "Gemeinsam schauen (SyncPlay)"), isOn: $syncPlay)
                         }
                         SettingsSection(String(localized: "Bewertungen bei Filmen und Serien"), footer: IMDbRatings.isAvailable
                                         ? String(localized: "IMDb-Werte kommen aus IMDbs öffentlichem Bewertungs-Datensatz und werden wöchentlich aktualisiert. Rotten Tomatoes stammt aus den Metadaten deines Jellyfin-Servers und fehlt bei Titeln, für die der Server keinen Kritikerwert hat.")

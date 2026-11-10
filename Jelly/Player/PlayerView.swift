@@ -5,6 +5,7 @@ import AetherEngine
 struct PlayerView: View {
     let client: JellyfinClient
     let userID: String
+    @EnvironmentObject private var model: AppModel
     @State private var request: PlaybackRequest
 
     init(request: PlaybackRequest, client: JellyfinClient, userID: String) {
@@ -16,6 +17,8 @@ struct PlayerView: View {
     var body: some View {
         PlaybackScreen(request: request, client: client, userID: userID) { request = $0 }
             .id(request.id)
+            // Remote control or the group picked another title while this one plays.
+            .onChange(of: model.playback?.id) { _, _ in if let new = model.playback, new.id != request.id { request = new } }
     }
 }
 
@@ -140,7 +143,8 @@ struct PlaybackScreen: View {
         .task {
             await player.start(fromBeginning: request.fromBeginning, mediaSourceID: request.mediaSourceID,
                                preference: request.forceSoftware ? .software : enginePreference,
-                               audioLanguage: model.user?.configuration?.audioLanguagePreference)
+                               audioLanguage: model.user?.configuration?.audioLanguagePreference,
+                               at: request.startSeconds, paused: request.startsPaused)
         }
         .onDisappear {
             hideTask?.cancel()
