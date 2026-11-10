@@ -502,7 +502,7 @@ struct QuickConnectView: View {
 
     var body: some View {
         OnboardingLayout(title: String(localized: "Mit Code anmelden"),
-                         subtitle: String(localized: "Öffne Jellyfin auf deinem Handy oder Computer, tippe auf dein Profil › Quick Connect und gib diesen Code ein.")) {
+                         subtitle: String(localized: "Scanne den QR-Code mit Jelly auf deinem iPhone – oder gib den Code in Jellyfin unter Profil › Quick Connect ein.")) {
             VStack(spacing: 44) {
                 if let code {
                     HStack(spacing: 18) {
@@ -514,9 +514,19 @@ struct QuickConnectView: View {
                                 .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).strokeBorder(.white.opacity(0.15), lineWidth: 2))
                         }
                     }
-                    HStack(spacing: 18) {
-                        ProgressView()
-                        Text("Warte auf Bestätigung …").foregroundStyle(.secondary)
+                    // Jelly on the iPhone scans this and approves the code; any other camera falls back to the code above.
+                    HStack(spacing: 40) {
+                        QRCodeView(text: SignInLink(server: server.url, serverID: server.info?.id, code: code).url.absoluteString)
+                            .frame(width: 220, height: 220).padding(14)
+                            .background(.white, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+                        VStack(alignment: .leading, spacing: 12) {
+                            Label("Mit Jelly auf dem iPhone scannen und bestätigen", systemImage: "qrcode.viewfinder").font(.headline)
+                            HStack(spacing: 14) {
+                                ProgressView()
+                                Text("Warte auf Bestätigung …").foregroundStyle(.secondary)
+                            }
+                        }
+                        .frame(maxWidth: 560, alignment: .leading)
                     }
                 } else if let error {
                     Label(error, systemImage: "exclamationmark.triangle").foregroundStyle(.orange)

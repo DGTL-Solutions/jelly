@@ -28,6 +28,8 @@ final class AppModel: ObservableObject {
     /// Server whose user picker should open directly, e.g. when adding a profile.
     @Published var preselectedServer: KnownServer?
     @Published var playback: PlaybackRequest?
+    /// A sign-in code scanned from an Apple TV's QR code, waiting for this phone's approval.
+    @Published var pendingSignIn: SignInLink?
     /// Detail page to open on the start tab (Top Shelf links, debug launch arguments).
     @Published var pendingOpen: BaseItem?
     /// Changes after playback or watched-state edits so screens reload resume positions.
@@ -371,6 +373,13 @@ final class AppModel: ObservableObject {
         #endif
     }
 
+    /// Approves the Apple TV's code with the active profile – only where this profile signs in to the same server.
+    func approve(_ link: SignInLink) async throws {
+        guard let client, let session else { throw JellyError.unauthorized }
+        guard link.serverID == nil || session.serverID == nil || link.serverID == session.serverID else { throw JellyError.wrongServer }
+        try await client.quickConnectAuthorize(code: link.code)
+    }
+
     func setWatched(_ item: BaseItem, _ watched: Bool) async {
         guard let client, let session else { return }
         try? await client.setPlayed(user: session.userID, id: item.id, watched)
@@ -385,6 +394,10 @@ final class AppModel: ObservableObject {
 
     /// Links from the Top Shelf: `jelly://play/<id>` starts playback, `jelly://item/<id>` opens the detail page.
     func open(_ url: URL) async {
+        if let link = SignInLink(url) {
+            pendingSignIn = link
+            return
+        }
         guard url.scheme == "jelly", let action = url.host(), let id = url.pathComponents.dropFirst().first,
               let client, let session, let item = try? await client.item(user: session.userID, id: id) else { return }
         choosingProfile = false
