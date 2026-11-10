@@ -27,9 +27,32 @@ enum SecureStore {
                                     kSecAttrAccount as String: account]
         #if os(tvOS)
         if shared && sharedKeychainWorks { query[kSecUseUserIndependentKeychain as String] = true }
+        #elseif os(macOS)
+        // The Mac's modern keychain, the one iPhone and iPad have: no password prompts, no access lists.
+        query[kSecUseDataProtectionKeychain as String] = true
         #endif
         return query
     }
+
+    #if os(macOS)
+    /// The modern keychain needs an app signed for a team. A build from source without one keeps its secrets in files
+    /// inside the app's own sandbox container instead of asking the login keychain (which would prompt at every build).
+    private static let fileFolder: URL? = {
+        var probe = query("probe")
+        probe[kSecReturnData as String] = true
+        probe[kSecMatchLimit as String] = kSecMatchLimitOne
+        var result: CFTypeRef?
+        let status = SecItemCopyMatching(probe as CFDictionary, &result)
+        if status == errSecSuccess || status == errSecItemNotFound { return nil }
+        let folder = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("Jelly-Secrets", isDirectory: true)
+        try? FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+        return folder
+    }()
+
+    private static func file(_ account: String) -> URL? {
+        fileFolder?.appendingPathComponent(Data(account.utf8).base64EncodedString().replacingOccurrences(of: "/", with: "_"))
+    }
+    #endif
 
     #if os(tvOS)
     /// Without the "runs as current user" entitlement (builds from source, the simulator) the shared keychain refuses
@@ -47,6 +70,9 @@ enum SecureStore {
 
     static func save(_ store: AccountStore) throws {
         let data = try JSONEncoder().encode(store)
+        #if os(macOS)
+        if let file = file("accounts") { try data.write(to: file, options: .atomic); return }
+        #endif
         let status = SecItemUpdate(query("accounts") as CFDictionary, [kSecValueData as String: data] as CFDictionary)
         if status == errSecItemNotFound {
             var attributes = query("accounts")
@@ -95,6 +121,12 @@ enum SecureStore {
     }
 
     private static func write(_ data: Data?, for account: String, shared: Bool) {
+        #if os(macOS)
+        if let file = file(account) {
+            if let data { try? data.write(to: file, options: .atomic) } else { try? FileManager.default.removeItem(at: file) }
+            return
+        }
+        #endif
         SecItemDelete(query(account, shared: shared) as CFDictionary)
         guard let data else {
             #if os(tvOS)
@@ -119,6 +151,9 @@ enum SecureStore {
     }
 
     private static func read(_ account: String, shared: Bool = true) -> Data? {
+        #if os(macOS)
+        if let file = file(account) { return try? Data(contentsOf: file) }
+        #endif
         var attributes = query(account, shared: shared)
         attributes[kSecReturnData as String] = true
         attributes[kSecMatchLimit as String] = kSecMatchLimitOne
