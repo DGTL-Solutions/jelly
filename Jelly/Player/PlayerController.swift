@@ -1010,12 +1010,20 @@ final class PlayerController: ObservableObject {
         guard let next = nextEpisode, !nextPrepared, offline == nil else { return }
         nextPrepared = true
         let client = client, user = userID, spare = stats.bufferAhead ?? 0
+        // Only where this episode plays the original file: then the next one will too.
+        let original = plan?.engine == .direct && quality == 0
         Task {
             async let full = try? client.item(user: user, id: next.id)
             guard let info = try? await client.playbackInfo(user: user, itemID: next.id), let item = await full else { return }
             Self.prepared = Self.prepared.filter { Date().timeIntervalSince($0.value.date) < 600 }
             Self.prepared[next.id] = Prepared(item: item, info: info, date: Date())
             Diagnostics.log("prepared next \"\(item.name)\"")
+            // The first megabytes of the next episode, fetched while the credits run: it starts without waiting for them.
+            if original, let source = info.mediaSources.first(where: { $0.requiresOpening != true }) ?? info.mediaSources.first {
+                let url = client.streamURL(itemID: next.id, source: source, playSessionID: info.playSessionId)
+                let report = await AetherEngine.prewarm(url: url, httpHeaders: ["Authorization": client.authorization])
+                Diagnostics.log("prewarmed next: \(report)")
+            }
             if let source = info.mediaSources.first, Double(source.bitrate ?? 0) > 15_000_000, !ServerLocator.isPrivate(client.server),
                NetworkProbe.recent(for: client.server) == nil, spare > 15 {
                 _ = await NetworkProbe.measure(client: client, itemID: next.id, source: source)
