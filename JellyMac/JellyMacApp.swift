@@ -49,6 +49,25 @@ struct JellyMacApp: App {
 final class JellyMacDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         UNUserNotificationCenter.current().delegate = self
+        #if DEBUG
+        // Testing without a screen to look at: JELLY_SHOT=<seconds> writes the window's picture to the app's temporary
+        // folder (shot.png) at that interval.
+        if let seconds = ProcessInfo.processInfo.environment["JELLY_SHOT"].flatMap(Double.init) {
+            Timer.scheduledTimer(withTimeInterval: max(0.5, seconds), repeats: true) { _ in
+                MainActor.assumeIsolated {
+                    // The window as the window server draws it (materials, video and all); a process may always
+                    // picture its own windows. The call left the SDK, not the system.
+                    typealias Capture = @convention(c) (CGRect, UInt32, UInt32, UInt32) -> Unmanaged<CGImage>?
+                    guard let window = NSApp.windows.first(where: { $0.isVisible && $0.frame.width > 300 }),
+                          let symbol = dlsym(UnsafeMutableRawPointer(bitPattern: -2), "CGWindowListCreateImage"),
+                          let image = unsafeBitCast(symbol, to: Capture.self)(.null, 1 << 3, UInt32(window.windowNumber), 1 << 0)?.takeRetainedValue()
+                    else { return }
+                    let folder = URL(fileURLWithPath: NSTemporaryDirectory())
+                    try? NSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:])?.write(to: folder.appendingPathComponent("shot.png"))
+                }
+            }
+        }
+        #endif
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
