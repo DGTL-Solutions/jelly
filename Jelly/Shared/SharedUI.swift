@@ -173,3 +173,14 @@ extension UIImage {
     convenience init(pixels: CGImage) { self.init(cgImage: pixels) }
 }
 #endif
+
+extension View {
+    /// A sheet on the Mac is as big as its content asks for; lists and forms ask for almost nothing. This gives them room.
+    func macSheet(width: CGFloat = 520, height: CGFloat = 480) -> some View {
+        #if os(macOS)
+        frame(minWidth: width, idealWidth: width, minHeight: height, idealHeight: height)
+        #else
+        self
+        #endif
+    }
+}

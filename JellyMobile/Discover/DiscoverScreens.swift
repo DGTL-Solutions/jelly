@@ -34,7 +34,7 @@ struct DiscoverScreen: View {
                     .zoomTransition(sourceID: route.source, in: zoom)
             }
         }
-        .sheet(isPresented: $connecting) { SeerrConnectSheet() }
+        .sheet(isPresented: $connecting) { SeerrConnectSheet().macSheet() }
         // An expired or ended Jellyseerr session leaves no detail pages of it behind.
         .onChange(of: model.seerr == nil) { _, signedOut in if signedOut { path = [] } }
         #if DEBUG

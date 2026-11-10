@@ -35,8 +35,8 @@ struct PlayElsewhereMenu: View {
             guard let client = model.client, let session = model.session else { return }
             sessions = (try? await client.controllableSessions(user: session.userID)) ?? []
         }
-        .sheet(item: $remote) { RemoteSheet(session: $0) }
-        .sheet(isPresented: $showsGroups) { SyncPlayGroupsView(onClose: { showsGroups = false }, syncPlay: model.syncPlay) }
+        .sheet(item: $remote) { RemoteSheet(session: $0).macSheet(width: 440, height: 360) }
+        .sheet(isPresented: $showsGroups) { SyncPlayGroupsView(onClose: { showsGroups = false }, syncPlay: model.syncPlay).macSheet() }
         .sensoryFeedback(.success, trigger: sent)
     }
 
@@ -152,8 +152,8 @@ struct TogetherStatusButton: View {
             guard scenePhase == .active, let client = model.client, let user = model.session?.userID else { return }
             playing = (try? await client.controllableSessions(user: user))?.first { $0.nowPlayingItem != nil }
         }
-        .sheet(item: $remote) { RemoteSheet(session: $0) }
-        .sheet(isPresented: $showsGroups) { SyncPlayGroupsView(onClose: { showsGroups = false }, syncPlay: syncPlay) }
+        .sheet(item: $remote) { RemoteSheet(session: $0).macSheet(width: 440, height: 360) }
+        .sheet(isPresented: $showsGroups) { SyncPlayGroupsView(onClose: { showsGroups = false }, syncPlay: syncPlay).macSheet() }
     }
 
     private func button(_ symbol: String, label: LocalizedStringKey, action: @escaping () -> Void) -> some View {

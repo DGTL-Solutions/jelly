@@ -82,9 +82,11 @@ struct SettingsScreen: View {
             .accountReadableWidth()
             .navigationTitle("Einstellungen")
             .toolbar {
+                #if !os(macOS)
                 if isPresented {
                     ToolbarItem(placement: .confirmationAction) { Button("Fertig") { dismiss() } }
                 }
+                #endif
             }
             .navigationDestination(for: SettingsRoute.self) { route in
                 switch route {
@@ -99,8 +101,8 @@ struct SettingsScreen: View {
             #if DEBUG
             .task { if let route = AccountDebug.settingsRoute() { path = route } }
             #endif
-            .sheet(isPresented: $connectingSeerr) { SeerrConnectSheet() }
-            .sheet(isPresented: $settingUpKids) { KidsSetupView { settingUpKids = false } }
+            .sheet(isPresented: $connectingSeerr) { SeerrConnectSheet().macSheet() }
+            .sheet(isPresented: $settingUpKids) { KidsSetupView { settingUpKids = false }.macSheet(height: 560) }
             .manageSubscriptionsSheet(isPresented: $managingSubscription)
             .confirmationDialog(signOutTitle, isPresented: $confirmingSignOut, titleVisibility: .hidden) {
                 Button(signOutTitle, role: .destructive) { Task { await model.signOut() } }
