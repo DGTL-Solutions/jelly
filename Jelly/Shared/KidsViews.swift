@@ -142,8 +142,10 @@ struct KidsSetupView: View {
                 } else {
                     List {
                         Section {
-                            ForEach(ratings) { item in
-                                Button(item.name) { rating = item.name }
+                            ForEach(levels) { item in
+                                Button { rating = item.name } label: {
+                                    Text("Freigaben bis \(item.value ?? 0)", comment: "Kids profile: titles with age ratings up to this age")
+                                }
                             }
                         } header: { Text("Höchste Altersfreigabe") } footer: {
                             Text("Das Kinderprofil zeigt nur Filme und Serien bis zu dieser Freigabe.")
@@ -155,26 +157,30 @@ struct KidsSetupView: View {
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Abbrechen", action: onClose) } }
         }
         .task {
-            ratings = Self.usable(((try? await model.client?.parentalRatings()) ?? []))
+            ratings = (try? await model.client?.parentalRatings()) ?? []
             loaded = true
         }
     }
 
-    /// One entry per level, from the lowest up – the server lists ratings of many countries.
-    private static func usable(_ all: [ParentalRating]) -> [ParentalRating] {
-        let rated = all.filter { ($0.value ?? -1) >= 0 }.sorted { ($0.value ?? 0, $0.name) < ($1.value ?? 0, $1.name) }
-        return rated
+    /// One entry per age, from the lowest up – the server lists the ratings of many countries.
+    private var levels: [ParentalRating] {
+        var seen = Set<Int>()
+        return ratings.filter { (0...18).contains($0.value ?? -1) }.sorted { ($0.value ?? 0, $0.name) < ($1.value ?? 0, $1.name) }
+            .filter { seen.insert($0.value ?? 0).inserted }
     }
 
     private func finish(_ rating: String, _ pin: String) {
-        model.enableKids(rating: rating, pin: pin)
+        model.enableKids(rating: rating, pin: pin, ratings: ratings)
         onClose()
     }
 }
 
-/// On a kids profile, content that needs a parent: asks for the PIN first and closes again when the tab is left.
+/// On a kids profile, content that needs a parent: the PIN pad stands in its place until the PIN was entered, and
+/// it locks again when the page is left.
 struct ParentLocked<Content: View>: View {
     @EnvironmentObject private var model: AppModel
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.isPresented) private var isPresented
     @State private var unlocked = false
     @ViewBuilder let content: Content
 
@@ -182,12 +188,16 @@ struct ParentLocked<Content: View>: View {
         if !model.isKids || unlocked {
             content.onDisappear { unlocked = false }
         } else {
-            VStack(spacing: 30) {
-                Image(systemName: "lock.fill").font(.system(size: 64)).foregroundStyle(.secondary)
-                Text("Nur für Eltern").font(.title2.bold())
-                Button("Mit PIN öffnen") { model.requireParent { unlocked = true } }
-            }
+            PINPad(title: String(localized: "Nur für Eltern"), subtitle: String(localized: "Für diese Aktion braucht es den PIN."),
+                   onComplete: { pin in
+                guard KidsPIN.matches(pin) else { return false }
+                // What follows in here (another profile, ending the kids profile) doesn't ask again right away.
+                model.parentUnlockedUntil = Date().addingTimeInterval(300)
+                unlocked = true
+                return true
+            }, onCancel: isPresented ? { dismiss() } : nil)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Theme.background.ignoresSafeArea())
         }
     }
 }

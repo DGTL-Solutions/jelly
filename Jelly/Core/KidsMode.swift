@@ -6,8 +6,9 @@ extension AppModel {
 
     var isKids: Bool { kidsRating != nil }
 
-    func enableKids(rating: String, pin: String) {
+    func enableKids(rating: String, pin: String, ratings: [ParentalRating]) {
         guard let session else { return }
+        KidsPIN.saveTable(ratings)
         if !KidsPIN.isSet { KidsPIN.set(pin) }
         KidsPIN.setRating(rating, for: session)
         kidsChanged()
@@ -22,7 +23,7 @@ extension AppModel {
 
     /// Runs `action` right away on a normal profile; on a kids profile only after the PIN was entered.
     func requireParent(_ action: @escaping () -> Void) {
-        guard isKids else { action(); return }
+        guard isKids, Date() > parentUnlockedUntil else { action(); return }
         parentAction = action
     }
 

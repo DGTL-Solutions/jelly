@@ -177,6 +177,12 @@ struct JellyfinClient: Sendable {
 
     // MARK: Library
 
+    /// Kids profile: drops titles rated above the limit from a list the server didn't filter.
+    private func kidsSafe(_ items: [BaseItem]) -> [BaseItem] {
+        guard let maxRating else { return items }
+        return items.filter { KidsPIN.allows($0.officialRating, max: maxRating) }
+    }
+
     func listQueryForTesting(_ user: String) -> [String: String] { listQuery(user) }
 
     private func listQuery(_ user: String, _ extra: [String: String] = [:]) -> [String: String] {
@@ -196,7 +202,7 @@ struct JellyfinClient: Sendable {
         var query = listQuery(user, ["Limit": "\(limit)", "MediaTypes": "Video"])
         if let fields { query["Fields"] = fields }
         let page: ItemsResponse = try await get("UserItems/Resume", legacy: "Users/\(user)/Items/Resume", query: query)
-        return page.items
+        return kidsSafe(page.items)
     }
 
     func nextUp(user: String, seriesID: String? = nil, limit: Int = 16, fields: String? = nil) async throws -> [BaseItem] {
@@ -204,12 +210,12 @@ struct JellyfinClient: Sendable {
         if let seriesID { query["SeriesId"] = seriesID }
         if let fields { query["Fields"] = fields }
         let page: ItemsResponse = try await get("Shows/NextUp", query: query)
-        return page.items
+        return kidsSafe(page.items)
     }
 
     func latest(user: String, parentID: String, limit: Int = 20) async throws -> [BaseItem] {
-        try await get("Items/Latest", legacy: "Users/\(user)/Items/Latest",
-                      query: listQuery(user, ["ParentId": parentID, "Limit": "\(limit)", "GroupItems": "true"]))
+        kidsSafe(try await get("Items/Latest", legacy: "Users/\(user)/Items/Latest",
+                               query: listQuery(user, ["ParentId": parentID, "Limit": "\(limit)", "GroupItems": "true"])))
     }
 
     struct ItemQuery: Equatable {
@@ -242,7 +248,9 @@ struct JellyfinClient: Sendable {
         if let rating = q.minRating { query["MinCommunityRating"] = "\(rating)" }
         if let person = q.personID { query["PersonIds"] = person }
         if let fields = q.fields { query["Fields"] = fields }
-        return try await get("Items", query: query)
+        var page: ItemsResponse = try await get("Items", query: query)
+        page.items = kidsSafe(page.items)
+        return page
     }
 
     /// The genres that occur in a library, for its filter menu.
@@ -273,7 +281,7 @@ struct JellyfinClient: Sendable {
 
     func similar(user: String, id: String) async throws -> [BaseItem] {
         let page: ItemsResponse = try await get("Items/\(id)/Similar", query: listQuery(user, ["Limit": "16"]))
-        return page.items
+        return kidsSafe(page.items)
     }
 
     func setFavorite(user: String, id: String, _ favorite: Bool) async throws {

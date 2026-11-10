@@ -100,6 +100,7 @@ struct SettingsScreen: View {
             .task { if let route = AccountDebug.settingsRoute() { path = route } }
             #endif
             .sheet(isPresented: $connectingSeerr) { SeerrConnectSheet() }
+            .sheet(isPresented: $settingUpKids) { KidsSetupView { settingUpKids = false } }
             .manageSubscriptionsSheet(isPresented: $managingSubscription)
             .confirmationDialog(signOutTitle, isPresented: $confirmingSignOut, titleVisibility: .hidden) {
                 Button(signOutTitle, role: .destructive) { Task { await model.signOut() } }
@@ -223,7 +224,6 @@ struct SettingsScreen: View {
             Text(model.isKids ? "Dieses Profil zeigt nur Titel bis \(model.kidsRating ?? ""). Einstellungen, andere Profile und Erkunden öffnen nur mit dem PIN."
                               : "Begrenzt dieses Profil auf eine Altersfreigabe. Einstellungen, andere Profile und Erkunden sind dann nur mit einem PIN der Eltern zugänglich.")
         }
-        .fullScreenCover(isPresented: $settingUpKids) { KidsSetupView { settingUpKids = false } }
     }
 
     private var signOutTitle: String {

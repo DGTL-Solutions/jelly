@@ -153,5 +153,28 @@ final class JellyTests: XCTestCase {
         var client = JellyfinClient(server: URL(string: "http://x")!, token: "t", deviceID: "d")
         client.maxRating = "FSK-12"
         XCTAssertEqual(client.listQueryForTesting("u")["MaxOfficialRating"], "FSK-12")
+        // Lists the server doesn't filter are filtered here, by the server's own rating table.
+        KidsPIN.saveTable([ParentalRating(name: "FSK-6", value: 6), ParentalRating(name: "FSK-12", value: 12), ParentalRating(name: "FSK-16", value: 16)])
+        XCTAssertTrue(KidsPIN.allows("FSK-6", max: "FSK-12"))
+        XCTAssertTrue(KidsPIN.allows("FSK-12", max: "FSK-12"))
+        XCTAssertFalse(KidsPIN.allows("FSK-16", max: "FSK-12"))
+        XCTAssertTrue(KidsPIN.allows(nil, max: "FSK-12"))
+        SecureStore.setData(nil, for: "kids-table")
+    }
+
+    func testSyncPlayDatesAndFilters() throws {
+        let date = try XCTUnwrap(JellyDate.parse("2026-11-10T13:10:10.3671970Z"))
+        XCTAssertEqual(date.timeIntervalSince1970, 1794316210.367197, accuracy: 0.0001)
+        XCTAssertNotNil(JellyDate.parse("2026-11-10T13:10:10Z"))
+        XCTAssertEqual(JellyDate.parse(JellyDate.string(date))!.timeIntervalSince1970, date.timeIntervalSince1970, accuracy: 0.002)
+        var filters = LibraryFilters()
+        XCTAssertTrue(filters.isEmpty)
+        filters.unwatched = true; filters.genres = ["Komödie", "Action"]; filters.decade = 1990; filters.minRating = 7
+        var query = JellyfinClient.ItemQuery()
+        filters.apply(to: &query)
+        XCTAssertEqual(query.filters, ["IsUnplayed"])
+        XCTAssertEqual(query.genres, ["Action", "Komödie"])
+        XCTAssertEqual(query.years.first, 1990); XCTAssertEqual(query.years.count, 10)
+        XCTAssertEqual(filters.count, 5)
     }
 }
