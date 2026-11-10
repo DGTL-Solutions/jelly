@@ -311,6 +311,12 @@ struct PlaybackStage: View {
         }
         .statusBarHidden()
         .persistentSystemOverlays(.hidden)
+        #if os(macOS)
+        // Moving the pointer brings the controls up, as every Mac player does.
+        .onContinuousHover { phase in
+            if case .active = phase, player.phase == .playing, !ui.panelOpen { ui.showControls() }
+        }
+        #endif
         .animation(.easeInOut(duration: 0.25), value: showsControls)
         .animation(.spring(response: 0.38, dampingFraction: 0.9), value: ui.panelOpen)
         .animation(.easeInOut(duration: 0.4), value: player.phase)

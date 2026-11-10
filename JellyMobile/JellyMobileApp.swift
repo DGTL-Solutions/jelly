@@ -64,7 +64,7 @@ struct MobileRootView: View {
         }
         .parentGate()
         .togetherNotices()
-        .sheet(item: $model.pendingSignIn) { link in SignInApprovalSheet(link: link) }
+        .sheet(item: $model.pendingSignIn) { link in SignInApprovalSheet(link: link).macSheet(height: 360) }
         #if DEBUG
         // Simulator testing only: JELLY_ROTATE="22:landscape,30:portrait" turns the screen at those seconds after launch.
         .task {
@@ -157,9 +157,9 @@ struct MainTabs: View {
             }
         }
         .tabViewStyle(.sidebarAdaptable)
-        .sheet(isPresented: $showsSettings) { ParentLocked { SettingsScreen() } }
-        .sheet(isPresented: $showsDownloads) { DownloadsScreen() }
-        .sheet(item: $pick.current) { DownloadQualitySheet(pick: $0) }
+        .sheet(isPresented: $showsSettings) { ParentLocked { SettingsScreen() }.macSheet(width: 640, height: 640) }
+        .sheet(isPresented: $showsDownloads) { DownloadsScreen().macSheet(width: 640, height: 560) }
+        .sheet(item: $pick.current) { DownloadQualitySheet(pick: $0).macSheet() }
         // Links from outside (jelly://item/…) land on the home tab's stack.
         .onChange(of: model.pendingOpen) { _, item in if item != nil { tab = .home } }
         .task {

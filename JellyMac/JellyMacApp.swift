@@ -24,6 +24,8 @@ struct JellyMacApp: App {
                 .environmentObject(model.purchases)
                 .preferredColorScheme(.dark)
                 .tint(Theme.accent)
+                // Settings and other forms as grouped cards, like on iPad, instead of the Mac's label columns.
+                .formStyle(.grouped)
                 .frame(minWidth: 820, minHeight: 560)
         }
         .defaultSize(width: 1280, height: 820)
@@ -32,15 +34,19 @@ struct JellyMacApp: App {
             // One window, no documents.
             CommandGroup(replacing: .newItem) {}
             CommandMenu("Wiedergabe") {
-                Button("Wiedergabe / Pause") { PlaybackHub.shared.player?.togglePlayPause() }
-                    .keyboardShortcut(.space, modifiers: [])
-                Button("10 Sekunden zurück") { if let player = PlaybackHub.shared.player { player.seek(to: player.position - 10) } }
-                    .keyboardShortcut(.leftArrow, modifiers: [])
-                Button("30 Sekunden vor") { if let player = PlaybackHub.shared.player { player.seek(to: player.position + 30) } }
-                    .keyboardShortcut(.rightArrow, modifiers: [])
-                Divider()
-                Button("Wiedergabe beenden") { model.playback = nil }
-                    .keyboardShortcut(.escape, modifiers: [])
+                // Plain keys, so only while a film is open: otherwise the space bar belongs to the search field.
+                Group {
+                    Button("Wiedergabe / Pause") { PlaybackHub.shared.player?.togglePlayPause() }
+                        .keyboardShortcut(.space, modifiers: [])
+                    Button("10 Sekunden zurück") { if let player = PlaybackHub.shared.player { player.seek(to: player.position - 10) } }
+                        .keyboardShortcut(.leftArrow, modifiers: [])
+                    Button("30 Sekunden vor") { if let player = PlaybackHub.shared.player { player.seek(to: player.position + 30) } }
+                        .keyboardShortcut(.rightArrow, modifiers: [])
+                    Divider()
+                    Button("Wiedergabe beenden") { model.playback = nil }
+                        .keyboardShortcut(.escape, modifiers: [])
+                }
+                .disabled(model.playback == nil)
             }
         }
     }
