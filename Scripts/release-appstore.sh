@@ -59,9 +59,9 @@ echo "Signieren …"
 # App Store entitlements: no get-task-allow; beta-reports-active lets TestFlight take the build. Capabilities are
 # signed in only where the provisioning profile grants them (they are switched on per bundle ID in the developer
 # account): SharePlay (Group Activities), and on Apple TV "runs as current user" and HomeKit scenes.
-granted() { # profile, entitlement key -> prints the profile's value as XML, empty if the profile doesn't grant it
-  openssl smime -inform der -verify -noverify -in "$1" 2>/dev/null | plutil -extract "Entitlements.$2" xml1 -o - - 2>/dev/null \
-    | grep -v -E '^<\?xml|^<!DOCTYPE|^</?plist' || true
+granted() { # profile, entitlement key -> prints the profile's value, empty if the profile doesn't grant it
+  openssl smime -inform der -verify -noverify -in "$1" -out "$WORK/profile.plist" 2>/dev/null
+  /usr/libexec/PlistBuddy -c "Print :Entitlements:$2" "$WORK/profile.plist" 2>/dev/null || true
 }
 entitlements() { # output plist, bundle ID, profile, capability keys …
   local out=$1 id=$2 profile=$3; shift 3
