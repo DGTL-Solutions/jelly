@@ -28,6 +28,8 @@ final class AppModel: ObservableObject {
     /// Server whose user picker should open directly, e.g. when adding a profile.
     @Published var preselectedServer: KnownServer?
     @Published var playback: PlaybackRequest?
+    /// What a kids profile only allows after the PIN: set while the PIN page is up.
+    @Published var parentAction: (() -> Void)?
     /// A sign-in code scanned from an Apple TV's QR code, waiting for this phone's approval.
     @Published var pendingSignIn: SignInLink?
     /// Detail page to open on the start tab (Top Shelf links, debug launch arguments).
@@ -77,7 +79,7 @@ final class AppModel: ObservableObject {
     var showsOnboarding: Bool { session == nil || addingAccount }
 
     var client: JellyfinClient? {
-        session.map { JellyfinClient(server: homeAddress ?? $0.server, token: $0.token, deviceID: deviceID) }
+        session.map { JellyfinClient(server: homeAddress ?? $0.server, token: $0.token, deviceID: deviceID, maxRating: kidsRating) }
     }
 
     // MARK: Home network
@@ -196,6 +198,11 @@ final class AppModel: ObservableObject {
     }
 
     func switchTo(_ account: Session) {
+        guard !isKids || account.key == session?.key else { return requireParent { [weak self] in self?.performSwitch(to: account) } }
+        performSwitch(to: account)
+    }
+
+    private func performSwitch(to account: Session) {
         homeAddress = nil
         lastProfiles[account.serverKey] = account.key
         store.activeKey = account.key
@@ -213,6 +220,10 @@ final class AppModel: ObservableObject {
 
     /// Opens the onboarding for another profile, starting at the current server's user picker.
     func addProfile() {
+        requireParent { [weak self] in self?.performAddProfile() }
+    }
+
+    private func performAddProfile() {
         // The server list lives in user defaults, the profiles in the keychain: after a reinstall only the profiles
         // remain, so the active session stands in for its server.
         preselectedServer = knownServers.first { $0.url == session?.server } ?? session.map {
@@ -240,6 +251,7 @@ final class AppModel: ObservableObject {
     /// Signs the active profile out on the server and removes it from this Apple TV.
     func signOut() async {
         guard let session else { return }
+        KidsPIN.setRating(nil, for: session)
         let client = client
         store.accounts.removeAll { $0.key == session.key }
         store.activeKey = store.accounts.first?.key

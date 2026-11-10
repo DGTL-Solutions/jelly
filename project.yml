@@ -65,6 +65,7 @@ targets:
       - Jelly/Core/JellyfinClient.swift
       - Jelly/Core/PlaybackSupport.swift
       - Jelly/Core/SecureStore.swift
+      - Jelly/Core/KidsPIN.swift
       - Jelly/Core/Artwork.swift
       - Jelly/Core/Diagnostics.swift
     settings:

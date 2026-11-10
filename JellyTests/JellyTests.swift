@@ -133,4 +133,25 @@ final class JellyTests: XCTestCase {
         XCTAssertEqual(boxed.width, 137, accuracy: 0.5)
         XCTAssertEqual(boxed.minY, 90 + 497, accuracy: 0.5)
     }
+
+    func testSignInLinkRoundTrip() throws {
+        let link = SignInLink(server: URL(string: "http://192.168.1.10:8096")!, serverID: "abc", code: "123456")
+        let parsed = try XCTUnwrap(SignInLink(link.url))
+        XCTAssertEqual(parsed.server.absoluteString, "http://192.168.1.10:8096")
+        XCTAssertEqual(parsed.serverID, "abc")
+        XCTAssertEqual(parsed.code, "123456")
+        XCTAssertNil(SignInLink(URL(string: "jelly://signin?server=http://x&code=12ab")!))
+        XCTAssertNil(SignInLink(URL(string: "jelly://play/1")!))
+    }
+
+    func testKidsPINAndRatingFilter() {
+        KidsPIN.set("1234")
+        XCTAssertTrue(KidsPIN.matches("1234"))
+        XCTAssertFalse(KidsPIN.matches("1235"))
+        KidsPIN.clear()
+        XCTAssertFalse(KidsPIN.isSet)
+        var client = JellyfinClient(server: URL(string: "http://x")!, token: "t", deviceID: "d")
+        client.maxRating = "FSK-12"
+        XCTAssertEqual(client.listQueryForTesting("u")["MaxOfficialRating"], "FSK-12")
+    }
 }

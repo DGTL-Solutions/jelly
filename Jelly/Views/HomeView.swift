@@ -11,9 +11,11 @@ struct MainView: View {
             Tab("Start", systemImage: "house", value: 0) { BrowseStack { HomeView() } }
             Tab("Filme", systemImage: "film", value: 1) { BrowseStack { LibraryGridView(title: String(localized: "Filme"), types: ["Movie"]) } }
             Tab("Serien", systemImage: "tv", value: 2) { BrowseStack { LibraryGridView(title: String(localized: "Serien"), types: ["Series"]) } }
-            Tab("Erkunden", systemImage: "sparkles", value: 5) { DiscoverView() }
+            if !model.isKids {
+                Tab("Erkunden", systemImage: "sparkles", value: 5) { DiscoverView() }
+            }
             Tab("Suche", systemImage: "magnifyingglass", value: 3, role: .search) { BrowseStack { SearchView() } }
-            Tab("Einstellungen", systemImage: "gearshape", value: 4) { SettingsView() }
+            Tab("Einstellungen", systemImage: "gearshape", value: 4) { ParentLocked { SettingsView() } }
         }
         .onChange(of: model.pendingOpen) { _, item in if item != nil { tab = 0 } }
         .fullScreenCover(isPresented: $idle.screensaverActive) { CoverWallView().environmentObject(model) }
@@ -281,3 +283,4 @@ private struct HeroDetailsButton: View {
         Button { openItem(item) } label: { Label("Details", systemImage: "info.circle") }
     }
 }
+

@@ -516,7 +516,7 @@ struct QuickConnectView: View {
                     }
                     // Jelly on the iPhone scans this and approves the code; any other camera falls back to the code above.
                     HStack(spacing: 40) {
-                        QRCodeView(text: SignInLink(server: server.url, serverID: server.info?.id, code: code).url.absoluteString)
+                        QRCodeView(text: SignInLink(server: server.url, serverID: server.info.id, code: code).url.absoluteString)
                             .frame(width: 220, height: 220).padding(14)
                             .background(.white, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
                         VStack(alignment: .leading, spacing: 12) {

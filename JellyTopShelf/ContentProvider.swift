@@ -23,7 +23,7 @@ final class ContentProvider: TVTopShelfContentProvider {
             Diagnostics.log("topshelf: no profile, static image")
             return nil
         }
-        let client = JellyfinClient(server: session.server, token: session.token, deviceID: store.deviceID)
+        let client = JellyfinClient(server: session.server, token: session.token, deviceID: store.deviceID, maxRating: KidsPIN.rating(for: session))
         let newest: JellyfinClient.ItemQuery = {
             var query = JellyfinClient.ItemQuery()
             query.sortBy = "DateCreated"
