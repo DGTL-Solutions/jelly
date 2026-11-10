@@ -9,14 +9,14 @@ for locale in (try? FileManager.default.contentsOfDirectory(atPath: raw.path)) ?
     let output = root.appendingPathComponent("screenshots-mac/\(locale)")
     try? FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
     for name in ((try? FileManager.default.contentsOfDirectory(atPath: raw.appendingPathComponent(locale).path)) ?? []).sorted() where name.hasSuffix(".png") {
-        guard let image = NSImage(contentsOf: raw.appendingPathComponent("\(locale)/\(name)")),
-              let canvas = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: 1440, pixelsHigh: 900, bitsPerSample: 8, samplesPerPixel: 3,
-                                            hasAlpha: false, isPlanar: false, colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0) else { continue }
-        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: canvas)
-        NSColor.black.setFill()
-        NSRect(x: 0, y: 0, width: 1440, height: 900).fill()
-        image.draw(in: NSRect(x: 0, y: 0, width: 1440, height: 900))
-        try? canvas.representation(using: .png, properties: [:])?.write(to: output.appendingPathComponent(name))
+        guard let image = NSImage(contentsOf: raw.appendingPathComponent("\(locale)/\(name)"))?.cgImage(forProposedRect: nil, context: nil, hints: nil),
+              let context = CGContext(data: nil, width: 1440, height: 900, bitsPerComponent: 8, bytesPerRow: 0, space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                                      bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue) else { continue }
+        context.setFillColor(CGColor(gray: 0, alpha: 1))
+        context.fill(CGRect(x: 0, y: 0, width: 1440, height: 900))
+        context.draw(image, in: CGRect(x: 0, y: 0, width: 1440, height: 900))
+        guard let flat = context.makeImage() else { continue }
+        try? NSBitmapImageRep(cgImage: flat).representation(using: .png, properties: [:])?.write(to: output.appendingPathComponent(name))
         print("\(locale)/\(name)")
     }
 }
