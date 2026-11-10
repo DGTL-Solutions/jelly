@@ -18,9 +18,15 @@ final class ThemeMusic {
         guard Self.isEnabled, owner != item.id else { return }
         // An episode's page plays its series' song.
         let id = item.seriesId ?? item.id
-        guard let song = try? await client.themeSongs(user: user, itemID: id).first, !Task.isCancelled else { return }
+        let songs: [BaseItem]
+        do { songs = try await client.themeSongs(user: user, itemID: id) } catch {
+            Diagnostics.log("theme music: \(error)")
+            return
+        }
+        guard let song = songs.first, !Task.isCancelled else { return }
         stop(fading: false)
         owner = item.id
+        Diagnostics.log("theme music for \"\(item.name)\"")
         #if os(iOS)
         // Quiet background music: follows the silent switch and doesn't stop the viewer's own music app for good.
         try? AVAudioSession.sharedInstance().setCategory(.ambient)
