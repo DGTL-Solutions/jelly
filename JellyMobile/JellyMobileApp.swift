@@ -54,6 +54,11 @@ struct MobileRootView: View {
             }
         }
         .onOpenURL { url in Task { await model.open(url) } }
+        // Siri and Shortcuts, and a title handed over from another device (Handoff) or found in Spotlight.
+        .task { IntentRouter.attach { url in Task { await model.open(url) } } }
+        .onContinueUserActivity(ItemActivity.type) { activity in
+            if let url = ItemActivity.url(activity) { Task { await model.open(url) } }
+        }
         .parentGate()
         .togetherNotices()
         .sheet(item: $model.pendingSignIn) { link in SignInApprovalSheet(link: link) }
@@ -291,6 +296,9 @@ extension Notification.Name {
 final class JellyAppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         WishNotifications.register()
+        #if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
+        Task { @MainActor in DownloadActivityController.shared.start() }
+        #endif
         UNUserNotificationCenter.current().delegate = self
         return true
     }

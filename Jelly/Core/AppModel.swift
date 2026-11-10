@@ -1,6 +1,8 @@
 import SwiftUI
 #if os(tvOS)
 import TVServices
+#else
+import WidgetKit
 #endif
 
 struct PlaybackRequest: Identifiable {
@@ -453,6 +455,9 @@ final class AppModel: ObservableObject {
         // Keeps "Weiterschauen" on the Apple TV home screen current.
         #if os(tvOS)
         TVTopShelfContentProvider.topShelfContentDidChange()
+        #else
+        // … and the "Weiterschauen" widget on iPhone, iPad and Mac.
+        WidgetCenter.shared.reloadAllTimelines()
         #endif
     }
 
@@ -479,6 +484,10 @@ final class AppModel: ObservableObject {
     func open(_ url: URL) async {
         if let link = SignInLink(url) {
             pendingSignIn = link
+            return
+        }
+        if url.scheme == "jelly", url.host() == "downloads" {
+            NotificationCenter.default.post(name: Notification.Name("jellyShowDownloads"), object: nil)
             return
         }
         guard url.scheme == "jelly", let action = url.host(), let id = url.pathComponents.dropFirst().first,

@@ -1354,6 +1354,8 @@ struct ItemDetailScreen: View {
         .sensoryFeedback(.selection, trigger: seasonTick)
         .task(id: model.refreshID) { await load() }
         .themeMusic(for: item)
+        // Handoff: the same page opens on the iPad or Mac nearby; it also makes the title findable in Spotlight.
+        .userActivity(ItemActivity.type, isActive: details != nil) { ItemActivity.fill($0, item: current, serverID: model.session?.serverID) }
         .task(id: selectedSeason) { await loadEpisodes() }
     }
 

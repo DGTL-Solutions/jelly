@@ -53,6 +53,12 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>de.jelly.item</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

@@ -103,10 +103,12 @@ targets:
     dependencies:
       - package: AetherEngine
       - package: libass
+      - target: JellyWidgets
     settings:
       base:
         PRODUCT_NAME: Jelly
         PRODUCT_BUNDLE_IDENTIFIER: $(JELLY_BUNDLE_ID)
+        CODE_SIGN_ENTITLEMENTS: JellyMobile/JellyMobile.entitlements
         TARGETED_DEVICE_FAMILY: '1,2'
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         GENERATE_INFOPLIST_FILE: YES
@@ -129,6 +131,10 @@ targets:
         UIBackgroundModes: [audio, fetch]
         # "Dein Wunsch ist da": asking Jellyseerr now and then while Jelly is closed.
         BGTaskSchedulerPermittedIdentifiers: [de.jelly.wishes]
+        # Handoff of the open title to another device, and Spotlight.
+        NSUserActivityTypes: [de.jelly.item]
+        # The download Live Activity on the lock screen and in the Dynamic Island.
+        NSSupportsLiveActivities: true
         CFBundleURLTypes:
           - CFBundleURLName: de.jelly.tv
             CFBundleURLSchemes: [jelly]
@@ -141,6 +147,41 @@ targets:
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
+  # Home-screen widget "Weiterschauen" and the download Live Activity. Reads the active profile from the app's keychain group.
+  JellyWidgets:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: '18.0'
+    sources:
+      - JellyWidgets
+      - JellyMobile/Downloads/DownloadActivity.swift
+      - Jelly/Core/Models.swift
+      - Jelly/Core/JellyfinClient.swift
+      - Jelly/Core/PlaybackSupport.swift
+      - Jelly/Core/SecureStore.swift
+      - Jelly/Core/KidsPIN.swift
+      - Jelly/Core/Artwork.swift
+      - Jelly/Core/Diagnostics.swift
+      - Jelly/Core/StoredProfile.swift
+      - Jelly/Localizable.xcstrings
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(JELLY_BUNDLE_ID).widgets
+        CODE_SIGN_ENTITLEMENTS: JellyWidgets/JellyWidgets.entitlements
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Jelly
+        TARGETED_DEVICE_FAMILY: '1,2'
+    info:
+      path: JellyWidgets/Info.plist
+      properties:
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+        CFBundleDevelopmentRegion: en
+        CFBundleLocalizations: [de, en, fr, es, it, nl, pt-BR, da, sv, pl]
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
   # Scripted taps and screenshots for the iPhone/iPad app in the simulator (see JellyUITests/ScriptedUITest.swift).
   JellyUITests:
     type: bundle.ui-testing
