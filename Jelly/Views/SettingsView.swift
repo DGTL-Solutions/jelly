@@ -19,7 +19,7 @@ struct SettingsView: View {
     @AppStorage("showRottenTomatoes") private var showRottenTomatoes = true
     @AppStorage("screensaverMinutes") private var screensaverMinutes = 5
     @State private var display = DisplayCapabilities.current()
-    @State private var settingUpKids = false
+    @State private var settingUpKids = ProcessInfo.processInfo.environment["JELLY_KIDS_SETUP"] != nil
 
     // One page-wide scroll view: tvOS hides the tab bar while it scrolls, and every row exists up front,
     // so the focus never loses its way. Choices open Jelly's own pages instead of the system picker lists.

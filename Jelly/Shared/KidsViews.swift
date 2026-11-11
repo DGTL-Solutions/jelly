@@ -151,10 +151,21 @@ struct KidsSetupView: View {
                             Text("Das Kinderprofil zeigt nur Filme und Serien bis zu dieser Freigabe.")
                         }
                     }
+                    #if os(tvOS)
+                    .frame(maxWidth: 1000)
+                    #endif
                 }
             }
+            #if os(tvOS)
+            // A cover on Apple TV is see-through; without this the settings behind shine through the list.
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Theme.background.ignoresSafeArea())
+            #endif
             .navigationTitle("Kinderprofil")
+            // On Apple TV the Menu button closes the page; a button up there would sit on the list's heading.
+            #if !os(tvOS)
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Abbrechen", action: onClose) } }
+            #endif
         }
         .task {
             ratings = (try? await model.client?.parentalRatings()) ?? []
