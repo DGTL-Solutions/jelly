@@ -7,7 +7,8 @@ QUÉ HACE DIFERENTE A JELLY
 • Pensado para series: Jelly detecta las intros y los créditos por su sonido, sin plugins en el servidor, e inicia el siguiente episodio en cuanto empiezan los créditos.
 • Inteligente con conexiones lentas: Jelly mide la conexión y primero descarta las pistas de audio no usadas, sin pérdida, antes de que el servidor reduzca la calidad de la imagen. En casa, Jelly se comunica directamente con tu servidor.
 • Para llevar: guarda películas, episodios y temporadas completas en tu iPhone o iPad y míralos sin conexión, en Original, Mejor o Buena, con el tamaño y una recomendación para tu dispositivo.
-• Una suscripción para todo: Jelly en Apple TV, iPhone y iPad con la misma cuenta de Apple.
+• Ver juntos: SharePlay por FaceTime y SyncPlay con todos los de tu servidor. Además, un perfil infantil con clasificación por edades y PIN.
+• Una suscripción para todo: Jelly en Apple TV, iPhone, iPad y Mac con la misma cuenta de Apple.
 
 EN IPHONE Y IPAD
 Explora tu biblioteca con carátulas grandes, toca dos veces para saltar 10 segundos, avanza y retrocede con miniaturas y pellizca para llenar la pantalla. Imagen dentro de imagen mantiene la película en marcha mientras usas otras apps, AirPlay la envía a tu televisor y la pantalla bloqueada muestra lo que se está reproduciendo. En el iPad, Jelly aprovecha toda la pantalla con una barra lateral y diseños más amplios.
@@ -18,7 +19,7 @@ Jelly encuentra tu servidor en tu red doméstica. Inicia sesión con tu contrase
 Además: valoraciones en las páginas de detalles, capítulos, miniaturas al avanzar y retroceder, sincronización de audio y subtítulos e información detallada de la reproducción.
 
 PRUÉBALO GRATIS DURANTE 2 SEMANAS
-Prueba Jelly con todas las funciones gratis durante 2 semanas. Después, la suscripción anual de Jelly se renueva cada año al precio que se muestra en el App Store de tu país. Una suscripción cubre Jelly en iPhone, iPad y Apple TV con tu cuenta de Apple. El pago se carga en tu cuenta de Apple. La suscripción se renueva automáticamente por otro año salvo que la canceles al menos 24 horas antes de que termine; puedes cancelarla en cualquier momento en Ajustes › tu nombre › Suscripciones.
+Prueba Jelly con todas las funciones gratis durante 2 semanas. Después, la suscripción anual de Jelly se renueva cada año al precio que se muestra en el App Store de tu país. Una suscripción cubre Jelly en iPhone, iPad, Mac y Apple TV con tu cuenta de Apple. El pago se carga en tu cuenta de Apple. La suscripción se renueva automáticamente por otro año salvo que la canceles al menos 24 horas antes de que termine; puedes cancelarla en cualquier momento en Ajustes › tu nombre › Suscripciones.
 
 Condiciones de uso: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Política de privacidad: https://dgtl-solutions.github.io/jelly/privacy/

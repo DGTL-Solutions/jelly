@@ -11,7 +11,9 @@ Usage: asc_appstore.py KEY_ID ISSUER_ID KEY_PATH setup             texts, screen
 App Review contact (seen by Apple only, never committed): REVIEW_FIRST_NAME, REVIEW_LAST_NAME, REVIEW_PHONE, REVIEW_EMAIL.
 PLATFORM=ios works on the iPhone and iPad version instead: its texts come from AppStore/metadata-ios/<locale> where a file
 exists there (else AppStore/metadata), screenshots from AppStore/screenshots-ios/<locale>/iphone and /ipad, review notes
-from review-notes-ios.txt. App name, subtitle, price and subscription are shared by both platforms.
+from review-notes-ios.txt. PLATFORM=mac works on the Mac version: texts from AppStore/metadata-mac/<locale>, then
+metadata-ios, then metadata; screenshots from AppStore/screenshots-mac/<locale>; review notes from review-notes-mac.txt.
+App name, subtitle, price and subscription are shared by all platforms.
 """
 import hashlib, os, sys
 
@@ -45,11 +47,13 @@ BASE_TERRITORY = "DEU"
 # Countries with their own price instead of Apple's conversion from the German one, e.g. {"USA": "9.99"}.
 # Empty: every country gets Apple's conversion (US prices exclude sales tax, so 9,99 € becomes $8.99).
 MANUAL_PRICES = {}
+MAC = os.environ.get("PLATFORM", "tvos") == "mac"
 IOS = os.environ.get("PLATFORM", "tvos") == "ios"
-ASC_PLATFORM = "IOS" if IOS else "TV_OS"
-PLATFORM_NAME = "iOS" if IOS else "tvOS"
+ASC_PLATFORM = "MAC_OS" if MAC else "IOS" if IOS else "TV_OS"
+PLATFORM_NAME = "macOS" if MAC else "iOS" if IOS else "tvOS"
 # Screenshot sets of the version: display type and folder per locale.
-SCREENSHOT_SETS = ([("APP_IPHONE_67", "screenshots-ios", "iphone"), ("APP_IPAD_PRO_3GEN_129", "screenshots-ios", "ipad")] if IOS
+SCREENSHOT_SETS = ([("APP_DESKTOP", "screenshots-mac", "")] if MAC else
+                   [("APP_IPHONE_67", "screenshots-ios", "iphone"), ("APP_IPAD_PRO_3GEN_129", "screenshots-ios", "ipad")] if IOS
                    else [("APP_APPLE_TV", "screenshots", "")])
 
 
@@ -60,8 +64,9 @@ def text(name):
 
 def meta(locale, name, version_text=False):
     """A store text; the iOS version's own texts (description, keywords …) take precedence where they exist."""
-    if IOS and version_text and os.path.exists(os.path.join(ROOT, "metadata-ios", locale, name)):
-        return text(os.path.join("metadata-ios", locale, name))
+    for folder in (["metadata-mac", "metadata-ios"] if MAC else ["metadata-ios"] if IOS else []) if version_text else []:
+        if os.path.exists(os.path.join(ROOT, folder, locale, name)):
+            return text(os.path.join(folder, locale, name))
     return text(os.path.join("metadata", locale, name))
 
 
@@ -143,9 +148,10 @@ if COMMAND == "setup":
                                  "medicalOrTreatmentInformation", "profanityOrCrudeHumor", "sexualContentGraphicAndNudity",
                                  "sexualContentOrNudity", "horrorOrFearThemes", "matureOrSuggestiveThemes", "violenceCartoonOrFantasy",
                                  "violenceRealisticProlongedGraphicOrSadistic", "violenceRealistic"]}
-    no = {k: False for k in ["advertising", "gambling", "healthOrWellnessTopics", "lootBox", "messagingAndChat", "parentalControls",
+    no = {k: False for k in ["advertising", "gambling", "healthOrWellnessTopics", "lootBox", "messagingAndChat",
                              "ageAssurance", "socialMedia", "unrestrictedWebAccess", "userGeneratedContent"]}
-    call("PATCH", f"/ageRatingDeclarations/{rating}", {"data": {"type": "ageRatingDeclarations", "id": rating, "attributes": {**none, **no}}},
+    call("PATCH", f"/ageRatingDeclarations/{rating}", {"data": {"type": "ageRatingDeclarations", "id": rating,
+         "attributes": {**none, **no, "parentalControls": True}}},
          fatal=False)
 
     step(f"Version {versions[0]['attributes']['versionString']} ({PLATFORM_NAME}): Copyright, Beschreibung, Stichwörter, Werbetext, Support-Seite")
@@ -191,7 +197,7 @@ if COMMAND == "setup":
             for name in files:
                 if not present.get(name):
                     put_asset("/appScreenshots", "appScreenshots", "appScreenshotSet", "appScreenshotSets", screens["id"], os.path.join(folder, name))
-                    print(f"  {locale} {device or 'tv'}: {name}")
+                    print(f"  {locale} {device or PLATFORM_NAME}: {name}")
             shots = call("GET", f"/appScreenshotSets/{screens['id']}/appScreenshots")["data"]
             order = sorted(shots, key=lambda shot: shot["attributes"]["fileName"])
             call("PATCH", f"/appScreenshotSets/{screens['id']}/relationships/appScreenshots",
@@ -205,7 +211,7 @@ if COMMAND == "setup":
     step("App-Review-Angaben")
     contact = {k: os.environ.get(v) for k, v in [("contactFirstName", "REVIEW_FIRST_NAME"), ("contactLastName", "REVIEW_LAST_NAME"),
                                                  ("contactPhone", "REVIEW_PHONE"), ("contactEmail", "REVIEW_EMAIL")] if os.environ.get(v)}
-    notes = "review-notes-ios.txt" if IOS and os.path.exists(os.path.join(ROOT, "review-notes-ios.txt")) else "review-notes.txt"
+    notes = "review-notes-mac.txt" if MAC else "review-notes-ios.txt" if IOS else "review-notes.txt"
     review = {**contact, "demoAccountRequired": False, "notes": text(notes)[:4000]}
     existing = find(f"/appStoreVersions/{version}/appStoreReviewDetail")
     if existing and len(contact) == 4:

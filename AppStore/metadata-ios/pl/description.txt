@@ -7,7 +7,8 @@ CO WYRÓŻNIA JELLY
 • Stworzone dla seriali: Jelly rozpoznaje czołówki i napisy końcowe po dźwięku – bez wtyczki na serwerze – i uruchamia następny odcinek, gdy tylko pojawią się napisy końcowe.
 • Sprytne przy wolnym łączu: Jelly mierzy połączenie i najpierw – bezstratnie – pomija nieużywane ścieżki audio, zanim serwer obniży jakość obrazu. W domu Jelly łączy się z twoim serwerem bezpośrednio.
 • Na drogę: zapisuj filmy, odcinki i całe sezony na iPhonie lub iPadzie i oglądaj je offline – w jakości Oryginał, Lepsza lub Dobra, z rozmiarem i zaleceniem dla twojego urządzenia.
-• Jedna subskrypcja na wszystko: Jelly na Apple TV, iPhonie i iPadzie z tym samym kontem Apple.
+• Oglądaj razem: SharePlay przez FaceTime i SyncPlay ze wszystkimi na twoim serwerze. Do tego profil dziecięcy z kategorią wiekową i kodem PIN.
+• Jedna subskrypcja na wszystko: Jelly na Apple TV, iPhonie, iPadzie i Macu z tym samym kontem Apple.
 
 NA IPHONIE I IPADZIE
 Przeglądaj bibliotekę z dużymi okładkami, stuknij dwukrotnie, aby przeskoczyć o 10 sekund, przewijaj z podglądem miniatur i zsuń palce, aby wypełnić ekran. Obraz w obrazie odtwarza film dalej, gdy korzystasz z innych aplikacji, AirPlay przesyła go na telewizor, a ekran blokady pokazuje, co jest odtwarzane. Na iPadzie Jelly wykorzystuje cały ekran z paskiem bocznym i szerszym układem.
@@ -18,7 +19,7 @@ Jelly samo znajduje twój serwer w sieci domowej. Zaloguj się hasłem lub przez
 Poza tym: oceny na stronach szczegółów, rozdziały, podgląd miniatur podczas przewijania, synchronizacja dźwięku i napisów oraz szczegółowe informacje o odtwarzaniu.
 
 WYPRÓBUJ ZA DARMO PRZEZ 2 TYGODNIE
-Wypróbuj Jelly ze wszystkimi funkcjami za darmo przez 2 tygodnie. Potem roczna subskrypcja Jelly odnawia się co roku w cenie podanej w App Store dla twojego kraju. Jedna subskrypcja obejmuje Jelly na iPhonie, iPadzie i Apple TV z twoim kontem Apple. Płatność zostanie pobrana z twojego konta Apple. Subskrypcja odnawia się automatycznie na kolejny rok, chyba że anulujesz ją co najmniej 24 godziny przed jej końcem; możesz ją anulować w dowolnym momencie w Ustawienia › twoje imię i nazwisko › Subskrypcje.
+Wypróbuj Jelly ze wszystkimi funkcjami za darmo przez 2 tygodnie. Potem roczna subskrypcja Jelly odnawia się co roku w cenie podanej w App Store dla twojego kraju. Jedna subskrypcja obejmuje Jelly na iPhonie, iPadzie, Macu i Apple TV z twoim kontem Apple. Płatność zostanie pobrana z twojego konta Apple. Subskrypcja odnawia się automatycznie na kolejny rok, chyba że anulujesz ją co najmniej 24 godziny przed jej końcem; możesz ją anulować w dowolnym momencie w Ustawienia › twoje imię i nazwisko › Subskrypcje.
 
 Warunki użytkowania: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Polityka prywatności: https://dgtl-solutions.github.io/jelly/privacy/

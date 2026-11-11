@@ -7,7 +7,8 @@ WAT JELLY ANDERS MAAKT
 • Gemaakt voor series: Jelly herkent intro’s en aftiteling aan het geluid – zonder serverplug-in – en start de volgende aflevering zodra de aftiteling begint.
 • Slim bij trage verbindingen: Jelly meet de verbinding en laat eerst ongebruikte audiosporen weg – verliesvrij – voordat de server het beeld omlaag schaalt. Thuis praat Jelly direct met je server.
 • Voor onderweg: bewaar films, afleveringen en hele seizoenen op je iPhone of iPad en bekijk ze offline – in Origineel, Beter of Goed, met de grootte en een aanbeveling voor je apparaat.
-• Eén abonnement voor alles: Jelly op Apple TV, iPhone en iPad met hetzelfde Apple Account.
+• Samen kijken: SharePlay via FaceTime en SyncPlay met iedereen op je server. Plus een kinderprofiel met leeftijdsclassificatie en pincode.
+• Eén abonnement voor alles: Jelly op Apple TV, iPhone, iPad en Mac met hetzelfde Apple Account.
 
 OP IPHONE EN IPAD
 Blader door je bibliotheek met grote illustraties, tik twee keer om 10 seconden te springen, spoel met miniatuurvoorvertoningen en knijp om het scherm te vullen. Met beeld-in-beeld blijft de film spelen terwijl je andere apps gebruikt, AirPlay stuurt hem naar je tv en het toegangsscherm toont wat er speelt. Op de iPad gebruikt Jelly het hele scherm, met een navigatiekolom en bredere weergaven.
@@ -18,7 +19,7 @@ Jelly vindt je server in je thuisnetwerk. Log in met je wachtwoord of met Quick 
 Verder: beoordelingen op detailpagina’s, hoofdstukken, miniatuurvoorvertoningen tijdens het spoelen, synchronisatie van audio en ondertiteling en uitgebreide afspeelinformatie.
 
 2 WEKEN GRATIS PROBEREN
-Probeer Jelly met alle functies 2 weken gratis. Daarna wordt het Jelly-jaarabonnement elk jaar verlengd tegen de prijs die in de App Store voor jouw land wordt getoond. Eén abonnement geldt voor Jelly op iPhone, iPad en Apple TV met je Apple Account. De betaling wordt in rekening gebracht via je Apple Account. Het abonnement wordt automatisch met een jaar verlengd, tenzij je het uiterlijk 24 uur voor het einde opzegt; je kunt op elk moment opzeggen in Instellingen › je naam › Abonnementen.
+Probeer Jelly met alle functies 2 weken gratis. Daarna wordt het Jelly-jaarabonnement elk jaar verlengd tegen de prijs die in de App Store voor jouw land wordt getoond. Eén abonnement geldt voor Jelly op iPhone, iPad, Mac en Apple TV met je Apple Account. De betaling wordt in rekening gebracht via je Apple Account. Het abonnement wordt automatisch met een jaar verlengd, tenzij je het uiterlijk 24 uur voor het einde opzegt; je kunt op elk moment opzeggen in Instellingen › je naam › Abonnementen.
 
 Gebruiksvoorwaarden: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Privacybeleid: https://dgtl-solutions.github.io/jelly/privacy/

@@ -1,0 +1,31 @@
+Jelly är Jellyfin-spelaren för alla som vill se sina filmer som de är: i originalkvalitet, utan att servern behöver koda om – på din Mac, i ett eget fönster eller i helskärm. Allt du behöver är en egen Jellyfin-server (gratis på jellyfin.org).
+
+VAD SOM GÖR JELLY ANNORLUNDA
+• Jellyseerr inbyggt: begär filmer och serier, sök och följ nedladdningen live.
+• Originalet, inte en omkodning: MKV, MP4, AVI och TS med H.264, HEVC, AV1, VC-1 eller MPEG-2. Det som enheten inte kan avkoda själv avkodar Jelly – din server behöver inte koda om något, så även en liten NAS räcker.
+• Undertexter som de var tänkta: ASS/SSA med inbäddade typsnitt, positioner och effekter, plus PGS, VobSub, SRT och externa undertexter. Du väljer storlek, färg och bakgrund.
+• Gjord för serier: Jelly känner igen intron och eftertexter på ljudet – inget servertillägg behövs – och startar nästa avsnitt så fort eftertexterna börjar rulla.
+• Smart vid långsam anslutning: Jelly mäter anslutningen och tar först bort oanvända ljudspår – förlustfritt – innan servern skalar ned bilden. Hemma pratar Jelly direkt med din server.
+• På resan: hämta filmer, avsnitt och hela säsonger till din Mac och titta offline – i Original, Bättre eller Bra, med storlek och en rekommendation.
+• Titta tillsammans: SharePlay via FaceTime och SyncPlay med alla på din server. Dessutom en barnprofil med åldersgräns och PIN-kod.
+• En prenumeration för allt: Jelly på Apple TV, iPhone, iPad och Mac med samma Apple-konto.
+
+PÅ MAC
+En riktig Mac-app: ett sidofält för Hem, Filmer, Serier, Utforska och Hämtningar, en Uppspelning-meny med kortkommandon för paus och spolning, helskärm och AirPlay till din TV. Reglagen visas så fort du rör pekaren, och miniatyrer visar rätt ställe när du spolar.
+
+ENKEL INLOGGNING
+Jelly hittar din server i hemnätverket. Logga in med lösenord eller med Quick Connect – flera servrar och profiler, med ”Vem tittar?” vid start.
+
+Dessutom: betyg på detaljsidor, kapitel, miniatyrer när du spolar, synk av ljud och undertexter och detaljerad uppspelningsinformation.
+
+PROVA GRATIS I 2 VECKOR
+Prova Jelly med alla funktioner gratis i 2 veckor. Därefter förnyas Jelly årsprenumeration varje år till det pris som visas i App Store för ditt land. En prenumeration gäller för Jelly på iPhone, iPad, Mac och Apple TV med ditt Apple-konto. Betalningen debiteras ditt Apple-konto. Prenumerationen förnyas automatiskt ett år i taget om du inte avslutar den minst 24 timmar innan den löper ut; du kan avsluta när som helst i Inställningar › ditt namn › Prenumerationer.
+
+Användarvillkor: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Integritetspolicy: https://dgtl-solutions.github.io/jelly/privacy/
+
+Inga annonser, ingen spårning, ingen datainsamling. Jelly pratar bara med dina egna servrar.
+
+Jelly är en oberoende app och ingen officiell produkt från Jellyfin-projektet.
+
+Filmer i skärmbilderna: © Blender Foundation / Blender Studio, CC-BY 4.0 (creativecommons.org/licenses/by/4.0).

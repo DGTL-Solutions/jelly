@@ -6,7 +6,8 @@ O QUE TORNA O JELLY DIFERENTE
 • Legendas como foram pensadas: ASS/SSA com fontes incorporadas, posições e efeitos, além de PGS, VobSub, SRT e legendas externas. Você escolhe o tamanho, a cor e o fundo.
 • Feito para séries: o Jelly detecta aberturas e créditos pelo som – sem plugin no servidor – e inicia o próximo episódio assim que os créditos começam.
 • Esperto em conexões lentas: o Jelly mede a conexão e primeiro omite faixas de áudio não usadas – sem perdas – antes de o servidor reduzir a imagem. Em casa, o Jelly fala diretamente com o seu servidor.
-• Uma assinatura para tudo: Jelly no Apple TV, iPhone e iPad com a mesma Conta Apple.
+• Assistir junto: SharePlay pelo FaceTime e SyncPlay com todos no seu servidor. E um perfil infantil com classificação etária e PIN.
+• Uma assinatura para tudo: Jelly no Apple TV, iPhone, iPad e Mac com a mesma Conta Apple.
 
 NO APPLE TV
 Dolby Vision (perfis 5 e 8) e HDR10+ são reproduzidos pelo player da Apple com metadados dinâmicos, o Dolby Atmos em Dolby Digital Plus chega ao seu receiver como bitstream, e TrueHD e DTS-HD tocam sem perdas como áudio multicanal. A taxa de quadros e a faixa dinâmica se ajustam a cada filme. Continuar assistindo e os próximos episódios aparecem em tela cheia no Top Shelf, além de uma proteção de tela com capas como a do antigo iTunes.
@@ -17,7 +18,7 @@ O Jelly encontra sozinho o seu servidor na rede doméstica. Perfis sem senha abr
 Além disso: avaliações nas páginas de detalhes, capítulos, miniaturas ao avançar e voltar, sincronia de áudio e legendas e informações detalhadas de reprodução.
 
 2 SEMANAS GRÁTIS
-Experimente o Jelly com todos os recursos grátis por 2 semanas. Depois disso, a Assinatura Anual do Jelly é renovada todo ano pelo preço exibido na App Store do seu país. Uma assinatura cobre o Jelly no Apple TV, iPhone e iPad com a sua Conta Apple. O pagamento é cobrado na sua Conta Apple. A assinatura é renovada automaticamente por mais um ano, a menos que você a cancele pelo menos 24 horas antes do fim; você pode cancelar a qualquer momento nos Ajustes do Apple TV, em Usuários e Contas › Assinaturas.
+Experimente o Jelly com todos os recursos grátis por 2 semanas. Depois disso, a Assinatura Anual do Jelly é renovada todo ano pelo preço exibido na App Store do seu país. Uma assinatura cobre o Jelly no Apple TV, iPhone, iPad e Mac com a sua Conta Apple. O pagamento é cobrado na sua Conta Apple. A assinatura é renovada automaticamente por mais um ano, a menos que você a cancele pelo menos 24 horas antes do fim; você pode cancelar a qualquer momento nos Ajustes do Apple TV, em Usuários e Contas › Assinaturas.
 
 Termos de Uso: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Política de Privacidade: https://dgtl-solutions.github.io/jelly/privacy/

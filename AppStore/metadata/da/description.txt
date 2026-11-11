@@ -6,7 +6,8 @@ DET GØR JELLY ANDERLEDES
 • Undertekster, som de er tænkt: ASS/SSA med indlejrede skrifttyper, placeringer og effekter samt PGS, VobSub, SRT og eksterne undertekster. Du vælger selv størrelse, farve og baggrund.
 • Skabt til serier: Jelly genkender intro og rulletekster på lyden – uden server-plugin – og starter næste afsnit, så snart rulleteksterne begynder.
 • Smart ved langsomme forbindelser: Jelly måler forbindelsen og udelader først ubrugte lydspor – tabsfrit – før serveren skalerer billedet ned. Derhjemme taler Jelly direkte med din server.
-• Ét abonnement til det hele: Jelly på Apple TV, iPhone og iPad med den samme Apple-konto.
+• Se sammen: SharePlay via FaceTime og SyncPlay med alle på din server. Plus en børneprofil med aldersgrænse og pinkode.
+• Ét abonnement til det hele: Jelly på Apple TV, iPhone, iPad og Mac med den samme Apple-konto.
 
 PÅ APPLE TV
 Dolby Vision (profil 5 og 8) og HDR10+ afspilles via Apples afspiller med dynamiske metadata, Dolby Atmos i Dolby Digital Plus når frem til din receiver som bitstream, og TrueHD og DTS-HD afspilles tabsfrit som flerkanalslyd. Billedfrekvens og dynamisk område tilpasses hver film. Fortsæt med at se og næste afsnit vises i fuld skærm i Top Shelf, og der er en pauseskærm med covers, ligesom iTunes havde engang.
@@ -17,7 +18,7 @@ Jelly finder selv din server på dit hjemmenetværk. Profiler uden adgangskode �
 Desuden: bedømmelser på detaljesider, kapitler, miniaturer, når du spoler, synkronisering af lyd og undertekster samt detaljerede afspilningsoplysninger.
 
 PRØV GRATIS I 2 UGER
-Prøv Jelly med alle funktioner gratis i 2 uger. Derefter fornyes Jelly-årsabonnementet hvert år til den pris, der vises i App Store for dit land. Ét abonnement dækker Jelly på Apple TV, iPhone og iPad med din Apple-konto. Betalingen opkræves via din Apple-konto. Abonnementet fornyes automatisk for endnu et år, medmindre du opsiger det mindst 24 timer før udløb; du kan til enhver tid opsige det i Indstillinger på Apple TV under Brugere og konti › Abonnementer.
+Prøv Jelly med alle funktioner gratis i 2 uger. Derefter fornyes Jelly-årsabonnementet hvert år til den pris, der vises i App Store for dit land. Ét abonnement dækker Jelly på Apple TV, iPhone, iPad og Mac med din Apple-konto. Betalingen opkræves via din Apple-konto. Abonnementet fornyes automatisk for endnu et år, medmindre du opsiger det mindst 24 timer før udløb; du kan til enhver tid opsige det i Indstillinger på Apple TV under Brugere og konti › Abonnementer.
 
 Brugsbetingelser: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Anonymitetspolitik: https://dgtl-solutions.github.io/jelly/privacy/

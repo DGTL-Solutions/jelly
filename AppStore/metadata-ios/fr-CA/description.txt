@@ -7,7 +7,8 @@ CE QUI REND JELLY UNIQUE
 • Pensé pour les séries : Jelly détecte les génériques de début et de fin grâce au son – sans plug-in sur le serveur – et lance l'épisode suivant dès le début du générique.
 • Malin sur les connexions lentes : Jelly mesure la connexion et retire d'abord les pistes audio inutilisées – sans perte – avant que le serveur ne réduise l'image. À la maison, Jelly parle directement à ton serveur.
 • Pour la route : enregistre des films, des épisodes et des saisons entières sur ton iPhone ou iPad et regarde-les hors ligne – en qualité Originale, Meilleure ou Bonne, avec la taille et une recommandation pour ton appareil.
-• Un abonnement pour tout : Jelly sur Apple TV, iPhone et iPad avec le même compte Apple.
+• Regarder ensemble : SharePlay via FaceTime et SyncPlay avec tous ceux de ton serveur. Et un profil enfant avec classification d'âge et code PIN.
+• Un abonnement pour tout : Jelly sur Apple TV, iPhone, iPad et Mac avec le même compte Apple.
 
 SUR IPHONE ET IPAD
 Parcours ta bibliothèque avec de grandes illustrations, touche deux fois pour avancer de 10 secondes, trouve le bon passage avec des aperçus en miniature et pince pour remplir l'écran. Image dans l'image continue la lecture pendant que tu utilises d'autres apps, AirPlay envoie le film sur ta télé et l'écran verrouillé affiche ce qui est en cours. Sur iPad, Jelly utilise tout l'écran avec une barre latérale et des mises en page larges.
@@ -18,7 +19,7 @@ Jelly trouve ton serveur sur ton réseau domestique. Connecte-toi avec ton mot d
 Et aussi : notes sur les pages de détail, chapitres, aperçus en miniature pendant l'avance rapide, synchronisation du son et des sous-titres et informations de lecture détaillées.
 
 2 SEMAINES GRATUITES
-Essaie Jelly gratuitement pendant 2 semaines avec toutes les fonctionnalités. Ensuite, l'abonnement annuel Jelly se renouvelle chaque année au prix indiqué dans l'App Store pour ton pays. Un abonnement couvre Jelly sur iPhone, iPad et Apple TV avec ton compte Apple. Le paiement est débité de ton compte Apple. L'abonnement se renouvelle automatiquement pour un an, sauf si tu le résilies au moins 24 heures avant son échéance ; tu peux le résilier à tout moment dans Réglages › ton nom › Abonnements.
+Essaie Jelly gratuitement pendant 2 semaines avec toutes les fonctionnalités. Ensuite, l'abonnement annuel Jelly se renouvelle chaque année au prix indiqué dans l'App Store pour ton pays. Un abonnement couvre Jelly sur iPhone, iPad, Mac et Apple TV avec ton compte Apple. Le paiement est débité de ton compte Apple. L'abonnement se renouvelle automatiquement pour un an, sauf si tu le résilies au moins 24 heures avant son échéance ; tu peux le résilier à tout moment dans Réglages › ton nom › Abonnements.
 
 Conditions d'utilisation : https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Politique de confidentialité : https://dgtl-solutions.github.io/jelly/privacy/

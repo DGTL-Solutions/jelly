@@ -1,0 +1,31 @@
+Jelly ist der Jellyfin-Player für alle, die ihre Filme so sehen wollen, wie sie sind: in Originalqualität, ohne dass dein Server umrechnen muss – auf dem Mac, im eigenen Fenster oder im Vollbild. Du brauchst dafür einen eigenen Jellyfin-Server (kostenlos unter jellyfin.org).
+
+WAS JELLY BESONDERS MACHT
+• Jellyseerr eingebaut: Filme und Serien wünschen, suchen und den Download live verfolgen.
+• Das Original statt umgerechnet: MKV, MP4, AVI und TS mit H.264, HEVC, AV1, VC-1 oder MPEG-2. Was das Gerät nicht selbst kann, decodiert Jelly selbst – dein Server muss nichts neu kodieren, auch ein kleines NAS reicht.
+• Untertitel, wie sie gedacht sind: ASS/SSA mit eingebetteten Schriften, Positionen und Effekten, dazu PGS, VobSub, SRT und externe Untertitel. Größe, Farbe und Hintergrund stellst du selbst ein.
+• Für Serien gemacht: Jelly erkennt Intros und Abspann selbst am Ton – ohne Server-Plugin – und startet die nächste Folge, sobald der Abspann beginnt.
+• Klug bei langsamer Leitung: Jelly misst die Verbindung und lässt zuerst ungenutzte Tonspuren weg – verlustfrei –, bevor der Server das Bild herunterrechnet. Zu Hause spricht Jelly deinen Server direkt an.
+• Für unterwegs: Filme, Folgen und ganze Staffeln auf den Mac laden und offline schauen – in Original, Besser oder Gut, mit Größe und Empfehlung.
+• Gemeinsam schauen: SharePlay über FaceTime und SyncPlay mit allen auf deinem Server. Dazu ein Kinderprofil mit Altersfreigabe und PIN.
+• Ein Abo für alles: Jelly auf Apple TV, iPhone, iPad und Mac mit derselben Apple-ID.
+
+AUF DEM MAC
+Eine echte Mac-App: Seitenleiste für Start, Filme, Serien, Erkunden und Downloads, ein Menü „Wiedergabe“ mit Tastenkürzeln für Pause und Spulen, Vollbild und AirPlay auf deinen Fernseher. Die Steuerung erscheint, sobald du den Zeiger bewegst, und beim Spulen zeigen Vorschaubilder die richtige Stelle.
+
+EINFACH ANMELDEN
+Jelly findet deinen Server im Heimnetz. Melde dich mit Passwort oder per Quick Connect an – mehrere Server und Profile, mit „Wer schaut gerade?“ beim Start.
+
+Außerdem: Bewertungen auf den Detailseiten, Kapitel, Bildvorschau beim Spulen, Ton- und Untertitel-Synchronisation und genaue Wiedergabe-Infos.
+
+2 WOCHEN GRATIS, DANN 9,99 € IM JAHR
+Probier Jelly 2 Wochen lang kostenlos mit allen Funktionen. Danach kostet das Jelly Jahresabo 9,99 € pro Jahr. Ein Abo gilt für Jelly auf iPhone, iPad, Mac und Apple TV mit deiner Apple-ID. Die Zahlung erfolgt über deine Apple-ID. Das Abo verlängert sich automatisch um ein Jahr, wenn du es nicht spätestens 24 Stunden vor Ablauf kündigst; kündigen kannst du jederzeit in den Einstellungen unter dein Name › Abonnements.
+
+Nutzungsbedingungen: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Datenschutz: https://dgtl-solutions.github.io/jelly/datenschutz/
+
+Keine Werbung, kein Tracking, keine Datensammlung. Jelly spricht nur mit deinen eigenen Servern.
+
+Jelly ist eine unabhängige App und kein offizielles Produkt des Jellyfin-Projekts.
+
+Filme in den Screenshots: © Blender Foundation / Blender Studio, CC-BY 4.0 (creativecommons.org/licenses/by/4.0).

@@ -6,7 +6,7 @@ HOW TO REVIEW (public demo server of the Jellyfin project, public-domain and Cre
 3. Browse the library and play e.g. "Caminandes: Llama Drama". Tap the video for the controls; the options button opens subtitles, audio, quality and info. Picture in Picture and AirPlay are in the top bar.
 
 SUBSCRIPTION (Guideline 3.1.2)
-- The app is free to download and unlocked by the auto-renewable subscription "Jelly Annual" (1 year, 9.99 EUR) with a 2-week free trial as introductory offer. The same subscription unlocks Jelly on Apple TV (universal purchase).
+- The app is free to download and unlocked by the auto-renewable subscription "Jelly Annual" (1 year, 9.99 EUR) with a 2-week free trial as introductory offer. The same subscription unlocks Jelly on Apple TV and Mac (universal purchase).
 - The offer appears once after signing in and whenever playback is started without an active subscription. It states the price per year, the trial, automatic renewal and how to cancel, and links to the Terms of Use (Apple's standard EULA) and the Privacy Policy.
 - Settings (profile button at the top right on iPhone, Settings tab on iPad) > Annual Subscription shows the status and offers subscribing, "Restore Purchases" and managing the subscription. Browsing the library works without a subscription.
 
@@ -16,4 +16,14 @@ NOTES
 - Background audio mode: used only so that playback continues in Picture in Picture and on AirPlay.
 - The "Discover" tab is optional. It connects to the user's own Jellyseerr server, a companion request manager for Jellyfin; without one it only explains how to connect it. The demo server has no Jellyseerr.
 - No data is collected; there is no analytics, advertising or tracking.
-- The interface is in English and German and follows the device language.
+- The interface follows the device language: English, German, French, Spanish, Italian, Dutch, Portuguese (Brazil), Danish, Swedish and Polish.
+
+
+NEW IN 2.0
+- Watch together: SharePlay (Group Activities) starts playback for everyone in a FaceTime call. SyncPlay (Settings > Extras) is the Jellyfin server's own watch-together feature.
+- "Play on Apple TV" on a detail page starts the title in Jelly on an Apple TV signed in to the same server and turns the iPhone into its remote; this goes through the user's Jellyfin server.
+- Sign in an Apple TV: opening the QR code shown by Jelly on Apple TV (jelly://signin…) confirms its Quick Connect code with the profile signed in on the iPhone.
+- Kids profile (Settings > Kids Profile): limits the library to an age rating taken from the server and protects Settings, profile switching and Discover with a PIN stored in the keychain.
+- Notifications (optional, asked only when switched on in Settings > Extras): a local notification when a title requested through the user's Jellyseerr server has become available. No push server is involved.
+- Widget "Continue Watching", a Live Activity for running downloads, App Intents for Siri and Shortcuts, and Handoff between the user's devices.
+- Optional: theme music on series pages and automatic download of the next two episodes.

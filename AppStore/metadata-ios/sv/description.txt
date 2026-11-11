@@ -7,7 +7,8 @@ VAD SOM GÖR JELLY ANNORLUNDA
 • Gjord för serier: Jelly känner igen intron och eftertexter på ljudet – inget servertillägg behövs – och startar nästa avsnitt så fort eftertexterna börjar rulla.
 • Smart vid långsam anslutning: Jelly mäter anslutningen och tar först bort oanvända ljudspår – förlustfritt – innan servern skalar ned bilden. Hemma pratar Jelly direkt med din server.
 • För resan: spara filmer, avsnitt och hela säsonger på din iPhone eller iPad och titta offline – i Original, Bättre eller Bra, med storlek och en rekommendation för din enhet.
-• En prenumeration för allt: Jelly på Apple TV, iPhone och iPad med samma Apple-konto.
+• Titta tillsammans: SharePlay via FaceTime och SyncPlay med alla på din server. Dessutom en barnprofil med åldersgräns och PIN-kod.
+• En prenumeration för allt: Jelly på Apple TV, iPhone, iPad och Mac med samma Apple-konto.
 
 PÅ IPHONE OCH IPAD
 Bläddra i ditt bibliotek med stora omslag, tryck två gånger för att hoppa 10 sekunder, spola med miniatyrer och nyp för att fylla skärmen. Med Bild-i-bild fortsätter filmen medan du använder andra appar, AirPlay skickar den till din TV och låsskärmen visar vad som spelas. På iPad använder Jelly hela skärmen med sidofält och bredare layouter.
@@ -18,7 +19,7 @@ Jelly hittar din server i hemnätverket. Logga in med lösenord eller med Quick 
 Dessutom: betyg på detaljsidor, kapitel, miniatyrer när du spolar, synk av ljud och undertexter och detaljerad uppspelningsinformation.
 
 PROVA GRATIS I 2 VECKOR
-Prova Jelly med alla funktioner gratis i 2 veckor. Därefter förnyas Jelly årsprenumeration varje år till det pris som visas i App Store för ditt land. En prenumeration gäller för Jelly på iPhone, iPad och Apple TV med ditt Apple-konto. Betalningen debiteras ditt Apple-konto. Prenumerationen förnyas automatiskt ett år i taget om du inte avslutar den minst 24 timmar innan den löper ut; du kan avsluta när som helst i Inställningar › ditt namn › Prenumerationer.
+Prova Jelly med alla funktioner gratis i 2 veckor. Därefter förnyas Jelly årsprenumeration varje år till det pris som visas i App Store för ditt land. En prenumeration gäller för Jelly på iPhone, iPad, Mac och Apple TV med ditt Apple-konto. Betalningen debiteras ditt Apple-konto. Prenumerationen förnyas automatiskt ett år i taget om du inte avslutar den minst 24 timmar innan den löper ut; du kan avsluta när som helst i Inställningar › ditt namn › Prenumerationer.
 
 Användarvillkor: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Integritetspolicy: https://dgtl-solutions.github.io/jelly/privacy/

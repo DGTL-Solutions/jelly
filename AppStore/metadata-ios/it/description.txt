@@ -7,7 +7,8 @@ COSA RENDE JELLY DIVERSO
 • Pensato per le serie TV: Jelly riconosce intro e titoli di coda dall'audio, senza plugin sul server, e avvia l'episodio successivo appena partono i titoli di coda.
 • Intelligente con le connessioni lente: Jelly misura la connessione e prima elimina le tracce audio non usate, senza perdita, poi il server riduce la qualità dell'immagine. A casa, Jelly comunica direttamente con il tuo server.
 • Da portare con te: salva film, episodi e intere stagioni su iPhone o iPad e guardali offline, in qualità Originale, Migliore o Buona, con la dimensione e un consiglio per il tuo dispositivo.
-• Un abbonamento per tutto: Jelly su Apple TV, iPhone e iPad con lo stesso Account Apple.
+• Guarda insieme: SharePlay tramite FaceTime e SyncPlay con tutti quelli sul tuo server. In più, un profilo bambini con classificazione per età e PIN.
+• Un abbonamento per tutto: Jelly su Apple TV, iPhone, iPad e Mac con lo stesso Account Apple.
 
 SU IPHONE E IPAD
 Sfoglia la tua libreria con grandi immagini, tocca due volte per saltare di 10 secondi, scorri con le anteprime e avvicina le dita per riempire lo schermo. Picture in Picture continua a riprodurre il film mentre usi altre app, AirPlay lo invia alla tua TV e la schermata di blocco mostra cosa è in riproduzione. Su iPad, Jelly usa tutto lo schermo con una barra laterale e layout più ampi.
@@ -18,7 +19,7 @@ Jelly trova il tuo server nella rete domestica. Accedi con la password o con Qui
 E inoltre: valutazioni nelle pagine dei dettagli, capitoli, anteprime durante lo scorrimento, sincronizzazione di audio e sottotitoli e informazioni dettagliate sulla riproduzione.
 
 PROVALO GRATIS PER 2 SETTIMANE
-Prova Jelly con tutte le funzioni gratis per 2 settimane. Dopo, l'abbonamento annuale a Jelly si rinnova ogni anno al prezzo indicato nell'App Store per il tuo paese. Un solo abbonamento copre Jelly su iPhone, iPad e Apple TV con il tuo Account Apple. Il pagamento viene addebitato sul tuo Account Apple. L'abbonamento si rinnova automaticamente per un altro anno, a meno che tu non lo annulli almeno 24 ore prima della scadenza; puoi annullarlo in qualsiasi momento in Impostazioni › il tuo nome › Abbonamenti.
+Prova Jelly con tutte le funzioni gratis per 2 settimane. Dopo, l'abbonamento annuale a Jelly si rinnova ogni anno al prezzo indicato nell'App Store per il tuo paese. Un solo abbonamento copre Jelly su iPhone, iPad, Mac e Apple TV con il tuo Account Apple. Il pagamento viene addebitato sul tuo Account Apple. L'abbonamento si rinnova automaticamente per un altro anno, a meno che tu non lo annulli almeno 24 ore prima della scadenza; puoi annullarlo in qualsiasi momento in Impostazioni › il tuo nome › Abbonamenti.
 
 Condizioni d'uso: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Informativa sulla privacy: https://dgtl-solutions.github.io/jelly/privacy/

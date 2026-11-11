@@ -1,0 +1,31 @@
+Jelly to odtwarzacz Jellyfin dla wszystkich, którzy chcą oglądać swoje filmy takimi, jakie są: w oryginalnej jakości, bez transkodowania na serwerze – na Macu, we własnym oknie lub na pełnym ekranie. Potrzebujesz tylko własnego serwera Jellyfin (bezpłatnie na jellyfin.org).
+
+CO WYRÓŻNIA JELLY
+• Wbudowany Jellyseerr: proś o filmy i seriale, wyszukuj i śledź pobieranie na żywo.
+• Oryginał zamiast transkodowania: MKV, MP4, AVI i TS z H.264, HEVC, AV1, VC-1 lub MPEG-2. Czego urządzenie nie potrafi zdekodować samo, dekoduje Jelly – twój serwer nie musi niczego ponownie kodować, więc wystarczy nawet mały NAS.
+• Napisy takie, jakie miały być: ASS/SSA z osadzonymi czcionkami, pozycjami i efektami, a także PGS, VobSub, SRT i napisy zewnętrzne. Rozmiar, kolor i tło wybierasz sam.
+• Stworzone dla seriali: Jelly rozpoznaje czołówki i napisy końcowe po dźwięku – bez wtyczki na serwerze – i uruchamia następny odcinek, gdy tylko pojawią się napisy końcowe.
+• Sprytne przy wolnym łączu: Jelly mierzy połączenie i najpierw – bezstratnie – pomija nieużywane ścieżki audio, zanim serwer obniży jakość obrazu. W domu Jelly łączy się z twoim serwerem bezpośrednio.
+• W podróży: pobieraj filmy, odcinki i całe sezony na Maca i oglądaj offline – w jakości Oryginalnej, Lepszej lub Dobrej, z rozmiarem i zaleceniem.
+• Oglądaj razem: SharePlay przez FaceTime i SyncPlay ze wszystkimi na twoim serwerze. Do tego profil dziecięcy z kategorią wiekową i kodem PIN.
+• Jedna subskrypcja na wszystko: Jelly na Apple TV, iPhonie, iPadzie i Macu z tym samym kontem Apple.
+
+NA MACU
+Prawdziwa aplikacja na Maca: pasek boczny (Strona główna, Filmy, Seriale, Odkrywaj, Pobrane), menu Odtwarzanie ze skrótami klawiszowymi do pauzy i przewijania, pełny ekran oraz AirPlay na telewizor. Sterowanie pojawia się, gdy tylko poruszysz wskaźnikiem, a miniatury pokazują właściwe miejsce podczas przewijania.
+
+ŁATWE LOGOWANIE
+Jelly samo znajduje twój serwer w sieci domowej. Zaloguj się hasłem lub przez Quick Connect – wiele serwerów i profili, z pytaniem „Kto ogląda?” przy uruchomieniu.
+
+Poza tym: oceny na stronach szczegółów, rozdziały, podgląd miniatur podczas przewijania, synchronizacja dźwięku i napisów oraz szczegółowe informacje o odtwarzaniu.
+
+WYPRÓBUJ ZA DARMO PRZEZ 2 TYGODNIE
+Wypróbuj Jelly ze wszystkimi funkcjami za darmo przez 2 tygodnie. Potem roczna subskrypcja Jelly odnawia się co roku w cenie podanej w App Store dla twojego kraju. Jedna subskrypcja obejmuje Jelly na iPhonie, iPadzie, Macu i Apple TV z twoim kontem Apple. Płatność zostanie pobrana z twojego konta Apple. Subskrypcja odnawia się automatycznie na kolejny rok, chyba że anulujesz ją co najmniej 24 godziny przed jej końcem; możesz ją anulować w dowolnym momencie w Ustawienia › twoje imię i nazwisko › Subskrypcje.
+
+Warunki użytkowania: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Polityka prywatności: https://dgtl-solutions.github.io/jelly/privacy/
+
+Bez reklam, bez śledzenia, bez zbierania danych. Jelly łączy się tylko z twoimi własnymi serwerami.
+
+Jelly jest niezależną aplikacją, a nie oficjalnym produktem projektu Jellyfin.
+
+Filmy na zrzutach ekranu: © Blender Foundation / Blender Studio, CC-BY 4.0 (creativecommons.org/licenses/by/4.0).

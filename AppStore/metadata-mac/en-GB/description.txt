@@ -1,0 +1,31 @@
+Jelly is the Jellyfin player for everyone who wants to see their films the way they are: in original quality, without your server having to transcode – on your Mac, in a window of its own or in full screen. All you need is your own Jellyfin server (free at jellyfin.org).
+
+WHAT MAKES JELLY DIFFERENT
+• Jellyseerr built in: request movies and shows, search, and follow the download live.
+• The original, not a transcode: MKV, MP4, AVI and TS with H.264, HEVC, AV1, VC-1 or MPEG-2. Whatever the device can't decode itself, Jelly decodes – your server doesn't have to re-encode anything, so even a small NAS is enough.
+• Subtitles as they were meant to be: ASS/SSA with embedded fonts, positions and effects, plus PGS, VobSub, SRT and external subtitles. You choose size, colour and background.
+• Made for TV shows: Jelly detects intros and credits by their sound – no server plugin needed – and starts the next episode as soon as the credits roll.
+• Smart on slow connections: Jelly measures the connection and first drops unused audio tracks – losslessly – before the server scales the picture down. At home, Jelly talks to your server directly.
+• For the road: save films, episodes and whole seasons to your Mac and watch them offline – in Original, Better or Good, with the size and a recommendation.
+• Watch together: SharePlay over FaceTime and SyncPlay with everyone on your server. Plus a kids profile with an age rating and a PIN.
+• One subscription for everything: Jelly on Apple TV, iPhone, iPad and Mac with the same Apple ID.
+
+ON THE MAC
+A real Mac app: a sidebar for Home, Films, Shows, Discover and Downloads, a Playback menu with keyboard shortcuts for pausing and skipping, full screen, and AirPlay to your TV. The controls appear as soon as you move the pointer, and thumbnail previews show the right spot while you scrub.
+
+EASY SIGN-IN
+Jelly finds your server on your home network. Sign in with your password or with Quick Connect – several servers and profiles, with "Who's watching?" at launch.
+
+Also: ratings on detail pages, chapters, thumbnail previews while scrubbing, audio and subtitle sync and detailed playback information.
+
+TRY IT FREE FOR 2 WEEKS
+Try Jelly with all features free for 2 weeks. After that, the Jelly annual subscription renews every year at the price shown in the App Store for your country. One subscription covers Jelly on iPhone, iPad, Mac and Apple TV with your Apple ID. Payment is charged to your Apple ID. The subscription renews automatically for another year unless you cancel at least 24 hours before it ends; you can cancel at any time in Settings › your name › Subscriptions.
+
+Terms of Use: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Privacy Policy: https://dgtl-solutions.github.io/jelly/privacy/
+
+No ads, no tracking, no data collection. Jelly only talks to your own servers.
+
+Jelly is an independent app and not an official product of the Jellyfin project.
+
+Films shown in the screenshots: © Blender Foundation / Blender Studio, CC-BY 4.0 (creativecommons.org/licenses/by/4.0).
