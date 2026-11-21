@@ -628,12 +628,25 @@ private struct SeerrPosterCard: View {
     let width: CGFloat?
     let source: String
     let zoom: Namespace.ID
+    /// Among library titles, on a library stack: a plus marks what isn't on the server yet.
+    var inLibrary = false
     @Environment(\.horizontalSizeClass) private var sizeClass
 
     var body: some View {
+        Group {
+            if inLibrary {
+                NavigationLink(value: MobileRoute.wish(title)) { label }
+            } else {
+                NavigationLink(value: SeerrRoute(title: title, source: source)) { label }
+            }
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .combine)
+    }
+
+    private var label: some View {
         let download = title.download
-        NavigationLink(value: SeerrRoute(title: title, source: source)) {
-            VStack(alignment: .leading, spacing: 6) {
+        return VStack(alignment: .leading, spacing: 6) {
                 Theme.placeholder
                     .aspectRatio(2 / 3, contentMode: .fit)
                     .frame(width: width)
@@ -656,7 +669,7 @@ private struct SeerrPosterCard: View {
                         }
                     }
                     .overlay(alignment: .topTrailing) {
-                        if title.status != .none {
+                        if title.status != .none || inLibrary {
                             SeerrStatusBadge(status: title.status, size: sizeClass == .regular ? 30 : 26).padding(6)
                         }
                     }
@@ -688,9 +701,48 @@ private struct SeerrPosterCard: View {
             .frame(width: width, alignment: .leading)
             .frame(maxWidth: width == nil ? .infinity : nil, alignment: .leading)
             .contentShape(Rectangle())
+    }
+}
+
+/// A Jellyseerr title among the library's suggestions ("Das könnte dir auch gefallen"): opens its Jellyseerr page on
+/// the library's stack; holding it wishes for it right there.
+struct SeerrSuggestionCard: View {
+    let title: SeerrClient.Title
+    let width: CGFloat
+    let onWish: () -> Void
+    @Namespace private var zoom
+
+    var body: some View {
+        SeerrPosterCard(title: title, width: width, source: "suggestion-\(title.id)", zoom: zoom, inLibrary: true)
+            .contextMenu {
+                if title.status == .none {
+                    Button(action: onWish) { Label("Wünschen", systemImage: "plus") }
+                }
+            }
+    }
+}
+
+/// The last card of a row of missing titles: wishes for all of them at once.
+struct WishAllCard: View {
+    let count: Int
+    let width: CGFloat
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            VStack(alignment: .leading, spacing: 6) {
+                ZStack {
+                    Theme.placeholder
+                    Image(systemName: "plus.circle.fill").font(.system(size: width * 0.3)).foregroundStyle(Theme.accent)
+                }
+                .frame(width: width, height: width * 1.5)
+                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                Text("Alle wünschen").font(.footnote.weight(.semibold)).foregroundStyle(.primary).lineLimit(1)
+                Text("\(count) Filme").font(.caption).foregroundStyle(.secondary).lineLimit(1)
+            }
+            .frame(width: width, alignment: .leading)
         }
         .buttonStyle(.plain)
-        .accessibilityElement(children: .combine)
     }
 }
 
@@ -774,7 +826,7 @@ private extension SeerrClient.Title {
 
 // MARK: - Detail
 
-private struct SeerrDetailScreen: View {
+struct SeerrDetailScreen: View {
     let title: SeerrClient.Title
     @EnvironmentObject private var model: AppModel
     @Environment(\.horizontalSizeClass) private var sizeClass

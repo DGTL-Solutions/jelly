@@ -167,6 +167,8 @@ struct BaseItem: Decodable, Identifiable, Hashable {
 
     var isSeries: Bool { type == "Series" }
     var imdbID: String? { providerIds?["Imdb"]?.nonEmpty }
+    /// The title's number at TMDB, as Jellyseerr knows it.
+    var tmdbID: Int? { providerIds?["Tmdb"].flatMap { Int($0) } }
     var isEpisode: Bool { type == "Episode" }
     var isMovie: Bool { type == "Movie" }
     var isPlayable: Bool { ["Movie", "Episode", "Video", "MusicVideo", "Trailer"].contains(type ?? "") }

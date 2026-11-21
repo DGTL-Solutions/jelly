@@ -4,7 +4,7 @@ import XCTest
 ///   TEST_RUNNER_JELLY_ENV="JELLY_SERVER=…;JELLY_USER=…"  launch environment of the app
 ///   TEST_RUNNER_JELLY_STEPS="waitfor:Start;tap:Filme;shot:filme;wait:2"
 ///   TEST_RUNNER_JELLY_OUT=/tmp/jelly-ui   where screenshots (`shot:`) and element dumps (`dump:`) go
-/// Steps: tap:<label> · tapexact:<label> · tapxy:<x>,<y> (0…1) · longpress:<label> · type:<text> · swipe:up|down|left|right · scrollto:<label> · wait:<s> ·
+/// Steps: tap:<label> · tapexact:<label> · tapxy:<x>,<y> (0…1) · tapright:<label> (switches) · drag:<x1>,<y1>,<x2>,<y2> (0…1) · longpress:<label> · type:<text> · swipe:up|down|left|right · scrollto:<label> · wait:<s> ·
 /// waitfor:<label> · shot:<name> · dump:<name> · home · activate · relaunch
 final class ScriptedUITest: XCTestCase {
     func testScript() throws {
@@ -33,6 +33,15 @@ final class ScriptedUITest: XCTestCase {
                 guard let element else { log += "MISSING \(step)\n"; continue }
                 if parts[0] == "longpress" { element.press(forDuration: 1.2) } else { element.tap() }
                 log += "ok \(step)\n"
+            case "tapright":
+                // Switches only react at their right end, not in the middle of the row.
+                guard let element = find(argument) else { log += "MISSING \(step)\n"; continue }
+                element.coordinate(withNormalizedOffset: CGVector(dx: 0.92, dy: 0.5)).tap()
+                log += "ok \(step)\n"
+            case "drag":
+                let p = argument.split(separator: ",").compactMap { Double($0) }
+                app.coordinate(withNormalizedOffset: CGVector(dx: p[0], dy: p[1]))
+                    .press(forDuration: 0.05, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: p[2], dy: p[3])))
             case "tapxy":
                 let xy = argument.split(separator: ",").compactMap { Double($0) }
                 app.coordinate(withNormalizedOffset: CGVector(dx: xy[0], dy: xy[1])).tap()

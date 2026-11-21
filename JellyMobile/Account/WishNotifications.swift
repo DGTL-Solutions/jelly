@@ -5,6 +5,7 @@ import UserNotifications
 
 /// Optional on iPhone and iPad: a notification when a Jellyseerr wish has arrived, also while Jelly is closed.
 /// The system wakes Jelly now and then (background refresh) to ask Jellyseerr; nothing goes through other servers.
+/// The same wake-up looks for new episodes (`EpisodeNotifications`).
 enum WishNotifications {
     static let settingKey = "wishNotifications"
     static let taskID = "de.jelly.wishes"
@@ -23,7 +24,11 @@ enum WishNotifications {
         #if !os(macOS)
         BGTaskScheduler.shared.register(forTaskWithIdentifier: taskID, using: nil) { task in
             schedule()
-            let work = Task { await check(); task.setTaskCompleted(success: true) }
+            let work = Task {
+                await check()
+                await EpisodeNotifications.check()
+                task.setTaskCompleted(success: true)
+            }
             task.expirationHandler = { work.cancel() }
         }
         #endif
@@ -32,7 +37,7 @@ enum WishNotifications {
     /// Asks the system for the next wake-up, about once an hour at best. (A Mac only looks while Jelly is open.)
     static func schedule() {
         #if !os(macOS)
-        guard isEnabled else { return }
+        guard isEnabled || EpisodeNotifications.isEnabled else { return }
         let request = BGAppRefreshTaskRequest(identifier: taskID)
         request.earliestBeginDate = Date(timeIntervalSinceNow: 45 * 60)
         try? BGTaskScheduler.shared.submit(request)

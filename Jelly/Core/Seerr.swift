@@ -86,9 +86,12 @@ struct SeerrClient: Sendable {
         var backdropPath: String?
         var voteAverage: Double?
         var mediaInfo: MediaInfo?
+        var voteCount: Int?
+        var genreIds: [Int]?
 
         enum CodingKeys: String, CodingKey {
             case tmdbID = "id", mediaType, title, name, releaseDate, firstAirDate, overview, posterPath, backdropPath, voteAverage, mediaInfo
+            case voteCount, genreIds
         }
 
         var id: String { "\(mediaType ?? "-")-\(tmdbID)" }
@@ -124,6 +127,30 @@ struct SeerrClient: Sendable {
         var posterPath: String?
         var backdropPath: String?
         var mediaInfo: MediaInfo?
+        /// The film series a film belongs to, if any.
+        var collection: Collection?
+    }
+
+    /// A film series on TMDB ("Harry Potter Filmreihe"); the films come with the collection's own page only.
+    struct Collection: Decodable {
+        var id: Int
+        var name: String?
+        var parts: [Title]?
+    }
+
+    /// A film or series in a person's filmography: as part of the cast, or of the crew with a job.
+    struct Credit: Decodable {
+        var job: String?
+        var title: Title
+
+        enum CodingKeys: String, CodingKey { case job }
+
+        init(job: String? = nil, title: Title) { self.job = job; self.title = title }
+
+        init(from decoder: Decoder) throws {
+            job = try decoder.container(keyedBy: CodingKeys.self).decodeIfPresent(String.self, forKey: .job)
+            title = try Title(from: decoder)
+        }
     }
 
     struct Request: Decodable {
@@ -272,6 +299,74 @@ struct SeerrClient: Sendable {
 
     func details(_ title: Title) async throws -> Details {
         try await get("\(title.isSeries ? "tv" : "movie")/\(title.tmdbID)", query: language)
+    }
+
+    /// What TMDB suggests to people who liked this film or series, without the titles that are already in the library:
+    /// the row "Das könnte dir auch gefallen" continues with them. Falls back to TMDB's "similar" for titles too new
+    /// or too rare to have recommendations.
+    func suggestions(tmdbID: Int, series: Bool, limit: Int = 12) async throws -> [Title] {
+        let kind = series ? "tv" : "movie"
+        var page: Page = try await get("\(kind)/\(tmdbID)/recommendations", query: "page=1&\(language)")
+        if Self.missing(page.results, kind: kind, limit: 1).isEmpty {
+            page = try await get("\(kind)/\(tmdbID)/similar", query: "page=1&\(language)")
+        }
+        return Self.missing(page.results, kind: kind, limit: limit)
+    }
+
+    /// The titles of a suggestion list that can still be wished for or are on their way – what the library has
+    /// (also in part) is left to the library's own suggestions.
+    static func missing(_ titles: [Title], kind: String, limit: Int) -> [Title] {
+        let open = titles.compactMap { title -> Title? in
+            var title = title
+            if title.mediaType == nil { title.mediaType = kind }
+            guard title.mediaType == "movie" || title.mediaType == "tv", title.posterPath != nil,
+                  title.status != .available, title.status != .partial, title.mediaInfo?.jellyfinMediaId == nil else { return nil }
+            return title
+        }
+        return Array(open.uniqued().prefix(limit))
+    }
+
+    /// The films of the series a film belongs to that aren't in the library yet, oldest first, with the series' name.
+    /// `nil` for a film on its own or a series that is complete.
+    func missingParts(ofMovie tmdbID: Int) async throws -> (name: String, parts: [Title])? {
+        let details: Details = try await get("movie/\(tmdbID)", query: language)
+        guard let reference = details.collection else { return nil }
+        let collection: Collection = try await get("collection/\(reference.id)", query: language)
+        let parts = Self.missing((collection.parts ?? []).filter { $0.tmdbID != tmdbID }, kind: "movie", limit: 40)
+            .sorted { ($0.releaseDate?.nonEmpty ?? "9999") < ($1.releaseDate?.nonEmpty ?? "9999") }
+        guard !parts.isEmpty, let name = (collection.name ?? reference.name)?.nonEmpty else { return nil }
+        return (name, parts)
+    }
+
+    private struct Credits: Decodable {
+        var cast: [Credit]?
+        var crew: [Credit]?
+    }
+
+    /// What a person is known for and the library doesn't have: films and series they act in or directed, the best
+    /// known first.
+    func missingCredits(person tmdbID: Int, limit: Int = 18) async throws -> [Title] {
+        let credits: Credits = try await get("person/\(tmdbID)/combined_credits", query: language)
+        return Self.missing(Self.known(cast: credits.cast ?? [], crew: credits.crew ?? []), kind: "movie", limit: limit)
+    }
+
+    /// A filmography by how well known the titles are, without talk shows, news and award galas (guest appearances
+    /// that would bury the actual work) and with only the director's chair from the crew.
+    static func known(cast: [Credit], crew: [Credit]) -> [Title] {
+        let sideshows: Set<Int> = [10763, 10767]
+        return (cast + crew.filter { $0.job == "Director" }).map(\.title)
+            .filter { sideshows.isDisjoint(with: $0.genreIds ?? []) }
+            .sorted { ($0.voteCount ?? 0) > ($1.voteCount ?? 0) }
+    }
+
+    /// Wishes for a title in one step: a film as it is, a series with every season that isn't there or wished for yet.
+    /// Returns Jellyseerr's request status (2 = approved).
+    func requestAll(_ title: Title) async throws -> Int {
+        guard title.isSeries else { return try await request(title, seasons: nil) }
+        let details = try await details(title)
+        let taken = Set((details.mediaInfo?.seasons ?? []).filter { SeerrStatus($0.status) != .none }.map(\.seasonNumber))
+        let seasons = (details.seasons ?? []).map(\.seasonNumber).filter { $0 > 0 && !taken.contains($0) }
+        return try await request(title, seasons: seasons)
     }
 
     /// Asks for a film, or for the given seasons of a series. Returns Jellyseerr's request status (2 = approved).

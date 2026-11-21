@@ -23,7 +23,7 @@ struct PlayerView: View {
 }
 
 enum PanelTab: String, CaseIterable, Identifiable {
-    case subtitles, audio, quality, chapters, sync, info
+    case subtitles, audio, quality, chapters, sync, sleep, info
     var id: String { rawValue }
     var title: String {
         switch self {
@@ -32,6 +32,7 @@ enum PanelTab: String, CaseIterable, Identifiable {
         case .quality: return String(localized: "Qualität", comment: "Player panel tab: stream quality")
         case .chapters: return String(localized: "Kapitel", comment: "Player panel tab: chapters")
         case .sync: return String(localized: "Synchronisation", comment: "Player panel tab: audio/subtitle delay")
+        case .sleep: return String(localized: "Einschlaf-Timer", comment: "Player panel tab: sleep timer")
         case .info: return String(localized: "Info", comment: "Player panel tab: playback details")
         }
     }
@@ -53,6 +54,7 @@ struct PlaybackScreen: View {
     @AppStorage("enginePreference") private var enginePreference = EnginePreference.automatic
     @AppStorage("debugOverlay") private var debugOverlay = false
 
+    @ObservedObject private var sleep = SleepTimer.shared
     @State private var controlsVisible = false
     @State private var panelOpen = false
     @State private var panelTab = PanelTab.subtitles
@@ -84,7 +86,7 @@ struct PlaybackScreen: View {
     }
 
     private var showsUpNext: Bool {
-        guard autoplayNext, player.nextEpisode != nil, !upNextDismissed, !panelOpen else { return false }
+        guard autoplayNext, !sleep.stopsAtEnd, player.nextEpisode != nil, !upNextDismissed, !panelOpen else { return false }
         if player.phase == .ended { return true }
         if let credits = player.creditsStart, player.phase == .playing { return player.position >= credits }
         return false
@@ -174,7 +176,7 @@ struct PlaybackScreen: View {
                 }
                 #endif
             case .ended:
-                if !showsUpNext { dismiss() }
+                if sleep.stopsAtEnd { sleep.clear(); dismiss() } else if !showsUpNext { dismiss() }
             case .failed:
                 focus = .retry
             case .preparing:
@@ -198,6 +200,7 @@ struct PlaybackScreen: View {
             guard notice != nil else { return }
             Task { try? await Task.sleep(for: .seconds(4)); player.notice = nil }
         }
+        .sleepTimer(sleep, player: player)
         .task(id: showsUpNext) {
             guard showsUpNext else { return }
             countdown = 10
@@ -462,6 +465,7 @@ struct PlaybackScreen: View {
                     case .quality: qualityTab
                     case .chapters: chaptersTab
                     case .sync: syncTab
+                    case .sleep: sleepTab
                     case .info: PlaybackInfoColumn(player: player)
                     }
                 }
@@ -566,6 +570,19 @@ struct PlaybackScreen: View {
                 Text("Die Ton-Synchronisation übernimmt bei diesem Titel Apples Player selbst.")
                     .font(.caption).foregroundStyle(.secondary)
             }
+        }
+    }
+
+    private var sleepTab: some View {
+        VStack(alignment: .leading, spacing: 26) {
+            HStack(spacing: 12) {
+                ForEach(SleepTimer.choices) { choice in
+                    Button(choice.title(isEpisode: player.item.isEpisode)) { sleep.set(choice) }
+                        .buttonStyle(PillButtonStyle(selected: sleep.choice == choice))
+                }
+            }
+            .focusSection()
+            Text(sleep.status(isEpisode: player.item.isEpisode)).font(.callout).foregroundStyle(.secondary)
         }
     }
 

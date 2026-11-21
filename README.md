@@ -103,6 +103,12 @@ Vorschaubilder beim Spulen kommen aus Jellyfins Trickplay-Funktion (Dashboard �
 - **Kinderprofil** (`Jelly/Core/KidsPIN.swift`, `KidsMode.swift`): Altersgrenze aus der Bewertungsliste des Servers, PIN im Schlüsselbund. Einstellungen, Profilwechsel und Erkunden brauchen den PIN.
 - **Apple-TV-Benutzer:** Jelly läuft als der aktive Apple-TV-Benutzer (`runs-as-current-user`). Einstellungen und das aktive Profil sind dadurch pro Person getrennt, die Anmeldungen liegen im gemeinsamen Schlüsselbund (`SecureStore`).
 - **Optional:** Titelmusik, HomeKit-Szenen (Apple TV), nächste Folgen automatisch laden und Mitteilung bei erfüllten Wünschen (iPhone/iPad).
+- **Vorschläge von Jellyseerr (optional, Einstellungen › Jellyseerr):** „Das könnte dir auch gefallen“ zeigt nach den Titeln der Bibliothek auch, was TMDB zu dem Film oder der Serie empfiehlt und noch nicht auf dem Server liegt – mit Plus markiert, per Klick auf die Jellyseerr-Seite, per Kartenmenü (lange drücken) direkt gewünscht. Braucht die TMDB-Nummer des Titels aus Jellyfin; im Kinderprofil aus. Im Simulator schaltet das Startargument `-seerrSuggestions YES` es ein.
+- **Filmreihen und Personen** (mit „Vorschläge von Jellyseerr“): Die Seite eines Films zeigt die fehlenden Teile seiner Filmreihe („Fehlt noch: …“, mit „Alle wünschen“), die Seite einer Person ihre weiteren Filme und Serien („Noch nicht in deiner Mediathek“).
+- **Filmreihen gruppieren** (an, abschaltbar im Filtermenü der Filmliste und unter Einstellungen › Bibliothek): Filme, die der Server als Sammlung führt, erscheinen in Filmlisten als ein Eintrag (`CollapseBoxSetItems`). Im Simulator abschalten mit `-groupCollections NO`.
+- **Einschlaf-Timer** im Player (Reiter „Einschlaf-Timer“): pausiert nach 15–60 Minuten oder spielt nach dem laufenden Titel nichts mehr ab. Test: `JELLY_SLEEP=<Sekunden>`, `JELLY_PANEL=sleep`.
+- **Mitteilung bei neuen Folgen** (iPhone/iPad, Einstellungen › Mitteilungen, aus): Die Hintergrundaktualisierung von „Dein Wunsch ist da“ meldet auch neue Folgen von Serien, die das Profil gerade schaut (`Jelly/Core/EpisodeWatcher.swift`).
+- **Einstellungen** sind Oberpunkte mit eigenen Seiten (Profile & Server, Wiedergabe, Untertitel, Bibliothek, Mitteilungen, Jellyseerr, Info); auf iPhone/iPad öffnet `JELLY_SETTINGS=account|playback|subtitles|library|notifications|jellyseerr|subscription|info` eine Seite direkt.
 - **Widget, Siri, Handoff:** Ziel `JellyWidgets` (Widget „Weiterschauen“, Download-Live-Aktivität), `JellyMobile/Intents` (App Intents, Handoff, Spotlight).
 
 ## Mac
@@ -114,7 +120,7 @@ Ziel `JellyMac`: die Bildschirme der iPhone- und iPad-App in einem Mac-Fenster. 
 ```sh
 # Kernlogik ohne tvOS-Runtime
 xcrun swiftc -parse-as-library Jelly/Core/Models.swift Jelly/Core/JellyfinClient.swift Jelly/Core/PlaybackSupport.swift \
-  Jelly/Core/ServerDiscovery.swift Jelly/Core/IMDbRatings.swift Jelly/Core/NetworkProbe.swift Jelly/Core/Diagnostics.swift Jelly/Core/IntroDetector.swift Jelly/Core/Seerr.swift Jelly/Core/Access.swift Jelly/Core/Downloads.swift Scripts/CoreChecks.swift -o /tmp/jelly-core-checks && /tmp/jelly-core-checks
+  Jelly/Core/ServerDiscovery.swift Jelly/Core/IMDbRatings.swift Jelly/Core/NetworkProbe.swift Jelly/Core/Diagnostics.swift Jelly/Core/IntroDetector.swift Jelly/Core/Seerr.swift Jelly/Core/Access.swift Jelly/Core/Downloads.swift Jelly/Core/KidsPIN.swift Jelly/Core/SecureStore.swift Jelly/Core/EpisodeWatcher.swift Scripts/CoreChecks.swift -o /tmp/jelly-core-checks && /tmp/jelly-core-checks
 
 # Gerätebuild ohne Signierung
 xcodebuild -project Jelly.xcodeproj -scheme Jelly -configuration Release -destination 'generic/platform=tvOS' CODE_SIGNING_ALLOWED=NO build

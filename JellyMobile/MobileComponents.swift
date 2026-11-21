@@ -6,6 +6,8 @@ enum MobileRoute: Hashable {
     case item(BaseItem)
     case library(BaseItem)
     case person(Person)
+    /// A title that isn't in the library yet, on its Jellyseerr page.
+    case wish(SeerrClient.Title)
 }
 
 struct OpenMobileItemAction {
@@ -33,6 +35,7 @@ struct MobileBrowseStack<Root: View>: View {
                     case .item(let item): ItemDetailScreen(item: item)
                     case .library(let library): LibraryScreen(library: library)
                     case .person(let person): PersonScreen(person: person)
+                    case .wish(let title): SeerrDetailScreen(title: title)
                     }
                 }
         }

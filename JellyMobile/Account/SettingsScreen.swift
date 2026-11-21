@@ -10,8 +10,11 @@ struct SettingsScreen: View {
     @AppStorage("skipIntros") private var skipIntros = false
     @AppStorage(ThemeMusic.settingKey) private var themeMusic = false
     @AppStorage(SyncPlay.settingKey) private var syncPlay = false
+    @AppStorage(SeerrSuggestions.settingKey) private var seerrSuggestions = false
     @AppStorage(DownloadCenter.autoNextKey) private var autoDownloadNext = false
     @AppStorage(WishNotifications.settingKey) private var wishNotifications = false
+    @AppStorage(EpisodeNotifications.settingKey) private var episodeNotifications = false
+    @AppStorage(LibraryFilters.groupingKey) private var groupsCollections = true
     @AppStorage("askProfileOnLaunch") private var askProfileOnLaunch = true
     @AppStorage("subtitleSize") private var subtitleSize = SubtitleSize.standard
     @AppStorage("subtitleBackground") private var subtitleBackground = SubtitleBackground.shadow
@@ -30,30 +33,17 @@ struct SettingsScreen: View {
     @Environment(\.dismiss) private var dismiss
 
 
+    /// Built like the system's Settings: the profile and a short list of topics, each opening a page of its own.
     var body: some View {
         NavigationStack(path: $path) {
-            ScrollViewReader { proxy in
             Form {
-                profileHeader
-                servers
-                profiles
-                jellyseerr
-                kids
-                playback.id("playback")
-                subtitles.id("subtitles")
                 Section {
-                    Picker("Bei zu langsamer Verbindung", selection: $slowConnection) {
-                        ForEach(SlowConnectionPolicy.allCases) { Text($0.title).tag($0) }
-                    }
-                    .pickerStyle(.navigationLink)
-                } header: {
-                    Text("Langsame Verbindung")
-                } footer: {
-                    Text("Vor großen Dateien misst Jelly kurz, was die Leitung zum Server schafft. Reicht sie nicht, lässt Jelly zuerst ungenutzte Tonspuren weg (verlustfrei) und lässt erst danach den Server herunterrechnen.")
+                    NavigationLink(value: SettingsRoute.account) { profileHeader }
                 }
-                ratings
-                extras
                 Section {
+                    topic("Wiedergabe", icon: "play.circle", route: .playback)
+                    topic("Untertitel", icon: "captions.bubble", route: .subtitles)
+                    topic("Bibliothek", icon: "square.grid.2x2", route: .library)
                     NavigationLink(value: SettingsRoute.downloads) {
                         LabeledContent {
                             Text(DownloadPlanner.size(DownloadCenter.shared.usedSpace))
@@ -61,23 +51,33 @@ struct SettingsScreen: View {
                             Label("Downloads", systemImage: "arrow.down.circle")
                         }
                     }
+                    #if os(iOS)
+                    topic("Mitteilungen", icon: "bell.badge", route: .notifications)
+                    #endif
                 }
-                if purchases.isActive { subscription.id("subscription") }
-                Section("Diagnose") {
-                    NavigationLink(value: SettingsRoute.log) {
-                        Label("Protokoll anzeigen", systemImage: "list.bullet.rectangle")
+                Section {
+                    NavigationLink(value: SettingsRoute.jellyseerr) {
+                        LabeledContent {
+                            Text(model.seerr == nil ? "Nicht verbunden" : "Verbunden")
+                        } label: {
+                            Label { Text(verbatim: "Jellyseerr") } icon: { Image(systemName: "sparkles") }
+                        }
                     }
                 }
-                info.id("info")
-            }
-            #if DEBUG
-            .task {
-                // Simulator testing only: JELLY_SETTINGS_SCROLL=playback|subtitles|subscription|info scrolls there.
-                guard let anchor = ProcessInfo.processInfo.environment["JELLY_SETTINGS_SCROLL"] else { return }
-                try? await Task.sleep(for: .seconds(1))
-                proxy.scrollTo(anchor, anchor: .top)
-            }
-            #endif
+                Section {
+                    if purchases.isActive {
+                        NavigationLink(value: SettingsRoute.subscription) {
+                            LabeledContent { Text(purchaseStatus) } label: { Label("Jahresabo", systemImage: "star") }
+                        }
+                    }
+                    NavigationLink(value: SettingsRoute.about) {
+                        LabeledContent {
+                            Text("Version \(AppInfo.version)")
+                        } label: {
+                            Label { Text("Info", comment: "Settings section: about the app") } icon: { Image(systemName: "info.circle") }
+                        }
+                    }
+                }
             }
             .accountReadableWidth()
             .navigationTitle("Einstellungen")
@@ -90,6 +90,14 @@ struct SettingsScreen: View {
             }
             .navigationDestination(for: SettingsRoute.self) { route in
                 switch route {
+                case .account: page("Profile & Server") { servers; profiles; kids }
+                case .playback: page("Wiedergabe") { playback; slowConnectionSection; together; autoDownload }
+                case .subtitles: page("Untertitel") { subtitles }
+                case .library: page("Bibliothek") { appearance; ratings }
+                case .notifications: page("Mitteilungen") { notifications }
+                case .jellyseerr: page("Jellyseerr") { jellyseerr }
+                case .subscription: page("Jahresabo") { subscription }
+                case .about: page("Info") { info; diagnostics }
                 case .licenses: LicensesScreen()
                 case .license(let name):
                     if let component = OpenSourceComponent.all.first(where: { $0.name == name }) { LicenseTextScreen(component: component) }
@@ -110,10 +118,88 @@ struct SettingsScreen: View {
         }
     }
 
+    private func topic(_ title: LocalizedStringKey, icon: String, route: SettingsRoute) -> some View {
+        NavigationLink(value: route) { Label(title, systemImage: icon) }
+    }
+
+    /// One topic's page: its sections in a form of their own.
+    private func page<Content: View>(_ title: LocalizedStringKey, @ViewBuilder content: () -> Content) -> some View {
+        Form { content() }
+            .accountReadableWidth()
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private var slowConnectionSection: some View {
+        Section {
+            Picker("Bei zu langsamer Verbindung", selection: $slowConnection) {
+                ForEach(SlowConnectionPolicy.allCases) { Text($0.title).tag($0) }
+            }
+            .pickerStyle(.navigationLink)
+        } header: {
+            Text("Langsame Verbindung")
+        } footer: {
+            Text("Vor großen Dateien misst Jelly kurz, was die Leitung zum Server schafft. Reicht sie nicht, lässt Jelly zuerst ungenutzte Tonspuren weg (verlustfrei) und lässt erst danach den Server herunterrechnen.")
+        }
+    }
+
+    private var together: some View {
+        Section {
+            Toggle("Gemeinsam schauen (SyncPlay)", isOn: $syncPlay)
+        } footer: {
+            Text("Mit SyncPlay sehen alle in einer Gruppe auf deinem Server dieselbe Sekunde – der Knopf dafür erscheint auf der Detailseite.")
+        }
+    }
+
+    @ViewBuilder private var autoDownload: some View {
+        if model.user?.policy?.enableContentDownloading ?? true {
+            Section {
+                Toggle("Nächste Folgen automatisch laden", isOn: $autoDownloadNext)
+            } header: {
+                Text("Downloads")
+            } footer: {
+                Text("Bei Serien mit Downloads liegen immer die nächsten zwei ungesehenen Folgen auf dem Gerät, gesehene machen Platz.")
+            }
+        }
+    }
+
+    private var appearance: some View {
+        Section {
+            Toggle("Filmreihen gruppieren", isOn: $groupsCollections)
+            Toggle("Titelmusik", isOn: $themeMusic)
+        } header: {
+            Text("Darstellung")
+        } footer: {
+            Text("Filmreihen: Filme, die dein Server als Sammlung führt – etwa alle Harry-Potter-Filme –, erscheinen in der Filmbibliothek als ein Eintrag. Titelmusik: Hat dein Server zu einer Serie oder einem Film eine Titelmelodie, läuft sie leise auf der Detailseite.")
+        }
+    }
+
+    private var notifications: some View {
+        Section {
+            Toggle("Mitteilung bei neuen Folgen", isOn: Binding(get: { episodeNotifications }, set: { on in
+                if on { Task { episodeNotifications = await EpisodeNotifications.enable() } } else { episodeNotifications = false }
+            }))
+            if model.seerr != nil {
+                Toggle("Mitteilung, wenn ein Wunsch da ist", isOn: Binding(get: { wishNotifications }, set: { on in
+                    if on { Task { wishNotifications = await WishNotifications.enable() } } else { wishNotifications = false }
+                }))
+            }
+        } footer: {
+            Text("Neue Folgen: für Serien, die du gerade schaust. Das System weckt Jelly dafür ab und zu im Hintergrund – die Mitteilung kann deshalb etwas später kommen. Nichts davon läuft über fremde Server.")
+        }
+    }
+
+    private var diagnostics: some View {
+        Section("Diagnose") {
+            NavigationLink(value: SettingsRoute.log) {
+                Label("Protokoll anzeigen", systemImage: "list.bullet.rectangle")
+            }
+        }
+    }
+
     // MARK: Account
 
-    private var profileHeader: some View {
-        Section {
+    @ViewBuilder private var profileHeader: some View {
             if let session = model.session {
                 HStack(spacing: 16) {
                     AccountAvatar(user: model.user ?? UserDto(id: session.userID, name: session.name, primaryImageTag: session.imageTag),
@@ -127,8 +213,9 @@ struct SettingsScreen: View {
                 }
                 .padding(.vertical, 4)
                 .accessibilityElement(children: .combine)
+            } else {
+                Label("Profile & Server", systemImage: "person.crop.circle")
             }
-        }
     }
 
     private var servers: some View {
@@ -194,25 +281,6 @@ struct SettingsScreen: View {
         }
     }
 
-    private var extras: some View {
-        Section {
-            Toggle("Titelmusik", isOn: $themeMusic)
-            Toggle("Gemeinsam schauen (SyncPlay)", isOn: $syncPlay)
-            if model.user?.policy?.enableContentDownloading ?? true {
-                Toggle("Nächste Folgen automatisch laden", isOn: $autoDownloadNext)
-            }
-            if model.seerr != nil {
-                Toggle("Mitteilung, wenn ein Wunsch da ist", isOn: Binding(get: { wishNotifications }, set: { on in
-                    if on { Task { wishNotifications = await WishNotifications.enable() } } else { wishNotifications = false }
-                }))
-            }
-        } header: {
-            Text("Extras")
-        } footer: {
-            Text("Titelmusik: Hat dein Server zu einer Serie oder einem Film eine Titelmelodie, läuft sie leise auf der Detailseite. Gemeinsam schauen: Mit SyncPlay sehen alle in einer Gruppe auf deinem Server dieselbe Sekunde – der Knopf dafür erscheint oben rechts auf der Detailseite. Nächste Folgen: Bei Serien mit Downloads liegen immer die nächsten zwei ungesehenen Folgen auf dem Gerät, gesehene machen Platz.")
-        }
-    }
-
     private var kids: some View {
         Section {
             if model.isKids {
@@ -237,6 +305,7 @@ struct SettingsScreen: View {
             if let seerr = model.seerr {
                 LabeledContent(seerr.server.host(percentEncoded: false) ?? seerr.server.absoluteString,
                                value: String(localized: "Angemeldet als \(seerr.name)"))
+                Toggle("Vorschläge von Jellyseerr", isOn: $seerrSuggestions)
                 Button(role: .destructive) { Task { await model.disconnectSeerr() } } label: {
                     Label("Jellyseerr trennen", systemImage: "xmark.circle").foregroundStyle(.red)
                 }
@@ -244,9 +313,13 @@ struct SettingsScreen: View {
                 Button { connectingSeerr = true } label: { Label("Jellyseerr verbinden", systemImage: "sparkles") }
             }
         } header: {
-            Text(verbatim: "Jellyseerr")
+            Text("Verbindung")
         } footer: {
-            Text("Zum Wünschen neuer Filme und Serien im Tab „Erkunden“. Die Anmeldung gilt für dieses Profil.")
+            if model.seerr == nil {
+                Text("Zum Wünschen neuer Filme und Serien im Tab „Erkunden“. Die Anmeldung gilt für dieses Profil.")
+            } else {
+                Text("Zum Wünschen neuer Filme und Serien im Tab „Erkunden“. Die Anmeldung gilt für dieses Profil. Vorschläge: Die Seiten von Filmen, Serien und Personen zeigen dann auch, was noch nicht auf deinem Server ist – ähnliche Titel, fehlende Teile einer Filmreihe, weitere Filme der Person –, mit einem Plus markiert und direkt von dort zu wünschen.")
+            }
         }
     }
 
@@ -261,14 +334,14 @@ struct SettingsScreen: View {
             }
             .pickerStyle(.navigationLink)
         } header: {
-            Text("Wiedergabe")
+            Text("Allgemein", comment: "Settings group: general")
         } footer: {
             Text("Jelly spielt immer das Original – Video wird nie neu kodiert. Was dein Gerät selbst decodieren kann, läuft über Apples Player; alles andere – AV1, VC-1, MPEG-2 und mehr – decodiert Jelly selbst. Intros erkennt Jelly selbst, indem es den Ton benachbarter Folgen vergleicht – auch ohne Server-Plugin.")
         }
     }
 
     private var subtitles: some View {
-        Section("Untertitel") {
+        Section("Darstellung") {
             SubtitlePreview(size: subtitleSize, background: subtitleBackground, color: subtitleColor)
                 .listRowInsets(EdgeInsets())
             Picker("Untertitelgröße", selection: $subtitleSize) {
@@ -380,11 +453,13 @@ enum SettingsRoute: Hashable {
     case privacy
     case log
     case downloads
+    /// The topics of the first page.
+    case account, playback, subtitles, library, notifications, jellyseerr, subscription, about
 }
 
 #if DEBUG
 /// Simulator testing only, read from the launch environment (JELLY_TAB=settings opens the settings, see MainTabs):
-/// JELLY_SETTINGS=licenses|privacy|log|license:<name> opens that page in it, JELLY_ACCOUNT_ADD=profile|server starts adding
+/// JELLY_SETTINGS=account|playback|subtitles|library|notifications|jellyseerr|subscription|info|licenses|privacy|log|license:<name> opens that page in it, JELLY_ACCOUNT_ADD=profile|server starts adding
 /// one from "Wer schaut gerade?".
 enum AccountDebug {
     private static var used: Set<String> = []
@@ -396,10 +471,18 @@ enum AccountDebug {
 
     static func settingsRoute() -> [SettingsRoute]? {
         switch take("JELLY_SETTINGS") {
-        case "licenses": return [.licenses]
-        case "privacy": return [.privacy]
-        case "log": return [.log]
-        case let value? where value.hasPrefix("license:"): return [.licenses, .license(String(value.dropFirst(8)))]
+        case "licenses": return [.about, .licenses]
+        case "privacy": return [.about, .privacy]
+        case "log": return [.about, .log]
+        case "account": return [.account]
+        case "playback": return [.playback]
+        case "subtitles": return [.subtitles]
+        case "library": return [.library]
+        case "notifications": return [.notifications]
+        case "jellyseerr": return [.jellyseerr]
+        case "subscription": return [.subscription]
+        case "info": return [.about]
+        case let value? where value.hasPrefix("license:"): return [.about, .licenses, .license(String(value.dropFirst(8)))]
         default: return nil
         }
     }

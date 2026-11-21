@@ -130,10 +130,15 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(data)
 
     def do_POST(self):
-        self.rfile.read(int(self.headers.get("Content-Length") or 0))
+        body = self.rfile.read(int(self.headers.get("Content-Length") or 0))
         if self.path.startswith("/api/v1/auth/"):
             return self.reply({"id": 1, "displayName": "Test"}, headers=[("Set-Cookie", "connect.sid=mock; Path=/; HttpOnly")])
         if self.path.startswith("/api/v1/request"):
+            # A wish is approved at once and stays that way until the mock is restarted.
+            wished = json.loads(body or b"{}")
+            for index, entry in enumerate(TITLES):
+                if entry[0] == wished.get("mediaId") and entry[1] == wished.get("mediaType") and entry[5] is None:
+                    TITLES[index] = entry[:5] + (3, None)
             return self.reply({"id": 99, "status": 2})
         self.reply({"message": "not mocked"}, 404)
 
@@ -156,10 +161,25 @@ class Handler(BaseHTTPRequestHandler):
             else:
                 entries = [e for e in TITLES if e[5] is not None]
             return self.reply({"results": [request(e, n) for n, e in enumerate(entries, 1)]})
+        match = re.fullmatch(r"(movie|tv)/(\d+)/(recommendations|similar)", path)
+        if match:
+            # Suggestions for any title of the library: every title of that kind, in whatever state it is.
+            return self.reply({"results": [title(e) for e in TITLES if e[1] == match[1] and e[0] != int(match[2])]})
+        if re.fullmatch(r"collection/\d+", path):
+            return self.reply({"id": 7, "name": "Caminandes Filmreihe", "parts": [title(e) for e in TITLES if e[2].startswith("Caminandes")]})
+        if re.fullmatch(r"person/\d+/combined_credits", path):
+            # Any person of the library: in every film, the first ones the best known.
+            cast = [dict(title(e), voteCount=1000 - n, genreIds=[16], character="Self") for n, e in enumerate(TITLES)]
+            return self.reply({"id": 1, "cast": cast, "crew": []})
         match = re.fullmatch(r"(movie|tv)/(\d+)", path)
         if match:
             entry = next((e for e in TITLES if e[0] == int(match[2]) and e[1] == match[1]), None)
-            return self.reply(details(entry)) if entry else self.reply({"message": "not found"}, 404)
+            # Every film counts as part of the one film series – also films only the library knows –, so any film of
+            # the library shows its missing parts.
+            extra = {"collection": {"id": 7, "name": "Caminandes Filmreihe"}} if match[1] == "movie" else {}
+            if not entry:
+                return self.reply(dict({"id": int(match[2]), "title": "Film der Mediathek"}, **extra)) if extra else self.reply({"message": "not found"}, 404)
+            return self.reply(dict(details(entry), **extra))
         self.reply({"message": "not mocked"}, 404)
 
     def log_message(self, format, *args):

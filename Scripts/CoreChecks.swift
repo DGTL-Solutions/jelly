@@ -122,6 +122,45 @@ struct CoreChecks {
         let wished = try JSONDecoder().decode(SeerrClient.Title.self, from: Data(#"{"id":603,"mediaType":"movie","title":"Matrix","releaseDate":"1999-03-31","posterPath":"/p.jpg","mediaInfo":{"status":5,"jellyfinMediaId":"abc"}}"#.utf8))
         precondition(wished.status == .available && wished.year == "1999" && wished.id == "movie-603")
         precondition(wished.download == nil && !(wished.mediaInfo?.isLoading ?? true))
+        // Suggestions next to the library's own: only what can still be wished for or is on its way, each title once.
+        let suggested = try JSONDecoder().decode([SeerrClient.Title].self, from: Data(#"""
+        [{"id":1,"title":"Neu","posterPath":"/a.jpg"},
+         {"id":2,"title":"Da","posterPath":"/b.jpg","mediaInfo":{"status":5,"jellyfinMediaId":"abc"}},
+         {"id":3,"title":"Gewünscht","posterPath":"/c.jpg","mediaInfo":{"status":2}},
+         {"id":4,"title":"Ohne Bild"},
+         {"id":1,"title":"Neu","posterPath":"/a.jpg"},
+         {"id":5,"mediaType":"person","name":"Jemand","posterPath":"/d.jpg"},
+         {"id":6,"title":"Teilweise","posterPath":"/e.jpg","mediaInfo":{"status":4}}]
+        """#.utf8))
+        let open = SeerrClient.missing(suggested, kind: "movie", limit: 12)
+        precondition(open.map(\.id) == ["movie-1", "movie-3"], "\(open.map(\.id))")
+        precondition(SeerrClient.missing(suggested, kind: "movie", limit: 1).count == 1)
+        let withNumber = try JSONDecoder.jellyfin.decode(BaseItem.self, from: Data(#"{"Id":"x","Name":"Sintel","Type":"Movie","ProviderIds":{"Tmdb":"45745","Imdb":"tt1727587"}}"#.utf8))
+        precondition(withNumber.tmdbID == 45745)
+
+        // A person's filmography: best known first, guest appearances in talk shows and crew jobs other than directing left out.
+        let credits = try JSONDecoder().decode([SeerrClient.Credit].self, from: Data(#"""
+        [{"id":1,"mediaType":"movie","title":"Klein","posterPath":"/a.jpg","voteCount":10,"character":"Anna"},
+         {"id":2,"mediaType":"tv","name":"Talkshow","posterPath":"/b.jpg","voteCount":900,"genreIds":[10767]},
+         {"id":3,"mediaType":"movie","title":"Groß","posterPath":"/c.jpg","voteCount":500,"genreIds":[18]},
+         {"id":4,"mediaType":"movie","title":"Regie","posterPath":"/d.jpg","voteCount":50,"job":"Director"},
+         {"id":5,"mediaType":"movie","title":"Schnitt","posterPath":"/e.jpg","voteCount":800,"job":"Editor"}]
+        """#.utf8))
+        let known = SeerrClient.known(cast: Array(credits.prefix(3)), crew: Array(credits.suffix(2)))
+        precondition(known.map(\.tmdbID) == [3, 4, 1], "\(known.map(\.tmdbID))")
+
+        // New episodes: only what stands before the first known one, unwatched, of series in progress.
+        func episode(_ id: String, _ series: String, _ number: Int, played: Bool = false) throws -> BaseItem {
+            try JSONDecoder.jellyfin.decode(BaseItem.self, from: Data(#"{"Id":"\#(id)","Name":"F\#(number)","Type":"Episode","SeriesId":"\#(series)","SeriesName":"Serie \#(series)","ParentIndexNumber":1,"IndexNumber":\#(number),"UserData":{"Played":\#(played)}}"#.utf8))
+        }
+        let latest = [try episode("e6", "a", 6), try episode("e5", "a", 5), try episode("x1", "b", 1), try episode("w1", "a", 4, played: true),
+                      try episode("old", "a", 3), try episode("older", "c", 1)]
+        let fresh = EpisodeWatcher.fresh(latest, known: ["old", "older"])
+        precondition(fresh.map(\.id) == ["e6", "e5", "x1", "w1"])
+        let news = EpisodeWatcher.news(fresh, watching: ["a", "c"])
+        precondition(news.count == 1 && news[0].series == "Serie a" && news[0].episodes.map(\.id) == ["e5", "e6"], "\(news)")
+        precondition(EpisodeWatcher.fresh(latest, known: ["e6"]).isEmpty)
+
         // Download progress from Jellyseerr's tracker: a season pack counts once, the slowest running download sets the time.
         let loading = try JSONDecoder().decode(SeerrClient.Title.self, from: Data(#"""
             {"id":1399,"mediaType":"tv","name":"Game of Thrones","mediaInfo":{"status":3,"downloadStatus":[

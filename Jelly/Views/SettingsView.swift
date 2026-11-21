@@ -1,112 +1,33 @@
 import SwiftUI
 import AVKit
 
+/// The settings the way the Apple TV's own are built: a short list of topics, each opening a page of its own.
 struct SettingsView: View {
     @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var purchases: Purchases
-    @AppStorage("autoplayNext") private var autoplayNext = true
-    @AppStorage("skipIntros") private var skipIntros = false
-    @AppStorage(ThemeMusic.settingKey) private var themeMusic = false
-    @AppStorage(SyncPlay.settingKey) private var syncPlay = false
-    @AppStorage("askProfileOnLaunch") private var askProfileOnLaunch = true
-    @AppStorage("subtitleSize") private var subtitleSize = SubtitleSize.standard
-    @AppStorage("subtitleBackground") private var subtitleBackground = SubtitleBackground.shadow
-    @AppStorage("subtitleColor") private var subtitleColor = SubtitleColor.white
-    @AppStorage("enginePreference") private var engine = EnginePreference.automatic
-    @AppStorage("slowConnection") private var slowConnection = SlowConnectionPolicy.adapt
-    @AppStorage("debugOverlay") private var debugOverlay = false
-    @AppStorage("showIMDb") private var showIMDb = true
-    @AppStorage("showRottenTomatoes") private var showRottenTomatoes = true
-    @AppStorage("screensaverMinutes") private var screensaverMinutes = 5
-    @State private var display = DisplayCapabilities.current()
     @State private var settingUpKids = ProcessInfo.processInfo.environment["JELLY_KIDS_SETUP"] != nil
 
-    // One page-wide scroll view: tvOS hides the tab bar while it scrolls, and every row exists up front,
-    // so the focus never loses its way. Choices open Jelly's own pages instead of the system picker lists.
     var body: some View {
         NavigationStack {
             ScrollView {
                 HStack(alignment: .top, spacing: 90) {
                     profile.frame(width: 440).padding(.top, 60)
-                    VStack(alignment: .leading, spacing: 64) {
-                        servers
-                        profiles
-                        kids
-                        jellyseerr
-                        SettingsSection(String(localized: "Verbindung"), footer: String(localized: "Misst den Weg zu deinem Server und zeigt, was in Originalqualität läuft, was angepasst wird, woran es hakt und zu welcher Tageszeit die Leitung am schnellsten ist.")) {
-                            NavigationLink { ConnectionAnalysisView() } label: {
-                                SettingsRowLabel(String(localized: "Verbindungsanalyse"), icon: "waveform.path.ecg", chevron: true)
-                            }
+                    VStack(alignment: .leading, spacing: 12) {
+                        topic(String(localized: "Profile & Server"), icon: "person.crop.circle", value: model.session?.name) { AccountSettingsPage() }
+                        topic(String(localized: "Wiedergabe"), icon: "play.circle") { PlaybackSettingsPage() }
+                        topic(String(localized: "Untertitel"), icon: "captions.bubble") { SubtitleSettingsPage() }
+                        topic(String(localized: "Bibliothek"), icon: "square.grid.2x2") { LibrarySettingsPage() }
+                        topic("Jellyseerr", icon: "sparkles",
+                              value: model.seerr == nil ? String(localized: "Nicht verbunden") : String(localized: "Verbunden")) { SeerrSettingsPage() }
+                        topic(String(localized: "Verbindung & Diagnose"), icon: "waveform.path.ecg") { DiagnosticsSettingsPage() }
+                        if purchases.isActive {
+                            topic(String(localized: "Jahresabo"), icon: "star", value: PurchaseSettingsPage.status(purchases.access)) { PurchaseSettingsPage() }
                         }
-                        SettingsSection(String(localized: "Wiedergabe"), footer: String(localized: "Jelly spielt immer das Original – Video wird nie neu kodiert. Was das Apple TV selbst decodiert, läuft über Apples Player mit echtem Dolby Vision (Profil 7 als 8.1), HDR10+ und Dolby Atmos; die Datei wird dafür auf dem Apple TV umverpackt, nicht auf dem Server. Alles andere – AV1, VC-1, MPEG-2 und mehr – decodiert Jelly selbst. Intros erkennt Jelly selbst, indem es den Ton benachbarter Folgen vergleicht – auch ohne Server-Plugin.")) {
-                            SettingsToggle(String(localized: "Nächste Folge automatisch abspielen"), isOn: $autoplayNext)
-                            SettingsToggle(String(localized: "Intros automatisch überspringen"), isOn: $skipIntros)
-                            SettingsChoice(String(localized: "Untertitelgröße"), selection: $subtitleSize,
-                                           options: SubtitleSize.allCases) { $0.title }
-                            SettingsChoice(String(localized: "Untertitel-Hintergrund"), selection: $subtitleBackground,
-                                           options: SubtitleBackground.allCases) { $0.title }
-                            SettingsChoice(String(localized: "Untertitelfarbe"), selection: $subtitleColor,
-                                           options: SubtitleColor.allCases) { $0.title }
-                            SettingsChoice(String(localized: "Decoder", comment: "Settings row: video decoder choice"), selection: $engine,
-                                           options: EnginePreference.allCases) { $0.title }
-                        }
-                        SettingsSection(String(localized: "Extras"), footer: String(localized: "Titelmusik: Hat dein Server zu einer Serie oder einem Film eine Titelmelodie, läuft sie leise auf der Detailseite. Gemeinsam schauen: Mit SyncPlay sehen alle in einer Gruppe auf deinem Server dieselbe Sekunde – der Knopf dafür erscheint auf der Detailseite.")) {
-                            SettingsToggle(String(localized: "Titelmusik"), isOn: $themeMusic)
-                            SettingsToggle(String(localized: "Gemeinsam schauen (SyncPlay)"), isOn: $syncPlay)
-                        }
-                        HomeScenesSettings()
-                        SettingsSection(String(localized: "Bewertungen bei Filmen und Serien"), footer: IMDbRatings.isAvailable
-                                        ? String(localized: "IMDb-Werte kommen aus IMDbs öffentlichem Bewertungs-Datensatz und werden wöchentlich aktualisiert. Rotten Tomatoes stammt aus den Metadaten deines Jellyfin-Servers und fehlt bei Titeln, für die der Server keinen Kritikerwert hat.")
-                                        : String(localized: "Beide Werte stammen aus den Metadaten deines Jellyfin-Servers und fehlen bei Titeln, für die der Server keine Bewertung hat.")) {
-                            SettingsToggle(IMDbRatings.isAvailable ? String(localized: "IMDb-Bewertung")
-                                                                    : String(localized: "Bewertung", comment: "Rating"), isOn: $showIMDb)
-                            SettingsToggle(IMDbRatings.isAvailable ? "Rotten Tomatoes" : String(localized: "Kritikerwertung"),
-                                           isOn: $showRottenTomatoes)
-                        }
-                        SettingsSection(String(localized: "Bildschirmschoner"), footer: String(localized: "Wenn du im Menü nichts tust, füllen deine Film- und Serien-Cover den Bildschirm und drehen sich nacheinander um – wie früher bei iTunes. Jeder Tastendruck beendet ihn; nach einer Stunde übernimmt der Ruhezustand des Apple TV.")) {
-                            SettingsChoice(String(localized: "Cover-Wand starten"), selection: $screensaverMinutes, options: [0, 2, 5, 10, 15]) {
-                                $0 == 0 ? String(localized: "Nie", comment: "Screensaver: never start") : String(localized: "Nach \($0) Minuten")
-                            }
-                            Button { IdleMonitor.shared.activate() } label: { SettingsRowLabel(String(localized: "Jetzt anzeigen")) }
-                        }
-                        SettingsSection(String(localized: "Langsame Verbindung"), footer: String(localized: "Vor großen Dateien misst Jelly kurz, was die Leitung zum Server schafft. Reicht sie nicht, lässt Jelly zuerst ungenutzte Tonspuren weg (verlustfrei) und lässt erst danach den Server herunterrechnen. Im Player unter ↓ › Qualität jederzeit änderbar.")) {
-                            SettingsChoice(String(localized: "Bei zu langsamer Verbindung"), selection: $slowConnection,
-                                           options: SlowConnectionPolicy.allCases) { $0.title }
-                        }
-                        SettingsSection(String(localized: "Bild & Ton"), footer: display.matchingEnabled
-                                        ? String(localized: "Das Apple TV schaltet für jeden Film automatisch auf Dolby Vision, HDR10 oder SDR und die passende Bildfrequenz um.")
-                                        : String(localized: "Für automatisches Umschalten auf HDR, Dolby Vision und 24 Hz: Apple-TV-Einstellungen › Video und Audio › Inhalt anpassen › Dynamikbereich und Bildfrequenz aktivieren.")) {
-                            SettingsInfo(String(localized: "Inhalt anpassen", comment: "Name of the Apple TV setting Match Content"),
-                                         value: display.matchingEnabled ? String(localized: "Aktiv") : String(localized: "Aus", comment: "Off"))
-                            SettingsInfo(String(localized: "HDR-Formate des Fernsehers"),
-                                         value: display.hdrFormats.isEmpty
-                                             ? String(localized: "Keine erkannt") : display.hdrFormats.joined(separator: ", "))
-                        }
-                        SettingsSection(String(localized: "Diagnose"), footer: String(localized: "Das Overlay zeigt während der Wiedergabe, was die Leitung liefert, was der Film braucht, Puffer, Hänger und verlorene Bilder – und in Klartext, woran ein Stocken liegt.")) {
-                            SettingsToggle(String(localized: "Diagnose-Overlay im Player"), isOn: $debugOverlay)
-                            NavigationLink { DiagnosticsLogView() } label: {
-                                SettingsRowLabel(String(localized: "Protokoll anzeigen"), chevron: true)
-                            }
-                        }
-                        if purchases.isActive { purchase }
-                        SettingsSection(String(localized: "Info", comment: "Settings section: about the app"),
-                                        footer: String(localized: "Jelly ist eine unabhängige App und kein offizielles Produkt des Jellyfin-Projekts. \(AppInfo.copyright)")) {
-                            SettingsInfo("Jelly", value: String(localized: "Version \(AppInfo.version)"))
-                            // tvOS has no in-app rating request; a code to rate on the phone, only for those who look for it.
-                            NavigationLink { RateAppView() } label: {
-                                SettingsRowLabel(String(localized: "Jelly bewerten"), icon: "star", chevron: true)
-                            }
-                            NavigationLink { LicensesView() } label: {
-                                SettingsRowLabel(String(localized: "Open-Source-Lizenzen"), icon: "doc.text",
-                                                 detail: String(localized: "Jelly, AetherEngine, FFmpeg und \(OpenSourceComponent.all.count - 3) weitere"),
-                                                 chevron: true)
-                            }
-                            NavigationLink { PrivacyNoticeView() } label: {
-                                SettingsRowLabel(String(localized: "Datenschutz"), icon: "hand.raised", chevron: true)
-                            }
-                        }
+                        topic(String(localized: "Info", comment: "Settings section: about the app"), icon: "info.circle",
+                              value: String(localized: "Version \(AppInfo.version)")) { AboutSettingsPage() }
                     }
                     .frame(maxWidth: 1100)
+                    .padding(.top, 60)
                 }
                 .padding(.horizontal, Theme.edge)
                 .padding(.top, 30)
@@ -114,8 +35,12 @@ struct SettingsView: View {
             }
             .buttonStyle(SettingsRowStyle())
             .background(Theme.background.ignoresSafeArea())
-            .onAppear { display = DisplayCapabilities.current() }
+            .fullScreenCover(isPresented: $settingUpKids) { KidsSetupView { settingUpKids = false } }
         }
+    }
+
+    private func topic<Page: View>(_ title: String, icon: String, value: String? = nil, @ViewBuilder page: @escaping () -> Page) -> some View {
+        NavigationLink(destination: page) { SettingsRowLabel(title, icon: icon, value: value, chevron: true) }
     }
 
     private var profile: some View {
@@ -131,6 +56,48 @@ struct SettingsView: View {
             }
         }
         .frame(maxWidth: .infinity)
+    }
+}
+
+// MARK: - Pages
+
+/// One topic of the settings: its title and its groups of rows, every row there up front so the focus never loses its way.
+/// Choices open Jelly's own pages instead of the system picker lists.
+struct SettingsPage<Content: View>: View {
+    let title: String
+    @ViewBuilder let content: Content
+
+    init(_ title: String, @ViewBuilder content: () -> Content) {
+        self.title = title
+        self.content = content()
+    }
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 56) {
+                Text(title).font(.title2.weight(.bold)).padding(.leading, 28)
+                content
+            }
+            .frame(maxWidth: 1100)
+            .padding(.vertical, 80)
+            .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(SettingsRowStyle())
+        .background(Theme.background.ignoresSafeArea())
+    }
+}
+
+private struct AccountSettingsPage: View {
+    @EnvironmentObject private var model: AppModel
+    @AppStorage("askProfileOnLaunch") private var askProfileOnLaunch = true
+    @State private var settingUpKids = false
+
+    var body: some View {
+        SettingsPage(String(localized: "Profile & Server")) {
+            servers
+            profiles
+            kids
+        }
     }
 
     private var servers: some View {
@@ -171,10 +138,8 @@ struct SettingsView: View {
             }
         }
     }
-}
 
-extension SettingsView {
-    var kids: some View {
+    private var kids: some View {
         SettingsSection(String(localized: "Kinderprofil"), footer: model.isKids
                         ? String(localized: "Dieses Profil zeigt nur Titel bis \(model.kidsRating ?? ""). Einstellungen, andere Profile und Erkunden öffnen nur mit dem PIN.")
                         : String(localized: "Begrenzt dieses Profil auf eine Altersfreigabe. Einstellungen, andere Profile und Erkunden sind dann nur mit einem PIN der Eltern zugänglich.")) {
@@ -187,10 +152,156 @@ extension SettingsView {
         .fullScreenCover(isPresented: $settingUpKids) { KidsSetupView { settingUpKids = false } }
     }
 
-    /// The App Store version's subscription.
-    var purchase: some View {
+}
+
+private struct PlaybackSettingsPage: View {
+    @AppStorage("autoplayNext") private var autoplayNext = true
+    @AppStorage("skipIntros") private var skipIntros = false
+    @AppStorage(SyncPlay.settingKey) private var syncPlay = false
+    @AppStorage("enginePreference") private var engine = EnginePreference.automatic
+    @AppStorage("slowConnection") private var slowConnection = SlowConnectionPolicy.adapt
+    @State private var display = DisplayCapabilities.current()
+
+    var body: some View {
+        SettingsPage(String(localized: "Wiedergabe")) {
+            SettingsSection(String(localized: "Allgemein", comment: "Settings group: general"), footer: String(localized: "Jelly spielt immer das Original – Video wird nie neu kodiert. Was das Apple TV selbst decodiert, läuft über Apples Player mit echtem Dolby Vision (Profil 7 als 8.1), HDR10+ und Dolby Atmos; die Datei wird dafür auf dem Apple TV umverpackt, nicht auf dem Server. Alles andere – AV1, VC-1, MPEG-2 und mehr – decodiert Jelly selbst. Intros erkennt Jelly selbst, indem es den Ton benachbarter Folgen vergleicht – auch ohne Server-Plugin.")) {
+                SettingsToggle(String(localized: "Nächste Folge automatisch abspielen"), isOn: $autoplayNext)
+                SettingsToggle(String(localized: "Intros automatisch überspringen"), isOn: $skipIntros)
+                SettingsChoice(String(localized: "Decoder", comment: "Settings row: video decoder choice"), selection: $engine,
+                               options: EnginePreference.allCases) { $0.title }
+            }
+            SettingsSection(String(localized: "Langsame Verbindung"), footer: String(localized: "Vor großen Dateien misst Jelly kurz, was die Leitung zum Server schafft. Reicht sie nicht, lässt Jelly zuerst ungenutzte Tonspuren weg (verlustfrei) und lässt erst danach den Server herunterrechnen. Im Player unter ↓ › Qualität jederzeit änderbar.")) {
+                SettingsChoice(String(localized: "Bei zu langsamer Verbindung"), selection: $slowConnection,
+                               options: SlowConnectionPolicy.allCases) { $0.title }
+            }
+            SettingsSection(String(localized: "Gemeinsam schauen"), footer: String(localized: "Mit SyncPlay sehen alle in einer Gruppe auf deinem Server dieselbe Sekunde – der Knopf dafür erscheint auf der Detailseite.")) {
+                SettingsToggle(String(localized: "Gemeinsam schauen (SyncPlay)"), isOn: $syncPlay)
+            }
+            HomeScenesSettings()
+            SettingsSection(String(localized: "Bild & Ton"), footer: display.matchingEnabled
+                            ? String(localized: "Das Apple TV schaltet für jeden Film automatisch auf Dolby Vision, HDR10 oder SDR und die passende Bildfrequenz um.")
+                            : String(localized: "Für automatisches Umschalten auf HDR, Dolby Vision und 24 Hz: Apple-TV-Einstellungen › Video und Audio › Inhalt anpassen › Dynamikbereich und Bildfrequenz aktivieren.")) {
+                SettingsInfo(String(localized: "Inhalt anpassen", comment: "Name of the Apple TV setting Match Content"),
+                             value: display.matchingEnabled ? String(localized: "Aktiv") : String(localized: "Aus", comment: "Off"))
+                SettingsInfo(String(localized: "HDR-Formate des Fernsehers"),
+                             value: display.hdrFormats.isEmpty
+                                 ? String(localized: "Keine erkannt") : display.hdrFormats.joined(separator: ", "))
+            }
+        }
+        .onAppear { display = DisplayCapabilities.current() }
+    }
+}
+
+private struct SubtitleSettingsPage: View {
+    @AppStorage("subtitleSize") private var subtitleSize = SubtitleSize.standard
+    @AppStorage("subtitleBackground") private var subtitleBackground = SubtitleBackground.shadow
+    @AppStorage("subtitleColor") private var subtitleColor = SubtitleColor.white
+
+    var body: some View {
+        SettingsPage(String(localized: "Untertitel")) {
+            SettingsSection(String(localized: "Darstellung")) {
+                    SettingsChoice(String(localized: "Untertitelgröße"), selection: $subtitleSize,
+                                   options: SubtitleSize.allCases) { $0.title }
+                    SettingsChoice(String(localized: "Untertitel-Hintergrund"), selection: $subtitleBackground,
+                                   options: SubtitleBackground.allCases) { $0.title }
+                    SettingsChoice(String(localized: "Untertitelfarbe"), selection: $subtitleColor,
+                                   options: SubtitleColor.allCases) { $0.title }
+            }
+        }
+    }
+}
+
+private struct LibrarySettingsPage: View {
+    @AppStorage(LibraryFilters.groupingKey) private var groupsCollections = true
+    @AppStorage(ThemeMusic.settingKey) private var themeMusic = false
+    @AppStorage("showIMDb") private var showIMDb = true
+    @AppStorage("showRottenTomatoes") private var showRottenTomatoes = true
+    @AppStorage("screensaverMinutes") private var screensaverMinutes = 5
+
+    var body: some View {
+        SettingsPage(String(localized: "Bibliothek")) {
+            SettingsSection(String(localized: "Darstellung"), footer: String(localized: "Filmreihen: Filme, die dein Server als Sammlung führt – etwa alle Harry-Potter-Filme –, erscheinen in der Filmbibliothek als ein Eintrag. Titelmusik: Hat dein Server zu einer Serie oder einem Film eine Titelmelodie, läuft sie leise auf der Detailseite.")) {
+                SettingsToggle(String(localized: "Filmreihen gruppieren"), isOn: $groupsCollections)
+                SettingsToggle(String(localized: "Titelmusik"), isOn: $themeMusic)
+            }
+            SettingsSection(String(localized: "Bewertungen bei Filmen und Serien"), footer: IMDbRatings.isAvailable
+                            ? String(localized: "IMDb-Werte kommen aus IMDbs öffentlichem Bewertungs-Datensatz und werden wöchentlich aktualisiert. Rotten Tomatoes stammt aus den Metadaten deines Jellyfin-Servers und fehlt bei Titeln, für die der Server keinen Kritikerwert hat.")
+                            : String(localized: "Beide Werte stammen aus den Metadaten deines Jellyfin-Servers und fehlen bei Titeln, für die der Server keine Bewertung hat.")) {
+                SettingsToggle(IMDbRatings.isAvailable ? String(localized: "IMDb-Bewertung")
+                                                        : String(localized: "Bewertung", comment: "Rating"), isOn: $showIMDb)
+                SettingsToggle(IMDbRatings.isAvailable ? "Rotten Tomatoes" : String(localized: "Kritikerwertung"),
+                               isOn: $showRottenTomatoes)
+            }
+            SettingsSection(String(localized: "Bildschirmschoner"), footer: String(localized: "Wenn du im Menü nichts tust, füllen deine Film- und Serien-Cover den Bildschirm und drehen sich nacheinander um – wie früher bei iTunes. Jeder Tastendruck beendet ihn; nach einer Stunde übernimmt der Ruhezustand des Apple TV.")) {
+                SettingsChoice(String(localized: "Cover-Wand starten"), selection: $screensaverMinutes, options: [0, 2, 5, 10, 15]) {
+                    $0 == 0 ? String(localized: "Nie", comment: "Screensaver: never start") : String(localized: "Nach \($0) Minuten")
+                }
+                Button { IdleMonitor.shared.activate() } label: { SettingsRowLabel(String(localized: "Jetzt anzeigen")) }
+            }
+        }
+    }
+}
+
+private struct SeerrSettingsPage: View {
+    @EnvironmentObject private var model: AppModel
+    @AppStorage(SeerrSuggestions.settingKey) private var seerrSuggestions = false
+
+    var body: some View {
+        SettingsPage("Jellyseerr") { jellyseerr }
+    }
+
+    private var jellyseerr: some View {
+        SettingsSection(String(localized: "Verbindung"), footer: model.seerr == nil
+                        ? String(localized: "Zum Wünschen neuer Filme und Serien im Tab „Erkunden“. Die Anmeldung gilt für dieses Profil.")
+                        : String(localized: "Zum Wünschen neuer Filme und Serien im Tab „Erkunden“. Die Anmeldung gilt für dieses Profil. Vorschläge: Die Seiten von Filmen, Serien und Personen zeigen dann auch, was noch nicht auf deinem Server ist – ähnliche Titel, fehlende Teile einer Filmreihe, weitere Filme der Person –, mit einem Plus markiert und direkt von dort zu wünschen.")) {
+            if let seerr = model.seerr {
+                SettingsToggle(String(localized: "Vorschläge von Jellyseerr"), isOn: $seerrSuggestions)
+                SettingsInfo(seerr.server.host(percentEncoded: false) ?? seerr.server.absoluteString,
+                             value: String(localized: "Angemeldet als \(seerr.name)"))
+                Button(role: .destructive) { Task { await model.disconnectSeerr() } } label: {
+                    SettingsRowLabel(String(localized: "Jellyseerr trennen"), icon: "xmark.circle", destructive: true)
+                }
+            } else {
+                NavigationLink { SeerrConnectView() } label: {
+                    SettingsRowLabel(String(localized: "Jellyseerr verbinden"), icon: "sparkles", chevron: true)
+                }
+            }
+        }
+    }
+}
+
+private struct DiagnosticsSettingsPage: View {
+    @AppStorage("debugOverlay") private var debugOverlay = false
+
+    var body: some View {
+        SettingsPage(String(localized: "Verbindung & Diagnose")) {
+            SettingsSection(String(localized: "Verbindung"), footer: String(localized: "Misst den Weg zu deinem Server und zeigt, was in Originalqualität läuft, was angepasst wird, woran es hakt und zu welcher Tageszeit die Leitung am schnellsten ist.")) {
+                NavigationLink { ConnectionAnalysisView() } label: {
+                    SettingsRowLabel(String(localized: "Verbindungsanalyse"), icon: "waveform.path.ecg", chevron: true)
+                }
+            }
+            SettingsSection(String(localized: "Diagnose"), footer: String(localized: "Das Overlay zeigt während der Wiedergabe, was die Leitung liefert, was der Film braucht, Puffer, Hänger und verlorene Bilder – und in Klartext, woran ein Stocken liegt.")) {
+                SettingsToggle(String(localized: "Diagnose-Overlay im Player"), isOn: $debugOverlay)
+                NavigationLink { DiagnosticsLogView() } label: {
+                    SettingsRowLabel(String(localized: "Protokoll anzeigen"), chevron: true)
+                }
+            }
+        }
+    }
+}
+
+/// The App Store version's subscription.
+private struct PurchaseSettingsPage: View {
+    @EnvironmentObject private var model: AppModel
+    @EnvironmentObject private var purchases: Purchases
+
+    var body: some View {
+        SettingsPage(String(localized: "Jahresabo")) { purchase }
+    }
+
+    private var purchase: some View {
         SettingsSection(String(localized: "Jahresabo"), footer: purchases.message ?? String(localized: "\(purchases.price) pro Jahr, verlängert sich automatisch – gilt auf Apple TV, iPhone und iPad mit deiner Apple-ID. Kündigen: Apple-TV-Einstellungen › Benutzer und Accounts › Abonnements.")) {
-            SettingsInfo("Jelly", value: purchaseStatus)
+            SettingsInfo("Jelly", value: Self.status(purchases.access))
             Button { model.showsPaywall = true } label: {
                 SettingsRowLabel(purchases.access.isActive ? String(localized: "Abo, Nutzungsbedingungen & Datenschutz")
                                  : purchases.trialAvailable ? String(localized: "Kostenlos testen") : String(localized: "Jahresabo abschließen"),
@@ -204,8 +315,8 @@ extension SettingsView {
         }
     }
 
-    private var purchaseStatus: String {
-        switch purchases.access {
+    static func status(_ access: Access) -> String {
+        switch access {
         case .checking: return String(localized: "Wird geprüft …")
         case .notSubscribed: return String(localized: "Kein Abo")
         case .trial(let days): return days == 1 ? String(localized: "Probezeit: noch 1 Tag") : String(localized: "Probezeit: noch \(days) Tage")
@@ -215,17 +326,25 @@ extension SettingsView {
         }
     }
 
-    var jellyseerr: some View {
-        SettingsSection("Jellyseerr", footer: String(localized: "Zum Wünschen neuer Filme und Serien im Tab „Erkunden“. Die Anmeldung gilt für dieses Profil.")) {
-            if let seerr = model.seerr {
-                SettingsInfo(seerr.server.host(percentEncoded: false) ?? seerr.server.absoluteString,
-                             value: String(localized: "Angemeldet als \(seerr.name)"))
-                Button(role: .destructive) { Task { await model.disconnectSeerr() } } label: {
-                    SettingsRowLabel(String(localized: "Jellyseerr trennen"), icon: "xmark.circle", destructive: true)
+}
+
+private struct AboutSettingsPage: View {
+    var body: some View {
+        SettingsPage(String(localized: "Info", comment: "Settings section: about the app")) {
+            SettingsSection(String(localized: "Info", comment: "Settings section: about the app"),
+                            footer: String(localized: "Jelly ist eine unabhängige App und kein offizielles Produkt des Jellyfin-Projekts. \(AppInfo.copyright)")) {
+                SettingsInfo("Jelly", value: String(localized: "Version \(AppInfo.version)"))
+                // tvOS has no in-app rating request; a code to rate on the phone, only for those who look for it.
+                NavigationLink { RateAppView() } label: {
+                    SettingsRowLabel(String(localized: "Jelly bewerten"), icon: "star", chevron: true)
                 }
-            } else {
-                NavigationLink { SeerrConnectView() } label: {
-                    SettingsRowLabel(String(localized: "Jellyseerr verbinden"), icon: "sparkles", chevron: true)
+                NavigationLink { LicensesView() } label: {
+                    SettingsRowLabel(String(localized: "Open-Source-Lizenzen"), icon: "doc.text",
+                                     detail: String(localized: "Jelly, AetherEngine, FFmpeg und \(OpenSourceComponent.all.count - 3) weitere"),
+                                     chevron: true)
+                }
+                NavigationLink { PrivacyNoticeView() } label: {
+                    SettingsRowLabel(String(localized: "Datenschutz"), icon: "hand.raised", chevron: true)
                 }
             }
         }

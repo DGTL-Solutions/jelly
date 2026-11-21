@@ -10,6 +10,7 @@ struct PlayerOptionsPanel: View {
     @AppStorage("subtitleSize") private var subtitleSize = SubtitleSize.standard
     @AppStorage("subtitleBackground") private var subtitleBackground = SubtitleBackground.shadow
     @AppStorage("subtitleColor") private var subtitleColor = SubtitleColor.white
+    @ObservedObject private var sleep = SleepTimer.shared
 
     private var tabs: [MobilePanelTab] {
         MobilePanelTab.allCases.filter { ($0 != .chapters || !player.chapters.isEmpty) && ($0 != .quality || player.offline == nil) }
@@ -66,6 +67,7 @@ struct PlayerOptionsPanel: View {
                     case .quality: qualityTab
                     case .chapters: chaptersTab
                     case .sync: syncTab
+                    case .sleep: sleepTab
                     case .info: PlayerInfoList(player: player)
                     }
                 }
@@ -201,6 +203,15 @@ struct PlayerOptionsPanel: View {
                 }
                 .buttonStyle(PlayerRowStyle())
             }
+        }
+    }
+
+    private var sleepTab: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            let choices = SleepTimer.choices
+            PlayerTrackList(options: choices.indices.map { TrackOption(id: $0, title: choices[$0].title(isEpisode: player.item.isEpisode)) },
+                            selected: choices.firstIndex(of: sleep.choice) ?? 0) { sleep.set(choices[$0]) }
+            Text(sleep.status(isEpisode: player.item.isEpisode)).font(.footnote).foregroundStyle(.secondary)
         }
     }
 

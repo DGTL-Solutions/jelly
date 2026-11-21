@@ -231,6 +231,8 @@ struct JellyfinClient: Sendable {
         var start = 0
         var limit = 60
         var personID: String?
+        /// Film series as one entry each (the server's collections) instead of their films one by one.
+        var groupsCollections = false
         /// Overrides the default list fields, e.g. "MediaSources" for bitrates.
         var fields: String?
     }
@@ -247,6 +249,7 @@ struct JellyfinClient: Sendable {
         if !q.years.isEmpty { query["Years"] = q.years.map(String.init).joined(separator: ",") }
         if let rating = q.minRating { query["MinCommunityRating"] = "\(rating)" }
         if let person = q.personID { query["PersonIds"] = person }
+        if q.groupsCollections { query["CollapseBoxSetItems"] = "true" }
         if let fields = q.fields { query["Fields"] = fields }
         var page: ItemsResponse = try await get("Items", query: query)
         page.items = kidsSafe(page.items)

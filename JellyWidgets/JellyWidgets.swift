@@ -113,28 +113,56 @@ private struct TileView: View {
     /// Fills the whole widget (small) instead of sitting in a row.
     let large: Bool
 
+    /// Tinted and clear Home Screens draw every view as a flat white shape of its alpha: a poster with a dark fade and
+    /// white text over it comes out as one white box. There the picture keeps its colours and the text sits under it.
+    @Environment(\.widgetRenderingMode) private var renderingMode
+    @Environment(\.widgetFamily) private var family
+
     var body: some View {
+        if renderingMode == .fullColor { poster } else { accented }
+    }
+
+    private var poster: some View {
         ZStack(alignment: .bottomLeading) {
             Color.white.opacity(0.08)
             if let data = tile.image, let image = UIImage(data: data) {
                 Image(uiImage: image).resizable().scaledToFill()
             }
             LinearGradient(colors: [.clear, .black.opacity(0.85)], startPoint: .center, endPoint: .bottom)
-            VStack(alignment: .leading, spacing: 3) {
-                Text(tile.title).font(.caption.weight(.semibold)).lineLimit(1)
-                if let subtitle = tile.subtitle { Text(subtitle).font(.caption2).lineLimit(1).opacity(0.75) }
-                if tile.progress > 0 {
-                    ProgressView(value: min(1, tile.progress)).tint(.white).scaleEffect(x: 1, y: 0.6, anchor: .center)
-                }
-            }
-            .foregroundStyle(.white)
-            .padding(10)
+            labels.padding(10)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .clipShape(RoundedRectangle(cornerRadius: large ? 0 : 12, style: .continuous))
         .overlay(alignment: .topTrailing) {
             Image(systemName: "play.fill").font(.caption2).padding(6).background(.black.opacity(0.45), in: Circle()).foregroundStyle(.white).padding(8)
         }
+    }
+
+    private var accented: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Color.white.opacity(0.08)
+                .overlay {
+                    if let data = tile.image, let image = UIImage(data: data) {
+                        Image(uiImage: image).resizable().widgetAccentedRenderingMode(.fullColor).scaledToFill()
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            labels
+        }
+        // The small widget has no padding of its own: the poster fills it edge to edge.
+        .padding(family == .systemSmall ? 10 : 0)
+    }
+
+    private var labels: some View {
+        VStack(alignment: .leading, spacing: 3) {
+            Text(tile.title).font(.caption.weight(.semibold)).lineLimit(1)
+            if let subtitle = tile.subtitle { Text(subtitle).font(.caption2).lineLimit(1).opacity(0.75) }
+            if tile.progress > 0 {
+                ProgressView(value: min(1, tile.progress)).tint(.white).scaleEffect(x: 1, y: 0.6, anchor: .center)
+            }
+        }
+        .foregroundStyle(.white)
     }
 }
 

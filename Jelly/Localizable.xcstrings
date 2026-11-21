@@ -34177,122 +34177,6 @@
         }
       }
     },
-    "Titelmusik: Hat dein Server zu einer Serie oder einem Film eine Titelmelodie, läuft sie leise auf der Detailseite. Gemeinsam schauen: Mit SyncPlay sehen alle in einer Gruppe auf deinem Server dieselbe Sekunde – der Knopf dafür erscheint auf der Detailseite." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Theme music: if your server has a theme song for a series or film, it plays quietly on its page. Watch together: with SyncPlay everyone in a group on your server sees the same second – the button for it appears on the title’s page."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Musique du générique : si ton serveur a un thème pour une série ou un film, il est joué doucement sur sa page. Regarder ensemble : avec SyncPlay, tous les membres d’un groupe sur ton serveur voient la même seconde – le bouton apparaît sur la page du titre."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Música de cabecera: si tu servidor tiene una melodía para una serie o película, suena bajito en su página. Ver juntos: con SyncPlay todos los miembros de un grupo en tu servidor ven el mismo segundo; el botón aparece en la página del título."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sigla: se il server ha una sigla per una serie o un film, viene riprodotta a basso volume nella sua pagina. Guarda insieme: con SyncPlay tutti in un gruppo sul tuo server vedono lo stesso secondo – il pulsante appare nella pagina del titolo."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Titelmuziek: heeft je server een titelmelodie voor een serie of film, dan speelt die zacht op de detailpagina. Samen kijken: met SyncPlay ziet iedereen in een groep op je server dezelfde seconde – de knop daarvoor staat op de detailpagina."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Música-tema: se o servidor tiver um tema para uma série ou filme, ele toca baixinho na página do título. Assistir junto: com o SyncPlay, todos em um grupo no seu servidor veem o mesmo segundo – o botão aparece na página do título."
-          }
-        },
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Temamusik: Har din server en kendingsmelodi til en serie eller film, spiller den stille på dens side. Se sammen: Med SyncPlay ser alle i en gruppe på din server det samme sekund – knappen vises på titlens side."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Temamusik: Om din server har en signaturmelodi till en serie eller film spelas den lågt på dess sida. Titta tillsammans: Med SyncPlay ser alla i en grupp på din server samma sekund – knappen visas på titelns sida."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Muzyka tytułowa: jeśli serwer ma motyw muzyczny serialu lub filmu, gra on cicho na stronie tytułu. Oglądaj razem: dzięki SyncPlay wszyscy w grupie na twoim serwerze widzą tę samą sekundę – przycisk pojawia się na stronie tytułu."
-          }
-        }
-      }
-    },
-    "Titelmusik: Hat dein Server zu einer Serie oder einem Film eine Titelmelodie, läuft sie leise auf der Detailseite. Gemeinsam schauen: Mit SyncPlay sehen alle in einer Gruppe auf deinem Server dieselbe Sekunde – der Knopf dafür erscheint oben rechts auf der Detailseite. Nächste Folgen: Bei Serien mit Downloads liegen immer die nächsten zwei ungesehenen Folgen auf dem Gerät, gesehene machen Platz." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Theme music: if your server has a theme song for a series or film, it plays quietly on its page. Watch together: with SyncPlay everyone in a group on your server sees the same second – the button for it appears at the top right of the title’s page. Next episodes: for series with downloads, the next two unwatched episodes are always on the device, and watched ones make room."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Musique du générique : si ton serveur a un thème pour une série ou un film, il est joué doucement sur sa page. Regarder ensemble : avec SyncPlay, tous les membres d’un groupe sur ton serveur voient la même seconde – le bouton apparaît en haut à droite de la page du titre. Épisodes suivants : pour les séries téléchargées, les deux prochains épisodes non vus sont toujours sur l’appareil, et ceux déjà vus leur laissent la place."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Música de cabecera: si tu servidor tiene una melodía para una serie o película, suena bajito en su página. Ver juntos: con SyncPlay todos los miembros de un grupo en tu servidor ven el mismo segundo; el botón aparece arriba a la derecha en la página del título. Episodios siguientes: en las series con descargas, los dos próximos episodios sin ver están siempre en el dispositivo y los ya vistos dejan sitio."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sigla: se il server ha una sigla per una serie o un film, viene riprodotta a basso volume nella sua pagina. Guarda insieme: con SyncPlay tutti in un gruppo sul tuo server vedono lo stesso secondo – il pulsante appare in alto a destra nella pagina del titolo. Episodi successivi: per le serie con download, i due prossimi episodi non visti sono sempre sul dispositivo e quelli già visti lasciano spazio."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Titelmuziek: heeft je server een titelmelodie voor een serie of film, dan speelt die zacht op de detailpagina. Samen kijken: met SyncPlay ziet iedereen in een groep op je server dezelfde seconde – de knop daarvoor staat rechtsboven op de detailpagina. Volgende afleveringen: bij series met downloads staan altijd de volgende twee onbekeken afleveringen op het apparaat; bekeken afleveringen maken plaats."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Música-tema: se o servidor tiver um tema para uma série ou filme, ele toca baixinho na página do título. Assistir junto: com o SyncPlay, todos em um grupo no seu servidor veem o mesmo segundo – o botão aparece no canto superior direito da página do título. Próximos episódios: nas séries com downloads, os dois próximos episódios não assistidos ficam sempre no dispositivo, e os já assistidos abrem espaço."
-          }
-        },
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Temamusik: Har din server en kendingsmelodi til en serie eller film, spiller den stille på dens side. Se sammen: Med SyncPlay ser alle i en gruppe på din server det samme sekund – knappen vises øverst til højre på titlens side. Næste afsnit: For serier med downloads ligger de næste to usete afsnit altid på enheden, og sete afsnit giver plads."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Temamusik: Om din server har en signaturmelodi till en serie eller film spelas den lågt på dess sida. Titta tillsammans: Med SyncPlay ser alla i en grupp på din server samma sekund – knappen visas uppe till höger på titelns sida. Nästa avsnitt: För serier med hämtningar finns alltid de två nästa osedda avsnitten på enheten, och sedda avsnitt ger plats."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Muzyka tytułowa: jeśli serwer ma motyw muzyczny serialu lub filmu, gra on cicho na stronie tytułu. Oglądaj razem: dzięki SyncPlay wszyscy w grupie na twoim serwerze widzą tę samą sekundę – przycisk pojawia się w prawym górnym rogu strony tytułu. Kolejne odcinki: w serialach z pobranymi odcinkami na urządzeniu zawsze są dwa następne nieobejrzane odcinki, a obejrzane robią im miejsce."
-          }
-        }
-      }
-    },
     "Ton" : {
       "comment" : "Sound (sync setting, diagnostics label)",
       "localizations" : {
@@ -36860,6 +36744,64 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mycket nöje med dina filmer och serier."
+          }
+        }
+      }
+    },
+    "Vorschläge von Jellyseerr" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forslag fra Jellyseerr"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggestions from Jellyseerr"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sugerencias de Jellyseerr"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggestions de Jellyseerr"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggerimenti di Jellyseerr"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggesties van Jellyseerr"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Propozycje z Jellyseerr"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sugestões do Jellyseerr"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Förslag från Jellyseerr"
           }
         }
       }
@@ -41542,6 +41484,1630 @@
         }
       },
       "extractionState" : "manual"
+    },
+    "Zum Wünschen neuer Filme und Serien im Tab „Erkunden“. Die Anmeldung gilt für dieses Profil. Vorschläge: Die Seiten von Filmen, Serien und Personen zeigen dann auch, was noch nicht auf deinem Server ist – ähnliche Titel, fehlende Teile einer Filmreihe, weitere Filme der Person –, mit einem Plus markiert und direkt von dort zu wünschen." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Til at ønske nye film og serier under fanen „Udforsk“. Login gælder for denne profil. Forslag: Siderne for film, serier og personer viser så også det, der endnu ikke er på din server – lignende titler, manglende dele af en filmserie, personens øvrige film – markeret med et plus og lige til at ønske derfra."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For requesting new films and series in the “Discover” tab. The sign-in applies to this profile. Suggestions: the pages of films, series and people then also show what isn’t on your server yet – similar titles, missing parts of a film series, the person’s other work – marked with a plus and ready to request right there."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para pedir nuevas películas y series en la pestaña «Explorar». El inicio de sesión vale para este perfil. Sugerencias: las páginas de películas, series y personas muestran también lo que aún no está en tu servidor –títulos similares, partes que faltan de una saga, otras películas de la persona–, marcado con un más y listo para pedir desde allí."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour demander de nouveaux films et séries dans l’onglet « Explorer ». La connexion vaut pour ce profil. Suggestions : les pages des films, des séries et des personnes montrent alors aussi ce qui n’est pas encore sur ton serveur – titres similaires, volets manquants d’une saga, autres films de la personne –, marqué d’un plus et à demander directement de là."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per richiedere nuovi film e serie nella scheda «Esplora». L’accesso vale per questo profilo. Suggerimenti: le pagine di film, serie e persone mostrano anche ciò che non è ancora sul tuo server – titoli simili, capitoli mancanti di una saga, altri film della persona – contrassegnato da un più e richiedibile direttamente da lì."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voor het aanvragen van nieuwe films en series in het tabblad ‘Ontdekken’. De aanmelding geldt voor dit profiel. Suggesties: de pagina’s van films, series en personen tonen dan ook wat nog niet op je server staat – vergelijkbare titels, ontbrekende delen van een filmreeks, andere films van de persoon – gemarkeerd met een plus en direct daar aan te vragen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do zamawiania nowych filmów i seriali na karcie „Odkrywaj”. Logowanie dotyczy tego profilu. Propozycje: strony filmów, seriali i osób pokazują wtedy także to, czego jeszcze nie ma na twoim serwerze – podobne tytuły, brakujące części serii filmowej, inne filmy danej osoby – oznaczone plusem i gotowe do zamówienia od razu stamtąd."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para pedir novos filmes e séries na aba “Explorar”. O login vale para este perfil. Sugestões: as páginas de filmes, séries e pessoas passam a mostrar também o que ainda não está no seu servidor – títulos parecidos, partes que faltam de uma franquia, outros filmes da pessoa – marcado com um mais e pronto para pedir dali mesmo."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "För att önska nya filmer och serier under fliken ”Utforska”. Inloggningen gäller för den här profilen. Förslag: sidorna för filmer, serier och personer visar då även det som ännu inte finns på din server – liknande titlar, saknade delar i en filmserie, personens andra filmer – markerat med ett plus och redo att önska direkt därifrån."
+          }
+        }
+      }
+    },
+    "Fehlt noch: %@" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mangler stadig: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Still missing: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún falta: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il manque encore : %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manca ancora: %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ontbreekt nog: %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeszcze brakuje: %@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ainda falta: %@"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saknas än: %@"
+          }
+        }
+      }
+    },
+    "Alle wünschen" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ønsk alle"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Request all"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pedir todas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tout demander"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Richiedi tutti"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alles aanvragen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zamów wszystkie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pedir todos"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önska alla"
+          }
+        }
+      }
+    },
+    "%lld Filme" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld film"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld films"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld películas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld films"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld film"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld films"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filmy: %lld"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld filmes"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld filmer"
+          }
+        }
+      }
+    },
+    "Noch nicht in deiner Mediathek" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Endnu ikke i dit bibliotek"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not in your library yet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún no está en tu biblioteca"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pas encore dans ta médiathèque"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non ancora nella tua libreria"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nog niet in je bibliotheek"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeszcze nie w twojej bibliotece"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ainda não está na sua biblioteca"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ännu inte i ditt bibliotek"
+          }
+        }
+      }
+    },
+    "Filmreihen gruppieren" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gruppér filmserier"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group film series"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agrupar sagas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regrouper les sagas"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Raggruppa le saghe"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filmreeksen groeperen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grupuj serie filmowe"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agrupar franquias"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gruppera filmserier"
+          }
+        }
+      }
+    },
+    "Ende der Folge" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Når afsnittet slutter"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End of episode"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fin del episodio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fin de l’épisode"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fine dell’episodio"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einde van de aflevering"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koniec odcinka"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fim do episódio"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "När avsnittet är slut"
+          }
+        }
+      }
+    },
+    "Ende des Films" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Når filmen slutter"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End of film"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fin de la película"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fin du film"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fine del film"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einde van de film"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koniec filmu"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fim do filme"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "När filmen är slut"
+          }
+        }
+      }
+    },
+    "Die Wiedergabe läuft, bis du sie anhältst." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afspilningen fortsætter, indtil du stopper den."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Playback continues until you stop it."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La reproducción sigue hasta que la detengas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La lecture continue jusqu’à ce que tu l’arrêtes."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La riproduzione continua finché non la fermi."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het afspelen gaat door tot je het stopt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odtwarzanie trwa, dopóki go nie zatrzymasz."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A reprodução continua até você parar."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uppspelningen fortsätter tills du stoppar den."
+          }
+        }
+      }
+    },
+    "Die Wiedergabe pausiert um %@." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afspilningen sættes på pause kl. %@."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Playback pauses at %@."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La reproducción se pausará a las %@."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La lecture se mettra en pause à %@."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La riproduzione andrà in pausa alle %@."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het afspelen pauzeert om %@."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odtwarzanie zostanie wstrzymane o %@."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A reprodução pausa às %@."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uppspelningen pausas kl. %@."
+          }
+        }
+      }
+    },
+    "Nach dieser Folge geht es nicht automatisch weiter." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efter dette afsnit fortsætter det ikke automatisk."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing plays automatically after this episode."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Después de este episodio no se reproduce nada más automáticamente."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Après cet épisode, rien ne se lance automatiquement."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dopo questo episodio non parte nient’altro in automatico."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Na deze aflevering gaat het niet automatisch verder."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po tym odcinku nic nie włączy się automatycznie."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Depois deste episódio, nada mais toca automaticamente."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efter det här avsnittet fortsätter det inte automatiskt."
+          }
+        }
+      }
+    },
+    "Nach dem Film schließt der Player." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efter filmen lukker afspilleren."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The player closes after the film."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El reproductor se cierra al terminar la película."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le lecteur se ferme après le film."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dopo il film il player si chiude."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Na de film sluit de speler."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po filmie odtwarzacz się zamknie."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O player fecha depois do filme."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spelaren stängs efter filmen."
+          }
+        }
+      }
+    },
+    "Einschlaf-Timer: Wiedergabe pausiert" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleeptimer: afspilning sat på pause"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep timer: playback paused"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temporizador de sueño: reproducción en pausa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minuterie de sommeil : lecture en pause"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timer di spegnimento: riproduzione in pausa"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slaaptimer: afspelen gepauzeerd"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyłącznik czasowy: odtwarzanie wstrzymane"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timer de sono: reprodução pausada"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insomningstimer: uppspelningen pausad"
+          }
+        }
+      }
+    },
+    "Einschlaf-Timer" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleeptimer"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep timer"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temporizador de sueño"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minuterie de sommeil"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timer di spegnimento"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slaaptimer"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyłącznik czasowy"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timer de sono"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insomningstimer"
+          }
+        }
+      }
+    },
+    "Neue Folge: %@" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nyt afsnit: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New episode: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuevo episodio: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouvel épisode : %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuovo episodio: %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nieuwe aflevering: %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nowy odcinek: %@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Novo episódio: %@"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nytt avsnitt: %@"
+          }
+        }
+      }
+    },
+    "Neue Folgen: %@" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nye afsnit: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New episodes: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuevos episodios: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouveaux épisodes : %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuovi episodi: %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nieuwe afleveringen: %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nowe odcinki: %@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Novos episódios: %@"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nya avsnitt: %@"
+          }
+        }
+      }
+    },
+    "%lld neue Folgen sind in deiner Mediathek." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld nye afsnit er i dit bibliotek."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld new episodes are in your library."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hay %lld episodios nuevos en tu biblioteca."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld nouveaux épisodes sont dans ta médiathèque."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld nuovi episodi sono nella tua libreria."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld nieuwe afleveringen staan in je bibliotheek."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nowe odcinki w twojej bibliotece: %lld."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld novos episódios estão na sua biblioteca."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld nya avsnitt finns i ditt bibliotek."
+          }
+        }
+      }
+    },
+    "Mitteilung bei neuen Folgen" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifikation ved nye afsnit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notify me about new episodes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avisar de nuevos episodios"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notification pour les nouveaux épisodes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifica per i nuovi episodi"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Melding bij nieuwe afleveringen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Powiadomienie o nowych odcinkach"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificar sobre novos episódios"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notis vid nya avsnitt"
+          }
+        }
+      }
+    },
+    "Profile & Server" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profiler og servere"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profiles & Servers"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perfiles y servidores"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profils et serveurs"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profili e server"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profielen en servers"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profile i serwery"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perfis e servidores"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profiler och servrar"
+          }
+        }
+      }
+    },
+    "Verbindung & Diagnose" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forbindelse og diagnose"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connection & Diagnostics"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conexión y diagnóstico"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connexion et diagnostic"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connessione e diagnostica"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbinding en diagnose"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Połączenie i diagnostyka"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conexão e diagnóstico"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anslutning och diagnos"
+          }
+        }
+      }
+    },
+    "Nicht verbunden" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikke forbundet"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not connected"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No conectado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non connecté"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non connesso"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niet verbonden"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie połączono"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não conectado"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inte ansluten"
+          }
+        }
+      }
+    },
+    "Mitteilungen" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifikationer"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificaciones"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifiche"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meldingen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Powiadomienia"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificações"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notiser"
+          }
+        }
+      }
+    },
+    "Darstellung" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Udseende"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appearance"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apariencia"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apparence"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aspetto"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weergave"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wygląd"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aparência"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utseende"
+          }
+        }
+      }
+    },
+    "Mit SyncPlay sehen alle in einer Gruppe auf deinem Server dieselbe Sekunde – der Knopf dafür erscheint auf der Detailseite." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Med SyncPlay ser alle i en gruppe på din server det samme sekund – knappen til det vises på detaljesiden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With SyncPlay everyone in a group on your server sees the same second – the button for it appears on the detail page."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con SyncPlay, todos los de un grupo en tu servidor ven el mismo segundo; el botón aparece en la página de detalles."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avec SyncPlay, tous les membres d’un groupe sur ton serveur voient la même seconde – le bouton apparaît sur la page de détail."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con SyncPlay tutti i membri di un gruppo sul tuo server vedono lo stesso secondo – il pulsante compare nella pagina dei dettagli."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Met SyncPlay ziet iedereen in een groep op je server dezelfde seconde – de knop daarvoor staat op de detailpagina."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dzięki SyncPlay wszyscy w grupie na twoim serwerze widzą tę samą sekundę – przycisk pojawia się na stronie szczegółów."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Com o SyncPlay, todos de um grupo no seu servidor veem o mesmo segundo – o botão aparece na página de detalhes."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Med SyncPlay ser alla i en grupp på din server samma sekund – knappen för det visas på detaljsidan."
+          }
+        }
+      }
+    },
+    "Bei Serien mit Downloads liegen immer die nächsten zwei ungesehenen Folgen auf dem Gerät, gesehene machen Platz." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For serier med downloads ligger de næste to usete afsnit altid på enheden; sete afsnit giver plads."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For series with downloads, the next two unwatched episodes are always on the device; watched ones make room."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En las series con descargas, los dos siguientes episodios sin ver están siempre en el dispositivo; los vistos dejan sitio."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour les séries avec téléchargements, les deux prochains épisodes non vus sont toujours sur l’appareil ; les épisodes vus font de la place."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per le serie con download, i prossimi due episodi non visti sono sempre sul dispositivo; quelli visti fanno spazio."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bij series met downloads staan de volgende twee onbekeken afleveringen altijd op het apparaat; bekeken afleveringen maken plaats."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "W serialach z pobranymi odcinkami dwa kolejne nieobejrzane są zawsze na urządzeniu, a obejrzane zwalniają miejsce."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Em séries com downloads, os dois próximos episódios não assistidos ficam sempre no aparelho; os assistidos dão lugar."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "För serier med nedladdningar finns alltid de två nästa osedda avsnitten på enheten; sedda avsnitt ger plats."
+          }
+        }
+      }
+    },
+    "Filmreihen: Filme, die dein Server als Sammlung führt – etwa alle Harry-Potter-Filme –, erscheinen in der Filmbibliothek als ein Eintrag. Titelmusik: Hat dein Server zu einer Serie oder einem Film eine Titelmelodie, läuft sie leise auf der Detailseite." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filmserier: Film, som din server har samlet i en samling – f.eks. alle Harry Potter-filmene – vises som ét punkt i filmbiblioteket. Temamusik: Har din server en temamelodi til en serie eller film, spiller den dæmpet på detaljesiden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Film series: films your server keeps as a collection – all the Harry Potter films, say – appear as one entry in the film library. Theme music: if your server has a theme tune for a series or film, it plays quietly on the detail page."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sagas: las películas que tu servidor guarda como colección –por ejemplo, todas las de Harry Potter– aparecen como una sola entrada en la biblioteca de películas. Música de cabecera: si tu servidor tiene una melodía para una serie o película, suena bajito en la página de detalles."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sagas : les films que ton serveur regroupe en collection – tous les Harry Potter, par exemple – apparaissent comme une seule entrée dans la bibliothèque de films. Musique de générique : si ton serveur a un thème pour une série ou un film, il est joué doucement sur la page de détail."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saghe: i film che il tuo server tiene come raccolta – per esempio tutti gli Harry Potter – compaiono come un’unica voce nella libreria dei film. Musica della sigla: se il tuo server ha una sigla per una serie o un film, viene riprodotta a basso volume nella pagina dei dettagli."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filmreeksen: films die je server als collectie bijhoudt – bijvoorbeeld alle Harry Potter-films – verschijnen als één item in de filmbibliotheek. Titelmuziek: heeft je server een herkenningsmelodie bij een serie of film, dan speelt die zacht op de detailpagina."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serie filmowe: filmy, które twój serwer prowadzi jako kolekcję – na przykład wszystkie części Harry’ego Pottera – pojawiają się w bibliotece filmów jako jedna pozycja. Muzyka tytułowa: jeśli serwer ma motyw muzyczny do serialu lub filmu, gra on cicho na stronie szczegółów."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Franquias: os filmes que o seu servidor mantém como coleção – todos os Harry Potter, por exemplo – aparecem como um único item na biblioteca de filmes. Música tema: se o servidor tiver um tema para uma série ou filme, ele toca baixinho na página de detalhes."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filmserier: filmer som din server har som en samling – till exempel alla Harry Potter-filmer – visas som en post i filmbiblioteket. Temamusik: om din server har en signaturmelodi till en serie eller film spelas den lågt på detaljsidan."
+          }
+        }
+      }
+    },
+    "Neue Folgen: für Serien, die du gerade schaust. Das System weckt Jelly dafür ab und zu im Hintergrund – die Mitteilung kann deshalb etwas später kommen. Nichts davon läuft über fremde Server." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nye afsnit: for serier, du er i gang med. Systemet vækker Jelly i baggrunden af og til – notifikationen kan derfor komme lidt senere. Intet af det går via fremmede servere."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New episodes: for series you’re in the middle of. The system wakes Jelly in the background now and then – so the notification can arrive a little later. None of it goes through other servers."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuevos episodios: de las series que estás viendo. El sistema despierta a Jelly en segundo plano de vez en cuando, así que el aviso puede llegar algo más tarde. Nada pasa por servidores ajenos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouveaux épisodes : pour les séries que tu es en train de regarder. Le système réveille Jelly de temps en temps en arrière-plan – la notification peut donc arriver un peu plus tard. Rien ne passe par des serveurs tiers."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuovi episodi: per le serie che stai guardando. Il sistema risveglia Jelly ogni tanto in background, quindi la notifica può arrivare un po’ più tardi. Niente passa da server di terzi."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nieuwe afleveringen: voor series waar je mee bezig bent. Het systeem wekt Jelly af en toe op de achtergrond – de melding kan daardoor iets later komen. Niets hiervan loopt via andere servers."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nowe odcinki: dla seriali, które właśnie oglądasz. System co jakiś czas budzi Jelly w tle – powiadomienie może więc przyjść nieco później. Nic nie przechodzi przez obce serwery."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Novos episódios: das séries que você está acompanhando. O sistema acorda o Jelly em segundo plano de vez em quando – por isso a notificação pode chegar um pouco depois. Nada disso passa por servidores de terceiros."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nya avsnitt: för serier du håller på med. Systemet väcker Jelly i bakgrunden då och då – notisen kan därför komma lite senare. Inget av det går via andras servrar."
+          }
+        }
+      }
+    },
+    "Allgemein" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generelt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Général"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generali"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Algemeen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ogólne"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geral"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allmänt"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

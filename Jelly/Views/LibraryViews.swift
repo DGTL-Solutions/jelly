@@ -27,6 +27,8 @@ struct LibraryGridView: View {
     var parentID: String?
     var personID: String?
     var header: AnyView?
+    /// Shown under the grid once all of it is loaded.
+    var footer: AnyView?
 
     @EnvironmentObject private var model: AppModel
     @State private var items: [BaseItem] = []
@@ -36,15 +38,17 @@ struct LibraryGridView: View {
     @State private var sort = LibrarySort.name
     @State private var filter = LibraryFilters()
     @State private var genres: [String] = []
+    @AppStorage(LibraryFilters.groupingKey) private var groupsCollections = true
 
     private let columns = Array(repeating: GridItem(.fixed(250), spacing: 50, alignment: .top), count: 6)
 
-    init(title: String, types: [String], parentID: String? = nil, personID: String? = nil, header: AnyView? = nil) {
+    init(title: String, types: [String], parentID: String? = nil, personID: String? = nil, header: AnyView? = nil, footer: AnyView? = nil) {
         self.title = title
         self.types = types
         self.parentID = parentID
         self.personID = personID
         self.header = header
+        self.footer = footer
     }
 
     init(library: BaseItem) {
@@ -76,7 +80,7 @@ struct LibraryGridView: View {
                         Menu {
                             Picker("Sortieren", selection: $sort) { ForEach(LibrarySort.allCases) { Text($0.title).tag($0) } }
                         } label: { Label(sort.title, systemImage: "arrow.up.arrow.down") }
-                        LibraryFilterMenu(filters: $filter, genres: genres)
+                        LibraryFilterMenu(filters: $filter, genres: genres, grouping: LibraryFilters.canGroup(types: types, personID: personID) ? $groupsCollections : nil)
                     }
                 }
                 .focusSection()
@@ -96,6 +100,7 @@ struct LibraryGridView: View {
                     }
                 }
                 if loading { ProgressView().frame(maxWidth: .infinity).padding(40) }
+                if let footer, !loading, items.count >= total { footer.padding(.horizontal, -Theme.edge).padding(.top, 20) }
             }
             .padding(.horizontal, Theme.edge)
             .padding(.vertical, 40)
@@ -103,7 +108,7 @@ struct LibraryGridView: View {
         .scrollClipDisabled()
         .ignoresSafeArea(edges: .horizontal)
         .background(Theme.background.ignoresSafeArea())
-        .task(id: "\(sort.rawValue)-\(filter.key)-\(model.refreshID)") { await load(reset: true) }
+        .task(id: "\(sort.rawValue)-\(filter.key)-\(groupsCollections)-\(model.refreshID)") { await load(reset: true) }
         .task(id: model.session?.key) {
             guard personID == nil, let client = model.client, let session = model.session else { return }
             genres = (try? await client.genres(user: session.userID, parentID: parentID, types: types)) ?? []
@@ -119,6 +124,7 @@ struct LibraryGridView: View {
                                             start: reset ? 0 : items.count, limit: 60)
         filter.apply(to: &query)
         query.personID = personID
+        query.groupsCollections = filter.groups(types: types, personID: personID, enabled: groupsCollections)
         do {
             let page = try await client.items(user: session.userID, query)
             if reset { items = page.items } else { items += page.items.filter { new in !items.contains { $0.id == new.id } } }
@@ -184,10 +190,34 @@ struct SearchView: View {
 struct PersonView: View {
     let person: Person
     @EnvironmentObject private var model: AppModel
+    @State private var missing: [SeerrClient.Title] = []
+    @State private var openedWish: SeerrClient.Title?
 
     var body: some View {
         LibraryGridView(title: String(localized: "Bekannt aus", comment: "Titles a person is known for"), types: ["Movie", "Series"],
-                        personID: person.id, header: AnyView(header))
+                        personID: person.id, header: AnyView(header), footer: missing.isEmpty ? nil : AnyView(missingShelf))
+            .navigationDestination(item: $openedWish) { SeerrDetailView(title: $0).toolbar(.hidden, for: .tabBar) }
+            .task(id: model.refreshID) {
+                guard let client = model.client, let session = model.session,
+                      let details = try? await client.item(user: session.userID, id: person.id) else { return }
+                let credits = await SeerrSuggestions.missingCredits(for: details, model: model)
+                if !Task.isCancelled { missing = credits }
+            }
+    }
+
+    /// With "Vorschläge von Jellyseerr": the person's other films and series, to wish for.
+    private var missingShelf: some View {
+        Shelf(title: String(localized: "Noch nicht in deiner Mediathek"), items: missing) { title in
+            SeerrCard(title: title, marksMissing: true, onWish: { wish(title) }) { openedWish = title }
+        }
+    }
+
+    private func wish(_ title: SeerrClient.Title) {
+        Task {
+            guard let wished = await SeerrSuggestions.wish(title, model: model) else { openedWish = title; return }
+            if let index = missing.firstIndex(where: { $0.id == title.id }) { missing[index] = wished }
+            model.contentChanged()
+        }
     }
 
     private var header: some View {

@@ -21,6 +21,19 @@ struct LibraryFilters: Equatable {
         query.minRating = minRating
     }
 
+    /// "Filmreihen gruppieren" (on unless switched off in a film library's filter menu): the films of a series the
+    /// server keeps as a collection – all Harry Potter films – appear as one entry that opens the series.
+    static let groupingKey = "groupCollections"
+
+    /// Whether a grid shows film series as one entry: film libraries only, and not while filtering – a filter is
+    /// about the single films.
+    func groups(types: [String], personID: String?, enabled: Bool) -> Bool {
+        enabled && isEmpty && Self.canGroup(types: types, personID: personID)
+    }
+
+    /// Film lists – the "Filme" tab and film libraries –, not what a collection or a person's page shows.
+    static func canGroup(types: [String], personID: String?) -> Bool { types == ["Movie"] && personID == nil }
+
     static let decades = Array(stride(from: 2020, through: 1950, by: -10))
     static let ratings = [8, 7, 6, 5]
 }
@@ -29,9 +42,15 @@ struct LibraryFilters: Equatable {
 struct LibraryFilterMenu: View {
     @Binding var filters: LibraryFilters
     let genres: [String]
+    /// Film libraries: the switch for grouping film series.
+    var grouping: Binding<Bool>?
 
     var body: some View {
         Menu {
+            if let grouping {
+                Toggle(isOn: grouping) { Label("Filmreihen gruppieren", systemImage: "rectangle.stack") }
+                Divider()
+            }
             Toggle(isOn: $filters.unwatched) { Label("Ungesehen", systemImage: "eye.slash") }
             Toggle(isOn: $filters.favorites) { Label("Favoriten", systemImage: "heart") }
             if !genres.isEmpty {

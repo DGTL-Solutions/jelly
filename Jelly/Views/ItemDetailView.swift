@@ -10,6 +10,12 @@ struct ItemDetailView: View {
     @State private var episodes: [BaseItem] = []
     @State private var nextUp: BaseItem?
     @State private var similar: [BaseItem] = []
+    /// Jellyseerr's suggestions that aren't in the library, when that setting is on.
+    @State private var wishes: [SeerrClient.Title] = []
+    /// The films of this film's series that aren't in the library, and the series' name.
+    @State private var parts: [SeerrClient.Title] = []
+    @State private var partsName = ""
+    @State private var openedWish: SeerrClient.Title?
     @State private var sourceID: String?
     @State private var error: String?
     @State private var showsOverview = false
@@ -38,8 +44,24 @@ struct ItemDetailView: View {
                         if let people = current.people?.filter({ ["Actor", "Director", "GuestStar"].contains($0.type ?? "") }), !people.isEmpty {
                             Shelf(title: String(localized: "Besetzung & Crew"), items: Array(people.prefix(24)), spacing: 44) { PersonCard(person: $0) }
                         }
-                        if !similar.isEmpty {
-                            Shelf(title: String(localized: "Das könnte dir auch gefallen"), items: similar) { MediaCard(item: $0, style: .poster, width: 230) }
+                        if !parts.isEmpty {
+                            Shelf(title: String(localized: "Fehlt noch: \(partsName)", comment: "Row title: films missing from a film series, e.g. Fehlt noch: Matrix Filmreihe"),
+                                  items: MissingPart.row(parts)) { part in
+                                switch part {
+                                case .title(let title):
+                                    SeerrCard(title: title, marksMissing: true, onWish: { wish(title) }) { openedWish = title }
+                                case .all(let count): WishAllCard(count: count) { wishAllParts() }
+                                }
+                            }
+                        }
+                        if !similar.isEmpty || !wishes.isEmpty {
+                            Shelf(title: String(localized: "Das könnte dir auch gefallen"), items: Suggestion.row(similar, wishes)) { suggestion in
+                                switch suggestion {
+                                case .library(let item): MediaCard(item: item, style: .poster, width: 230)
+                                case .wish(let title):
+                                    SeerrCard(title: title, marksMissing: true, onWish: { wish(title) }) { openedWish = title }
+                                }
+                            }
                         }
                     }
                     .padding(.bottom, 80)
@@ -60,6 +82,7 @@ struct ItemDetailView: View {
         .fullScreenCover(isPresented: $showsGroups) { SyncPlayGroupsView(onClose: { showsGroups = false }, syncPlay: model.syncPlay) }
         .onReceive(model.syncPlay.$group) { inGroup = $0 != nil }
         .task(id: model.refreshID) { await load() }
+        .navigationDestination(item: $openedWish) { SeerrDetailView(title: $0).toolbar(.hidden, for: .tabBar) }
         .themeMusic(for: item)
         .task(id: selectedSeason) { await loadEpisodes() }
     }
@@ -222,6 +245,10 @@ struct ItemDetailView: View {
             if similar.isEmpty, !full.isEpisode {
                 similar = (try? await client.similar(user: session.userID, id: full.id)) ?? []
             }
+            let suggested = await SeerrSuggestions.load(for: full, model: model)
+            if !Task.isCancelled { wishes = suggested }
+            let series = await SeerrSuggestions.missingParts(for: full, model: model)
+            if !Task.isCancelled { (partsName, parts) = (series?.name ?? "", series?.parts ?? []) }
             if let episode = full.isEpisode ? full : nextUp { await prepareIntro(episode) }
         } catch is CancellationError {
         } catch {
@@ -243,6 +270,23 @@ struct ItemDetailView: View {
         try? await Task.sleep(for: .seconds(3))
         guard !Task.isCancelled, let client = model.client, let session = model.session else { return }
         Task.detached(priority: .utility) { _ = await IntroFinder.shared.intro(for: episode, client: client, user: session.userID) }
+    }
+
+    /// "Wünschen" from a card's menu: the badge on the card answers; if Jellyseerr refuses, its page says why.
+    private func wish(_ title: SeerrClient.Title) {
+        Task {
+            guard let wished = await SeerrSuggestions.wish(title, model: model) else { openedWish = title; return }
+            if let index = wishes.firstIndex(where: { $0.id == title.id }) { wishes[index] = wished }
+            if let index = parts.firstIndex(where: { $0.id == title.id }) { parts[index] = wished }
+            model.contentChanged()
+        }
+    }
+
+    private func wishAllParts() {
+        Task {
+            parts = await SeerrSuggestions.wishAll(parts, model: model)
+            model.contentChanged()
+        }
     }
 
     private func playSeries() {

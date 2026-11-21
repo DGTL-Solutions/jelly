@@ -26,7 +26,7 @@ struct MobilePlayerScreen: View {
 }
 
 enum MobilePanelTab: String, CaseIterable, Identifiable {
-    case subtitles, audio, quality, chapters, sync, info
+    case subtitles, audio, quality, chapters, sync, sleep, info
     var id: String { rawValue }
     var title: String {
         switch self {
@@ -35,6 +35,7 @@ enum MobilePanelTab: String, CaseIterable, Identifiable {
         case .quality: return String(localized: "Qualität", comment: "Player panel tab: stream quality")
         case .chapters: return String(localized: "Kapitel", comment: "Player panel tab: chapters")
         case .sync: return String(localized: "Synchronisation", comment: "Player panel tab: audio/subtitle delay")
+        case .sleep: return String(localized: "Einschlaf-Timer", comment: "Player panel tab: sleep timer")
         case .info: return String(localized: "Info", comment: "Player panel tab: playback details")
         }
     }
@@ -223,6 +224,7 @@ struct PlaybackStage: View {
     @AppStorage("enginePreference") private var enginePreference = EnginePreference.automatic
     @AppStorage("debugOverlay") private var debugOverlay = false
 
+    @ObservedObject private var sleep = SleepTimer.shared
     @State private var upNextDismissed = false
     /// Automatic skipping happens once; seeking back into the intro afterwards is deliberate.
     @State private var introSkipped = false
@@ -237,7 +239,7 @@ struct PlaybackStage: View {
     }
 
     private var showsUpNext: Bool {
-        guard autoplayNext, player.nextEpisode != nil, !upNextDismissed, !ui.panelOpen else { return false }
+        guard autoplayNext, !sleep.stopsAtEnd, player.nextEpisode != nil, !upNextDismissed, !ui.panelOpen else { return false }
         if player.phase == .ended { return true }
         if let credits = player.creditsStart, player.phase == .playing { return player.position >= credits }
         return false
@@ -359,7 +361,7 @@ struct PlaybackStage: View {
                 ui.showControls()
                 runDebugActions()
             case .ended:
-                if !showsUpNext { dismiss() }
+                if sleep.stopsAtEnd { sleep.clear(); dismiss() } else if !showsUpNext { dismiss() }
             case .preparing, .failed:
                 break
             }
@@ -379,6 +381,7 @@ struct PlaybackStage: View {
             guard notice != nil else { return }
             Task { try? await Task.sleep(for: .seconds(4)); player.notice = nil }
         }
+        .sleepTimer(sleep, player: player)
         .task(id: showsUpNext) {
             guard showsUpNext else { return }
             countdown = 10

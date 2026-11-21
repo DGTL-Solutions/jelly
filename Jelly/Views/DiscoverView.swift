@@ -373,6 +373,10 @@ private struct DiscoverHome: View {
 struct SeerrCard: View {
     let title: SeerrClient.Title
     var width: CGFloat = 230
+    /// Among library titles: a plus marks what isn't on the server yet.
+    var marksMissing = false
+    /// Wishes for the title without opening its page, from the card's menu.
+    var onWish: (() -> Void)?
     let action: () -> Void
     @FocusState private var focused: Bool
 
@@ -383,7 +387,7 @@ struct SeerrCard: View {
                 ZStack(alignment: .topTrailing) {
                     Theme.placeholder
                     RemoteImage(url: title.poster)
-                    if title.status != .none { SeerrStatusBadge(status: title.status).padding(14) }
+                    if title.status != .none || marksMissing { SeerrStatusBadge(status: title.status).padding(14) }
                 }
                 .frame(width: width, height: width * 1.5)
                 .overlay(alignment: .bottom) {
@@ -394,6 +398,11 @@ struct SeerrCard: View {
             }
             .buttonStyle(.card)
             .focused($focused)
+            .contextMenu {
+                if let onWish, title.status == .none {
+                    Button(action: onWish) { Label("Wünschen", systemImage: "plus") }
+                }
+            }
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(title.displayTitle).font(.caption.weight(.semibold)).lineLimit(1)
@@ -409,6 +418,36 @@ struct SeerrCard: View {
                     }
                 }
                 .font(.caption2).lineLimit(1).minimumScaleFactor(0.8)
+            }
+            .padding(.top, focused ? 26 : 14)
+            .opacity(focused ? 1 : 0.85)
+            .animation(.easeOut(duration: 0.2), value: focused)
+        }
+        .frame(width: width, alignment: .leading)
+    }
+}
+
+/// The last card of a row of missing titles: wishes for all of them at once.
+struct WishAllCard: View {
+    let count: Int
+    var width: CGFloat = 230
+    let action: () -> Void
+    @FocusState private var focused: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Button(action: action) {
+                ZStack {
+                    Theme.placeholder
+                    Image(systemName: "plus.circle.fill").font(.system(size: 72)).foregroundStyle(Theme.accent)
+                }
+                .frame(width: width, height: width * 1.5)
+            }
+            .buttonStyle(.card)
+            .focused($focused)
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Alle wünschen").font(.caption.weight(.semibold)).lineLimit(1)
+                Text("\(count) Filme").font(.caption2).foregroundStyle(.secondary).lineLimit(1)
             }
             .padding(.top, focused ? 26 : 14)
             .opacity(focused ? 1 : 0.85)

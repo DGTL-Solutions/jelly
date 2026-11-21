@@ -899,6 +899,8 @@ private struct LibraryPosterGrid<Header: View>: View {
     /// People pages: a section heading above the grid instead of a large navigation title.
     var sectionTitle: String?
     var initialSort = LibrarySort.name
+    /// Shown under the grid once all of it is loaded.
+    var footer: ((LibraryLayout) -> AnyView)?
     @ViewBuilder let header: (LibraryLayout) -> Header
 
     @EnvironmentObject private var model: AppModel
@@ -914,6 +916,7 @@ private struct LibraryPosterGrid<Header: View>: View {
     @State private var layout = LibraryLayout(alignsWithTitle: true)
     @State private var showsInlineTitle = false
     @State private var measuredWidth: CGFloat = 0
+    @AppStorage(LibraryFilters.groupingKey) private var groupsCollections = true
 
     private var activeSort: LibrarySort { sort ?? initialSort }
     private var showsControls: Bool { personID == nil }
@@ -947,6 +950,7 @@ private struct LibraryPosterGrid<Header: View>: View {
                 header(layout)
                 titleRow
                 grid
+                if let footer, loadedOnce, !loading, items.count >= total { footer(layout) }
             }
             .padding(.horizontal, layout.edge)
             .padding(.bottom, 32)
@@ -978,7 +982,7 @@ private struct LibraryPosterGrid<Header: View>: View {
         .refreshable { await load(reset: true) }
         .sensoryFeedback(.selection, trigger: filter)
         .sensoryFeedback(.selection, trigger: sort)
-        .task(id: "\(activeSort.rawValue)-\(filter.key)-\(model.refreshID)") { await load(reset: true) }
+        .task(id: "\(activeSort.rawValue)-\(filter.key)-\(groupsCollections)-\(model.refreshID)") { await load(reset: true) }
         .task(id: model.session?.key) {
             guard showsControls, let client = model.client, let session = model.session else { return }
             genres = (try? await client.genres(user: session.userID, parentID: parentID, types: types)) ?? []
@@ -1038,7 +1042,9 @@ private struct LibraryPosterGrid<Header: View>: View {
         }
     }
 
-    private var filterMenu: some View { LibraryFilterMenu(filters: $filter, genres: genres) }
+    private var filterMenu: some View {
+        LibraryFilterMenu(filters: $filter, genres: genres, grouping: LibraryFilters.canGroup(types: types, personID: personID) ? $groupsCollections : nil)
+    }
 
     private func loadMoreIfNeeded(after item: BaseItem) {
         guard !loading, items.count < total else { return }
@@ -1056,6 +1062,7 @@ private struct LibraryPosterGrid<Header: View>: View {
                                             start: reset ? 0 : items.count, limit: 60)
         filter.apply(to: &query)
         query.personID = personID
+        query.groupsCollections = filter.groups(types: types, personID: personID, enabled: groupsCollections)
         do {
             let page = try await client.items(user: session.userID, query)
             guard run == generation else { return }
@@ -1274,6 +1281,12 @@ struct ItemDetailScreen: View {
     @State private var loadingEpisodes = false
     @State private var nextUp: BaseItem?
     @State private var similar: [BaseItem] = []
+    /// Jellyseerr's suggestions that aren't in the library, when that setting is on.
+    @State private var wishes: [SeerrClient.Title] = []
+    /// The films of this film's series that aren't in the library, and the series' name.
+    @State private var parts: [SeerrClient.Title] = []
+    @State private var partsName = ""
+    @State private var openedWish: SeerrClient.Title?
     @State private var sourceID: String?
     @State private var error: String?
     @State private var layout = LibraryLayout()
@@ -1314,9 +1327,22 @@ struct ItemDetailScreen: View {
                         if current.isSeries && !seasons.isEmpty { seriesEpisodes.id("episodes") }
                         if current.isEpisode && episodes.count > 1 { seasonEpisodes.id("episodes") }
                         cast.id("cast")
-                        if !similar.isEmpty {
-                            LibraryShelf(title: String(localized: "Das könnte dir auch gefallen"), items: similar, layout: layout) {
-                                PosterCard(item: $0, width: layout.posterWidth)
+                        if !parts.isEmpty {
+                            LibraryShelf(title: String(localized: "Fehlt noch: \(partsName)", comment: "Row title: films missing from a film series, e.g. Fehlt noch: Matrix Filmreihe"),
+                                         items: MissingPart.row(parts), layout: layout) { part in
+                                switch part {
+                                case .title(let title): SeerrSuggestionCard(title: title, width: layout.posterWidth) { wish(title) }
+                                case .all(let count): WishAllCard(count: count, width: layout.posterWidth) { wishAllParts() }
+                                }
+                            }
+                            .id("parts")
+                        }
+                        if !similar.isEmpty || !wishes.isEmpty {
+                            LibraryShelf(title: String(localized: "Das könnte dir auch gefallen"), items: Suggestion.row(similar, wishes), layout: layout) { suggestion in
+                                switch suggestion {
+                                case .library(let item): PosterCard(item: item, width: layout.posterWidth)
+                                case .wish(let title): SeerrSuggestionCard(title: title, width: layout.posterWidth) { wish(title) }
+                                }
                             }
                             .id("similar")
                         }
@@ -1333,6 +1359,7 @@ struct ItemDetailScreen: View {
         .toolbarBackground(showsTitle ? .automatic : .hidden, for: .navigationBar)
         .background(Theme.background.ignoresSafeArea())
         .measuringLayout($layout)
+        .navigationDestination(item: $openedWish) { SeerrDetailScreen(title: $0) }
         .onScrollGeometryChange(for: Bool.self) { $0.contentOffset.y > headerHeight - 110 } action: { _, value in
             withAnimation(.easeOut(duration: 0.2)) { showsTitle = value }
         }
@@ -1730,9 +1757,30 @@ struct ItemDetailScreen: View {
             if similar.isEmpty, !full.isEpisode {
                 similar = (try? await client.similar(user: session.userID, id: full.id)) ?? []
             }
+            let suggested = await SeerrSuggestions.load(for: full, model: model)
+            if !Task.isCancelled { wishes = suggested }
+            let series = await SeerrSuggestions.missingParts(for: full, model: model)
+            if !Task.isCancelled { (partsName, parts) = (series?.name ?? "", series?.parts ?? []) }
             if let episode = full.isEpisode ? full : nextUp { await prepareIntro(episode) }
         } catch {
             if !libraryIsCancellation(error) { self.error = libraryErrorText(error) }
+        }
+    }
+
+    /// "Wünschen" from a card's menu: the badge on the card answers; if Jellyseerr refuses, its page says why.
+    private func wish(_ title: SeerrClient.Title) {
+        Task {
+            guard let wished = await SeerrSuggestions.wish(title, model: model) else { openedWish = title; return }
+            if let index = wishes.firstIndex(where: { $0.id == title.id }) { wishes[index] = wished }
+            if let index = parts.firstIndex(where: { $0.id == title.id }) { parts[index] = wished }
+            model.contentChanged()
+        }
+    }
+
+    private func wishAllParts() {
+        Task {
+            parts = await SeerrSuggestions.wishAll(parts, model: model)
+            model.contentChanged()
         }
     }
 
@@ -1785,16 +1833,39 @@ struct PersonScreen: View {
     let person: Person
     @EnvironmentObject private var model: AppModel
     @State private var details: BaseItem?
+    /// With "Vorschläge von Jellyseerr": the person's other films and series, to wish for.
+    @State private var missing: [SeerrClient.Title] = []
+    @State private var openedWish: SeerrClient.Title?
 
     var body: some View {
         LibraryPosterGrid(title: person.name, types: ["Movie", "Series"], personID: person.id,
                    sectionTitle: String(localized: "Bekannt aus", comment: "Titles a person is known for"),
-                   initialSort: .released) { layout in
+                   initialSort: .released, footer: missing.isEmpty ? nil : { AnyView(missingShelf($0)) }) { layout in
             header(layout)
         }
-        .task {
-            guard details == nil, let client = model.client, let session = model.session else { return }
-            details = try? await client.item(user: session.userID, id: person.id)
+        .navigationDestination(item: $openedWish) { SeerrDetailScreen(title: $0) }
+        .task(id: model.refreshID) {
+            guard let client = model.client, let session = model.session else { return }
+            if details == nil { details = try? await client.item(user: session.userID, id: person.id) }
+            guard let details else { return }
+            let credits = await SeerrSuggestions.missingCredits(for: details, model: model)
+            if !Task.isCancelled { missing = credits }
+        }
+    }
+
+    private func missingShelf(_ layout: LibraryLayout) -> some View {
+        LibraryShelf(title: String(localized: "Noch nicht in deiner Mediathek"), items: missing, layout: layout) { title in
+            SeerrSuggestionCard(title: title, width: layout.posterWidth) { wish(title) }
+        }
+        .padding(.horizontal, -layout.edge)
+        .padding(.top, 16)
+    }
+
+    private func wish(_ title: SeerrClient.Title) {
+        Task {
+            guard let wished = await SeerrSuggestions.wish(title, model: model) else { openedWish = title; return }
+            if let index = missing.firstIndex(where: { $0.id == title.id }) { missing[index] = wished }
+            model.contentChanged()
         }
     }
 
