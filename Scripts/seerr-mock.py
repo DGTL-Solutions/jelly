@@ -14,7 +14,7 @@ START = time.time()
 GB = 1024 ** 3
 
 # Blender Foundation's open movies (CC-BY, Spring public domain): colourful, free to show in App Store screenshots and the
-# same titles as the screenshot library (see AppStore/README.md). tmdb id, type, title, date, poster, media status
+# same titles as the screenshot library. tmdb id, type, title, date, poster, media status
 # (2 pending, 3 processing, 4 partial, 5 available), downloads
 TITLES = [
     (45745, "movie", "Sintel", "2010-09-27", "/l98Zns4oQe1BSvbF4hJ8oL6VSf0.jpg", 3, "movie-running"),

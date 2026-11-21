@@ -113,7 +113,7 @@ Vorschaubilder beim Spulen kommen aus Jellyfins Trickplay-Funktion (Dashboard �
 
 ## Mac
 
-Ziel `JellyMac`: die Bildschirme der iPhone- und iPad-App in einem Mac-Fenster. Ein natives macOS-Ziel, weil FFmpeg in der Player-Engine keine Mac-Catalyst-Variante hat; `JellyMac/MacCompat.swift` stellt bereit, was die geteilten Bildschirme aus UIKit erwarten. `Scripts/release-mac.sh` baut, signiert und lädt das Paket für den Mac App Store hoch (zusätzlich nötig: ein Zertifikat „Mac Installer Distribution“, siehe `Scripts/asc_certificate.py`).
+Ziel `JellyMac`: die Bildschirme der iPhone- und iPad-App in einem Mac-Fenster. Ein natives macOS-Ziel, weil FFmpeg in der Player-Engine keine Mac-Catalyst-Variante hat; `JellyMac/MacCompat.swift` stellt bereit, was die geteilten Bildschirme aus UIKit erwarten. Für den Mac App Store ist zusätzlich ein Zertifikat „Mac Installer Distribution“ nötig, siehe `Scripts/asc_certificate.py`.
 
 ## Prüfen
 
@@ -150,9 +150,9 @@ Nur in Debug-Builds steuern Startparameter (`SIMCTL_CHILD_…` bei `simctl launc
 
 ## App Store
 
-Die App-Store-Fassung wird mit einem Jahresabo freigeschaltet: 9,99 € pro Jahr, die ersten 2 Wochen gratis (StoreKit 2, `Jelly/Core/Purchases.swift`, Angebot mit allen Pflichtangaben für Abos in `PaywallView`). Kaufsperre und IMDb-freie Bewertungen gibt es nur mit dem Build-Schalter `APPSTORE`, den `Scripts/release-appstore.sh` setzt; Builds aus dem Quellcode laufen ohne Sperre. Zum Testen der Oberfläche in Debug-Builds: `JELLY_ACCESS=none|trial|active|expired`.
+Die App-Store-Fassung wird mit einem Jahresabo freigeschaltet: 9,99 € pro Jahr, die ersten 2 Wochen gratis (StoreKit 2, `Jelly/Core/Purchases.swift`, Angebot mit allen Pflichtangaben für Abos in `PaywallView`). Kaufsperre und IMDb-freie Bewertungen gibt es nur mit dem Build-Schalter `APPSTORE` (`SWIFT_ACTIVE_COMPILATION_CONDITIONS`), den nur der Store-Build setzt; Builds aus dem Quellcode laufen ohne Sperre. Zum Testen der Oberfläche in Debug-Builds: `JELLY_ACCESS=none|trial|active|expired`.
 
-Vorbereitung der Veröffentlichung – Lizenzen (AetherEngine und FFmpeg unter LGPL, ohne Lizenzkosten), Store-Texte, Review-Hinweise, Datenschutzerklärung und Upload-Skript (`Scripts/release-appstore.sh`): siehe [`AppStore/README.md`](AppStore/README.md). In der App: Einstellungen › Info › Open-Source-Lizenzen und Datenschutz.
+Lizenzen: AetherEngine und FFmpeg unter LGPL, ohne Lizenzkosten. Store-Texte, Screenshots und die Skripte für die Veröffentlichung gehören nicht zu diesem Repository. In der App: Einstellungen › Info › Open-Source-Lizenzen und Datenschutz.
 
 ## Sprachen
 

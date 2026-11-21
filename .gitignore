@@ -4,3 +4,18 @@ DerivedData/
 *.xcuserstate
 xcuserdata/
 __pycache__/
+
+# Store material and release tooling: kept locally, not part of the public repository.
+/AppStore/
+/Design/
+/Scripts/asc_numbers.py
+/Scripts/asc_event.py
+/Scripts/asc_experiment.py
+/Scripts/asc_appstore.py
+/Scripts/release-appstore.sh
+/Scripts/release-mac.sh
+/Scripts/screenshots-*.sh
+/Scripts/preview-ios.sh
+/Scripts/preview_video.py
+/Scripts/FrameScreenshots.swift
+/Scripts/FlattenMacScreenshots.swift
