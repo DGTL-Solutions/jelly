@@ -17,9 +17,9 @@ enum AppInfo {
     /// The App Store page opened straight at "Write a Review".
     static let reviewURL = "https://apps.apple.com/app/id6826379119?action=write-review"
     /// The privacy policy as published for the App Store listing.
-    static let privacyURL = "https://dgtl-solutions.github.io/jelly/datenschutz/"
+    static let privacyURL = "https://usejelly.app/datenschutz/"
 
-    private static let pages = "https://dgtl-solutions.github.io/jelly/"
+    private static let pages = "https://usejelly.app/"
     /// The app runs in German or English; every other language gets English.
     private static var isGerman: Bool { Bundle.main.preferredLocalizations.first?.hasPrefix("de") == true }
 
