@@ -217,6 +217,7 @@ struct PlaybackStage: View {
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.accessibilityVoiceOverEnabled) private var voiceOver
     @AppStorage("autoplayNext") private var autoplayNext = true
+    @AppStorage(DownloadCenter.autoDeleteWatchedKey) private var autoDeleteWatchedDownloads = false
     @AppStorage("skipIntros") private var skipIntros = false
     @AppStorage("subtitleSize") private var subtitleSize = SubtitleSize.standard
     @AppStorage("subtitleBackground") private var subtitleBackground = SubtitleBackground.shadow
@@ -284,16 +285,7 @@ struct PlaybackStage: View {
             } else if let action = creditsAction {
                 creditsButton(action).transition(.move(edge: .trailing).combined(with: .opacity))
             }
-            if showsUpNext, let next = player.nextEpisode {
-                if player.phase == .ended {
-                    PlayerBackdrop(item: next).transition(.opacity)
-                }
-                PlayerUpNextCard(episode: next, countdown: countdown, lifted: showsControls, play: playNext) {
-                    upNextDismissed = true
-                    if player.phase == .ended { dismiss() }
-                }
-                .transition(.move(edge: .trailing).combined(with: .opacity))
-            }
+            upNextOverlay
             if let notice = player.notice {
                 PlayerNotice(text: notice, lifted: showsControls).transition(.move(edge: .top).combined(with: .opacity))
             }
@@ -361,6 +353,9 @@ struct PlaybackStage: View {
                 ui.showControls()
                 runDebugActions()
             case .ended:
+                // Auto-delete when the player is about to close (last episode, or autoplay off). When the up-next
+                // card carries on to the next episode, playNext() removes the watched one instead.
+                if autoDeleteWatchedDownloads, !showsUpNext { deleteCurrentDownload() }
                 if sleep.stopsAtEnd { sleep.clear(); dismiss() } else if !showsUpNext { dismiss() }
             case .preparing, .failed:
                 break
@@ -402,6 +397,21 @@ struct PlaybackStage: View {
                       let still = await engine.scrubThumbnail(atSeconds: target, maxWidth: 320), !Task.isCancelled {
                 ui.thumbnail = UIImage(pixels: still)
             }
+        }
+    }
+
+    /// The end-of-episode card: for a download it also offers "Löschen & Weiter".
+    @ViewBuilder private var upNextOverlay: some View {
+        if showsUpNext, let next = player.nextEpisode {
+            if player.phase == .ended {
+                PlayerBackdrop(item: next).transition(.opacity)
+            }
+            PlayerUpNextCard(episode: next, countdown: countdown, lifted: showsControls,
+                             delete: upNextDelete, play: playNext) {
+                upNextDismissed = true
+                if player.phase == .ended { dismiss() }
+            }
+            .transition(.move(edge: .trailing).combined(with: .opacity))
         }
     }
 
@@ -475,7 +485,28 @@ struct PlaybackStage: View {
 
     private func playNext() {
         guard let next = player.nextEpisode else { return }
-        replace(PlaybackRequest(item: next, offline: model.offlineCopy(next)))
+        // The next episode's own download is untouched; capture it before removing the one just watched.
+        let nextOffline = model.offlineCopy(next)
+        if autoDeleteWatchedDownloads { deleteCurrentDownload() }
+        replace(PlaybackRequest(item: next, offline: nextOffline))
+    }
+
+    /// The "Löschen & Weiter" button on the up-next card: remove the watched download, then play on.
+    private func deleteAndNext() {
+        deleteCurrentDownload()
+        playNext()
+    }
+
+    /// The delete action the up-next card offers – only while playing from a download.
+    private var upNextDelete: (() -> Void)? { player.offline != nil ? deleteAndNext : nil }
+
+    /// Removes this device's download of the episode just watched – only when it was played from the download
+    /// (not while streaming), and only its own file.
+    private func deleteCurrentDownload() {
+        guard player.offline != nil,
+              let record = DownloadCenter.shared.record(itemID: player.item.id, profileKey: model.session?.key)
+        else { return }
+        DownloadCenter.shared.remove(record)
     }
 
     @ViewBuilder private func creditsButton(_ action: CreditsAction) -> some View {

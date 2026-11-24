@@ -1,6 +1,180 @@
 {
   "sourceLanguage" : "de",
   "strings" : {
+    "Gesehene Downloads automatisch löschen" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slet sete downloads automatisk"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete watched downloads automatically"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar descargas vistas automáticamente"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer automatiquement les téléchargements visionnés"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina automaticamente i download guardati"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bekeken downloads automatisch verwijderen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatycznie usuwaj obejrzane pobrane"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excluir downloads assistidos automaticamente"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radera sedda nedladdningar automatiskt"
+          }
+        }
+      }
+    },
+    "Eine heruntergeladene Folge wird vom Gerät entfernt, sobald du sie zu Ende gesehen hast. Am Folgenende geht das auch einzeln über „Löschen & Weiter“." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Et downloadet afsnit fjernes fra enheden, så snart du har set det færdigt. Ved afsnittets slutning kan du også gøre det enkeltvis med „Slet og fortsæt“."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A downloaded episode is removed from the device as soon as you finish watching it. At the end of an episode you can also do this individually with “Delete & Continue”."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un episodio descargado se elimina del dispositivo en cuanto terminas de verlo. Al final de un episodio también puedes hacerlo por separado con «Eliminar y continuar»."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un épisode téléchargé est supprimé de l’appareil dès que tu as fini de le regarder. À la fin d’un épisode, tu peux aussi le faire individuellement avec « Supprimer et continuer »."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un episodio scaricato viene rimosso dal dispositivo non appena finisci di guardarlo. Alla fine di un episodio puoi farlo anche singolarmente con «Elimina e continua»."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Een gedownloade aflevering wordt van het apparaat verwijderd zodra je die hebt uitgekeken. Aan het einde van een aflevering kan dat ook afzonderlijk met ‘Verwijderen en doorgaan’."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pobrany odcinek jest usuwany z urządzenia, gdy tylko skończysz go oglądać. Na końcu odcinka możesz to też zrobić pojedynczo za pomocą „Usuń i kontynuuj”."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um episódio baixado é removido do dispositivo assim que você termina de assisti-lo. No fim de um episódio, você também pode fazer isso separadamente com “Excluir e continuar”."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ett nedladdat avsnitt tas bort från enheten så snart du har sett klart det. I slutet av ett avsnitt kan du även göra det separat med ”Radera och fortsätt”."
+          }
+        }
+      }
+    },
+    "Gesehene Folge löschen und weiter" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slet set afsnit, og fortsæt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete watched episode and continue"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar episodio visto y continuar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer l’épisode visionné et continuer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina l’episodio guardato e continua"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bekeken aflevering verwijderen en doorgaan"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usuń obejrzany odcinek i kontynuuj"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excluir episódio assistido e continuar"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radera sett avsnitt och fortsätt"
+          }
+        }
+      }
+    },
     "" : {
       "localizations" : {}
     },

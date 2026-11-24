@@ -12,6 +12,7 @@ struct SettingsScreen: View {
     @AppStorage(SyncPlay.settingKey) private var syncPlay = false
     @AppStorage(SeerrSuggestions.settingKey) private var seerrSuggestions = false
     @AppStorage(DownloadCenter.autoNextKey) private var autoDownloadNext = false
+    @AppStorage(DownloadCenter.autoDeleteWatchedKey) private var autoDeleteWatched = false
     @AppStorage(WishNotifications.settingKey) private var wishNotifications = false
     @AppStorage(EpisodeNotifications.settingKey) private var episodeNotifications = false
     @AppStorage(LibraryFilters.groupingKey) private var groupsCollections = true
@@ -159,6 +160,11 @@ struct SettingsScreen: View {
                 Text("Downloads")
             } footer: {
                 Text("Bei Serien mit Downloads liegen immer die nächsten zwei ungesehenen Folgen auf dem Gerät, gesehene machen Platz.")
+            }
+            Section {
+                Toggle("Gesehene Downloads automatisch löschen", isOn: $autoDeleteWatched)
+            } footer: {
+                Text("Eine heruntergeladene Folge wird vom Gerät entfernt, sobald du sie zu Ende gesehen hast. Am Folgenende geht das auch einzeln über „Löschen & Weiter“.")
             }
         }
     }

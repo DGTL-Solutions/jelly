@@ -334,6 +334,8 @@ final class DownloadCenter: NSObject, ObservableObject {
     }
 
     static let autoNextKey = "autoDownloadNext"
+    /// Optional: an episode is removed from the device the moment it has been watched to the end.
+    static let autoDeleteWatchedKey = "autoDeleteWatchedDownloads"
 
     /// Optional: for every series with downloads, the next two unwatched episodes are kept on the device and watched
     /// ones make room – so there is always something to watch on the train.

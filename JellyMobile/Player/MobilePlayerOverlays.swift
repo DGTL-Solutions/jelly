@@ -100,6 +100,8 @@ struct PlayerUpNextCard: View {
     let episode: BaseItem
     let countdown: Int
     let lifted: Bool
+    /// Only for a download that has a next episode: remove the one just watched, then play on.
+    var delete: (() -> Void)? = nil
     let play: () -> Void
     let close: () -> Void
 
@@ -138,6 +140,16 @@ struct PlayerUpNextCard: View {
                         .contentShape(Rectangle())
                     }
                     .buttonStyle(PlayerPressStyle())
+                    if let delete {
+                        Button(action: delete) {
+                            Image(systemName: "trash")
+                                .font(.footnote.weight(.bold))
+                                .frame(width: 30, height: 30)
+                                .background(.white.opacity(0.14), in: Circle())
+                        }
+                        .buttonStyle(PlayerPressStyle())
+                        .accessibilityLabel(String(localized: "Gesehene Folge löschen und weiter"))
+                    }
                     Button(action: close) {
                         Image(systemName: "xmark")
                             .font(.footnote.weight(.bold))
